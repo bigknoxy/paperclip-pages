@@ -24,6 +24,9 @@ Notes
 - The project uses Vite + React for the demo UI and Vitest for tests.
 - GitHub Actions are configured to run tests and deploy the `dist/` site to Pages on `main`.
 
+Demo notes
+- The React demo includes a small interactive example on the landing page: a "Say hi" button and a simple "note" input. Type a note and click "Save note" to store it in browser localStorage (or a test fallback in non-browser environments). Use this to verify the interactive pipeline locally.
+
 If you'd like me to prepare a PR with these changes, or to open specific issues and assign them, tell me which step to take next.
 
 Ready-to-push notes
