@@ -1,0 +1,11 @@
+# CODEOWNERS
+#
+# Update these lines with the GitHub usernames or team names that should be the default
+# reviewers for changes. Example:
+# /src/ @your-org/frontend-team
+# /* @your-github-username
+#
+# Replace placeholders before enabling strict review rules.
+
+/src/ @maintainers
+/* @maintainers
