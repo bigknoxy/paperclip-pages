@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 import { greet } from './utils/hello'
 import { saveNote, loadNote } from './utils/notes'
 import Home from './pages/Home'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Demo from './pages/Demo'
 
 function App(){
   const [message, setMessage] = useState('')
@@ -17,7 +19,14 @@ function App(){
     setMessage('Saved note')
   }
 
-  return <Home />
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/demo" element={<Demo />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 const root = createRoot(document.getElementById('root'))
