@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /dist/
+
+Sitemap: https://anomalyco.github.io/gh-pages/sitemap.xml

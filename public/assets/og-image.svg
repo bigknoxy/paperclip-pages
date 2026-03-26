@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630">
+  <rect width="100%" height="100%" fill="#071124"/>
+  <g fill="#06b6d4" font-family="Arial, sans-serif">
+    <text x="60" y="180" font-size="72" font-weight="700">Paperclip</text>
+    <text x="60" y="260" font-size="28">Starter scaffold • Vite + React</text>
+  </g>
+</svg>
