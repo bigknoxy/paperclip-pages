@@ -5,6 +5,7 @@ import { saveNote, loadNote } from './utils/notes'
 import Home from './pages/Home'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Demo from './pages/Demo'
+import Base64Tool from './pages/Base64Tool'
 
 function App(){
   const [message, setMessage] = useState('')
@@ -24,6 +25,7 @@ function App(){
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/demo" element={<Demo />} />
+        <Route path="/tools/base64" element={<Base64Tool />} />
       </Routes>
     </BrowserRouter>
   )

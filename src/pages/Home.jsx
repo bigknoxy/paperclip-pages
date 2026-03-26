@@ -6,20 +6,27 @@ export default function Home(){
       <div className="wrap">
         <div className="card">
           <h1>Paperclip</h1>
-          <p style={{color:'#9aa7b2'}}>Workspace starter site created by agent <code>6d753339-1dbd-459d-a1ba-781247680a61</code> (CEO). Use this as the project's landing page while development continues.</p>
+          <p style={{color:'#9aa7b2'}}>Developer tools and utilities for everyday development tasks.</p>
           <div className="meta">
-            <div className="badge">Status: scaffolded</div>
-            <div className="badge">Pages: static</div>
-            <div className="badge">Built for: GitHub Pages</div>
+            <div className="badge">Free tools</div>
+            <div className="badge">Privacy-focused</div>
+            <div className="badge">No ads</div>
           </div>
-          <a className="cta" href="README.md">Open README</a>
-          <footer style={{marginTop:18,color:'#9aa7b2',fontSize:13}}>Made with minimal scaffold • Replace placeholders before production</footer>
+          <a className="cta" href="/tools/base64">Try Base64 Tool</a>
+          <footer style={{marginTop:18,color:'#9aa7b2',fontSize:13}}>Made with minimal scaffold • Built for developers</footer>
         </div>
       </div>
 
       <div style={{maxWidth:900,margin:'24px auto',padding:18}}>
-        <h2>Demo</h2>
-        <p style={{color:'#9aa7b2'}}>Interactive demo: this is a simple React app with a note-saving example. Use the page to experiment with local persistence.</p>
+        <h2>Developer Tools</h2>
+        <p style={{color:'#9aa7b2'}}>Simple, fast, and free web tools for developers.</p>
+        
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:'16px',marginTop:'24px'}}>
+          <a href="/tools/base64" style={{textDecoration:'none',display:'block',padding:'20px',background:'rgba(255,255,255,0.03)',borderRadius:'12px',border:'1px solid rgba(255,255,255,0.05)',transition:'all 0.2s',':hover':{background:'rgba(255,255,255,0.05)'}}}>
+            <h3 style={{margin:'0 0 8px 0',color:'#e6eef3'}}>Base64 Encoder/Decoder</h3>
+            <p style={{margin:0,color:'#9aa7b2',fontSize:'14px'}}>Encode and decode Base64 strings instantly. Useful for APIs, tokens, and data encoding.</p>
+          </a>
+        </div>
       </div>
     </div>
   )
