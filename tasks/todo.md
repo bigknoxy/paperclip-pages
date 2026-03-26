@@ -16,8 +16,18 @@
  - [x] Record lessons (if any)
    - Documented initial decisions in `docs/MEMORY.md`.
 
-Next tasks:
-- [ ] Add CODE_OF_CONDUCT.md and PR template
-- [ ] Add CODEOWNERS and branch protection guidance
-- [ ] Prepare branch and PR for review (requires remote/push)
-- [ ] Expand demo and documentation (design, pages, routing)
+Next tasks (current):
+- [x] Add CODE_OF_CONDUCT.md and PR template
+- [x] Add CODEOWNERS and branch protection guidance
+- [x] Prepare branch and PR for review (branch `chore/scaffold` created locally)
+- [x] Expand demo and documentation (design, pages, routing)
+
+Next tasks (recommended):
+- [ ] Push `chore/scaffold` to a remote and open a PR (needs remote/approval)
+- [ ] Add README status badges (replace placeholders after CI runs)
+- [ ] Run E2E Playwright tests in CI (workflow added: `.github/workflows/e2e.yml`)
+- [ ] Review and update `CODEOWNERS` with real maintainers
+
+Notes:
+- Local branch `chore/scaffold` contains the full scaffold, demo, tests, CI, and docs. It is committed and ready to push.
+- No git remote is configured in this environment; pushing requires a remote URL or running push locally.
