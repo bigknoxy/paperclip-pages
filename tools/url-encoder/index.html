@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>URL Encoder/Decoder | Paperclip</title>
+  <meta name="description" content="Free online URL encoder and decoder. Encode special characters for URLs or decode percent-encoded strings. Fast, private, no ads." />
+  <meta name="keywords" content="url encoder, url decoder, percent encoding, online url tool" />
+  <meta name="author" content="Paperclip" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/url-encoder/" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--error:#ef4444;color-scheme:dark}
+    *{box-sizing:border-box}
+    html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+    .logo{font-weight:700;font-size:1.2em;color:var(--accent)}
+    nav{display:flex;gap:16px}
+    nav a{color:var(--muted);text-decoration:none;font-size:14px}
+    nav a:hover{color:var(--text)}
+    .container{max-width:900px;margin:0 auto;padding:24px}
+    h1{font-size:1.8em;margin:0 0 8px 0}
+    .subtitle{color:var(--muted);margin-bottom:24px}
+    .tool-box{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin-bottom:20px}
+    label{display:block;margin-bottom:8px;color:var(--muted);font-size:14px}
+    textarea{width:100%;min-height:100px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;color:var(--text);font-family:monospace;font-size:14px;resize:vertical}
+    textarea:focus{outline:none;border-color:var(--accent)}
+    .button-group{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}
+    button{padding:12px 24px;background:var(--accent);color:#012;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px}
+    button:hover{opacity:.9}
+    button.secondary{background:rgba(255,255,255,0.1);color:var(--text)}
+    button.secondary:hover{background:rgba(255,255,255,0.15)}
+    .output-box{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;min-height:60px;font-family:monospace;font-size:14px;word-break:break-all;white-space:pre-wrap}
+    .message{margin-top:8px;padding:8px 12px;border-radius:6px;font-size:14px}
+    .message.success{background:rgba(34,197,94,.1);color:var(--success)}
+    .message.error{background:rgba(239,68,68,.1);color:var(--error)}
+    .options{margin:16px 0;display:flex;gap:16px;flex-wrap:wrap}
+    .option{display:flex;align-items:center;gap:8px;cursor:pointer}
+    .option input[type="checkbox"]{cursor:pointer}
+    footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo">← Paperclip</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/demo">Demo</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>URL Encoder/Decoder</h1>
+    <p class="subtitle">Encode special characters for URLs or decode percent-encoded strings. All processing happens in your browser.</p>
+
+    <div class="tool-box">
+      <label for="input">Input</label>
+      <textarea id="input" placeholder="Enter text to encode or URL to decode..." spellcheck="false"></textarea>
+      
+      <div class="options">
+        <label class="option">
+          <input type="checkbox" id="encodeAll" checked>
+          <span>Encode all special characters (not just unsafe ones)</span>
+        </label>
+      </div>
+      
+      <div class="button-group">
+        <button onclick="encode()">Encode URL</button>
+        <button onclick="decode()">Decode URL</button>
+        <button class="secondary" onclick="clearAll()">Clear</button>
+      </div>
+
+      <label>Output</label>
+      <div id="output" class="output-box"></div>
+      <div id="message"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Made with minimal code • Free forever • No tracking</p>
+  </footer>
+
+  <script>
+    const input = document.getElementById('input');
+    const output = document.getElementById('output');
+    const message = document.getElementById('message');
+    const encodeAll = document.getElementById('encodeAll');
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = 'message ' + type;
+      setTimeout(() => { message.textContent = ''; message.className = ''; }, 3000);
+    }
+
+    function encode() {
+      try {
+        const text = input.value;
+        if (!text) {
+          showMessage('Please enter some text', 'error');
+          return;
+        }
+        let encoded;
+        if (encodeAll.checked) {
+          // Encode all characters
+          encoded = encodeURIComponent(text);
+        } else {
+          // Only encode unsafe characters
+          encoded = encodeURI(text);
+        }
+        output.textContent = encoded;
+        showMessage('Encoded successfully!', 'success');
+      } catch (e) {
+        showMessage('Error encoding: ' + e.message, 'error');
+      }
+    }
+
+    function decode() {
+      try {
+        const text = input.value.trim();
+        if (!text) {
+          showMessage('Please enter a URL to decode', 'error');
+          return;
+        }
+        const decoded = decodeURIComponent(text);
+        output.textContent = decoded;
+        showMessage('Decoded successfully!', 'success');
+      } catch (e) {
+        showMessage('Invalid URL encoding', 'error');
+      }
+    }
+
+    function clearAll() {
+      input.value = '';
+      output.textContent = '';
+      message.textContent = '';
+    }
+  </script>
+</body>
+</html>

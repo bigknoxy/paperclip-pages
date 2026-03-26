@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Developer Tools | Paperclip</title>
+  <meta name="description" content="Free developer tools and utilities. Base64 encoder/decoder, URL encoder, JSON formatter, and more. Fast, private, no ads." />
+  <meta name="keywords" content="developer tools, base64 encoder, url encoder, json formatter, programming utilities" />
+  <meta name="author" content="Paperclip" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;color-scheme:dark}
+    *{box-sizing:border-box}
+    html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+    .logo{font-weight:700;font-size:1.2em;color:var(--accent)}
+    nav{display:flex;gap:16px}
+    nav a{color:var(--muted);text-decoration:none;font-size:14px}
+    nav a:hover{color:var(--text)}
+    .container{max-width:1200px;margin:0 auto;padding:24px}
+    h1{font-size:2em;margin:0 0 8px 0}
+    .subtitle{color:var(--muted);margin-bottom:32px}
+    .tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+    .tool-card{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;transition:transform .2s,border-color .2s}
+    .tool-card:hover{transform:translateY(-2px);border-color:var(--accent)}
+    .tool-card h3{margin:0 0 12px 0;color:var(--accent)}
+    .tool-card p{margin:0 0 16px 0;color:var(--muted);font-size:14px;line-height:1.5}
+    .tool-link{display:inline-block;padding:10px 18px;background:var(--accent);color:#012;text-decoration:none;border-radius:8px;font-weight:600;font-size:14px}
+    .tool-link:hover{opacity:.9}
+    footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:60px}
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo">← Paperclip</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/demo">Demo</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Developer Tools</h1>
+    <p class="subtitle">Free, fast, and privacy-focused utilities for everyday development tasks. No ads, no tracking.</p>
+
+    <div class="tools-grid">
+      <div class="tool-card">
+        <h3>Base64 Encoder/Decoder</h3>
+        <p>Encode and decode text to Base64 format. Useful for data encoding, email attachments, and web APIs.</p>
+        <a href="/tools/base64" class="tool-link">Open Tool</a>
+      </div>
+
+      <div class="tool-card">
+        <h3>URL Encoder/Decoder</h3>
+        <p>Encode special characters for URLs or decode percent-encoded strings. Essential for web development.</p>
+        <a href="/tools/url-encoder" class="tool-link">Open Tool</a>
+      </div>
+
+      <div class="tool-card">
+        <h3>JSON Formatter</h3>
+        <p>Validate, format, and beautify JSON data. Makes debugging APIs and reading JSON responses easier.</p>
+        <a href="/tools/json-formatter" class="tool-link">Open Tool</a>
+      </div>
+
+      <div class="tool-card">
+        <h3>Hash Generator</h3>
+        <p>Generate MD5, SHA-1, and SHA-256 hashes from text. Useful for checksums and data verification.</p>
+        <a href="/tools/hash" class="tool-link">Open Tool</a>
+      </div>
+
+      <div class="tool-card">
+        <h3>Word/Character Counter</h3>
+        <p>Count words, characters, lines, and paragraphs in your text. Simple but essential for writers.</p>
+        <a href="/tools/word-counter" class="tool-link">Open Tool</a>
+      </div>
+
+      <div class="tool-card">
+        <h3>Color Converter</h3>
+        <p>Convert between HEX, RGB, and HSL color formats. Includes color picker and palette suggestions.</p>
+        <a href="/tools/color" class="tool-link">Open Tool</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Made with minimal code • Free forever • No tracking</p>
+  </footer>
+</body>
+</html>
