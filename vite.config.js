@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/gh-pages/',
+  base: '/paperclip-pages/',
   publicDir: 'public',
   build: {
     outDir: 'dist',
