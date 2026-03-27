@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Readability Analyzer | Flesch-Kincaid Score | Free Tool | Paperclip</title>
+<meta name="description" content="Free readability analyzer tool. Check Flesch-Kincaid reading ease score, grade level, and sentence complexity. Optimize your content for your target audience. Perfect for bloggers and content writers." />
+<meta name="keywords" content="readability analyzer, flesch kincaid, reading ease score, content optimization, writing tools, readability grade" />
+<meta name="author" content="Paperclip" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/readability/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--border:rgba(255,255,255,0.08);--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+.logo{font-weight:700;font-size:1.2em;color:var(--accent);text-decoration:none}
+nav{display:flex;gap:16px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--text)}
+.container{max-width:1000px;margin:0 auto;padding:24px}
+h1{font-size:2em;margin:0 0 8px 0}
+.subtitle{color:var(--muted);margin-bottom:24px}
+.main-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px}
+.textarea-label{display:block;color:var(--muted);font-size:14px;margin-bottom:8px}
+textarea{width:100%;min-height:250px;padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:monospace;font-size:14px;resize:vertical}
+textarea:focus{outline:none;border-color:var(--accent)}
+.button-row{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+.btn{padding:10px 20px;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s}
+.btn-primary{background:var(--accent);color:#012}
+.btn-secondary{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border)}
+.btn:hover{opacity:.9}
+.score-section{margin-top:32px}
+.score-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+.score-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:20px;text-align:center}
+.score-value{font-size:3em;font-weight:700;margin:0;line-height:1}
+.score-label{color:var(--muted);font-size:14px;margin-top:8px}
+.score-bar{height:8px;background:var(--border);border-radius:4px;margin-top:12px;overflow:hidden}
+.score-fill{height:100%;border-radius:4px;transition:width .3s}
+.score-card.good .score-value{color:var(--success)}
+.score-card.good .score-fill{background:var(--success)}
+.score-card.warning .score-value{color:var(--warning)}
+.score-card.warning .score-fill{background:var(--warning)}
+.score-card.danger .score-value{color:var(--danger)}
+.score-card.danger .score-fill{background:var(--danger)}
+.reading-level{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-top:20px}
+.level-indicator{display:flex;align-items:center;gap:12px;margin-top:12px}
+.level-bar{flex:1;height:12px;background:linear-gradient(90deg,var(--danger),var(--warning),var(--success));border-radius:6px;position:relative}
+.level-marker{position:absolute;width:4px;height:20px;background:var(--text);border-radius:2px;top:50%;transform:translate(-50%,-50%);transition:left .3s}
+.level-labels{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-top:4px}
+.interpretation{margin-top:24px}
+.interpretation h3{margin:0 0 16px 0;font-size:1.1em}
+.tip-box{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:8px;padding:16px;margin-top:16px}
+.tip-box h4{margin:0 0 8px 0;color:var(--success)}
+.tip-box ul{margin:0;padding-left:20px;color:var(--muted);line-height:1.8}
+.seo-content{margin-top:40px;padding-top:40px;border-top:1px solid var(--border)}
+.seo-content h2{font-size:1.5em;margin-bottom:16px}
+.seo-content h3{font-size:1.2em;margin:24px 0 12px 0;color:var(--accent)}
+.seo-content p{line-height:1.7;color:var(--muted)}
+.seo-content ul{padding-left:20px;line-height:1.8;color:var(--muted)}
+table{width:100%;border-collapse:collapse;margin:16px 0}
+th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--muted);font-weight:600;font-size:13px}
+.cta-section{background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(6,182,212,0.05));border:1px solid rgba(6,182,212,0.2);border-radius:12px;padding:24px;margin-top:32px;text-align:center}
+.cta-section h3{margin:0 0 12px 0}
+.cta-section p{margin:0 0 16px 0;color:var(--muted)}
+.cta-button{display:inline-block;padding:12px 24px;background:var(--accent);color:#012;text-decoration:none;border-radius:8px;font-weight:600}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:60px}
+</style>
+</head>
+<body>
+<header>
+<a href="/" class="logo">← Paperclip</a>
+<nav>
+<a href="/tools/">Tools</a>
+<a href="/">Home</a>
+</nav>
+</header>
+
+<div class="container">
+<h1>Readability Analyzer</h1>
+<p class="subtitle">Check your content's readability with Flesch-Kincaid scores. Optimize for your target audience and improve SEO.</p>
+
+<div class="main-card">
+<label class="textarea-label">Paste your text here:</label>
+<textarea id="text-input" placeholder="Paste your blog post, article, or any text to analyze its readability..."></textarea>
+<div class="button-row">
+<button class="btn btn-primary" onclick="analyzeReadability()">Analyze Readability</button>
+<button class="btn btn-secondary" onclick="clearText()">Clear</button>
+</div>
+</div>
+
+<div class="score-section" id="results" style="display:none">
+<h3>Readability Scores</h3>
+<div class="score-grid">
+<div class="score-card" id="flesch-card">
+<div class="score-value" id="flesch-score">--</div>
+<div class="score-label">Flesch Reading Ease</div>
+<div class="score-bar"><div class="score-fill" id="flesch-bar"></div></div>
+</div>
+<div class="score-card" id="kincaid-card">
+<div class="score-value" id="kincaid-score">--</div>
+<div class="score-label">Flesch-Kincaid Grade</div>
+<div class="score-bar"><div class="score-fill" id="kincaid-bar"></div></div>
+</div>
+<div class="score-card">
+<div class="score-value" id="avg-words">--</div>
+<div class="score-label">Avg Words/Sentence</div>
+</div>
+<div class="score-card">
+<div class="score-value" id="avg-syllables">--</div>
+<div class="score-label">Avg Syllables/Word</div>
+</div>
+</div>
+
+<div class="reading-level">
+<h4>Reading Level</h4>
+<div class="level-indicator">
+<span>Very Easy</span>
+<div class="level-bar">
+<div class="level-marker" id="level-marker"></div>
+</div>
+<span>Very Difficult</span>
+</div>
+<div class="level-labels">
+<span>Grade 0-4</span>
+<span>Grade 5-8</span>
+<span>Grade 9-12</span>
+<span>College+</span>
+</div>
+</div>
+</div>
+
+<div class="interpretation" id="interpretation" style="display:none">
+<h3>What This Means</h3>
+<p id="interpretation-text"></p>
+<div class="tip-box" id="tips">
+<h4>Tips to Improve</h4>
+<ul id="tips-list"></ul>
+</div>
+</div>
+
+<div class="cta-section">
+<h3>Need Help Writing Better Content?</h3>
+<p>Discover the best AI writing tools that can help you create readable, engaging content faster. Compare top-rated tools.</p>
+<a href="/content/best-ai-writing-tools-2026.html" class="cta-button">See AI Writing Tools →</a>
+</div>
+
+<div class="seo-content">
+<h2>Why Readability Matters</h2>
+<p>Readability directly impacts how well your content performs. When readers can easily understand your writing, they stay engaged longer, share your content more, and Google rewards you with better rankings.</p>
+
+<h3>Flesch Reading Ease Score</h3>
+<p>The Flesch Reading Ease test measures how easy your text is to read. Higher scores mean easier reading:</p>
+<table>
+<tr><th>Score</th><th>Reading Level</th><th>Best For</th></tr>
+<tr><td>90-100</td><td>Very Easy (5th grade)</td><td>General public, social media</td></tr>
+<tr><td>80-89</td><td>Easy (6th grade)</td><td>Consumer content, blogs</td></tr>
+<tr><td>70-79</td><td>Fairly Easy (7th grade)</td><td>Popular magazines</td></tr>
+<tr><td>60-69</td><td>Standard (8-9th grade)</td><td>General articles</td></tr>
+<tr><td>50-59</td><td>Fairly Difficult (10-12th)</td><td>Technical content</td></tr>
+<tr><td>30-49</td><td>Difficult (College level)</td><td>Academic papers</td></tr>
+<tr><td>0-29</td><td>Very Difficult (College+)</td><td>Scientific papers</td></tr>
+</table>
+
+<h3>Flesch-Kincaid Grade Level</h3>
+<p>This score shows the U.S. school grade level needed to understand your text. For most web content:</p>
+<ul>
+<li><strong>Blogs & articles:</strong> Target 7-8th grade (ages 12-14)</li>
+<li><strong>Product descriptions:</strong> 6-8th grade for broad appeal</li>
+<li><strong>Technical docs:</strong> 10-12th grade depending on audience</li>
+<li><strong>Academic content:</strong> College level is appropriate</li>
+</ul>
+
+<h3>How to Improve Readability</h3>
+<ul>
+<li><strong>Use shorter sentences</strong> - Break long sentences into two</li>
+<li><strong>Choose simple words</strong> - "Use" instead of "utilize"</li>
+<li><strong>Avoid jargon</strong> - Explain technical terms</li>
+<li><strong>Use active voice</strong> - "The dog bit the man" not "The man was bitten"</li>
+<li><strong>Write for your audience</strong> - Match complexity to readers</li>
+<li><strong>Use bullet points</strong> - Break up dense paragraphs</li>
+</ul>
+
+<h3>SEO Benefits</h3>
+<p>Google's algorithms favor content that users engage with. Readable content:</p>
+<ul>
+<li>Reduces bounce rate (readers stay longer)</li>
+<li>Increases time on page</li>
+<li>Improves sharing and backlinks</li>
+<li>Works better with voice search</li>
+<li>Reaches wider audiences</li>
+</ul>
+</div>
+</div>
+
+<footer>
+<p>Made with minimal code • Free forever • No tracking</p>
+</footer>
+
+<script>
+const textarea = document.getElementById('text-input');
+
+function countSyllables(word) {
+word = word.toLowerCase().replace(/[^a-z]/g, '');
+if (word.length <= 3) return 1;
+word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '');
+word = word.replace(/^y/, '');
+const match = word.match(/[aeiouy]{1,2}/g);
+return match ? match.length : 1;
+}
+
+function analyzeReadability() {
+const text = textarea.value.trim();
+if (!text) return;
+
+const sentences = text.split(/[.!?]+/).filter(s => s.trim()).length || 1;
+const words = text.trim().split(/\s+/).filter(w => w).length || 1;
+const syllables = text.split(/\s+/).reduce((sum, word) => sum + countSyllables(word), 0);
+
+const avgWordsPerSentence = words / sentences;
+const avgSyllablesPerWord = syllables / words;
+
+const fleschScore = 206.835 - (1.015 * avgWordsPerSentence) - (84.6 * avgSyllablesPerWord);
+const kincaidGrade = (0.39 * avgWordsPerSentence) + (11.8 * avgSyllablesPerWord) - 15.59;
+
+const clampedFlesch = Math.max(0, Math.min(100, fleschScore));
+const clampedKincaid = Math.max(0, kincaidGrade);
+
+document.getElementById('flesch-score').textContent = Math.round(clampedFlesch);
+document.getElementById('kincaid-score').textContent = Math.round(clampedKincaid) + (clampedKincaid < 1 ? '' : Math.round(clampedKincaid) === 1 ? 'st' : Math.round(clampedKincaid) === 2 ? 'nd' : Math.round(clampedKincaid) === 3 ? 'rd' : 'th');
+document.getElementById('avg-words').textContent = avgWordsPerSentence.toFixed(1);
+document.getElementById('avg-syllables').textContent = avgSyllablesPerWord.toFixed(1);
+
+document.getElementById('flesch-bar').style.width = clampedFlesch + '%';
+document.getElementById('kincaid-bar').style.width = Math.min(100, (clampedKincaid / 16) * 100) + '%';
+
+const fleschCard = document.getElementById('flesch-card');
+const kincaidCard = document.getElementById('kincaid-card');
+
+fleschCard.className = 'score-card ' + (clampedFlesch >= 60 ? 'good' : clampedFlesch >= 30 ? 'warning' : 'danger');
+kincaidCard.className = 'score-card ' + (clampedKincaid <= 10 ? 'good' : clampedKincaid <= 14 ? 'warning' : 'danger');
+
+document.getElementById('level-marker').style.left = Math.min(100, (clampedKincaid / 16) * 100) + '%';
+
+document.getElementById('results').style.display = 'block';
+
+document.getElementById('interpretation').style.display = 'block';
+document.getElementById('interpretation-text').textContent = getInterpretation(clampedFlesch, clampedKincaid);
+document.getElementById('tips-list').innerHTML = getTips(clampedFlesch);
+}
+
+function getInterpretation(flesch, kincaid) {
+if (flesch >= 80) return `Your content is very easy to read (score: ${Math.round(flesch)}). It should be accessible to a broad audience including those with limited English proficiency. Great for blog posts, social media, and consumer content.`;
+if (flesch >= 60) return `Your content has standard readability (score: ${Math.round(flesch)}). Suitable for most web content and general audiences. This is a good target for most blog posts and articles.`;
+if (flesch >= 30) return `Your content is fairly difficult to read (score: ${Math.round(flesch)}). Best suited for technical audiences or academic content. Consider simplifying for broader appeal.`;
+return `Your content is very difficult to read (score: ${Math.round(flesch)}). Appropriate for specialized academic or scientific audiences only.`;
+}
+
+function getTips(flesch) {
+const tips = [];
+if (flesch < 60) {
+tips.push('Break long sentences into shorter ones (aim for 15-20 words max)');
+tips.push('Replace complex words with simpler alternatives');
+tips.push('Use active voice instead of passive voice');
+}
+if (flesch < 30) {
+tips.push('Add more transition words to improve flow');
+tips.push('Use bullet points to break up dense information');
+tips.push('Define technical terms when first used');
+}
+if (tips.length === 0) {
+tips.push('Your readability is good! Keep using short sentences and simple words.');
+tips.push('Consider your audience - adjust complexity based on who will read it.');
+}
+return tips.map(t => `<li>${t}</li>`).join('');
+}
+
+function clearText() {
+textarea.value = '';
+document.getElementById('results').style.display = 'none';
+document.getElementById('interpretation').style.display = 'none';
+textarea.focus();
+}
+</script>
+</body>
+</html>

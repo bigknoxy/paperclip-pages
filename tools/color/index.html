@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Color Converter | HEX, RGB, HSL | Free Online Tool | Paperclip</title>
+<meta name="description" content="Free color converter tool. Convert between HEX, RGB, and HSL color formats. Includes color picker, palette suggestions, and CSS code generation. Perfect for web designers and developers." />
+<meta name="keywords" content="color converter, hex to rgb, rgb to hex, hsl converter, color picker, web design tools, css colors" />
+<meta name="author" content="Paperclip" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/color/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--border:rgba(255,255,255,0.08);color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+.logo{font-weight:700;font-size:1.2em;color:var(--accent);text-decoration:none}
+nav{display:flex;gap:16px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--text)}
+.container{max-width:900px;margin:0 auto;padding:24px}
+h1{font-size:2em;margin:0 0 8px 0}
+.subtitle{color:var(--muted);margin-bottom:24px}
+.main-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px}
+.color-preview{height:120px;border-radius:8px;margin-bottom:24px;border:1px solid var(--border);transition:background-color .2s}
+.input-group{margin-bottom:16px}
+.input-group label{display:block;color:var(--muted);font-size:13px;margin-bottom:6px;font-weight:500}
+.input-group input{width:100%;padding:12px 16px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:monospace;font-size:14px}
+.input-group input:focus{outline:none;border-color:var(--accent)}
+.input-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+@media(max-width:600px){.input-row{grid-template-columns:1fr}}
+.button-row{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap}
+.btn{padding:10px 20px;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s}
+.btn-primary{background:var(--accent);color:#012}
+.btn-secondary{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border)}
+.btn:hover{opacity:.9}
+.palettes{margin-top:32px}
+.palettes h3{margin:0 0 16px 0;font-size:1.1em}
+.palette{display:flex;gap:8px;margin-bottom:16px}
+.palette-color{flex:1;height:60px;border-radius:8px;cursor:pointer;position:relative;transition:transform .2s}
+.palette-color:hover{transform:scale(1.05)}
+.palette-color::after{content:attr(data-hex);position:absolute;bottom:4px;left:4px;font-size:10px;background:rgba(0,0,0,0.7);color:#fff;padding:2px 6px;border-radius:4px;opacity:0;transition:opacity .2s}
+.palette-color:hover::after{opacity:1}
+.css-output{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:16px;margin-top:16px}
+.css-output code{font-family:monospace;font-size:13px;color:var(--text);display:block;margin:8px 0}
+.seo-content{margin-top:40px;padding-top:40px;border-top:1px solid var(--border)}
+.seo-content h2{font-size:1.5em;margin-bottom:16px}
+.seo-content h3{font-size:1.2em;margin:24px 0 12px 0;color:var(--accent)}
+.seo-content p{line-height:1.7;color:var(--muted)}
+.seo-content ul{padding-left:20px;line-height:1.8;color:var(--muted)}
+.cta-section{background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(6,182,212,0.05));border:1px solid rgba(6,182,212,0.2);border-radius:12px;padding:24px;margin-top:32px;text-align:center}
+.cta-section h3{margin:0 0 12px 0}
+.cta-section p{margin:0 0 16px 0;color:var(--muted)}
+.cta-button{display:inline-block;padding:12px 24px;background:var(--accent);color:#012;text-decoration:none;border-radius:8px;font-weight:600}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:60px}
+</style>
+</head>
+<body>
+<header>
+<a href="/" class="logo">← Paperclip</a>
+<nav>
+<a href="/tools/">Tools</a>
+<a href="/">Home</a>
+</nav>
+</header>
+
+<div class="container">
+<h1>Color Converter</h1>
+<p class="subtitle">Convert between HEX, RGB, and HSL color formats. Generate color palettes and CSS code instantly.</p>
+
+<div class="main-card">
+<div class="color-preview" id="color-preview" style="background-color:#06b6d4"></div>
+
+<div class="input-row">
+<div class="input-group">
+<label>HEX</label>
+<input type="text" id="hex-input" placeholder="#06b6d4" value="#06b6d4" maxlength="7">
+</div>
+<div class="input-group">
+<label>RGB</label>
+<input type="text" id="rgb-input" placeholder="rgb(6, 182, 212)" value="rgb(6, 182, 212)">
+</div>
+<div class="input-group">
+<label>HSL</label>
+<input type="text" id="hsl-input" placeholder="hsl(187, 94%, 43%)" value="hsl(187, 94%, 43%)">
+</div>
+</div>
+
+<div class="button-row">
+<button class="btn btn-secondary" onclick="randomColor()">Random Color</button>
+<button class="btn btn-secondary" onclick="copyHex()">Copy HEX</button>
+<button class="btn btn-secondary" onclick="copyCSS()">Copy CSS</button>
+</div>
+
+<div class="css-output">
+<strong>CSS Code:</strong>
+<code id="css-output">color: #06b6d4;</code>
+<code id="bg-output">background-color: rgb(6, 182, 212);</code>
+</div>
+</div>
+
+<div class="palettes">
+<h3>Complementary Palette</h3>
+<div class="palette" id="complementary"></div>
+
+<h3>Triadic Palette</h3>
+<div class="palette" id="triadic"></div>
+
+<h3>Analogous Palette</h3>
+<div class="palette" id="analogous"></div>
+</div>
+
+<div class="cta-section">
+<h3>Creating Content with AI?</h3>
+<p>Discover the best AI writing tools to speed up your content creation. Compare features, pricing, and find the perfect tool.</p>
+<a href="/content/best-ai-writing-tools-2026.html" class="cta-button">See AI Writing Tools →</a>
+</div>
+
+<div class="seo-content">
+<h2>Why Use Our Color Converter?</h2>
+<p>Our free color converter tool is essential for web designers, developers, and digital creators who work with colors. Whether you're converting between HEX and RGB for CSS, or exploring HSL for more intuitive color manipulation, this tool makes it instant and easy.</p>
+
+<h3>Features</h3>
+<ul>
+<li><strong>Real-time conversion</strong> - Edit any format, others update automatically</li>
+<li><strong>Visual preview</strong> - See your color instantly</li>
+<li><strong>Color palettes</strong> - Generate complementary, triadic, and analogous palettes</li>
+<li><strong>CSS code</strong> - Copy-ready color and background-color CSS</li>
+<li><strong>One-click copy</strong> - Copy HEX or full CSS with one click</li>
+<li><strong>Random colors</strong> - Generate inspiration with random colors</li>
+</ul>
+
+<h3>Color Format Guide</h3>
+<ul>
+<li><strong>HEX</strong> - Six-digit codes like #06b6d4. Most common in web design.</li>
+<li><strong>RGB</strong> - Red, Green, Blue values (0-255). Used in digital screens.</li>
+<li><strong>HSL</strong> - Hue, Saturation, Lightness. Intuitive for color adjustments.</li>
+</ul>
+
+<h3>Common Use Cases</h3>
+<ul>
+<li>Converting brand colors between design tools</li>
+<li>Creating CSS color variables</li>
+<li>Finding complementary colors for designs</li>
+<li>Generating accessible color palettes</li>
+<li>Matching colors from images</li>
+</ul>
+
+<h3>Web Design Tips</h3>
+<p>When choosing colors for web projects:</p>
+<ul>
+<li>Ensure sufficient contrast for accessibility (WCAG guidelines)</li>
+<li>Use complementary colors for call-to-action buttons</li>
+<li>Limit your palette to 3-5 main colors for consistency</li>
+<li>Test colors on both light and dark backgrounds</li>
+<li>Consider color psychology for your target audience</li>
+</ul>
+</div>
+</div>
+
+<footer>
+<p>Made with minimal code • Free forever • No tracking</p>
+</footer>
+
+<script>
+const hexInput = document.getElementById('hex-input');
+const rgbInput = document.getElementById('rgb-input');
+const hslInput = document.getElementById('hsl-input');
+const preview = document.getElementById('color-preview');
+const cssOutput = document.getElementById('css-output');
+const bgOutput = document.getElementById('bg-output');
+
+function hexToRgb(hex) {
+const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+return result ? {
+r: parseInt(result[1], 16),
+g: parseInt(result[2], 16),
+b: parseInt(result[3], 16)
+} : null;
+}
+
+function rgbToHex(r, g, b) {
+return '#' + [r, g, b].map(x => {
+const hex = Math.round(x).toString(16);
+return hex.length === 1 ? '0' + hex : hex;
+}).join('');
+}
+
+function rgbToHsl(r, g, b) {
+r /= 255; g /= 255; b /= 255;
+const max = Math.max(r, g, b), min = Math.min(r, g, b);
+let h, s, l = (max + min) / 2;
+
+if (max === min) {
+h = s = 0;
+} else {
+const d = max - min;
+s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+switch (max) {
+case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+case g: h = (b - r) / d + 2; break;
+case b: h = (r - g) / d + 4; break;
+}
+h /= 6;
+}
+
+return {
+h: Math.round(h * 360),
+s: Math.round(s * 100),
+l: Math.round(l * 100)
+};
+}
+
+function hslToRgb(h, s, l) {
+h /= 360; s /= 100; l /= 100;
+let r, g, b;
+
+if (s === 0) {
+r = g = b = l;
+} else {
+const hue2rgb = (p, q, t) => {
+if (t < 0) t += 1;
+if (t > 1) t -= 1;
+if (t < 1/6) return p + (q - p) * 6 * t;
+if (t < 1/2) return q;
+if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+return p;
+};
+const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+const p = 2 * l - q;
+r = hue2rgb(p, q, h + 1/3);
+g = hue2rgb(p, q, h);
+b = hue2rgb(p, q, h - 1/3);
+}
+
+return {
+r: Math.round(r * 255),
+g: Math.round(g * 255),
+b: Math.round(b * 255)
+};
+}
+
+function updateFromHex() {
+const hex = hexInput.value.trim();
+if (!/^#[0-9A-F]{6}$/i.test(hex)) return;
+
+const rgb = hexToRgb(hex);
+if (!rgb) return;
+
+const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+
+rgbInput.value = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+hslInput.value = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+updatePreview(hex, rgb);
+updatePalettes(hsl);
+}
+
+function updateFromRgb() {
+const match = rgbInput.value.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/i);
+if (!match) return;
+
+const r = parseInt(match[1]), g = parseInt(match[2]), b = parseInt(match[3]);
+const hex = rgbToHex(r, g, b);
+const hsl = rgbToHsl(r, g, b);
+
+hexInput.value = hex;
+hslInput.value = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+updatePreview(hex, {r, g, b});
+updatePalettes(hsl);
+}
+
+function updateFromHsl() {
+const match = hslInput.value.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/i);
+if (!match) return;
+
+const h = parseInt(match[1]), s = parseInt(match[2]), l = parseInt(match[3]);
+const rgb = hslToRgb(h, s, l);
+const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+
+hexInput.value = hex;
+rgbInput.value = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+updatePreview(hex, rgb);
+updatePalettes({h, s, l});
+}
+
+function updatePreview(hex, rgb) {
+preview.style.backgroundColor = hex;
+cssOutput.textContent = `color: ${hex};`;
+bgOutput.textContent = `background-color: rgb(${rgb.r}, ${rgb.g}, ${rgb.b});`;
+}
+
+function updatePalettes(hsl) {
+const comp = [(hsl.h + 180) % 360, hsl.s, hsl.l];
+const triadic1 = [(hsl.h + 120) % 360, hsl.s, hsl.l];
+const triadic2 = [(hsl.h + 240) % 360, hsl.s, hsl.l];
+const analogous1 = [(hsl.h - 30 + 360) % 360, hsl.s, hsl.l];
+const analogous2 = [(hsl.h + 30) % 360, hsl.s, hsl.l];
+
+renderPalette('complementary', [hsl, {h: comp[0], s: comp[1], l: comp[2]}]);
+renderPalette('triadic', [hsl, {h: triadic1[0], s: triadic1[1], l: triadic1[2]}, {h: triadic2[0], s: triadic2[1], l: triadic2[2]}]);
+renderPalette('analogous', [{h: analogous1[0], s: analogous1[1], l: analogous1[2]}, hsl, {h: analogous2[0], s: analogous2[1], l: analogous2[2]}]);
+}
+
+function renderPalette(id, hsls) {
+const container = document.getElementById(id);
+container.innerHTML = '';
+hsls.forEach(hsl => {
+const rgb = hslToRgb(hsl.h, hsl.s, hsl.l);
+const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+const div = document.createElement('div');
+div.className = 'palette-color';
+div.style.backgroundColor = hex;
+div.setAttribute('data-hex', hex);
+div.onclick = () => {
+hexInput.value = hex;
+updateFromHex();
+};
+container.appendChild(div);
+});
+}
+
+function randomColor() {
+const r = Math.floor(Math.random() * 256);
+const g = Math.floor(Math.random() * 256);
+const b = Math.floor(Math.random() * 256);
+const hex = rgbToHex(r, g, b);
+hexInput.value = hex;
+updateFromHex();
+}
+
+function copyHex() {
+navigator.clipboard.writeText(hexInput.value);
+}
+
+function copyCSS() {
+navigator.clipboard.writeText(cssOutput.textContent + '\n' + bgOutput.textContent);
+}
+
+hexInput.addEventListener('input', updateFromHex);
+rgbInput.addEventListener('input', updateFromRgb);
+hslInput.addEventListener('input', updateFromHsl);
+</script>
+</body>
+</html>
