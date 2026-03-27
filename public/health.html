@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Health Check</title>
+</head>
+<body>
+  <pre id="health"></pre>
+  <script>
+    document.getElementById('health').textContent = JSON.stringify({
+      status: "ok",
+      timestamp: new Date().toISOString(),
+      service: "paperclip-gh-pages"
+    }, null, 2);
+  </script>
+</body>
+</html>

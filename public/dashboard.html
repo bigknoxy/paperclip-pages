@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Metrics Dashboard | Paperclip</title>
+  <meta name="robots" content="noindex" />
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;color-scheme:dark}
+    body{font-family:system-ui,Arial,sans-serif;background:var(--bg);color:#e6eef3;margin:0;padding:24px;max-width:900px;margin:0 auto}
+    h1{margin:0 0 16px 0}
+    .card{background:var(--card);border:1px solid rgba(255,255,255,0.04);padding:20px;border-radius:8px;margin-bottom:16px}
+    h2{margin:0 0 12px 0;font-size:18px}
+    .metric{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+    .metric:last-child{border-bottom:none}
+    .label{color:var(--muted)}
+    .value{font-family:monospace}
+    a{color:var(--accent)}
+    .status{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px}
+    .status.ok{background:#22c55e}
+    .status.warn{background:#eab308}
+    .status.error{background:#ef4444}
+  </style>
+</head>
+<body>
+  <h1>Metrics Dashboard</h1>
+  
+  <div class="card">
+    <h2>Infrastructure Status</h2>
+    <div class="metric">
+      <span class="label"><span class="status ok"></span>GitHub Pages</span>
+      <span class="value">Active</span>
+    </div>
+    <div class="metric">
+      <span class="label"><span class="status warn"></span>Google Analytics 4</span>
+      <span class="value">Pending Setup</span>
+    </div>
+    <div class="metric">
+      <span class="label"><span class="status warn"></span>Search Console</span>
+      <span class="value">Pending Verification</span>
+    </div>
+    <div class="metric">
+      <span class="label"><span class="status warn"></span>Uptime Monitoring</span>
+      <span class="value">Configure UptimeRobot</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Quick Links</h2>
+    <div class="metric"><a href="https://analytics.google.com/">Google Analytics 4</a></div>
+    <div class="metric"><a href="https://search.google.com/search-console">Search Console</a></div>
+    <div class="metric"><a href="https://uptimerobot.com/">UptimeRobot</a></div>
+    <div class="metric"><a href="https://github.com/bigknoxy/paperclip-pages/actions">GitHub Actions</a></div>
+    <div class="metric"><a href="health.html">Health Check Endpoint</a></div>
+  </div>
+
+  <div class="card">
+    <h2>Setup Checklist</h2>
+    <div class="metric">
+      <span class="label">Google Analytics 4 Property</span>
+      <span class="value"><a href="../docs/INFRASTRUCTURE.md#google-analytics-4">View Docs</a></span>
+    </div>
+    <div class="metric">
+      <span class="label">Search Console Verification</span>
+      <span class="value"><a href="../docs/INFRASTRUCTURE.md#google-search-console">View Docs</a></span>
+    </div>
+    <div class="metric">
+      <span class="label">UptimeRobot Monitor</span>
+      <span class="value"><a href="../docs/INFRASTRUCTURE.md#uptimerobot-setup-free-tier">View Docs</a></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Site Info</h2>
+    <div class="metric">
+      <span class="label">Site URL</span>
+      <span class="value"><a href="/">bigknoxy.github.io/paperclip-pages</a></span>
+    </div>
+    <div class="metric">
+      <span class="label">Health Endpoint</span>
+      <span class="value"><a href="health.html">health.html</a></span>
+    </div>
+    <div class="metric">
+      <span class="label">Last Deployed</span>
+      <span class="value" id="deployTime">Unknown</span>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('deployTime').textContent = new Date().toLocaleString();
+  </script>
+</body>
+</html>

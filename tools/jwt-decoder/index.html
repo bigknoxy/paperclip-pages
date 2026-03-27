@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>JWT Decoder & Inspector | Paperclip</title>
+<meta name="description" content="Free online JWT decoder. Decode and inspect JSON Web Tokens. See header, payload, and signature. Fast, private, no ads." />
+<meta name="keywords" content="jwt decoder, jwt decoder online, jwt token decoder, json web token decoder, jwt inspector" />
+<meta name="author" content="Paperclip" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/jwt-decoder/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--error:#ef4444;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+.logo{font-weight:700;font-size:1.2em;color:var(--accent)}
+nav{display:flex;gap:16px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--text)}
+.container{max-width:1000px;margin:0 auto;padding:24px}
+h1{font-size:1.8em;margin:0 0 8px 0}
+.subtitle{color:var(--muted);margin-bottom:24px}
+.tool-box{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin-bottom:20px}
+label{display:block;margin-bottom:8px;color:var(--muted);font-size:14px}
+textarea{width:100%;min-height:100px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;color:var(--text);font-family:monospace;font-size:13px;resize:vertical}
+textarea:focus{outline:none;border-color:var(--accent)}
+.button-group{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}
+button{padding:10px 20px;background:var(--accent);color:#012;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px}
+button:hover{opacity:.9}
+button.secondary{background:rgba(255,255,255,0.1);color:var(--text)}
+button.secondary:hover{background:rgba(255,255,255,0.15)}
+.status{margin-top:8px;padding:8px 12px;border-radius:6px;font-size:14px}
+.status.success{background:rgba(34,197,94,.1);color:var(--success)}
+.status.error{background:rgba(239,68,68,.1);color:var(--error)}
+.output-section{margin-top:20px}
+.output-box{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);border-radius:8px;padding:16px;margin-bottom:16px}
+.output-box h4{margin:0 0 12px 0;color:var(--accent);font-size:14px;text-transform:uppercase;letter-spacing:0.5px}
+.output-box pre{margin:0;font-family:monospace;font-size:13px;white-space:pre-wrap;word-break:break-all;color:var(--muted)}
+.output-box code{color:var(--text)}
+.jwt-part{padding:12px;margin-bottom:12px;border-radius:6px;font-family:monospace;font-size:12px;word-break:break-all}
+.jwt-header{background:rgba(251,191,36,0.1);border-left:3px solid #fbbf24}
+.jwt-payload{background:rgba(34,197,94,0.1);border-left:3px solid #22c55e}
+.jwt-signature{background:rgba(239,68,68,0.1);border-left:3px solid #ef4444}
+.jwt-label{font-size:11px;color:var(--muted);margin-bottom:4px;text-transform:uppercase}
+.jwt-claims{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.claim-row{display:flex;gap:8px;align-items:center;padding:8px;background:rgba(255,255,255,0.02);border-radius:4px}
+.claim-key{color:var(--accent);font-family:monospace;font-size:12px}
+.claim-value{color:var(--text);font-size:13px}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
+</style>
+</head>
+<body>
+<header>
+<a href="/" class="logo">← Paperclip</a>
+<nav>
+<a href="/">Home</a>
+<a href="/about.html">About</a>
+<a href="/tools/">Tools</a>
+</nav>
+</header>
+
+<div class="container">
+<h1>JWT Decoder & Inspector</h1>
+<p class="subtitle">Decode JSON Web Tokens and inspect the header, payload, and signature. All processing happens in your browser.</p>
+
+<div class="tool-box">
+<label for="input">JWT Token</label>
+<textarea id="input" placeholder="Paste your JWT token here (e.g., eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...)" spellcheck="false"></textarea>
+
+<div class="button-group">
+<button onclick="decode()">Decode JWT</button>
+<button class="secondary" onclick="clearAll()">Clear</button>
+</div>
+
+<div id="status"></div>
+</div>
+
+<div class="output-section" id="output" style="display:none">
+<div class="output-box">
+<h4>🔴 Header (Algorithm)</h4>
+<div id="header-content"></div>
+</div>
+
+<div class="output-box">
+<h4>🟢 Payload (Data)</h4>
+<div id="payload-content"></div>
+</div>
+
+<div class="output-box">
+<h4>🔵 Signature (Verification)</h4>
+<div class="jwt-signature">
+<div class="jwt-label">Signature Hash</div>
+<div id="signature-content"></div>
+</div>
+</div>
+</div>
+</div>
+
+<footer>
+<p>Made with minimal code • Free forever • No tracking</p>
+</footer>
+
+<script>
+const input = document.getElementById('input');
+const output = document.getElementById('output');
+const status = document.getElementById('status');
+
+function showStatus(text, type) {
+status.textContent = text;
+status.className = 'status ' + type;
+}
+
+function decode() {
+try {
+const token = input.value.trim();
+if (!token) {
+showStatus('Please enter a JWT token', 'error');
+output.style.display = 'none';
+return;
+}
+
+const parts = token.split('.');
+if (parts.length !== 3) {
+showStatus('Invalid JWT format. Expected 3 parts separated by dots.', 'error');
+output.style.display = 'none';
+return;
+}
+
+// Decode header
+const header = JSON.parse(atob(parts[0].replace(/-/g, '+').replace(/_/g, '/')));
+document.getElementById('header-content').innerHTML = `
+<div class="jwt-header">
+<div class="jwt-label">Decoded JSON</div>
+<code>${JSON.stringify(header, null, 2)}</code>
+</div>
+<div class="jwt-claims">
+${Object.entries(header).map(([key, value]) => `
+<div class="claim-row">
+<span class="claim-key">${key}:</span>
+<span class="claim-value">${value}</span>
+</div>
+`).join('')}
+</div>
+`;
+
+// Decode payload
+const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+let claimsHtml = '';
+const timeClaims = ['exp', 'iat', 'nbf', 'auth_time'];
+
+for (const [key, value] of Object.entries(payload)) {
+let displayValue = value;
+if (timeClaims.includes(key) && typeof value === 'number') {
+const date = new Date(value * 1000);
+displayValue = `${value} (${date.toLocaleString()})`;
+}
+claimsHtml += `
+<div class="claim-row">
+<span class="claim-key">${key}:</span>
+<span class="claim-value">${displayValue}</span>
+</div>
+`;
+}
+
+document.getElementById('payload-content').innerHTML = `
+<div class="jwt-payload">
+<div class="jwt-label">Decoded JSON</div>
+<code>${JSON.stringify(payload, null, 2)}</code>
+</div>
+<div class="jwt-claims">
+${claimsHtml}
+</div>
+`;
+
+// Show signature (can't decode, it's a hash)
+document.getElementById('signature-content').textContent = parts[2];
+
+output.style.display = 'block';
+showStatus('JWT decoded successfully!', 'success');
+
+} catch (e) {
+showStatus('Error decoding JWT: ' + e.message, 'error');
+output.style.display = 'none';
+}
+}
+
+function clearAll() {
+input.value = '';
+output.style.display = 'none';
+status.textContent = '';
+status.className = '';
+}
+
+// Auto-decode on paste
+input.addEventListener('paste', function() {
+setTimeout(decode, 100);
+});
+</script>
+</body>
+</html>
