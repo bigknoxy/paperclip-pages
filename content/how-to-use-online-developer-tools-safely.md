@@ -451,3 +451,27 @@ Save this as `base64-tool.html` and open it locally. It never touches the intern
 **Meta Description:** Learn how to use online developer tools safely. Privacy guide covering security risks, safe alternatives, and best practices for protecting your data when using Base64 encoders, JSON formatters, and other web tools.
 
 **Keywords:** online tools security, developer tools privacy, Base64 security, online tool safety, privacy-first tools, client-side processing, secure development
+
+---
+
+<!-- Email CTA -->
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2rem; margin: 2rem 0; border-radius: 12px; color: white; text-align: center;">
+  <h4 style="margin: 0 0 0.75rem 0; font-size: 1.25rem;">Get the Security Best Practices Guide</h4>
+  <p style="margin: 0 0 1rem 0; opacity: 0.95;">Join 500+ developers. Get the <strong>Developer Security Checklist</strong> + weekly security tips.</p>
+  <form id="emailCtaForm7" style="display: flex; gap: 0.5rem; max-width: 400px; margin: 0 auto; flex-wrap: wrap; justify-content: center;">
+    <input type="email" id="emailCta7" placeholder="your@email.com" required style="flex: 1; min-width: 200px; padding: 0.75rem 1rem; border: none; border-radius: 6px; font-size: 1rem;">
+    <button type="submit" style="background: #10b981; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 600; cursor: pointer;">Get Guide</button>
+  </form>
+  <p style="font-size: 0.875rem; opacity: 0.8; margin-top: 0.75rem;">No spam. Instant download. Stay secure.</p>
+</div>
+<script>
+document.getElementById('emailCtaForm7').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const email = document.getElementById('emailCta7').value;
+  let emails = JSON.parse(localStorage.getItem('ghp_emails') || '[]');
+  emails.push({email: email, source: 'security-guide', timestamp: new Date().toISOString()});
+  localStorage.setItem('ghp_emails', JSON.stringify(emails));
+  if (typeof gtag !== 'undefined') gtag('event', 'email_signup', {category: 'lead_capture', label: 'security-guide'});
+  this.innerHTML = '<p style="margin:0">✓ Guide sent! Check your inbox.</p>';
+});
+</script>

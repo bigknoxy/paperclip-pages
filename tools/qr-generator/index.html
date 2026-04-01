@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator - Free QR Code Creator Tool</title>
+    <meta name="description" content="Free online QR Code Generator. Create custom QR codes for URLs, text, email, phone, WiFi, and more. Download in PNG, SVG, or PDF.">
+    <meta name="keywords" content="QR code generator, free QR code, custom QR code, QR code maker, QR code creator">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="/" class="logo">Paperclip</a>
+            <div class="nav-links">
+                <a href="/tools/">Tools</a>
+                <a href="/content/">Blog</a>
+                <a href="/#about">About</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <h1>QR Code Generator</h1>
+            <p class="subtitle">Create custom QR codes instantly. Free, customizable, and ready to download.</p>
+
+            <div class="qr-generator">
+                <div class="input-section">
+                    <div class="type-tabs">
+                        <button class="tab-btn active" data-type="url">URL</button>
+                        <button class="tab-btn" data-type="text">Text</button>
+                        <button class="tab-btn" data-type="email">Email</button>
+                        <button class="tab-btn" data-type="phone">Phone</button>
+                        <button class="tab-btn" data-type="wifi">WiFi</button>
+                        <button class="tab-btn" data-type="vcard">Contact</button>
+                    </div>
+
+                    <div class="input-panel" id="urlPanel">
+                        <label>Website URL</label>
+                        <input type="url" id="urlInput" placeholder="https://example.com" value="https://">
+                    </div>
+
+                    <div class="input-panel hidden" id="textPanel">
+                        <label>Text Message</label>
+                        <textarea id="textInput" placeholder="Enter your text message..." rows="4"></textarea>
+                    </div>
+
+                    <div class="input-panel hidden" id="emailPanel">
+                        <label>Email Address</label>
+                        <input type="email" id="emailAddress" placeholder="name@example.com">
+                        <label>Subject (optional)</label>
+                        <input type="text" id="emailSubject" placeholder="Email subject">
+                        <label>Message (optional)</label>
+                        <textarea id="emailBody" placeholder="Email message..." rows="3"></textarea>
+                    </div>
+
+                    <div class="input-panel hidden" id="phonePanel">
+                        <label>Phone Number</label>
+                        <input type="tel" id="phoneInput" placeholder="+1 234 567 8900">
+                    </div>
+
+                    <div class="input-panel hidden" id="wifiPanel">
+                        <label>Network Name (SSID)</label>
+                        <input type="text" id="wifiSsid" placeholder="WiFi Network Name">
+                        <label>Password</label>
+                        <input type="text" id="wifiPassword" placeholder="WiFi Password">
+                        <label>Security Type</label>
+                        <select id="wifiSecurity">
+                            <option value="WPA">WPA/WPA2</option>
+                            <option value="WEP">WEP</option>
+                            <option value="nopass">No Password</option>
+                        </select>
+                    </div>
+
+                    <div class="input-panel hidden" id="vcardPanel">
+                        <label>Full Name</label>
+                        <input type="text" id="vcardName" placeholder="John Doe">
+                        <label>Phone</label>
+                        <input type="tel" id="vcardPhone" placeholder="+1 234 567 8900">
+                        <label>Email</label>
+                        <input type="email" id="vcardEmail" placeholder="john@example.com">
+                        <label>Organization</label>
+                        <input type="text" id="vcardOrg" placeholder="Company Name">
+                        <label>Website</label>
+                        <input type="url" id="vcardUrl" placeholder="https://example.com">
+                    </div>
+
+                    <div class="options-section">
+                        <h3>Customization Options</h3>
+                        <div class="options-grid">
+                            <div class="option-group">
+                                <label>Size (px)</label>
+                                <input type="range" id="qrSize" min="200" max="800" value="300" class="slider">
+                                <span class="slider-value">300px</span>
+                            </div>
+                            <div class="option-group">
+                                <label>Foreground Color</label>
+                                <div class="color-picker-wrapper">
+                                    <input type="color" id="qrColor" value="#000000">
+                                    <span class="color-value">#000000</span>
+                                </div>
+                            </div>
+                            <div class="option-group">
+                                <label>Background Color</label>
+                                <div class="color-picker-wrapper">
+                                    <input type="color" id="qrBgColor" value="#ffffff">
+                                    <span class="color-value">#ffffff</span>
+                                </div>
+                            </div>
+                            <div class="option-group">
+                                <label>Error Correction</label>
+                                <select id="qrErrorCorrection">
+                                    <option value="L">Low (7%)</option>
+                                    <option value="M" selected>Medium (15%)</option>
+                                    <option value="Q">Quartile (25%)</option>
+                                    <option value="H">High (30%)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="generate-btn" id="generateBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"/>
+                            <rect x="14" y="3" width="7" height="7"/>
+                            <rect x="14" y="14" width="7" height="7"/>
+                            <rect x="3" y="14" width="7" height="7"/>
+                        </svg>
+                        Generate QR Code
+                    </button>
+                </div>
+
+                <div class="preview-section">
+                    <div class="qr-preview" id="qrPreview">
+                        <div class="preview-placeholder">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="3" width="7" height="7"/>
+                                <rect x="14" y="3" width="7" height="7"/>
+                                <rect x="14" y="14" width="7" height="7"/>
+                                <rect x="3" y="14" width="7" height="7"/>
+                            </svg>
+                            <p>Your QR code will appear here</p>
+                            <span class="hint">Enter content and click Generate</span>
+                        </div>
+                    </div>
+                    <div class="download-options hidden" id="downloadOptions">
+                        <p class="download-hint">Free download: PNG (low-res)</p>
+                        <div class="download-buttons">
+                            <button class="download-btn" id="downloadPng">Download PNG</button>
+                            <button class="download-btn premium hidden" id="downloadSvg">Download SVG</button>
+                            <button class="download-btn premium hidden" id="downloadPdf">Download PDF</button>
+                        </div>
+                        <p class="premium-hint">
+                            <a href="#" id="unlockPremium">Unlock high-res SVG & PDF downloads →</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-section">
+                <h2>Why Use Our QR Code Generator?</h2>
+                <div class="features-grid">
+                    <div class="feature">
+                        <div class="feature-icon">🔗</div>
+                        <h3>Multiple Content Types</h3>
+                        <p>Create QR codes for URLs, text, email, phone numbers, WiFi, and contact cards.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Full Customization</h3>
+                        <p>Customize size, colors, and error correction level to match your brand.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Instant Generation</h3>
+                        <p>QR codes generate instantly in your browser. No server processing needed.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📱</div>
+                        <h3>Universal Compatibility</h3>
+                        <p>Works with all QR code scanners on iPhone, Android, and other devices.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="use-cases">
+                <h2>Popular Use Cases</h2>
+                <div class="use-cases-grid">
+                    <div class="use-case">
+                        <h4>🔗 Websites & Links</h4>
+                        <p>Direct users to your website, landing page, or social media profiles.</p>
+                    </div>
+                    <div class="use-case">
+                        <h4>📧 Email QR Codes</h4>
+                        <p>Pre-fill email address, subject, and message for easy contact.</p>
+                    </div>
+                    <div class="use-case">
+                        <h4>📞 Phone Numbers</h4>
+                        <p>Enable one-tap dialing for customer support or business contacts.</p>
+                    </div>
+                    <div class="use-case">
+                        <h4>📶 WiFi Access</h4>
+                        <p>Let guests connect to your network by simply scanning a code.</p>
+                    </div>
+                    <div class="use-case">
+                        <h4>👤 Digital Business Cards</h4>
+                        <p>Share contact information instantly with vCard QR codes.</p>
+                    </div>
+                    <div class="use-case">
+                        <h4>💬 Plain Text</h4>
+                        <p>Encode any text message, coupon codes, or special offers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Paperclip. Free online tools for everyone.</p>
+            <div class="footer-links">
+                <a href="/privacy">Privacy</a>
+                <a href="/terms">Terms</a>
+                <a href="/content/">Blog</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lead Capture Modal -->
+    <div class="modal-overlay hidden" id="leadModal">
+        <div class="modal">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-content">
+                <div class="modal-icon">✨</div>
+                <h2>Unlock Premium Features</h2>
+                <p>Get high-resolution downloads and advanced features:</p>
+                <ul class="feature-list">
+                    <li>✓ SVG vector format (scalable)</li>
+                    <li>✓ PDF document export</li>
+                    <li>✓ High-resolution PNG (up to 2000px)</li>
+                    <li>✓ Custom logo embedding</li>
+                    <li>✓ Priority support</li>
+                </ul>
+                <form class="lead-form" id="leadForm">
+                    <input type="email" id="leadEmail" placeholder="Enter your email" required>
+                    <button type="submit" class="cta-btn">Get Free Access</button>
+                </form>
+                <p class="privacy-note">No spam. Unsubscribe anytime.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

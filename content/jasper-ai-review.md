@@ -156,7 +156,11 @@ No—Jasper augments writers but doesn't replace the strategic thinking and crea
 
 Jasper AI is the premium choice for serious content operations. While not cheap, the time savings and output quality justify the investment for teams. Solo creators should consider Copy.ai or Writesonic first.
 
-[Try Jasper free for 7 days →](https://www.jasper.ai)
+**[Try Jasper free for 7 days →](https://www.jasper.ai)**
+
+---
+
+*This review contains affiliate links. We earn a commission when you sign up through our links — at no extra cost to you.*
 
 ---
 

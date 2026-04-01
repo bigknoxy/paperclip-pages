@@ -252,7 +252,11 @@ Writesonic is the go-to AI writing tool for SEO-focused content creators. While 
 - You want the absolute best output quality
 - You have a large team needing collaboration
 
-[Start with Writesonic free →](https://writesonic.com)
+**[Start with Writesonic free →](https://writesonic.com)**
+
+---
+
+*This review contains affiliate links. We earn a commission when you sign up through our links — at no extra cost to you.*
 
 ---
 

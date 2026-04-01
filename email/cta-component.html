@@ -1,0 +1,129 @@
+<!-- Email CTA Component for Articles -->
+<!-- Embed at end of articles to capture leads -->
+
+<div class="article-cta" id="articleCta">
+  <div class="cta-content">
+    <h4>🚀 Get the Complete Developer Toolkit</h4>
+    <p>Join 500+ developers who get weekly tips, exclusive tools, and our <strong>50+ Essential Developer Tools Checklist</strong> (free PDF).</p>
+    
+    <form class="cta-form" id="ctaForm">
+      <input type="email" id="ctaEmail" placeholder="your@email.com" required>
+      <button type="submit" class="cta-button">Get Free Toolkit</button>
+    </form>
+    
+    <p class="cta-note">No spam. Unsubscribe anytime. Instant download.</p>
+    
+    <div class="cta-success hidden" id="ctaSuccess">
+      <p>✓ Welcome! Check your inbox for your download.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+.article-cta {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem;
+  margin: 2rem 0;
+  border-radius: 12px;
+  color: white;
+  text-align: center;
+}
+
+.article-cta h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.25rem;
+}
+
+.article-cta p {
+  margin: 0 0 1rem 0;
+  opacity: 0.95;
+}
+
+.cta-form {
+  display: flex;
+  gap: 0.5rem;
+  max-width: 400px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cta-form input {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.cta-button {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cta-button:hover {
+  background: #059669;
+}
+
+.cta-note {
+  font-size: 0.875rem;
+  opacity: 0.8;
+  margin-top: 0.75rem !important;
+}
+
+.cta-success {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(16, 185, 129, 0.2);
+  border-radius: 6px;
+}
+
+.hidden { display: none; }
+</style>
+
+<script>
+(function() {
+  const form = document.getElementById('ctaForm');
+  const success = document.getElementById('ctaSuccess');
+  
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('ctaEmail').value;
+      
+      // Store in localStorage
+      let emails = JSON.parse(localStorage.getItem('ghp_emails') || '[]');
+      emails.push({
+        email: email,
+        source: window.location.pathname,
+        timestamp: new Date().toISOString()
+      });
+      localStorage.setItem('ghp_emails', JSON.stringify(emails));
+      
+      // Track event
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'email_signup_article', {
+          event_category: 'lead_capture',
+          event_label: window.location.pathname
+        });
+      }
+      
+      // Show success
+      form.classList.add('hidden');
+      success.classList.remove('hidden');
+      
+      // Simulate welcome email
+      setTimeout(() => {
+        console.log('Welcome email queued for:', email);
+      }, 500);
+    });
+  }
+})();
+</script>

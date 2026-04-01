@@ -73,14 +73,43 @@
         <button class="secondary" onclick="clearAll()">Clear</button>
       </div>
 
-      <div id="status"></div>
-      <div class="stats" id="stats"></div>
-    </div>
-  </div>
+<div id="status"></div>
+<div class="stats" id="stats"></div>
+</div>
 
-  <footer>
-    <p>Made with minimal code • Free forever • No tracking</p>
-  </footer>
+<!-- Email CTA -->
+<style>
+.email-cta-box { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); padding: 1.5rem; margin: 2rem 0; border-radius: 12px; color: white; text-align: center; }
+.email-cta-box h3 { margin: 0 0 0.75rem 0; font-size: 1.25rem; }
+.email-cta-box p { margin: 0 0 1rem 0; opacity: 0.95; font-size: 0.95rem; }
+.email-cta-box form { display: flex; gap: 0.5rem; max-width: 400px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+.email-cta-box input { flex: 1; min-width: 200px; padding: 0.75rem 1rem; border: none; border-radius: 6px; font-size: 1rem; }
+.email-cta-box button { background: #10b981; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 600; cursor: pointer; }
+</style>
+<div class="email-cta-box">
+<h3>Get the JSON & API Development Cheatsheet</h3>
+<p>Join 500+ developers. Get the complete JSON reference + weekly API tips.</p>
+<form id="jsonEmailForm">
+<input type="email" placeholder="your@email.com" required>
+<button type="submit">Get Cheatsheet</button>
+</form>
+</div>
+
+<div class="tips" style="margin-top: 32px; padding: 20px; background: var(--card); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+<h3>Related Resources</h3>
+<ul style="color: var(--muted); padding-left: 20px;">
+<li><a href="/content/how-to-format-json" style="color: var(--accent);">How to Format JSON Guide</a> - Complete JSON formatting tutorial</li>
+<li><a href="/content/json-vs-xml-guide" style="color: var(--accent);">JSON vs XML</a> - When to use each format</li>
+<li><a href="/content/json-security-best-practices" style="color: var(--accent);">JSON Security Best Practices</a> - Secure JSON handling</li>
+<li><a href="/tools/base64" style="color: var(--accent);">Base64 Encoder/Decoder</a> - Encode JSON for APIs</li>
+<li><a href="/tools/jwt-decoder" style="color: var(--accent);">JWT Decoder</a> - Decode JSON Web Tokens</li>
+</ul>
+</div>
+</div>
+
+<footer>
+<p>Made with minimal code • Free forever • No tracking</p>
+</footer>
 
   <script>
     const input = document.getElementById('input');

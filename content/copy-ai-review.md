@@ -263,7 +263,11 @@ Copy.ai is the best entry point into AI writing tools. The free plan is genuinel
 
 **Upgrade when:** You need 10,000+ words monthly or long-form blog posts.
 
-[Try Copy.ai free →](https://www.copy.ai)
+**[Try Copy.ai free →](https://www.copy.ai)**
+
+---
+
+*This review contains affiliate links. We earn a commission when you sign up through our links — at no extra cost to you.*
 
 ---
 

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paperclip Welcome Email Templates</title>
+    <style>
+        /* Email 1: Welcome + Lead Magnet */
+        .email-1 { display: block; }
+        
+        /* Email 2: Value Education */
+        .email-2 { display: none; }
+        
+        /* Email 3: Product Focus */
+        .email-3 { display: none; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #374151;
+            background: #f3f4f6;
+            padding: 20px;
+        }
+        
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .email-header {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .email-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .email-header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 16px;
+        }
+        
+        .email-body {
+            padding: 40px 30px;
+        }
+        
+        .email-body h2 {
+            color: #111827;
+            margin-top: 0;
+            font-size: 22px;
+        }
+        
+        .email-body p {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.4);
+        }
+        
+        .feature-box {
+            background: #f9fafb;
+            border-left: 4px solid #2563eb;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .feature-box h3 {
+            margin-top: 0;
+            color: #111827;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .tool-item {
+            background: #f3f4f6;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .tool-item .icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .tool-item p {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .email-footer {
+            background: #f9fafb;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .email-footer p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #6b7280;
+        }
+        
+        .social-links {
+            margin: 20px 0;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .unsubscribe {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        
+        .unsubscribe a {
+            color: #6b7280;
+        }
+        
+        /* Mistake section styling */
+        .mistake-section {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .mistake-section h3 {
+            color: #92400e;
+            margin-top: 0;
+        }
+        
+        .mistake-section .solution {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+        
+        /* Testimonial */
+        .testimonial {
+            background: #ecfdf5;
+            border-left: 4px solid #22c55e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+        
+        .testimonial .author {
+            margin-top: 10px;
+            font-style: normal;
+            font-weight: 600;
+            color: #065f46;
+        }
+    </style>
+</head>
+<body>
+
+<!-- EMAIL 1: Welcome + Lead Magnet -->
+<div class="email-container email-1">
+    <div class="email-header">
+        <h1>🎉 Welcome to Paperclip!</h1>
+        <p>Your developer toolkit is ready</p>
+    </div>
+    
+    <div class="email-body">
+        <h2>Hi there,</h2>
+        
+        <p>Thanks for joining Paperclip! I'm excited to have you on board.</p>
+        
+        <p>You now have access to our entire collection of free developer tools, including:</p>
+        
+        <div class="tools-grid">
+            <div class="tool-item">
+                <div class="icon">🔄</div>
+                <p>Unit Converter</p>
+            </div>
+            <div class="tool-item">
+                <div class="icon">🔐</div>
+                <p>Password Generator</p>
+            </div>
+            <div class="tool-item">
+                <div class="icon">📱</div>
+                <p>QR Code Generator</p>
+            </div>
+            <div class="tool-item">
+                <div class="icon">🔧</div>
+                <p>10+ More Tools</p>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <h3>🎁 Your Free Download</h3>
+            <p>As a welcome gift, here's the <strong>Complete Developer Toolkit Checklist</strong> - a curated list of 50+ essential tools every developer should know about.</p>
+            <a href="#" class="cta-button">Download Free Checklist</a>
+        </div>
+        
+        <p>Over the next few days, I'll share some insights on how to get the most out of these tools and level up your development workflow.</p>
+        
+        <p>Talk soon,<br>
+        <strong>The Paperclip Team</strong></p>
+    </div>
+    
+    <div class="email-footer">
+        <p>Paperclip - Free tools for developers</p>
+        <div class="social-links">
+            <a href="#">Twitter</a> | <a href="#">GitHub</a> | <a href="#">Blog</a>
+        </div>
+        <p class="unsubscribe">
+            You're receiving this because you signed up at paperclip.tools<br>
+            <a href="#">Unsubscribe</a> | <a href="#">Update preferences</a>
+        </p>
+    </div>
+</div>
+
+<!-- EMAIL 2: The #1 Mistake -->
+<div class="email-container email-2" style="margin-top: 40px;">
+    <div class="email-header">
+        <h1>⚠️ Are you making this mistake?</h1>
+        <p>The #1 productivity killer for developers</p>
+    </div>
+    
+    <div class="email-body">
+        <h2>Hey {{first_name}},</h2>
+        
+        <p>Quick question: How many browser tabs do you have open right now?</p>
+        
+        <p>If you're like most developers, the answer is "too many." And that's costing you more than you think.</p>
+        
+        <div class="mistake-section">
+            <h3>The Context Switching Trap</h3>
+            <p>Every time you jump between tabs, apps, or tools, your brain needs 15-20 minutes to fully refocus. Studies show developers lose up to 40% of productive time to context switching alone.</p>
+            
+            <div class="solution">
+                <strong>The Solution:</strong> Use unified tool collections like Paperclip that keep everything in one place. Our tools are designed to work together seamlessly.
+            </div>
+        </div>
+        
+        <p>Here's how our users are saving hours every week:</p>
+        
+        <ul style="margin-bottom: 20px; padding-left: 20px;">
+            <li><strong>Unit Converter</strong> - Convert anything without leaving your workflow</li>
+            <li><strong>Password Generator</strong> - Create secure passwords instantly</li>
+            <li><strong>QR Code Generator</strong> - Share anything with a quick scan</li>
+            <li><strong>JSON Formatter</strong> - Debug APIs faster</li>
+            <li><strong>Text Processor</strong> - Transform text without opening an editor</li>
+        </ul>
+        
+        <div class="testimonial">
+            "I used to have 15 different bookmark folders. Now I just go to Paperclip. Game changer."
+            <div class="author">— Sarah K., Full-Stack Developer</div>
+        </div>
+        
+        <p>Try this today: Pick 3 tools you use most and bookmark paperclip.tools/tools. Notice how much smoother your workflow becomes.</p>
+        
+        <a href="/tools/" class="cta-button">Explore All Tools →</a>
+        
+        <p>More tips coming your way tomorrow.</p>
+        
+        <p>Cheers,<br>
+        <strong>The Paperclip Team</strong></p>
+    </div>
+    
+    <div class="email-footer">
+        <p>Paperclip - Free tools for developers</p>
+        <div class="social-links">
+            <a href="#">Twitter</a> | <a href="#">GitHub</a> | <a href="#">Blog</a>
+        </div>
+        <p class="unsubscribe">
+            You're receiving this because you signed up at paperclip.tools<br>
+            <a href="#">Unsubscribe</a> | <a href="#">Update preferences</a>
+        </p>
+    </div>
+</div>
+
+<!-- EMAIL 3: Exclusive Access -->
+<div class="email-container email-3" style="margin-top: 40px;">
+    <div class="email-header">
+        <h1>🔓 Your exclusive tools are waiting...</h1>
+        <p>High-resolution downloads & premium features</p>
+    </div>
+    
+    <div class="email-body">
+        <h2>Hi {{first_name}},</h2>
+        
+        <p>Over the past few days, you've seen how Paperclip can streamline your workflow. Now let's take it to the next level.</p>
+        
+        <div class="feature-box">
+            <h3>🚀 Unlock Premium Features</h3>
+            <p>As a valued member, you now have access to:</p>
+            <ul style="margin: 15px 0;">
+                <li>✓ <strong>SVG Vector Downloads</strong> - Scalable QR codes for print</li>
+                <li>✓ <strong>PDF Export</strong> - Professional documents ready to share</li>
+                <li>✓ <strong>High-Resolution PNG</strong> - Up to 2000px for any use case</li>
+                <li>✓ <strong>Custom Branding</strong> - Add your logo to generated content</li>
+                <li>✓ <strong>Priority Support</strong> - Get help when you need it</li>
+            </ul>
+        </div>
+        
+        <p>These features are already enabled on your account. Here's how to use them:</p>
+        
+        <ol style="margin-bottom: 20px; padding-left: 20px;">
+            <li>Go to any tool (Unit Converter, Password Generator, or QR Code Generator)</li>
+            <li>Use the tool as normal</li>
+            <li>Click the download button</li>
+            <li>Choose your preferred format: PNG, SVG, or PDF</li>
+        </ol>
+        
+        <div class="testimonial">
+            "The SVG exports alone have saved me hours. No more pixelated QR codes in my presentations!"
+            <div class="author">— Mike R., DevOps Engineer</div>
+        </div>
+        
+        <p>We're constantly adding new tools and features. Stay tuned for:</p>
+        <ul style="margin-bottom: 20px; padding-left: 20px;">
+            <li>API access for programmatic tool usage</li>
+            <li>Custom tool builder</li>
+            <li>Team collaboration features</li>
+            <li>Browser extensions</li>
+        </ul>
+        
+        <a href="/tools/" class="cta-button">Start Using Premium Features →</a>
+        
+        <p>Thanks for being part of the Paperclip community!</p>
+        
+        <p>Best,<br>
+        <strong>The Paperclip Team</strong></p>
+        
+        <p style="font-size: 14px; color: #6b7280; margin-top: 30px;">
+            P.S. Have feedback or tool requests? Just reply to this email - I read every message.
+        </p>
+    </div>
+    
+    <div class="email-footer">
+        <p>Paperclip - Free tools for developers</p>
+        <div class="social-links">
+            <a href="#">Twitter</a> | <a href="#">GitHub</a> | <a href="#">Blog</a>
+        </div>
+        <p class="unsubscribe">
+            You're receiving this because you signed up at paperclip.tools<br>
+            <a href="#">Unsubscribe</a> | <a href="#">Update preferences</a>
+        </p>
+    </div>
+</div>
+
+</body>
+</html>

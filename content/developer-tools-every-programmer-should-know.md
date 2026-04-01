@@ -401,6 +401,30 @@ These 10 tools form the foundation of an efficient developer workflow. While IDE
 
 ---
 
+<!-- Email CTA -->
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2rem; margin: 2rem 0; border-radius: 12px; color: white; text-align: center;">
+<h4 style="margin: 0 0 0.75rem 0; font-size: 1.25rem;">Become a 10x Developer</h4>
+<p style="margin: 0 0 1rem 0; opacity: 0.95;">Join 500+ developers. Get the <strong>50 Essential Developer Tools Checklist</strong> + weekly tool recommendations.</p>
+<form id="emailCtaFormDevTools" style="display: flex; gap: 0.5rem; max-width: 400px; margin: 0 auto; flex-wrap: wrap; justify-content: center;">
+<input type="email" id="emailCtaDevTools" placeholder="your@email.com" required style="flex: 1; min-width: 200px; padding: 0.75rem 1rem; border: none; border-radius: 6px; font-size: 1rem;">
+<button type="submit" style="background: #10b981; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 600; cursor: pointer;">Get Checklist</button>
+</form>
+<p style="font-size: 0.875rem; opacity: 0.8; margin-top: 0.75rem;">No spam. Instant download.</p>
+</div>
+<script>
+document.getElementById('emailCtaFormDevTools').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const email = document.getElementById('emailCtaDevTools').value;
+  let emails = JSON.parse(localStorage.getItem('ghp_emails') || '[]');
+  emails.push({email: email, source: 'developer-tools-guide', timestamp: new Date().toISOString()});
+  localStorage.setItem('ghp_emails', JSON.stringify(emails));
+  if (typeof gtag !== 'undefined') gtag('event', 'email_signup', {category: 'lead_capture', label: 'developer-tools'});
+  this.innerHTML = '<p style="margin:0">✓ Checklist sent! Check your inbox.</p>';
+});
+</script>
+
+---
+
 **What tools would you add to this list?** Let us know in the comments.
 
 **Related tools on Paperclip:**

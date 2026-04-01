@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Password Generator - Create Secure Passwords</title>
+    <meta name="description" content="Generate secure passwords with entropy analysis. Customizable length, character types, and strength meter. Free online password generator.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="/" class="logo">Paperclip</a>
+            <div class="nav-links">
+                <a href="/tools/">Tools</a>
+                <a href="/content/">Blog</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <h1>Advanced Password Generator</h1>
+            <p class="subtitle">Create strong, secure passwords with entropy analysis</p>
+
+            <div class="generator-card">
+                <div class="password-display">
+                    <input type="text" id="passwordOutput" readonly placeholder="Your secure password">
+                    <button id="copyBtn" class="icon-btn" title="Copy to clipboard">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </button>
+                    <button id="regenerateBtn" class="icon-btn" title="Generate new password">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="strength-meter">
+                    <div class="strength-bar">
+                        <div id="strengthFill" class="strength-fill"></div>
+                    </div>
+                    <span id="strengthText" class="strength-text">Generate a password</span>
+                </div>
+
+                <div class="entropy-display">
+                    <div class="entropy-value">
+                        <span id="entropyValue">0</span>
+                        <span class="entropy-unit">bits</span>
+                    </div>
+                    <span id="entropyLabel" class="entropy-label">Entropy</span>
+                </div>
+
+                <div class="crack-time">
+                    <span>Estimated crack time:</span>
+                    <span id="crackTime">Instant</span>
+                </div>
+
+                <div class="options">
+                    <div class="option-row">
+                        <label>Password Length</label>
+                        <div class="length-control">
+                            <input type="range" id="lengthSlider" min="8" max="64" value="16">
+                            <input type="number" id="lengthInput" min="8" max="64" value="16">
+                        </div>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="uppercase" checked>
+                            <span class="checkmark"></span>
+                            Uppercase (A-Z)
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="lowercase" checked>
+                            <span class="checkmark"></span>
+                            Lowercase (a-z)
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="numbers" checked>
+                            <span class="checkmark"></span>
+                            Numbers (0-9)
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="symbols" checked>
+                            <span class="checkmark"></span>
+                            Symbols (!@#$...)
+                        </label>
+                    </div>
+
+                    <div class="option-row">
+                        <label>Exclude Similar Characters</label>
+                        <label class="toggle">
+                            <input type="checkbox" id="excludeSimilar">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="option-row">
+                        <label>Easy to Read</label>
+                        <label class="toggle">
+                            <input type="checkbox" id="easyToRead">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-large">
+                    Generate Password
+                </button>
+
+                <div id="passwordTips" class="password-tips">
+                    <h4>Password Security Tips</h4>
+                    <ul>
+                        <li>Use at least 12 characters</li>
+                        <li>Include all character types</li>
+                        <li>Avoid common words</li>
+                        <li>Use a unique password for each account</li>
+                    </ul>
+                </div>
+            </div>
+
+<div class="features-grid">
+<div class="feature-card">
+<h3>Entropy Analysis</h3>
+<p>Understand exactly how strong your password is with mathematical entropy calculations.</p>
+</div>
+<div class="feature-card">
+<h3>Crack Time Estimation</h3>
+<p>See how long it would take for a computer to crack your password.</p>
+</div>
+<div class="feature-card">
+<h3>Custom Options</h3>
+<p>Full control over length, character types, and readability preferences.</p>
+</div>
+</div>
+
+<div class="related-resources" style="margin-top: 40px; padding: 24px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
+<h3 style="margin: 0 0 16px 0; color: #1e293b;">Related Resources</h3>
+<ul style="color: #64748b; padding-left: 20px; margin: 0;">
+<li><a href="/content/strong-password-generator-guide" style="color: #3b82f6; text-decoration: none;">Strong Password Generator Guide</a> - Complete password security guide</li>
+<li><a href="/content/how-to-use-online-developer-tools-safely" style="color: #3b82f6; text-decoration: none;">Online Tools Safety Guide</a> - Security best practices</li>
+<li><a href="/tools/hash" style="color: #3b82f6; text-decoration: none;">Hash Generator</a> - Create secure password hashes</li>
+<li><a href="/tools/base64" style="color: #3b82f6; text-decoration: none;">Base64 Encoder</a> - Encode for secure transmission</li>
+</ul>
+</div>
+</div>
+</main>
+
+    <!-- Lead Capture Modal -->
+    <div id="leadModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-body">
+                <h2>Get Password Security Tips</h2>
+                <p>Join our security newsletter and receive:</p>
+                <ul>
+                    <li>Weekly password security tips</li>
+                    <li>Data breach alerts</li>
+                    <li>Free password manager guide</li>
+                    <li>Security best practices</li>
+                </ul>
+                <form id="leadForm">
+                    <input type="email" id="emailInput" placeholder="Enter your email" required>
+                    <button type="submit" class="btn btn-primary">Subscribe Free</button>
+                </form>
+                <p class="privacy-note">Unsubscribe anytime. We never share your email.</p>
+                <button id="skipBtn" class="skip-btn">No thanks, continue</button>
+            </div>
+            <div id="successMessage" class="success-message" style="display:none;">
+                <h2>Welcome! 🔒</h2>
+                <p>Check your email for your free password security guide.</p>
+                <button class="btn btn-primary" onclick="closeModal()">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Paperclip. Generate secure passwords instantly.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

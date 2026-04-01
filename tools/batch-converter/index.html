@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Batch File Converter | Convert Multiple Files at Once</title>
+  <meta name="description" content="Convert multiple files at once with our free batch converter. Supports Base64, JSON, CSV, and more. Premium features available for batch processing." />
+  <meta name="keywords" content="batch file converter, bulk converter, multiple file converter, file format converter" />
+  <meta name="author" content="Paperclip" />
+  <meta name="robots" content="index, follow" />
+  
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+    gtag('event', 'page_view', { page_path: '/tools/batch-converter' });
+  </script>
+  
+  <link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/batch-converter/" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--warning:#f59e0b;--error:#ef4444;color-scheme:dark}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{min-height:100%;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+    .logo{font-weight:700;font-size:1.2em;color:var(--accent);text-decoration:none}
+    nav{display:flex;gap:16px}
+    nav a{color:var(--muted);text-decoration:none;font-size:14px}
+    nav a:hover{color:var(--text)}
+    .container{max-width:900px;margin:0 auto;padding:24px}
+    h1{font-size:2.2em;margin-bottom:8px}
+    .subtitle{color:var(--muted);margin-bottom:32px;font-size:1.1em}
+    
+    .tool-card{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:32px;margin-bottom:24px}
+    
+    .upload-zone{border:2px dashed rgba(255,255,255,0.1);border-radius:12px;padding:48px;text-align:center;cursor:pointer;transition:all 0.2s}
+    .upload-zone:hover{border-color:var(--accent);background:rgba(6,182,212,0.03)}
+    .upload-zone.dragover{border-color:var(--accent);background:rgba(6,182,212,0.05)}
+    .upload-zone input[type="file"]{display:none}
+    .upload-icon{font-size:48px;margin-bottom:16px;color:var(--accent)}
+    .upload-text{font-size:1.1em;margin-bottom:8px}
+    .upload-hint{color:var(--muted);font-size:0.9em}
+    
+    .file-list{margin-top:24px}
+    .file-item{display:flex;align-items:center;justify-content:space-between;padding:16px;background:rgba(255,255,255,0.03);border-radius:8px;margin-bottom:8px}
+    .file-info{display:flex;align-items:center;gap:12px}
+    .file-icon{color:var(--accent)}
+    .file-name{font-weight:500}
+    .file-size{color:var(--muted);font-size:0.85em}
+    .file-remove{color:var(--error);cursor:pointer;padding:4px}
+    
+    .form-group{margin-bottom:24px}
+    .form-label{display:block;margin-bottom:8px;font-weight:500;color:var(--text)}
+    .form-select{width:100%;padding:12px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:var(--bg);color:var(--text);font-size:1em;cursor:pointer}
+    .form-select:focus{outline:none;border-color:var(--accent)}
+    
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:8px;border:none;font-size:1em;font-weight:600;cursor:pointer;transition:all 0.2s}
+    .btn-primary{background:var(--accent);color:#012}
+    .btn-primary:hover{opacity:0.9}
+    .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
+    .btn-secondary{background:rgba(255,255,255,0.1);color:var(--text)}
+    .btn-secondary:hover{background:rgba(255,255,255,0.15)}
+    
+    .progress-section{display:none;margin-top:24px;padding:20px;background:rgba(255,255,255,0.03);border-radius:8px}
+    .progress-section.active{display:block}
+    .progress-bar{height:8px;background:rgba(255,255,255,0.1);border-radius:4px;overflow:hidden;margin-bottom:12px}
+    .progress-fill{height:100%;background:var(--accent);border-radius:4px;transition:width 0.3s}
+    .progress-text{display:flex;justify-content:space-between;color:var(--muted);font-size:0.9em}
+    
+    .results-section{display:none;margin-top:24px}
+    .results-section.active{display:block}
+    .result-item{display:flex;align-items:center;justify-content:space-between;padding:16px;background:rgba(255,255,255,0.03);border-radius:8px;margin-bottom:12px}
+    .result-info{display:flex;align-items:center;gap:12px}
+    .result-status{width:8px;height:8px;border-radius:50%}
+    .result-status.success{background:var(--success)}
+    .result-status.error{background:var(--error)}
+    
+    .premium-banner{background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(6,182,212,0.05));border:1px solid rgba(6,182,212,0.3);border-radius:12px;padding:24px;margin-top:32px}
+    .premium-title{font-size:1.3em;font-weight:600;margin-bottom:8px;color:var(--accent)}
+    .premium-text{color:var(--muted);margin-bottom:16px}
+    .premium-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px}
+    .premium-feature{display:flex;align-items:center;gap:8px;color:var(--text);font-size:0.95em}
+    .premium-feature::before{content:"✓";color:var(--success);font-weight:700}
+    
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:100;align-items:center;justify-content:center}
+    .modal-overlay.active{display:flex}
+    .modal{background:var(--card);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:32px;max-width:420px;width:90%;position:relative}
+    .modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--muted);font-size:1.5em;cursor:pointer;padding:4px}
+    .modal-title{font-size:1.3em;margin-bottom:8px}
+    .modal-text{color:var(--muted);margin-bottom:20px}
+    .form-input{width:100%;padding:12px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:var(--bg);color:var(--text);font-size:1em;margin-bottom:16px}
+    .form-input:focus{outline:none;border-color:var(--accent)}
+    .success-message{display:none;color:var(--success);text-align:center;padding:16px}
+    .success-message.active{display:block}
+    
+    footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:60px}
+    
+    @media (max-width:640px){
+      h1{font-size:1.6em}
+      .container{padding:16px}
+      .tool-card{padding:20px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo">← Paperclip</a>
+    <nav>
+      <a href="/tools/">Tools</a>
+      <a href="/about.html">About</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Batch File Converter</h1>
+    <p class="subtitle">Convert multiple files at once. Free for up to 5 files. Upgrade for unlimited batch processing.</p>
+    
+    <div class="tool-card">
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="fileInput" multiple accept=".txt,.json,.csv,.xml,.md">
+        <div class="upload-icon">📁</div>
+        <div class="upload-text">Drop files here or click to browse</div>
+        <div class="upload-hint">Supports TXT, JSON, CSV, XML, MD (Max 5 files free)</div>
+      </div>
+      
+      <div class="file-list" id="fileList" style="display:none"></div>
+      
+      <div class="form-group" style="margin-top:24px">
+        <label class="form-label">Convert to:</label>
+        <select class="form-select" id="outputFormat">
+          <option value="">Select format...</option>
+          <option value="json">JSON</option>
+          <option value="csv">CSV</option>
+          <option value="xml">XML</option>
+          <option value="base64">Base64</option>
+          <option value="txt">Plain Text</option>
+        </select>
+      </div>
+      
+      <button class="btn btn-primary" id="convertBtn" disabled>
+        <span>🚀</span> Convert Files
+      </button>
+      
+      <button class="btn btn-secondary" id="clearBtn" style="display:none;margin-left:12px">
+        Clear All
+      </button>
+    </div>
+    
+    <div class="progress-section" id="progressSection">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+      <div class="progress-text">
+        <span id="progressCurrent">0</span> of <span id="progressTotal">0</span> files
+      </div>
+    </div>
+    
+    <div class="results-section" id="resultsSection"></div>
+    
+    <div class="premium-banner">
+      <div class="premium-title">🔒 Unlock Premium Features</div>
+      <div class="premium-text">Sign up free to access advanced batch processing</div>
+      <div class="premium-features">
+        <div class="premium-feature">Unlimited file uploads</div>
+        <div class="premium-feature">Batch processing (up to 100 files)</div>
+        <div class="premium-feature">Custom output templates</div>
+        <div class="premium-feature">Download as ZIP</div>
+        <div class="premium-feature">API access</div>
+        <div class="premium-feature">Priority processing</div>
+      </div>
+      <button class="btn btn-primary" id="unlockBtn">
+        <span>✉️</span> Get Free Access
+      </button>
+    </div>
+  </div>
+
+  <!-- Email Modal -->
+  <div class="modal-overlay" id="emailModal">
+    <div class="modal">
+      <button class="modal-close" id="closeModal">×</button>
+      <h2 class="modal-title">Get Premium Access</h2>
+      <p class="modal-text">Enter your email to unlock unlimited batch processing and premium features.</p>
+      <form id="emailForm">
+        <input type="email" class="form-input" id="emailInput" placeholder="you@example.com" required>
+        <button type="submit" class="btn btn-primary" style="width:100%">Unlock Features</button>
+      </form>
+      <div class="success-message" id="successMessage">
+        ✅ Success! Check your email for access.
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Made with minimal code • Free batch conversion • No tracking</p>
+  </footer>
+
+  <script>
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+    const fileList = document.getElementById('fileList');
+    const outputFormat = document.getElementById('outputFormat');
+    const convertBtn = document.getElementById('convertBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const progressSection = document.getElementById('progressSection');
+    const resultsSection = document.getElementById('resultsSection');
+    const unlockBtn = document.getElementById('unlockBtn');
+    const emailModal = document.getElementById('emailModal');
+    const closeModal = document.getElementById('closeModal');
+    const emailForm = document.getElementById('emailForm');
+    const emailInput = document.getElementById('emailInput');
+    const successMessage = document.getElementById('successMessage');
+    
+    let files = [];
+    const FREE_LIMIT = 5;
+    
+    // Check if user has premium access
+    function hasPremiumAccess() {
+      return localStorage.getItem('batchConverter_email') !== null;
+    }
+    
+    // File upload handling
+    uploadZone.addEventListener('click', () => fileInput.click());
+    uploadZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadZone.classList.add('dragover');
+    });
+    uploadZone.addEventListener('dragleave', () => {
+      uploadZone.classList.remove('dragover');
+    });
+    uploadZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadZone.classList.remove('dragover');
+      handleFiles(e.dataTransfer.files);
+    });
+    fileInput.addEventListener('change', () => {
+      handleFiles(fileInput.files);
+    });
+    
+    function handleFiles(newFiles) {
+      const limit = hasPremiumAccess() ? 100 : FREE_LIMIT;
+      
+      if (files.length + newFiles.length > limit) {
+        alert(`Free tier limited to ${FREE_LIMIT} files. Sign up for unlimited processing!`);
+        return;
+      }
+      
+      files = [...files, ...Array.from(newFiles)];
+      updateFileList();
+      updateButtons();
+      
+      // Track file upload
+      gtag('event', 'file_upload', {
+        event_category: 'engagement',
+        event_label: 'batch_converter',
+        value: files.length
+      });
+    }
+    
+    function updateFileList() {
+      if (files.length === 0) {
+        fileList.style.display = 'none';
+        return;
+      }
+      
+      fileList.style.display = 'block';
+      fileList.innerHTML = files.map((file, index) => `
+        <div class="file-item">
+          <div class="file-info">
+            <span class="file-icon">📄</span>
+            <div>
+              <div class="file-name">${file.name}</div>
+              <div class="file-size">${(file.size / 1024).toFixed(1)} KB</div>
+            </div>
+          </div>
+          <span class="file-remove" onclick="removeFile(${index})">✕</span>
+        </div>
+      `).join('');
+    }
+    
+    function removeFile(index) {
+      files.splice(index, 1);
+      updateFileList();
+      updateButtons();
+    }
+    
+    function updateButtons() {
+      convertBtn.disabled = files.length === 0 || !outputFormat.value;
+      clearBtn.style.display = files.length > 0 ? 'inline-flex' : 'none';
+    }
+    
+    outputFormat.addEventListener('change', updateButtons);
+    
+    clearBtn.addEventListener('click', () => {
+      files = [];
+      updateFileList();
+      updateButtons();
+      progressSection.classList.remove('active');
+      resultsSection.classList.remove('active');
+    });
+    
+    // Conversion
+    convertBtn.addEventListener('click', async () => {
+      if (files.length === 0 || !outputFormat.value) return;
+      
+      progressSection.classList.add('active');
+      resultsSection.classList.remove('active');
+      convertBtn.disabled = true;
+      
+      document.getElementById('progressTotal').textContent = files.length;
+      document.getElementById('progressCurrent').textContent = '0';
+      document.getElementById('progressFill').style.width = '0%';
+      
+      const results = [];
+      
+      for (let i = 0; i < files.length; i++) {
+        try {
+          const result = await convertFile(files[i], outputFormat.value);
+          results.push({ file: files[i], success: true, result });
+        } catch (error) {
+          results.push({ file: files[i], success: false, error: error.message });
+        }
+        
+        const progress = ((i + 1) / files.length) * 100;
+        document.getElementById('progressFill').style.width = `${progress}%`;
+        document.getElementById('progressCurrent').textContent = i + 1;
+      }
+      
+      displayResults(results);
+      convertBtn.disabled = false;
+      
+      // Track conversion
+      gtag('event', 'conversion_complete', {
+        event_category: 'engagement',
+        event_label: 'batch_converter',
+        value: files.length
+      });
+    });
+    
+    async function convertFile(file, format) {
+      const text = await file.text();
+      
+      switch(format) {
+        case 'json':
+          try {
+            const parsed = JSON.parse(text);
+            return JSON.stringify(parsed, null, 2);
+          } catch {
+            return JSON.stringify({ content: text }, null, 2);
+          }
+        case 'base64':
+          return btoa(unescape(encodeURIComponent(text)));
+        case 'txt':
+          return text;
+        default:
+          return text;
+      }
+    }
+    
+    function displayResults(results) {
+      resultsSection.classList.add('active');
+      
+      const successCount = results.filter(r => r.success).length;
+      
+      resultsSection.innerHTML = `
+        <div class="tool-card">
+          <h3 style="margin-bottom:16px">Conversion Results</h3>
+          <p style="color:var(--muted);margin-bottom:16px">
+            ${successCount} of ${results.length} files converted successfully
+          </p>
+          ${results.map(r => `
+            <div class="result-item">
+              <div class="result-info">
+                <div class="result-status ${r.success ? 'success' : 'error'}"></div>
+                <span>${r.file.name}</span>
+              </div>
+              ${r.success ? `<button class="btn btn-secondary" onclick="downloadResult('${r.file.name}', '${encodeURIComponent(r.result)}')">Download</button>` : '<span style="color:var(--error)">Failed</span>'}
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+    
+    function downloadResult(filename, content) {
+      const blob = new Blob([decodeURIComponent(content)], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `converted_${filename}`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+    
+    // Email capture modal
+    unlockBtn.addEventListener('click', () => {
+      emailModal.classList.add('active');
+      emailInput.focus();
+      
+      // Track modal open
+      gtag('event', 'lead_modal_open', {
+        event_category: 'lead_gen',
+        event_label: 'batch_converter'
+      });
+    });
+    
+    closeModal.addEventListener('click', () => {
+      emailModal.classList.remove('active');
+      successMessage.classList.remove('active');
+      emailForm.style.display = 'block';
+      emailInput.value = '';
+    });
+    
+    emailModal.addEventListener('click', (e) => {
+      if (e.target === emailModal) {
+        closeModal.click();
+      }
+    });
+    
+    emailForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = emailInput.value;
+      
+      // Store email
+      localStorage.setItem('batchConverter_email', email);
+      localStorage.setItem('batchConverter_date', new Date().toISOString());
+      
+      // Track conversion
+      gtag('event', 'generate_lead', {
+        event_category: 'lead_gen',
+        event_label: 'batch_converter',
+        value: 1
+      });
+      
+      // Show success
+      emailForm.style.display = 'none';
+      successMessage.classList.add('active');
+      
+      // Update UI
+      document.querySelector('.premium-banner').innerHTML = `
+        <div style="color:var(--success);font-weight:600">✓ Premium Access Unlocked</div>
+        <p style="color:var(--muted);margin-top:8px">You can now process up to 100 files at once!</p>
+      `;
+      
+      // Close modal after delay
+      setTimeout(() => {
+        closeModal.click();
+      }, 2000);
+    });
+    
+    // Check for existing premium on load
+    if (hasPremiumAccess()) {
+      document.querySelector('.premium-banner').innerHTML = `
+        <div style="color:var(--success);font-weight:600">✓ Premium Access Active</div>
+        <p style="color:var(--muted);margin-top:8px">You have unlimited batch processing. Upload up to 100 files!</p>
+      `;
+    }
+  </script>
+</body>
+</html>

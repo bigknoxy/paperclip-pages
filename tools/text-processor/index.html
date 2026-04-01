@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Advanced Text Processor | Format, Clean & Transform Text</title>
+  <meta name="description" content="Advanced text processing tool. Clean, format, and transform text with powerful filters. Free basic features. Premium unlocks batch processing and custom templates." />
+  <meta name="keywords" content="text processor, text formatter, text cleaner, text transformer, bulk text processing" />
+  <meta name="author" content="Paperclip" />
+  <meta name="robots" content="index, follow" />
+  
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+    gtag('event', 'page_view', { page_path: '/tools/text-processor' });
+  </script>
+  
+  <link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/text-processor/" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--warning:#f59e0b;color-scheme:dark}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{min-height:100%;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+    .logo{font-weight:700;font-size:1.2em;color:var(--accent);text-decoration:none}
+    nav{display:flex;gap:16px}
+    nav a{color:var(--muted);text-decoration:none;font-size:14px}
+    nav a:hover{color:var(--text)}
+    .container{max-width:1000px;margin:0 auto;padding:24px}
+    h1{font-size:2.2em;margin-bottom:8px}
+    .subtitle{color:var(--muted);margin-bottom:32px;font-size:1.1em}
+    
+    .tool-card{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:32px;margin-bottom:24px}
+    
+    .textarea-wrapper{position:relative}
+    .input-textarea{width:100%;min-height:200px;padding:16px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:var(--bg);color:var(--text);font-family:monospace;font-size:14px;resize:vertical}
+    .input-textarea:focus{outline:none;border-color:var(--accent)}
+    .char-count{position:absolute;bottom:12px;right:16px;color:var(--muted);font-size:0.85em}
+    
+    .filters-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:24px 0}
+    .filter-btn{display:flex;align-items:center;gap:8px;padding:12px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);color:var(--text);cursor:pointer;transition:all 0.2s;font-size:0.95em}
+    .filter-btn:hover{border-color:var(--accent);background:rgba(6,182,212,0.05)}
+    .filter-btn.active{background:var(--accent);color:#012;border-color:var(--accent)}
+    .filter-btn .icon{font-size:1.1em}
+    
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:8px;border:none;font-size:1em;font-weight:600;cursor:pointer;transition:all 0.2s}
+    .btn-primary{background:var(--accent);color:#012}
+    .btn-primary:hover{opacity:0.9}
+    .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
+    .btn-secondary{background:rgba(255,255,255,0.1);color:var(--text)}
+    .btn-secondary:hover{background:rgba(255,255,255,0.15)}
+    
+    .output-section{margin-top:24px;display:none}
+    .output-section.active{display:block}
+    .output-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    .output-title{font-weight:600;font-size:1.1em}
+    .output-actions{display:flex;gap:8px}
+    .output-textarea{width:100%;min-height:150px;padding:16px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:var(--bg);color:var(--text);font-family:monospace;font-size:14px;resize:vertical}
+    
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:20px}
+    .stat-item{padding:16px;background:rgba(255,255,255,0.03);border-radius:8px;text-align:center}
+    .stat-value{font-size:1.5em;font-weight:600;color:var(--accent)}
+    .stat-label{color:var(--muted);font-size:0.85em;margin-top:4px}
+    
+    .premium-banner{background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(6,182,212,0.05));border:1px solid rgba(6,182,212,0.3);border-radius:12px;padding:24px;margin-top:32px}
+    .premium-title{font-size:1.3em;font-weight:600;margin-bottom:8px;color:var(--accent)}
+    .premium-text{color:var(--muted);margin-bottom:16px}
+    .premium-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px}
+    .premium-feature{display:flex;align-items:center;gap:8px;color:var(--text);font-size:0.95em}
+    .premium-feature::before{content:"✓";color:var(--success);font-weight:700}
+    
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:100;align-items:center;justify-content:center}
+    .modal-overlay.active{display:flex}
+    .modal{background:var(--card);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:32px;max-width:420px;width:90%;position:relative}
+    .modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--muted);font-size:1.5em;cursor:pointer;padding:4px}
+    .modal-title{font-size:1.3em;margin-bottom:8px}
+    .modal-text{color:var(--muted);margin-bottom:20px}
+    .form-input{width:100%;padding:12px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:var(--bg);color:var(--text);font-size:1em;margin-bottom:16px}
+    .form-input:focus{outline:none;border-color:var(--accent)}
+    .success-message{display:none;color:var(--success);text-align:center;padding:16px}
+    .success-message.active{display:block}
+    
+    .template-section{margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.05)}
+    .template-title{font-weight:600;margin-bottom:16px}
+    .template-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+    .template-card{padding:16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);border-radius:8px;cursor:pointer;transition:all 0.2s}
+    .template-card:hover{border-color:var(--accent);background:rgba(6,182,212,0.05)}
+    .template-card.locked{opacity:0.5;position:relative}
+    .template-card.locked::after{content:"🔒";position:absolute;top:8px;right:8px}
+    .template-card h4{font-weight:600;margin-bottom:4px;font-size:0.95em}
+    .template-card p{color:var(--muted);font-size:0.85em}
+    
+    footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:60px}
+    
+    @media (max-width:640px){
+      h1{font-size:1.6em}
+      .container{padding:16px}
+      .tool-card{padding:20px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo">← Paperclip</a>
+    <nav>
+      <a href="/tools/">Tools</a>
+      <a href="/about.html">About</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Advanced Text Processor</h1>
+    <p class="subtitle">Clean, format, and transform text with powerful filters. Free for basic use. Premium unlocks custom templates and batch processing.</p>
+    
+    <div class="tool-card">
+      <div class="textarea-wrapper">
+        <textarea class="input-textarea" id="inputText" placeholder="Paste your text here to process..."></textarea>
+        <span class="char-count" id="charCount">0 chars</span>
+      </div>
+      
+      <div class="filters-grid">
+        <button class="filter-btn" data-filter="trim" title="Remove extra whitespace">
+          <span class="icon">✂️</span> Trim Spaces
+        </button>
+        <button class="filter-btn" data-filter="lower" title="Convert to lowercase">
+          <span class="icon">🔤</span> Lowercase
+        </button>
+        <button class="filter-btn" data-filter="upper" title="Convert to uppercase">
+          <span class="icon">🔠</span> Uppercase
+        </button>
+        <button class="filter-btn" data-filter="title" title="Convert to title case">
+          <span class="icon">📖</span> Title Case
+        </button>
+        <button class="filter-btn" data-filter="remove-lines" title="Remove empty lines">
+          <span class="icon">🗑️</span> Remove Empty
+        </button>
+        <button class="filter-btn" data-filter="dedupe" title="Remove duplicate lines">
+          <span class="icon">🎯</span> Remove Dupes
+        </button>
+        <button class="filter-btn" data-filter="sort" title="Sort lines alphabetically">
+          <span class="icon">📋</span> Sort Lines
+        </button>
+        <button class="filter-btn" data-filter="reverse" title="Reverse line order">
+          <span class="icon">🔄</span> Reverse
+        </button>
+        <button class="filter-btn" data-filter="numbers" title="Extract numbers only">
+          <span class="icon">🔢</span> Extract Numbers
+        </button>
+        <button class="filter-btn" data-filter="slug" title="Convert to URL slug">
+          <span class="icon">🔗</span> URL Slug
+        </button>
+        <button class="filter-btn" data-filter="base64" title="Encode to Base64">
+          <span class="icon">🔐</span> Base64
+        </button>
+        <button class="filter-btn" data-filter="base64-decode" title="Decode from Base64">
+          <span class="icon">🔓</span> Decode Base64
+        </button>
+      </div>
+      
+      <div style="display:flex;gap:12px">
+        <button class="btn btn-primary" id="processBtn" disabled>
+          <span>⚡</span> Process Text
+        </button>
+        <button class="btn btn-secondary" id="clearBtn">
+          <span>🗑️</span> Clear
+        </button>
+        <button class="btn btn-secondary" id="copyBtn" style="display:none">
+          <span>📋</span> Copy Result
+        </button>
+      </div>
+    </div>
+    
+    <div class="output-section" id="outputSection">
+      <div class="output-header">
+        <span class="output-title">Processed Output</span>
+        <div class="output-actions">
+          <button class="btn btn-secondary" id="downloadBtn">
+            <span>💾</span> Download
+          </button>
+        </div>
+      </div>
+      <textarea class="output-textarea" id="outputText" readonly></textarea>
+      
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-item">
+          <div class="stat-value" id="wordCount">0</div>
+          <div class="stat-label">Words</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="lineCount">0</div>
+          <div class="stat-label">Lines</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="charCountOut">0</div>
+          <div class="stat-label">Characters</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="changePercent">0%</div>
+          <div class="stat-label">Changed</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="template-section">
+      <div class="template-title">Quick Templates</div>
+      <div class="template-grid">
+        <div class="template-card" onclick="loadTemplate('csv')">
+          <h4>CSV to List</h4>
+          <p>Convert CSV rows</p>
+        </div>
+        <div class="template-card" onclick="loadTemplate('json')">
+          <h4>JSON Format</h4>
+          <p>Format JSON data</p>
+        </div>
+        <div class="template-card" onclick="loadTemplate('sql')">
+          <h4>SQL List</h4>
+          <p>Create SQL IN list</p>
+        </div>
+        <div class="template-card locked">
+          <h4>Batch Process</h4>
+          <p>Process multiple</p>
+        </div>
+        <div class="template-card locked">
+          <h4>Custom Filter</h4>
+          <p>Build your own</p>
+        </div>
+        <div class="template-card locked">
+          <h4>API Output</h4>
+          <p>Format API data</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="premium-banner">
+      <div class="premium-title">🔓 Unlock Premium Features</div>
+      <div class="premium-text">Sign up free to access advanced text processing</div>
+      <div class="premium-features">
+        <div class="premium-feature">Custom processing templates</div>
+        <div class="premium-feature">Batch file processing</div>
+        <div class="premium-feature">Regex search & replace</div>
+        <div class="premium-feature">Export to multiple formats</div>
+        <div class="premium-feature">API access</div>
+        <div class="premium-feature">Save processing history</div>
+      </div>
+      <button class="btn btn-primary" id="unlockBtn">
+        <span>✉️</span> Get Free Access
+      </button>
+    </div>
+  </div>
+
+  <!-- Email Modal -->
+  <div class="modal-overlay" id="emailModal">
+    <div class="modal">
+      <button class="modal-close" id="closeModal">×</button>
+      <h2 class="modal-title">Get Premium Access</h2>
+      <p class="modal-text">Enter your email to unlock custom templates and advanced features.</p>
+      <form id="emailForm">
+        <input type="email" class="form-input" id="emailInput" placeholder="you@example.com" required>
+        <button type="submit" class="btn btn-primary" style="width:100%">Unlock Features</button>
+      </form>
+      <div class="success-message" id="successMessage">
+        ✅ Success! Check your email for access.
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Made with minimal code • Free text processing • No tracking</p>
+  </footer>
+
+  <script>
+    const inputText = document.getElementById('inputText');
+    const charCount = document.getElementById('charCount');
+    const processBtn = document.getElementById('processBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const outputSection = document.getElementById('outputSection');
+    const outputText = document.getElementById('outputText');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const unlockBtn = document.getElementById('unlockBtn');
+    const emailModal = document.getElementById('emailModal');
+    const closeModal = document.getElementById('closeModal');
+    const emailForm = document.getElementById('emailForm');
+    const emailInput = document.getElementById('emailInput');
+    const successMessage = document.getElementById('successMessage');
+    
+    let selectedFilters = new Set();
+    let originalLength = 0;
+    
+    // Check premium status
+    function hasPremiumAccess() {
+      return localStorage.getItem('textProcessor_email') !== null;
+    }
+    
+    // Update character count
+    inputText.addEventListener('input', () => {
+      const len = inputText.value.length;
+      charCount.textContent = `${len.toLocaleString()} char${len !== 1 ? 's' : ''}`;
+      processBtn.disabled = len === 0 || selectedFilters.size === 0;
+    });
+    
+    // Filter button handling
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+        
+        if (selectedFilters.has(filter)) {
+          selectedFilters.delete(filter);
+          btn.classList.remove('active');
+        } else {
+          selectedFilters.add(filter);
+          btn.classList.add('active');
+        }
+        
+        processBtn.disabled = inputText.value.length === 0 || selectedFilters.size === 0;
+      });
+    });
+    
+    // Process text
+    processBtn.addEventListener('click', () => {
+      const text = inputText.value;
+      if (!text) return;
+      
+      originalLength = text.length;
+      let result = text;
+      
+      selectedFilters.forEach(filter => {
+        switch(filter) {
+          case 'trim':
+            result = result.split('\n').map(line => line.trim()).join('\n');
+            result = result.replace(/\n{3,}/g, '\n\n');
+            break;
+          case 'lower':
+            result = result.toLowerCase();
+            break;
+          case 'upper':
+            result = result.toUpperCase();
+            break;
+          case 'title':
+            result = result.toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+            break;
+          case 'remove-lines':
+            result = result.split('\n').filter(line => line.trim()).join('\n');
+            break;
+          case 'dedupe':
+            const lines = result.split('\n');
+            result = [...new Set(lines)].join('\n');
+            break;
+          case 'sort':
+            result = result.split('\n').sort().join('\n');
+            break;
+          case 'reverse':
+            result = result.split('\n').reverse().join('\n');
+            break;
+          case 'numbers':
+            const numbers = result.match(/\d+/g);
+            result = numbers ? numbers.join('\n') : '';
+            break;
+          case 'slug':
+            result = result.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+            break;
+          case 'base64':
+            try {
+              result = btoa(unescape(encodeURIComponent(result)));
+            } catch {
+              alert('Cannot encode to Base64');
+            }
+            break;
+          case 'base64-decode':
+            try {
+              result = decodeURIComponent(escape(atob(result)));
+            } catch {
+              alert('Invalid Base64 input');
+            }
+            break;
+        }
+      });
+      
+      // Display output
+      outputText.value = result;
+      outputSection.classList.add('active');
+      copyBtn.style.display = 'inline-flex';
+      
+      // Update stats
+      const words = result.trim() ? result.trim().split(/\s+/).length : 0;
+      const lines = result ? result.split('\n').length : 0;
+      const chars = result.length;
+      const change = originalLength > 0 ? Math.round(((result.length - originalLength) / originalLength) * 100) : 0;
+      
+      document.getElementById('wordCount').textContent = words.toLocaleString();
+      document.getElementById('lineCount').textContent = lines.toLocaleString();
+      document.getElementById('charCountOut').textContent = chars.toLocaleString();
+      document.getElementById('changePercent').textContent = `${change > 0 ? '+' : ''}${change}%`;
+      
+      // Track processing
+      gtag('event', 'text_process', {
+        event_category: 'engagement',
+        event_label: 'text_processor',
+        value: selectedFilters.size
+      });
+    });
+    
+    // Clear
+    clearBtn.addEventListener('click', () => {
+      inputText.value = '';
+      charCount.textContent = '0 chars';
+      outputSection.classList.remove('active');
+      copyBtn.style.display = 'none';
+      selectedFilters.clear();
+      filterBtns.forEach(btn => btn.classList.remove('active'));
+      processBtn.disabled = true;
+    });
+    
+    // Copy result
+    copyBtn.addEventListener('click', () => {
+      outputText.select();
+      document.execCommand('copy');
+      
+      const originalText = copyBtn.innerHTML;
+      copyBtn.innerHTML = '<span>✓</span> Copied!';
+      setTimeout(() => {
+        copyBtn.innerHTML = originalText;
+      }, 2000);
+    });
+    
+    // Download
+    downloadBtn.addEventListener('click', () => {
+      const blob = new Blob([outputText.value], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `processed_${new Date().toISOString().split('T')[0]}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+      
+      // Track download
+      gtag('event', 'download_result', {
+        event_category: 'engagement',
+        event_label: 'text_processor'
+      });
+    });
+    
+    // Template loader
+    window.loadTemplate = (type) => {
+      if (type === 'csv') {
+        inputText.value = 'name,email,role\nJohn,john@example.com,Admin\nJane,jane@example.com,User';
+      } else if (type === 'json') {
+        inputText.value = '{"users":[{"name":"John","email":"john@example.com"},{"name":"Jane","email":"jane@example.com"}]}';
+      } else if (type === 'sql') {
+        inputText.value = '1\n2\n3\n4\n5';
+      }
+      
+      charCount.textContent = `${inputText.value.length.toLocaleString()} chars`;
+      processBtn.disabled = selectedFilters.size === 0;
+      
+      // Track template usage
+      gtag('event', 'template_load', {
+        event_category: 'engagement',
+        event_label: type
+      });
+    };
+    
+    // Email modal
+    unlockBtn.addEventListener('click', () => {
+      emailModal.classList.add('active');
+      emailInput.focus();
+      
+      gtag('event', 'lead_modal_open', {
+        event_category: 'lead_gen',
+        event_label: 'text_processor'
+      });
+    });
+    
+    closeModal.addEventListener('click', () => {
+      emailModal.classList.remove('active');
+      successMessage.classList.remove('active');
+      emailForm.style.display = 'block';
+      emailInput.value = '';
+    });
+    
+    emailModal.addEventListener('click', (e) => {
+      if (e.target === emailModal) {
+        closeModal.click();
+      }
+    });
+    
+    emailForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = emailInput.value;
+      
+      // Store
+      localStorage.setItem('textProcessor_email', email);
+      localStorage.setItem('textProcessor_date', new Date().toISOString());
+      
+      // Track
+      gtag('event', 'generate_lead', {
+        event_category: 'lead_gen',
+        event_label: 'text_processor',
+        value: 1
+      });
+      
+      // Show success
+      emailForm.style.display = 'none';
+      successMessage.classList.add('active');
+      
+      // Update banner
+      document.querySelector('.premium-banner').innerHTML = `
+        <div style="color:var(--success);font-weight:600">✓ Premium Access Unlocked</div>
+        <p style="color:var(--muted);margin-top:8px">You can now use custom templates and advanced filters!</p>
+      `;
+      
+      // Unlock templates
+      document.querySelectorAll('.template-card.locked').forEach(card => {
+        card.classList.remove('locked');
+      });
+      
+      // Close after delay
+      setTimeout(() => {
+        closeModal.click();
+      }, 2000);
+    });
+    
+    // Check existing premium
+    if (hasPremiumAccess()) {
+      document.querySelector('.premium-banner').innerHTML = `
+        <div style="color:var(--success);font-weight:600">✓ Premium Access Active</div>
+        <p style="color:var(--muted);margin-top:8px">You have full access to all features!</p>
+      `;
+      document.querySelectorAll('.template-card.locked').forEach(card => {
+        card.classList.remove('locked');
+      });
+    }
+  </script>
+</body>
+</html>

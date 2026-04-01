@@ -380,6 +380,30 @@ testCases.forEach(tc => {
 - [What is Base64? Complete Guide](/content/what-is-base64-guide)
 - [Base64 vs URL Encoding](/content/base64-vs-url-encoding)
 
+---
+
+<!-- Email CTA -->
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2rem; margin: 2rem 0; border-radius: 12px; color: white; text-align: center;">
+<h4 style="margin: 0 0 0.75rem 0; font-size: 1.25rem;">Master Base64 Troubleshooting</h4>
+<p style="margin: 0 0 1rem 0; opacity: 0.95;">Join 500+ developers. Get the <strong>Base64 Troubleshooting Cheatsheet</strong> + weekly dev tips.</p>
+<form id="emailCtaFormB64T" style="display: flex; gap: 0.5rem; max-width: 400px; margin: 0 auto; flex-wrap: wrap; justify-content: center;">
+<input type="email" id="emailCtaB64T" placeholder="your@email.com" required style="flex: 1; min-width: 200px; padding: 0.75rem 1rem; border: none; border-radius: 6px; font-size: 1rem;">
+<button type="submit" style="background: #10b981; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 600; cursor: pointer;">Get Cheatsheet</button>
+</form>
+<p style="font-size: 0.875rem; opacity: 0.8; margin-top: 0.75rem;">No spam. Instant download.</p>
+</div>
+<script>
+document.getElementById('emailCtaFormB64T').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const email = document.getElementById('emailCtaB64T').value;
+  let emails = JSON.parse(localStorage.getItem('ghp_emails') || '[]');
+  emails.push({email: email, source: 'base64-troubleshooting', timestamp: new Date().toISOString()});
+  localStorage.setItem('ghp_emails', JSON.stringify(emails));
+  if (typeof gtag !== 'undefined') gtag('event', 'email_signup', {category: 'lead_capture', label: 'base64-troubleshooting'});
+  this.innerHTML = '<p style="margin:0">✓ Cheatsheet sent! Check your inbox.</p>';
+});
+</script>
+
 **Meta Description:** Fix Base64 encoding errors with our troubleshooting guide. Solutions for invalid character errors, padding issues, Unicode corruption, and platform-specific problems.
 
 **Keywords:** Base64 error, Base64 troubleshooting, invalid Base64 string, Base64 decode error, Unicode Base64 problem, Base64 padding error

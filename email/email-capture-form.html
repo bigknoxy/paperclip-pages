@@ -1,0 +1,306 @@
+<!-- Embeddable Email Capture Form -->
+<!-- Include this in any page to capture email leads -->
+
+<div class="email-capture-section" id="emailCaptureSection">
+    <div class="capture-container">
+        <div class="capture-content">
+            <h3>📧 Get Developer Tips & Free Tools</h3>
+            <p>Join 500+ developers. Get weekly tips, exclusive tools, and the <strong>Complete Developer Toolkit Checklist</strong> free.</p>
+            
+            <form class="capture-form" id="captureForm">
+                <div class="form-row">
+                    <input 
+                        type="email" 
+                        id="captureEmail" 
+                        placeholder="your@email.com" 
+                        required
+                        class="email-input"
+                    >
+                    <button type="submit" class="submit-btn">
+                        <span class="btn-text">Join Free</span>
+                        <span class="btn-loader hidden">Loading...</span>
+                    </button>
+                </div>
+                <p class="form-note">No spam. Unsubscribe anytime.</p>
+            </form>
+            
+            <div class="success-message hidden" id="successMessage">
+                <div class="success-icon">✓</div>
+                <p>Welcome aboard! Check your inbox for your welcome gift.</p>
+            </div>
+            
+            <div class="error-message hidden" id="errorMessage">
+                <p>Something went wrong. Please try again.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.email-capture-section {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    padding: 3rem 1.5rem;
+    margin: 3rem 0;
+    border-radius: 12px;
+    color: white;
+}
+
+.capture-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.capture-content {
+    text-align: center;
+}
+
+.capture-content h3 {
+    font-size: 1.75rem;
+    margin: 0 0 0.75rem 0;
+    font-weight: 700;
+}
+
+.capture-content p {
+    font-size: 1.1rem;
+    margin: 0 0 1.5rem 0;
+    opacity: 0.95;
+    line-height: 1.6;
+}
+
+.capture-form {
+    margin-top: 1.5rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.email-input {
+    flex: 1;
+    min-width: 250px;
+    padding: 1rem 1.25rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.email-input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+}
+
+.submit-btn {
+    padding: 1rem 2rem;
+    background: #1f2937;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.submit-btn:hover {
+    background: #111827;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+.submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.form-note {
+    font-size: 0.875rem;
+    opacity: 0.8;
+    margin-top: 0.75rem;
+}
+
+.success-message,
+.error-message {
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.success-message {
+    background: rgba(34, 197, 94, 0.2);
+}
+
+.error-message {
+    background: rgba(239, 68, 68, 0.2);
+}
+
+.success-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Inline version for articles */
+.email-capture-inline {
+    background: #f3f4f6;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #2563eb;
+    margin: 2rem 0;
+}
+
+.email-capture-inline h4 {
+    margin: 0 0 0.5rem 0;
+    color: #111827;
+}
+
+.email-capture-inline p {
+    margin: 0 0 1rem 0;
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
+.email-capture-inline .capture-form {
+    margin-top: 0;
+}
+
+.email-capture-inline .form-row {
+    flex-direction: column;
+}
+
+.email-capture-inline .email-input,
+.email-capture-inline .submit-btn {
+    width: 100%;
+}
+
+/* Sidebar version */
+.email-capture-sidebar {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.email-capture-sidebar h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.125rem;
+}
+
+.email-capture-sidebar p {
+    margin: 0 0 1rem 0;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.email-capture-sidebar .email-input {
+    border: 1px solid #d1d5db;
+    margin-bottom: 0.5rem;
+}
+
+.email-capture-sidebar .submit-btn {
+    width: 100%;
+    background: #2563eb;
+}
+
+.email-capture-sidebar .submit-btn:hover {
+    background: #1d4ed8;
+}
+</style>
+
+<script>
+(function() {
+    const form = document.getElementById('captureForm');
+    const emailInput = document.getElementById('captureEmail');
+    const submitBtn = form.querySelector('.submit-btn');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoader = submitBtn.querySelector('.btn-loader');
+    const successMsg = document.getElementById('successMessage');
+    const errorMsg = document.getElementById('errorMessage');
+    
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const email = emailInput.value.trim();
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            showError('Please enter a valid email address');
+            return;
+        }
+        
+        // Show loading state
+        submitBtn.disabled = true;
+        btnText.classList.add('hidden');
+        btnLoader.classList.remove('hidden');
+        
+        try {
+            // Use EmailCapture system if available
+            if (window.EmailCapture) {
+                const result = await window.EmailCapture.captureEmail(email, {
+                    source: window.location.pathname,
+                    tags: ['newsletter', 'content-signup'],
+                    leadMagnet: 'developer-toolkit-checklist'
+                });
+                
+                if (result.success) {
+                    showSuccess(result.message);
+                } else {
+                    showError(result.error || 'Something went wrong');
+                }
+            } else {
+                // Fallback: just save to localStorage
+                const subscribers = JSON.parse(localStorage.getItem('paperclip_subscribers') || '{}');
+                subscribers[email] = {
+                    email,
+                    source: window.location.pathname,
+                    subscribedAt: new Date().toISOString(),
+                    tags: ['newsletter']
+                };
+                localStorage.setItem('paperclip_subscribers', JSON.stringify(subscribers));
+                showSuccess('Welcome aboard! Check your inbox for your welcome gift.');
+            }
+            
+            // Track event
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'email_signup', {
+                    event_category: 'lead_capture',
+                    event_label: window.location.pathname
+                });
+            }
+            
+        } catch (error) {
+            console.error('Email capture error:', error);
+            showError('Something went wrong. Please try again.');
+        } finally {
+            submitBtn.disabled = false;
+            btnText.classList.remove('hidden');
+            btnLoader.classList.add('hidden');
+        }
+    });
+    
+    function showSuccess(message) {
+        form.classList.add('hidden');
+        successMsg.classList.remove('hidden');
+        successMsg.querySelector('p').textContent = message;
+        errorMsg.classList.add('hidden');
+    }
+    
+    function showError(message) {
+        errorMsg.classList.remove('hidden');
+        errorMsg.querySelector('p').textContent = message;
+        successMsg.classList.add('hidden');
+    }
+})();
+</script>
