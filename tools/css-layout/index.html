@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>CSS Flexbox & Grid Generator | Interactive Layout Tool | Paperclip</title>
+<meta name="description" content="Free interactive CSS Flexbox and Grid generator. Visual playground for flexbox and CSS grid properties with live preview and copy-ready CSS code. Perfect for web developers learning layouts." />
+<meta name="keywords" content="css flexbox generator, css grid generator, flexbox playground, grid playground, css layout tool, flexbox tutorial, css grid tutorial, web design tools" />
+<meta name="author" content="Paperclip" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/css-layout/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--border:rgba(255,255,255,0.08);color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1400px;margin:0 auto}
+.logo{font-weight:700;font-size:1.2em;color:var(--accent);text-decoration:none}
+nav{display:flex;gap:16px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--text)}
+.container{max-width:1400px;margin:0 auto;padding:24px}
+h1{font-size:2em;margin:0 0 8px 0}
+.subtitle{color:var(--muted);margin-bottom:24px}
+
+/* Tabs */
+.tabs{display:flex;gap:8px;margin-bottom:24px;border-bottom:1px solid var(--border);padding-bottom:12px}
+.tab-btn{padding:12px 24px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text);cursor:pointer;font-size:14px;font-weight:500;transition:all .2s}
+.tab-btn:hover{border-color:var(--accent)}
+.tab-btn.active{background:var(--accent);color:#012;border-color:var(--accent)}
+
+/* Layout */
+.layout{display:grid;grid-template-columns:320px 1fr;gap:24px;min-height:600px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}}
+
+/* Sidebar Controls */
+.sidebar{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;max-height:700px;overflow-y:auto}
+.control-group{margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.control-group:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.control-group h4{margin:0 0 12px 0;font-size:14px;color:var(--accent)}
+.control-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
+.control-row label{font-size:13px;color:var(--muted);flex:1}
+.control-row select,.control-row input{width:140px;padding:8px 10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px}
+.control-row input[type="number"]{width:70px}
+.control-row input[type="range"]{width:100%;margin-top:6px}
+.control-row select:focus,.control-row input:focus{outline:none;border-color:var(--accent)}
+
+/* Preview Area */
+.preview-area{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;display:flex;flex-direction:column}
+.preview-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px}
+.preview-header h3{margin:0;font-size:16px}
+.preview-actions{display:flex;gap:8px}
+.btn{padding:8px 16px;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .2s}
+.btn-primary{background:var(--accent);color:#012}
+.btn-secondary{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border)}
+.btn:hover{opacity:.9}
+
+/* Preview Container */
+.preview-container{background:var(--bg);border:2px dashed var(--border);border-radius:8px;padding:16px;min-height:400px;flex:1;overflow:auto}
+.preview-container.flex-mode{display:flex}
+.preview-container.grid-mode{display:grid}
+
+/* Flex/Grid Items */
+.item{background:linear-gradient(135deg,var(--accent),#0891b2);border-radius:6px;padding:20px;color:#012;font-weight:600;display:flex;align-items:center;justify-content:center;min-width:80px;min-height:80px;font-size:14px}
+.item:nth-child(2){background:linear-gradient(135deg,#8b5cf6,#7c3aed)}
+.item:nth-child(2) .item-label{color:#fff}
+.item:nth-child(3){background:linear-gradient(135deg,#f59e0b,#d97706)}
+.item:nth-child(4){background:linear-gradient(135deg,#ef4444,#dc2626)}
+.item:nth-child(4) .item-label{color:#fff}
+.item:nth-child(5){background:linear-gradient(135deg,#10b981,#059669)}
+.item:nth-child(6){background:linear-gradient(135deg,#ec4899,#db2777)}
+.item:nth-child(6) .item-label{color:#fff}
+
+/* CSS Output */
+.css-output{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:16px;margin-top:20px}
+.css-output h4{margin:0 0 12px 0;font-size:14px;color:var(--accent)}
+.css-output pre{margin:0;font-family:monospace;font-size:12px;line-height:1.6;color:var(--text);white-space:pre-wrap;word-break:break-all}
+.css-output .comment{color:#6b7280}
+.css-output .property{color:#60a5fa}
+.css-output .value{color:#a5f3fc}
+.css-output .selector{color:#f472b6}
+
+/* Info Section */
+.info-section{margin-top:40px;padding-top:40px;border-top:1px solid var(--border)}
+.info-section h2{font-size:1.5em;margin-bottom:16px}
+.info-section h3{font-size:1.1em;margin:24px 0 12px 0;color:var(--accent)}
+.info-section p{line-height:1.7;color:var(--muted)}
+.info-section ul{padding-left:20px;line-height:1.8;color:var(--muted)}
+.info-section code{background:rgba(6,182,212,0.15);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:13px}
+.property-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:16px}
+.property-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px}
+.property-card h4{margin:0 0 8px 0;font-size:14px;color:var(--text)}
+.property-card p{margin:0;font-size:13px;color:var(--muted);line-height:1.6}
+
+/* Item Count Control */
+.item-count{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:12px;background:var(--bg);border-radius:8px}
+.item-count button{width:32px;height:32px;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:6px;cursor:pointer;font-size:18px}
+.item-count button:hover{border-color:var(--accent)}
+.item-count span{font-weight:600}
+
+/* Gap Control */
+.gap-control{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+@media(max-width:500px){.gap-control{grid-template-columns:1fr}}
+
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:60px}
+</style>
+</head>
+<body>
+<header>
+<a href="/" class="logo">← Paperclip</a>
+<nav>
+<a href="/tools/">Tools</a>
+<a href="/">Home</a>
+</nav>
+</header>
+
+<div class="container">
+<h1>CSS Flexbox & Grid Generator</h1>
+<p class="subtitle">Interactive playground for CSS Flexbox and Grid layouts. Generate production-ready CSS code instantly.</p>
+
+<div class="tabs">
+<button class="tab-btn active" onclick="switchTab('flexbox')">Flexbox</button>
+<button class="tab-btn" onclick="switchTab('grid')">CSS Grid</button>
+</div>
+
+<div class="layout">
+<div class="sidebar">
+<!-- Flexbox Controls -->
+<div id="flexbox-controls">
+<div class="item-count">
+<button onclick="updateItemCount(-1)">−</button>
+<span>Items: <span id="itemCount">4</span></span>
+<button onclick="updateItemCount(1)">+</button>
+</div>
+
+<div class="control-group">
+<h4>Container Properties</h4>
+<div class="control-row">
+<label>display</label>
+<select id="flex-display" onchange="updateFlexbox()">
+<option value="flex" selected>flex</option>
+<option value="inline-flex">inline-flex</option>
+</select>
+</div>
+<div class="control-row">
+<label>flex-direction</label>
+<select id="flex-direction" onchange="updateFlexbox()">
+<option value="row" selected>row</option>
+<option value="row-reverse">row-reverse</option>
+<option value="column">column</option>
+<option value="column-reverse">column-reverse</option>
+</select>
+</div>
+<div class="control-row">
+<label>flex-wrap</label>
+<select id="flex-wrap" onchange="updateFlexbox()">
+<option value="nowrap" selected>nowrap</option>
+<option value="wrap">wrap</option>
+<option value="wrap-reverse">wrap-reverse</option>
+</select>
+</div>
+<div class="control-row">
+<label>justify-content</label>
+<select id="justify-content" onchange="updateFlexbox()">
+<option value="flex-start" selected>flex-start</option>
+<option value="flex-end">flex-end</option>
+<option value="center">center</option>
+<option value="space-between">space-between</option>
+<option value="space-around">space-around</option>
+<option value="space-evenly">space-evenly</option>
+</select>
+</div>
+<div class="control-row">
+<label>align-items</label>
+<select id="align-items" onchange="updateFlexbox()">
+<option value="stretch" selected>stretch</option>
+<option value="flex-start">flex-start</option>
+<option value="flex-end">flex-end</option>
+<option value="center">center</option>
+<option value="baseline">baseline</option>
+</select>
+</div>
+<div class="control-row">
+<label>align-content</label>
+<select id="align-content" onchange="updateFlexbox()">
+<option value="stretch" selected>stretch</option>
+<option value="flex-start">flex-start</option>
+<option value="flex-end">flex-end</option>
+<option value="center">center</option>
+<option value="space-between">space-between</option>
+<option value="space-around">space-around</option>
+<option value="space-evenly">space-evenly</option>
+</select>
+</div>
+<div class="control-row" style="flex-direction:column;align-items:flex-start">
+<label>gap</label>
+<input type="range" id="flex-gap" min="0" max="64" value="16" oninput="updateFlexbox()">
+<span id="flex-gap-value" style="font-size:12px;color:var(--muted)">16px</span>
+</div>
+</div>
+
+<div class="control-group">
+<h4>Item Properties (All Items)</h4>
+<div class="control-row">
+<label>flex-grow</label>
+<input type="number" id="flex-grow" min="0" max="10" value="0" oninput="updateFlexbox()">
+</div>
+<div class="control-row">
+<label>flex-shrink</label>
+<input type="number" id="flex-shrink" min="0" max="10" value="1" oninput="updateFlexbox()">
+</div>
+<div class="control-row">
+<label>flex-basis</label>
+<input type="text" id="flex-basis" value="auto" oninput="updateFlexbox()">
+</div>
+<div class="control-row">
+<label>align-self</label>
+<select id="align-self" onchange="updateFlexbox()">
+<option value="auto" selected>auto</option>
+<option value="flex-start">flex-start</option>
+<option value="flex-end">flex-end</option>
+<option value="center">center</option>
+<option value="baseline">baseline</option>
+<option value="stretch">stretch</option>
+</select>
+</div>
+</div>
+</div>
+
+<!-- Grid Controls -->
+<div id="grid-controls" style="display:none">
+<div class="control-group">
+<h4>Grid Template</h4>
+<div class="control-row">
+<label>Columns</label>
+<input type="number" id="grid-columns" min="1" max="6" value="3" oninput="updateGrid()">
+</div>
+<div class="control-row">
+<label>Rows</label>
+<input type="number" id="grid-rows" min="1" max="6" value="2" oninput="updateGrid()">
+</div>
+<div class="control-row">
+<label>Column Size</label>
+<select id="col-size" onchange="updateGrid()">
+<option value="1fr 1fr 1fr">equal (1fr)</option>
+<option value="2fr 1fr 1fr">2:1:1 ratio</option>
+<option value="1fr 2fr 1fr">1:2:1 ratio</option>
+<option value="1fr 1fr 2fr">1:1:2 ratio</option>
+<option value="200px 1fr 1fr">fixed + fluid</option>
+<option value="repeat(3, minmax(100px, 1fr))">responsive</option>
+</select>
+</div>
+<div class="control-row">
+<label>Row Size</label>
+<select id="row-size" onchange="updateGrid()">
+<option value="auto" selected>auto</option>
+<option value="100px">100px</option>
+<option value="150px">150px</option>
+<option value="1fr">1fr</option>
+<option value="minmax(100px, auto)">minmax</option>
+</select>
+</div>
+</div>
+
+<div class="control-group">
+<h4>Gap & Alignment</h4>
+<div class="gap-control">
+<div class="control-row" style="flex-direction:column;align-items:flex-start">
+<label>column-gap</label>
+<input type="range" id="grid-col-gap" min="0" max="64" value="16" oninput="updateGrid()">
+<span id="grid-col-gap-value" style="font-size:12px;color:var(--muted)">16px</span>
+</div>
+<div class="control-row" style="flex-direction:column;align-items:flex-start">
+<label>row-gap</label>
+<input type="range" id="grid-row-gap" min="0" max="64" value="16" oninput="updateGrid()">
+<span id="grid-row-gap-value" style="font-size:12px;color:var(--muted)">16px</span>
+</div>
+</div>
+<div class="control-row">
+<label>justify-items</label>
+<select id="grid-justify-items" onchange="updateGrid()">
+<option value="stretch" selected>stretch</option>
+<option value="start">start</option>
+<option value="end">end</option>
+<option value="center">center</option>
+</select>
+</div>
+<div class="control-row">
+<label>align-items</label>
+<select id="grid-align-items" onchange="updateGrid()">
+<option value="stretch" selected>stretch</option>
+<option value="start">start</option>
+<option value="end">end</option>
+<option value="center">center</option>
+</select>
+</div>
+</div>
+
+<div class="control-group">
+<h4>Auto Flow</h4>
+<div class="control-row">
+<label>grid-auto-flow</label>
+<select id="grid-auto-flow" onchange="updateGrid()">
+<option value="row" selected>row</option>
+<option value="column">column</option>
+<option value="row dense">row dense</option>
+<option value="column dense">column dense</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+
+<div class="preview-area">
+<div class="preview-header">
+<h3>Live Preview</h3>
+<div class="preview-actions">
+<button class="btn btn-secondary" onclick="resetLayout()">Reset</button>
+<button class="btn btn-primary" onclick="copyCSS()">Copy CSS</button>
+</div>
+</div>
+
+<div id="preview-container" class="preview-container flex-mode">
+<div class="item"><span class="item-label">1</span></div>
+<div class="item"><span class="item-label">2</span></div>
+<div class="item"><span class="item-label">3</span></div>
+<div class="item"><span class="item-label">4</span></div>
+</div>
+
+<div class="css-output">
+<h4>Generated CSS</h4>
+<pre id="css-code"><span class="selector">.container</span> {
+<span class="property">  display</span>: <span class="value">flex</span>;
+<span class="property">  flex-direction</span>: <span class="value">row</span>;
+<span class="property">  flex-wrap</span>: <span class="value">nowrap</span>;
+<span class="property">  justify-content</span>: <span class="value">flex-start</span>;
+<span class="property">  align-items</span>: <span class="value">stretch</span>;
+<span class="property">  gap</span>: <span class="value">16px</span>;
+}
+
+<span class="selector">.item</span> {
+<span class="property">  flex-grow</span>: <span class="value">0</span>;
+<span class="property">  flex-shrink</span>: <span class="value">1</span>;
+<span class="property">  flex-basis</span>: <span class="value">auto</span>;
+}</n</pre>
+</div>
+</div>
+</div>
+
+<div class="info-section">
+<h2>CSS Layout Guide</h2>
+
+<h3>Flexbox vs Grid: When to Use Which?</h3>
+<p><strong>Flexbox</strong> is best for one-dimensional layouts - either a row or a column. Use it for:</p>
+<ul>
+<li>Navigation bars and menus</li>
+<li>Centering elements</li>
+<li>Distributing space between items</li>
+<li>Card components with variable content</li>
+<li>Form layouts</li>
+</ul>
+
+<p><strong>CSS Grid</strong> is best for two-dimensional layouts - rows and columns together. Use it for:</p>
+<ul>
+<li>Page layouts (header, sidebar, main, footer)</li>
+<li>Image galleries</li>
+<li>Dashboard layouts</li>
+<li>Complex card grids</li>
+<li>Magazine-style layouts</li>
+</ul>
+
+<h3>Common Flexbox Properties</h3>
+<div class="property-grid">
+<div class="property-card">
+<h4>justify-content</h4>
+<p>Aligns items along the main axis (horizontal for row, vertical for column). Controls spacing between items.</p>
+</div>
+<div class="property-card">
+<h4>align-items</h4>
+<p>Aligns items along the cross axis (vertical for row, horizontal for column). Controls item alignment.</p>
+</div>
+<div class="property-card">
+<h4>flex-wrap</h4>
+<p>Allows items to wrap onto multiple lines. Use <code>wrap</code> for responsive layouts.</p>
+</div>
+<div class="property-card">
+<h4>gap</h4>
+<p>Sets spacing between flex items. Replaces margin hacks with a clean, modern approach.</p>
+</div>
+</div>
+
+<h3>Common Grid Properties</h3>
+<div class="property-grid">
+<div class="property-card">
+<h4>grid-template-columns</h4>
+<p>Defines column tracks. Use <code>repeat()</code> for patterns, <code>fr</code> units for fractions.</p>
+</div>
+<div class="property-card">
+<h4>grid-template-rows</h4>
+<p>Defines row tracks. Similar syntax to columns but for vertical tracks.</p>
+</div>
+<div class="property-card">
+<h4>grid-gap / gap</h4>
+<p>Sets spacing between grid cells. Modern shorthand for row-gap and column-gap.</p>
+</div>
+<div class="property-card">
+<h4>grid-auto-flow</h4>
+<p>Controls how auto-placed items fill the grid. Use <code>dense</code> to fill gaps.</p>
+</div>
+</div>
+
+<h3>Pro Tips</h3>
+<ul>
+<li>Use <code>gap</code> instead of margins for spacing - it's cleaner and handles edge cases</li>
+<li>Combine Grid for overall page layout with Flexbox for component interiors</li>
+<li>Use <code>minmax()</code> for responsive grids that don't break on small screens</li>
+<li><code>auto-fit</code> and <code>auto-fill</code> are powerful for responsive grids without media queries</li>
+<li>Set <code>flex: 1</code> as shorthand for <code>flex-grow: 1; flex-shrink: 1; flex-basis: 0%</code></li>
+</ul>
+</div>
+</div>
+
+<footer>
+<p>Made with minimal code • Free forever • No tracking</p>
+</footer>
+
+<script>
+let currentTab = 'flexbox';
+let itemCount = 4;
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  document.getElementById('flexbox-controls').style.display = tab === 'flexbox' ? 'block' : 'none';
+  document.getElementById('grid-controls').style.display = tab === 'grid' ? 'block' : 'none';
+  
+  const preview = document.getElementById('preview-container');
+  preview.className = 'preview-container ' + (tab === 'flexbox' ? 'flex-mode' : 'grid-mode');
+  
+  if (tab === 'flexbox') {
+    updateFlexbox();
+  } else {
+    updateGrid();
+  }
+}
+
+function updateItemCount(delta) {
+  itemCount = Math.max(1, Math.min(12, itemCount + delta));
+  document.getElementById('itemCount').textContent = itemCount;
+  
+  const container = document.getElementById('preview-container');
+  container.innerHTML = '';
+  for (let i = 1; i <= itemCount; i++) {
+    const item = document.createElement('div');
+    item.className = 'item';
+    item.innerHTML = `<span class="item-label">${i}</span>`;
+    container.appendChild(item);
+  }
+  
+  if (currentTab === 'flexbox') {
+    updateFlexbox();
+  } else {
+    updateGrid();
+  }
+}
+
+function updateFlexbox() {
+  const container = document.getElementById('preview-container');
+  const gap = document.getElementById('flex-gap').value;
+  
+  document.getElementById('flex-gap-value').textContent = gap + 'px';
+  
+  container.style.display = document.getElementById('flex-display').value;
+  container.style.flexDirection = document.getElementById('flex-direction').value;
+  container.style.flexWrap = document.getElementById('flex-wrap').value;
+  container.style.justifyContent = document.getElementById('justify-content').value;
+  container.style.alignItems = document.getElementById('align-items').value;
+  container.style.alignContent = document.getElementById('align-content').value;
+  container.style.gap = gap + 'px';
+  
+  const items = container.querySelectorAll('.item');
+  items.forEach(item => {
+    item.style.flexGrow = document.getElementById('flex-grow').value;
+    item.style.flexShrink = document.getElementById('flex-shrink').value;
+    item.style.flexBasis = document.getElementById('flex-basis').value;
+    item.style.alignSelf = document.getElementById('align-self').value;
+  });
+  
+  generateFlexCSS();
+}
+
+function updateGrid() {
+  const container = document.getElementById('preview-container');
+  const cols = document.getElementById('grid-columns').value;
+  const rows = document.getElementById('grid-rows').value;
+  const colSize = document.getElementById('col-size').value;
+  const rowSize = document.getElementById('row-size').value;
+  const colGap = document.getElementById('grid-col-gap').value;
+  const rowGap = document.getElementById('grid-row-gap').value;
+  
+  document.getElementById('grid-col-gap-value').textContent = colGap + 'px';
+  document.getElementById('grid-row-gap-value').textContent = rowGap + 'px';
+  
+  container.style.display = 'grid';
+  container.style.gridTemplateColumns = colSize;
+  container.style.gridTemplateRows = rowSize === 'auto' ? `repeat(${rows}, auto)` : `repeat(${rows}, ${rowSize})`;
+  container.style.columnGap = colGap + 'px';
+  container.style.rowGap = rowGap + 'px';
+  container.style.justifyItems = document.getElementById('grid-justify-items').value;
+  container.style.alignItems = document.getElementById('grid-align-items').value;
+  container.style.gridAutoFlow = document.getElementById('grid-auto-flow').value;
+  
+  // Ensure enough items for the grid
+  const totalCells = cols * rows;
+  const items = container.querySelectorAll('.item');
+  if (items.length < totalCells) {
+    for (let i = items.length + 1; i <= totalCells; i++) {
+      const item = document.createElement('div');
+      item.className = 'item';
+      item.innerHTML = `<span class="item-label">${i}</span>`;
+      container.appendChild(item);
+    }
+  } else if (items.length > totalCells) {
+    for (let i = items.length - 1; i >= totalCells; i--) {
+      items[i].remove();
+    }
+  }
+  itemCount = totalCells;
+  document.getElementById('itemCount').textContent = itemCount;
+  
+  generateGridCSS(cols, rows, colSize, rowSize, colGap, rowGap);
+}
+
+function generateFlexCSS() {
+  const display = document.getElementById('flex-display').value;
+  const direction = document.getElementById('flex-direction').value;
+  const wrap = document.getElementById('flex-wrap').value;
+  const justify = document.getElementById('justify-content').value;
+  const align = document.getElementById('align-items').value;
+  const content = document.getElementById('align-content').value;
+  const gap = document.getElementById('flex-gap').value;
+  const grow = document.getElementById('flex-grow').value;
+  const shrink = document.getElementById('flex-shrink').value;
+  const basis = document.getElementById('flex-basis').value;
+  const self = document.getElementById('align-self').value;
+  
+  let css = `<span class="selector">.container</span> {\n`;
+  css += `<span class="property">  display</span>: <span class="value">${display}</span>;\n`;
+  if (direction !== 'row') css += `<span class="property">  flex-direction</span>: <span class="value">${direction}</span>;\n`;
+  if (wrap !== 'nowrap') css += `<span class="property">  flex-wrap</span>: <span class="value">${wrap}</span>;\n`;
+  if (justify !== 'flex-start') css += `<span class="property">  justify-content</span>: <span class="value">${justify}</span>;\n`;
+  if (align !== 'stretch') css += `<span class="property">  align-items</span>: <span class="value">${align}</span>;\n`;
+  if (content !== 'stretch') css += `<span class="property">  align-content</span>: <span class="value">${content}</span>;\n`;
+  if (gap !== '0') css += `<span class="property">  gap</span>: <span class="value">${gap}px</span>;\n`;
+  css += `}\n\n`;
+  
+  css += `<span class="selector">.item</span> {\n`;
+  if (grow !== '0') css += `<span class="property">  flex-grow</span>: <span class="value">${grow}</span>;\n`;
+  if (shrink !== '1') css += `<span class="property">  flex-shrink</span>: <span class="value">${shrink}</span>;\n`;
+  if (basis !== 'auto') css += `<span class="property">  flex-basis</span>: <span class="value">${basis}</span>;\n`;
+  if (self !== 'auto') css += `<span class="property">  align-self</span>: <span class="value">${self}</span>;\n`;
+  css += `}`;
+  
+  document.getElementById('css-code').innerHTML = css;
+}
+
+function generateGridCSS(cols, rows, colSize, rowSize, colGap, rowGap) {
+  const justify = document.getElementById('grid-justify-items').value;
+  const align = document.getElementById('grid-align-items').value;
+  const autoFlow = document.getElementById('grid-auto-flow').value;
+  
+  let css = `<span class="selector">.container</span> {\n`;
+  css += `<span class="property">  display</span>: <span class="value">grid</span>;\n`;
+  css += `<span class="property">  grid-template-columns</span>: <span class="value">${colSize}</span>;\n`;
+  if (rowSize !== 'auto') {
+    css += `<span class="property">  grid-template-rows</span>: <span class="value">repeat(${rows}, ${rowSize})</span>;\n`;
+  }
+  if (colGap !== '0' || rowGap !== '0') {
+    css += `<span class="property">  gap</span>: <span class="value">${rowGap}px ${colGap}px</span>;\n`;
+  }
+  if (justify !== 'stretch') css += `<span class="property">  justify-items</span>: <span class="value">${justify}</span>;\n`;
+  if (align !== 'stretch') css += `<span class="property">  align-items</span>: <span class="value">${align}</span>;\n`;
+  if (autoFlow !== 'row') css += `<span class="property">  grid-auto-flow</span>: <span class="value">${autoFlow}</span>;\n`;
+  css += `}`;
+  
+  document.getElementById('css-code').innerHTML = css;
+}
+
+function resetLayout() {
+  if (currentTab === 'flexbox') {
+    document.getElementById('flex-direction').value = 'row';
+    document.getElementById('flex-wrap').value = 'nowrap';
+    document.getElementById('justify-content').value = 'flex-start';
+    document.getElementById('align-items').value = 'stretch';
+    document.getElementById('align-content').value = 'stretch';
+    document.getElementById('flex-gap').value = '16';
+    document.getElementById('flex-grow').value = '0';
+    document.getElementById('flex-shrink').value = '1';
+    document.getElementById('flex-basis').value = 'auto';
+    document.getElementById('align-self').value = 'auto';
+    updateFlexbox();
+  } else {
+    document.getElementById('grid-columns').value = '3';
+    document.getElementById('grid-rows').value = '2';
+    document.getElementById('col-size').value = '1fr 1fr 1fr';
+    document.getElementById('row-size').value = 'auto';
+    document.getElementById('grid-col-gap').value = '16';
+    document.getElementById('grid-row-gap').value = '16';
+    document.getElementById('grid-justify-items').value = 'stretch';
+    document.getElementById('grid-align-items').value = 'stretch';
+    document.getElementById('grid-auto-flow').value = 'row';
+    updateGrid();
+  }
+}
+
+function copyCSS() {
+  const code = document.getElementById('css-code').textContent;
+  navigator.clipboard.writeText(code);
+  const btn = event.target;
+  const originalText = btn.textContent;
+  btn.textContent = 'Copied!';
+  setTimeout(() => btn.textContent = originalText, 1500);
+}
+
+// Initialize
+updateFlexbox();
+</script>
+</body>
+</html>

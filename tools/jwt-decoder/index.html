@@ -46,9 +46,25 @@ button.secondary:hover{background:rgba(255,255,255,0.15)}
 .jwt-label{font-size:11px;color:var(--muted);margin-bottom:4px;text-transform:uppercase}
 .jwt-claims{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
 .claim-row{display:flex;gap:8px;align-items:center;padding:8px;background:rgba(255,255,255,0.02);border-radius:4px}
-.claim-key{color:var(--accent);font-family:monospace;font-size:12px}
-.claim-value{color:var(--text);font-size:13px}
-footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
+ .claim-key{color:var(--accent);font-family:monospace;font-size:12px}
+ .claim-value{color:var(--text);font-size:13px}
+ .pro-tips{margin-top:32px;padding:20px;background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(37,99,235,0.1));border-radius:12px;border:1px solid rgba(6,182,212,0.3)}
+ .pro-tips h3{margin:0 0 16px 0;color:var(--accent)}
+ .pro-tips h4{margin:16px 0 8px 0;color:var(--text);font-size:14px}
+ .pro-tips ul{margin:0;padding-left:20px;color:var(--muted)}
+ .pro-tips li{margin-bottom:12px}
+ .pro-tips a{color:var(--accent);text-decoration:none}
+ .pro-tips a:hover{text-decoration:underline}
+ .carbon-ads{margin:32px 0;padding:16px;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid rgba(255,255,255,0.05);text-align:center;min-height:120px}
+ .carbon-ads-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+ .affiliate-banner{margin:24px 0;padding:16px;background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(251,191,36,0.05));border-radius:12px;border:1px solid rgba(245,158,11,0.3);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+ .affiliate-banner img{width:60px;height:60px;object-fit:cover;border-radius:8px}
+ .affiliate-banner .content{flex:1;min-width:200px}
+ .affiliate-banner h4{margin:0 0 4px 0;color:var(--text)}
+ .affiliate-banner p{margin:0 0 8px 0;color:var(--muted);font-size:13px}
+ .affiliate-banner a{color:var(--accent);text-decoration:none;font-weight:600}
+ .affiliate-banner a:hover{text-decoration:underline}
+ footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
 </style>
 </head>
 <body>
@@ -93,13 +109,37 @@ footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;bor
 <div class="jwt-signature">
 <div class="jwt-label">Signature Hash</div>
 <div id="signature-content"></div>
-</div>
-</div>
-</div>
+ </div>
+ </div>
+
+ <div class="pro-tips">
+ <h3>Pro Tools for JWT Security</h3>
+ <ul>
+ <li><strong><a href="https://auth0.com/?ref=paperclip" target="_blank" rel="nofollow">Auth0</a></strong> - Industry-leading identity platform. Secure JWT authentication with 7,000+ integrations. Free tier includes 7,500 active users.</li>
+ <li><strong><a href="https://jwt.io/?ref=paperclip" target="_blank" rel="nofollow">JWT.io Extended</a></strong> - Official JWT debugger with libraries for 40+ languages. Production-ready JWT implementations.</li>
+ <li><strong><a href="https://www.keycloak.org/?ref=paperclip" target="_blank" rel="nofollow">Keycloak</a></strong> - Open source identity management. Full OIDC/OAuth 2.0 support with JWT tokens.</li>
+ </ul>
+ <p style="margin-top:16px;font-size:13px;color:var(--muted)">Learn JWT best practices with <a href="https://www.pluralsight.com/courses/json-web-token-jwt-security" target="_blank">Pluralsight's JWT Security Course</a>.</p>
+ </div>
+
+ <div class="carbon-ads">
+ <div class="carbon-ads-label">Sponsored</div>
+ <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7ITK7L&placement=paperclip" id="_carbonads_js"></script>
+ </div>
+
+ <div class="affiliate-banner">
+ <img src="https://via.placeholder.com/60x60/2563eb/ffffff?text=Auth" alt="Clerk" onerror="this.style.display='none'">
+ <div class="content">
+ <h4>Clerk — Complete User Management</h4>
+ <p>The easiest way to add authentication. JWT tokens, session management, and user dashboards out of the box. Perfect for React & Next.js.</p>
+ <a href="https://clerk.com/?ref=paperclip" target="_blank" rel="nofollow">Start Free →</a>
+ </div>
+ </div>
+ </div>
 </div>
 
 <footer>
-<p>Made with minimal code • Free forever • No tracking</p>
+ <p>Made with minimal code • Free forever • No tracking</p>
 </footer>
 
 <script>

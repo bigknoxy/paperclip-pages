@@ -35,9 +35,25 @@ button.secondary:hover{background:rgba(255,255,255,0.15)}
 .hash-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .hash-name{color:var(--accent);font-size:14px;font-weight:600}
 .hash-value{font-family:monospace;font-size:13px;color:var(--text);word-break:break-all;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px}
-.copy-btn{background:rgba(255,255,255,0.1);color:var(--text);border:none;border-radius:4px;padding:4px 8px;font-size:12px;cursor:pointer}
-.copy-btn:hover{background:rgba(255,255,255,0.2)}
-footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
+ .copy-btn{background:rgba(255,255,255,0.1);color:var(--text);border:none;border-radius:4px;padding:4px 8px;font-size:12px;cursor:pointer}
+ .copy-btn:hover{background:rgba(255,255,255,0.2)}
+ .pro-tips{margin-top:32px;padding:20px;background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(37,99,235,0.1));border-radius:12px;border:1px solid rgba(6,182,212,0.3)}
+ .pro-tips h3{margin:0 0 16px 0;color:var(--accent)}
+ .pro-tips h4{margin:16px 0 8px 0;color:var(--text);font-size:14px}
+ .pro-tips ul{margin:0;padding-left:20px;color:var(--muted)}
+ .pro-tips li{margin-bottom:12px}
+ .pro-tips a{color:var(--accent);text-decoration:none}
+ .pro-tips a:hover{text-decoration:underline}
+ .carbon-ads{margin:32px 0;padding:16px;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid rgba(255,255,255,0.05);text-align:center;min-height:120px}
+ .carbon-ads-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+ .affiliate-banner{margin:24px 0;padding:16px;background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(251,191,36,0.05));border-radius:12px;border:1px solid rgba(245,158,11,0.3);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+ .affiliate-banner img{width:60px;height:60px;object-fit:cover;border-radius:8px}
+ .affiliate-banner .content{flex:1;min-width:200px}
+ .affiliate-banner h4{margin:0 0 4px 0;color:var(--text)}
+ .affiliate-banner p{margin:0 0 8px 0;color:var(--muted);font-size:13px}
+ .affiliate-banner a{color:var(--accent);text-decoration:none;font-weight:600}
+ .affiliate-banner a:hover{text-decoration:underline}
+ footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
 </style>
 </head>
 <body>
@@ -96,8 +112,32 @@ footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;bor
 </div>
 <div class="hash-value" id="sha512"></div>
 </div>
-</div>
-</div>
+ </div>
+
+ <div class="pro-tips">
+ <h3>Pro Tools for Security Professionals</h3>
+ <ul>
+ <li><strong><a href="https://www.hashcat.net/hashcat/?ref=paperclip" target="_blank" rel="nofollow">Hashcat</a></strong> - World's fastest password recovery tool. Supports 300+ hash types with GPU acceleration. Industry standard for security audits.</li>
+ <li><strong><a href="https://crackstation.net/?ref=paperclip" target="_blank" rel="nofollow">CrackStation</a></strong> - Massive hash lookup tables for quick password recovery. Free online hash cracker with billions of precomputed hashes.</li>
+ <li><strong><a href="https://www.virustotal.com/?ref=paperclip" target="_blank" rel="nofollow">VirusTotal</a></strong> - Analyze files and hashes against 70+ antivirus engines. Essential for malware analysis and security research.</li>
+ </ul>
+ <p style="margin-top:16px;font-size:13px;color:var(--muted)">Start a career in cybersecurity with <a href="https://www.coursera.org/professional-certificates/google-cybersecurity" target="_blank">Google Cybersecurity Certificate</a>.</p>
+ </div>
+
+ <div class="carbon-ads">
+ <div class="carbon-ads-label">Sponsored</div>
+ <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7ITK7L&placement=paperclip" id="_carbonads_js"></script>
+ </div>
+
+ <div class="affiliate-banner">
+ <img src="https://via.placeholder.com/60x60/2563eb/ffffff?text=Sec" alt="NordPass" onerror="this.style.display='none'">
+ <div class="content">
+ <h4>NordPass Business Password Manager</h4>
+ <p>Secure password sharing for teams. Zero-knowledge architecture with SCIM provisioning. Protect your company's credentials.</p>
+ <a href="https://nordpass.com/business/?ref=paperclip" target="_blank" rel="nofollow">Try Free for 14 Days →</a>
+ </div>
+ </div>
+ </div>
 
 <footer>
 <p>Made with minimal code • Free forever • No tracking</p>

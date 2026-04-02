@@ -35,10 +35,26 @@
     .message{margin-top:8px;padding:8px 12px;border-radius:6px;font-size:14px}
     .message.success{background:rgba(34,197,94,.1);color:var(--success)}
     .message.error{background:rgba(239,68,68,.1);color:var(--error)}
-    .options{margin:16px 0;display:flex;gap:16px;flex-wrap:wrap}
-    .option{display:flex;align-items:center;gap:8px;cursor:pointer}
-    .option input[type="checkbox"]{cursor:pointer}
-    footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
+ .options{margin:16px 0;display:flex;gap:16px;flex-wrap:wrap}
+ .option{display:flex;align-items:center;gap:8px;cursor:pointer}
+ .option input[type="checkbox"]{cursor:pointer}
+ .pro-tips{margin-top:32px;padding:20px;background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(37,99,235,0.1));border-radius:12px;border:1px solid rgba(6,182,212,0.3)}
+ .pro-tips h3{margin:0 0 16px 0;color:var(--accent)}
+ .pro-tips h4{margin:16px 0 8px 0;color:var(--text);font-size:14px}
+ .pro-tips ul{margin:0;padding-left:20px;color:var(--muted)}
+ .pro-tips li{margin-bottom:12px}
+ .pro-tips a{color:var(--accent);text-decoration:none}
+ .pro-tips a:hover{text-decoration:underline}
+ .carbon-ads{margin:32px 0;padding:16px;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid rgba(255,255,255,0.05);text-align:center;min-height:120px}
+ .carbon-ads-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+ .affiliate-banner{margin:24px 0;padding:16px;background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(251,191,36,0.05));border-radius:12px;border:1px solid rgba(245,158,11,0.3);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+ .affiliate-banner img{width:60px;height:60px;object-fit:cover;border-radius:8px}
+ .affiliate-banner .content{flex:1;min-width:200px}
+ .affiliate-banner h4{margin:0 0 4px 0;color:var(--text)}
+ .affiliate-banner p{margin:0 0 8px 0;color:var(--muted);font-size:13px}
+ .affiliate-banner a{color:var(--accent);text-decoration:none;font-weight:600}
+ .affiliate-banner a:hover{text-decoration:underline}
+ footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
   </style>
 </head>
 <body>
@@ -95,17 +111,41 @@
 </form>
 </div>
 
-<div class="tips" style="margin-top: 32px; padding: 20px; background: var(--card); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-<h3>Related Resources</h3>
-<ul style="color: var(--muted); padding-left: 20px;">
-<li><a href="/content/url-encoding-guide" style="color: var(--accent);">URL Encoding Guide</a> - Complete URL encoding tutorial</li>
-<li><a href="/content/base64-vs-url-encoding" style="color: var(--accent);">Base64 vs URL Encoding</a> - When to use each</li>
-<li><a href="/tools/base64" style="color: var(--accent);">Base64 Encoder/Decoder</a> - Encode binary data</li>
-<li><a href="/tools/html-encoder" style="color: var(--accent);">HTML Entity Encoder</a> - Encode for HTML</li>
-<li><a href="/tools/json-formatter" style="color: var(--accent);">JSON Formatter</a> - Format API responses</li>
-</ul>
-</div>
-</div>
+ <div class="pro-tips">
+ <h3>Pro Tools for Web Developers</h3>
+ <ul>
+ <li><strong><a href="https://www.postman.com/?ref=paperclip" target="_blank" rel="nofollow">Postman</a></strong> - The complete API development platform. Test URL-encoded endpoints with ease. Free plan available.</li>
+ <li><strong><a href="https://httpie.io/?ref=paperclip" target="_blank" rel="nofollow">HTTPie</a></strong> - Modern, user-friendly HTTP client. Perfect for debugging API requests with URL parameters.</li>
+ <li><strong><a href="https://www.charlesproxy.com/?ref=paperclip" target="_blank" rel="nofollow">Charles Proxy</a></strong> - Inspect HTTP traffic including URL-encoded data. Essential for debugging web apps.</li>
+ </ul>
+ <p style="margin-top:16px;font-size:13px;color:var(--muted)">Master web APIs with <a href="https://www.udemy.com/topic/web-development/?ref=paperclip" target="_blank">Udemy's Web Development Courses</a>.</p>
+ </div>
+
+ <div class="carbon-ads">
+ <div class="carbon-ads-label">Sponsored</div>
+ <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7ITK7L&placement=paperclip" id="_carbonads_js"></script>
+ </div>
+
+ <div class="affiliate-banner">
+ <img src="https://via.placeholder.com/60x60/2563eb/ffffff?text=API" alt="Insomnia" onerror="this.style.display='none'">
+ <div class="content">
+ <h4>Insomnia API Client</h4>
+ <p>The most intuitive REST API client. Auto-encode URL parameters, generate code snippets, and collaborate with your team.</p>
+ <a href="https://insomnia.rest/?ref=paperclip" target="_blank" rel="nofollow">Download for Free →</a>
+ </div>
+ </div>
+
+ <div class="tips" style="margin-top: 32px; padding: 20px; background: var(--card); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+ <h3>Related Resources</h3>
+ <ul style="color: var(--muted); padding-left: 20px;">
+ <li><a href="/content/url-encoding-guide" style="color: var(--accent);">URL Encoding Guide</a> - Complete URL encoding tutorial</li>
+ <li><a href="/content/base64-vs-url-encoding" style="color: var(--accent);">Base64 vs URL Encoding</a> - When to use each</li>
+ <li><a href="/tools/base64" style="color: var(--accent);">Base64 Encoder/Decoder</a> - Encode binary data</li>
+ <li><a href="/tools/html-encoder" style="color: var(--accent);">HTML Entity Encoder</a> - Encode for HTML</li>
+ <li><a href="/tools/json-formatter" style="color: var(--accent);">JSON Formatter</a> - Format API responses</li>
+ </ul>
+ </div>
+ </div>
 
 <footer>
 <p>Made with minimal code • Free forever • No tracking</p>
