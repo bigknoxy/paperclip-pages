@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Lorem Ipsum Generator | Free Dummy Text Tool | Paperclip</title>
+<meta name="description" content="Free Lorem Ipsum generator. Create dummy text for design mockups, wireframes, and content testing. Generate paragraphs, words, sentences, or lists with HTML option." />
+<meta name="keywords" content="lorem ipsum generator, dummy text generator, placeholder text, lorem ipsum dolor sit amet, text filler" />
+<meta name="author" content="Paperclip" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/lorem-ipsum/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--border:rgba(255,255,255,0.08);color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+.logo{font-weight:700;font-size:1.2em;color:var(--accent);text-decoration:none}
+nav{display:flex;gap:16px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--text)}
+.container{max-width:900px;margin:0 auto;padding:24px}
+h1{font-size:2em;margin:0 0 8px 0}
+.subtitle{color:var(--muted);margin-bottom:24px}
+.tool-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px}
+.options-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px}
+.option-group{display:flex;flex-direction:column;gap:8px}
+.option-group label{color:var(--muted);font-size:14px}
+.option-group select,.option-group input{width:100%;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px}
+.option-group select:focus,.option-group input:focus{outline:none;border-color:var(--accent)}
+.checkbox-group{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:20px}
+.checkbox-label{display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--muted);font-size:14px}
+.checkbox-label input{cursor:pointer}
+.button-group{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.btn{padding:12px 24px;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s}
+.btn-primary{background:var(--accent);color:#012}
+.btn-secondary{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border)}
+.btn:hover{opacity:.9}
+.output-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:20px;min-height:200px;max-height:400px;overflow-y:auto}
+.output-box p{margin:0 0 16px 0;line-height:1.7}
+.output-box p:last-child{margin-bottom:0}
+.output-box ul,.output-box ol{margin:0;padding-left:24px}
+.output-box li{margin-bottom:8px;line-height:1.6}
+.stats-bar{display:flex;gap:24px;padding:16px;background:rgba(255,255,255,0.02);border-radius:8px;margin-top:16px;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column;align-items:center}
+.stat-value{font-size:1.5em;font-weight:700;color:var(--accent)}
+.stat-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-top:4px}
+.pro-tips{margin-top:32px;padding:20px;background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(37,99,235,0.1));border-radius:12px;border:1px solid rgba(6,182,212,0.3)}
+.pro-tips h3{margin:0 0 16px 0;color:var(--accent)}
+.pro-tips ul{margin:0;padding-left:20px;color:var(--muted)}
+.pro-tips li{margin-bottom:12px}
+.pro-tips a{color:var(--accent);text-decoration:none}
+.pro-tips a:hover{text-decoration:underline}
+.carbon-ads{margin:32px 0;padding:16px;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid rgba(255,255,255,0.05);text-align:center;min-height:120px}
+.carbon-ads-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+.affiliate-banner{margin:24px 0;padding:16px;background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(251,191,36,0.05));border-radius:12px;border:1px solid rgba(245,158,11,0.3);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.affiliate-banner img{width:60px;height:60px;object-fit:cover;border-radius:8px}
+.affiliate-banner .content{flex:1;min-width:200px}
+.affiliate-banner h4{margin:0 0 4px 0;color:var(--text)}
+.affiliate-banner p{margin:0 0 8px 0;color:var(--muted);font-size:13px}
+.affiliate-banner a{color:var(--accent);text-decoration:none;font-weight:600}
+.affiliate-banner a:hover{text-decoration:underline}
+.tips{margin-top:32px;padding:20px;background:var(--card);border-radius:12px;border:1px solid var(--border)}
+.tips h3{margin:0 0 12px 0;color:var(--accent)}
+.tips ul{margin:0;padding-left:20px;color:var(--muted)}
+.tips li{margin-bottom:8px}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:60px}
+.copy-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--accent);color:#012;padding:12px 24px;border-radius:8px;font-weight:600;opacity:0;transition:all .3s;z-index:1000}
+.copy-toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+</style>
+</head>
+<body>
+<header>
+ <a href="/" class="logo">← Paperclip</a>
+ <nav>
+ <a href="/">Home</a>
+ <a href="/about.html">About</a>
+ <a href="/tools/">Tools</a>
+ </nav>
+</header>
+
+<div class="container">
+ <h1>Lorem Ipsum Generator</h1>
+ <p class="subtitle">Generate placeholder text for your designs, mockups, and prototypes. Classic lorem ipsum with modern options.</p>
+
+ <div class="tool-box">
+ <div class="options-grid">
+ <div class="option-group">
+ <label for="generate-type">Generate</label>
+ <select id="generate-type">
+ <option value="paragraphs">Paragraphs</option>
+ <option value="words">Words</option>
+ <option value="sentences">Sentences</option>
+ <option value="lists">Lists</option>
+ </select>
+ </div>
+ <div class="option-group">
+ <label for="amount">Amount</label>
+ <input type="number" id="amount" value="3" min="1" max="100">
+ </div>
+ <div class="option-group">
+ <label for="list-type" id="list-type-label" style="display:none">List Type</label>
+ <select id="list-type" style="display:none">
+ <option value="ul">Bullet List</option>
+ <option value="ol">Numbered List</option>
+ </select>
+ </div>
+ </div>
+
+ <div class="checkbox-group">
+ <label class="checkbox-label">
+ <input type="checkbox" id="start-lorem">
+ <span>Start with "Lorem ipsum dolor sit amet..."</span>
+ </label>
+ <label class="checkbox-label">
+ <input type="checkbox" id="wrap-html">
+ <span>Wrap with HTML tags</span>
+ </label>
+ </div>
+
+ <div class="button-group">
+ <button class="btn btn-primary" onclick="generateText()">Generate Text</button>
+ <button class="btn btn-secondary" onclick="copyText()">Copy to Clipboard</button>
+ <button class="btn btn-secondary" onclick="clearOutput()">Clear</button>
+ </div>
+
+ <div class="output-box" id="output">
+ <p style="color:var(--muted);text-align:center;margin-top:80px">Click "Generate Text" to create lorem ipsum...</p>
+ </div>
+
+ <div class="stats-bar" id="stats" style="display:none">
+ <div class="stat">
+ <div class="stat-value" id="stat-paragraphs">0</div>
+ <div class="stat-label">Paragraphs</div>
+ </div>
+ <div class="stat">
+ <div class="stat-value" id="stat-words">0</div>
+ <div class="stat-label">Words</div>
+ </div>
+ <div class="stat">
+ <div class="stat-value" id="stat-chars">0</div>
+ <div class="stat-label">Characters</div>
+ </div>
+ </div>
+ </div>
+
+ <div class="pro-tips">
+ <h3>Pro Tools for Designers</h3>
+ <ul>
+ <li><strong><a href="https://www.figma.com/?ref=paperclip" target="_blank" rel="nofollow">Figma</a></strong> - The collaborative interface design tool. Perfect for testing layouts with real placeholder content. Free for individuals.</li>
+ <li><strong><a href="https://www.sketch.com/?ref=paperclip" target="_blank" rel="nofollow">Sketch</a></strong> - Professional digital design platform for Mac. Industry standard for UI/UX design with plugin ecosystem.</li>
+ <li><strong><a href="https://www.invisionapp.com/?ref=paperclip" target="_blank" rel="nofollow">InVision</a></strong> - Digital product design platform. Create interactive prototypes and collaborate with your team.</li>
+ </ul>
+ <p style="margin-top:16px;font-size:13px;color:var(--muted)">Master design with <a href="https://www.skillshare.com/search?query=ux+design" target="_blank">Skillshare UX Design Courses</a>.</p>
+ </div>
+
+ <div class="carbon-ads">
+ <div class="carbon-ads-label">Sponsored</div>
+ <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7ITK7L&placement=paperclip" id="_carbonads_js"></script>
+ </div>
+
+ <div class="affiliate-banner">
+ <img src="https://via.placeholder.com/60x60/2563eb/ffffff?text=Dn" alt="Canva" onerror="this.style.display='none'">
+ <div class="content">
+ <h4>Canva Pro — Design Made Easy</h4>
+ <p>Professional templates, brand kit, and 100M+ stock photos. Perfect for creating mockups with placeholder content.</p>
+ <a href="https://www.canva.com/pro/?ref=paperclip" target="_blank" rel="nofollow">Try Pro Free →</a>
+ </div>
+ </div>
+
+ <div class="tips">
+ <h3>What is Lorem Ipsum?</h3>
+ <ul>
+ <li><strong>Lorem ipsum</strong> is placeholder text used in publishing and graphic design</li>
+ <li>It's derived from a Latin text by Cicero from 45 BC</li>
+ <li>The text has been scrambled to be nonsensical while maintaining Latin-like characteristics</li>
+ <li>Helps designers focus on layout and typography without being distracted by readable content</li>
+ <li>Standard dummy text since the 1500s when an unknown printer scrambled type</li>
+ </ul>
+
+ <h3>Use Cases</h3>
+ <ul>
+ <li><strong>Web Design:</strong> Testing layouts before content is ready</li>
+ <li><strong>UI Mockups:</strong> Filling wireframes with realistic text lengths</li>
+ <li><strong>Typography:</strong> Evaluating font choices and readability</li>
+ <li><strong>Print Design:</strong> Magazine and brochure layout testing</li>
+ <li><strong>Presentations:</strong> Creating template slides</li>
+ </ul>
+ </div>
+</div>
+
+<footer>
+ <p>Made with minimal code • Free forever • No tracking</p>
+</footer>
+
+<div class="copy-toast" id="copyToast">Copied to clipboard!</div>
+
+<script>
+const loremWords = [
+ "lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit",
+ "sed", "do", "eiusmod", "tempor", "incididunt", "ut", "labore", "et", "dolore",
+ "magna", "aliqua", "ut", "enim", "ad", "minim", "veniam", "quis", "nostrud",
+ "exercitation", "ullamco", "laboris", "nisi", "ut", "aliquip", "ex", "ea",
+ "commodo", "consequat", "duis", "aute", "irure", "dolor", "in", "reprehenderit",
+ "in", "voluptate", "velit", "esse", "cillum", "dolore", "eu", "fugiat", "nulla",
+ "pariatur", "excepteur", "sint", "occaecat", "cupidatat", "non", "proident",
+ "sunt", "in", "culpa", "qui", "officia", "deserunt", "mollit", "anim", "id",
+ "est", "laborum", "sed", "ut", "perspiciatis", "unde", "omnis", "iste", "natus",
+ "error", "sit", "voluptatem", "accusantium", "doloremque", "laudantium",
+ "totam", "rem", "aperiam", "eaque", "ipsa", "quae", "ab", "illo", "inventore",
+ "veritatis", "et", "quasi", "architecto", "beatae", "vitae", "dicta", "sunt",
+ "explicabo", "nemo", "enim", "ipsam", "voluptatem", "quia", "voluptas", "sit",
+ "aspernatur", "aut", "odit", "aut", "fugit", "sed", "quia", "consequuntur",
+ "magni", "dolores", "eos", "qui", "ratione", "voluptatem", "sequi", "nesciunt",
+ "neque", "porro", "quisquam", "est", "qui", "dolorem", "ipsum", "quia", "dolor",
+ "sit", "amet", "consectetur", "adipisci", "velit", "sed", "quia", "non",
+ "numquam", "eius", "modi", "tempora", "incidunt", "ut", "labore", "et", "dolore",
+ "magnam", "aliquam", "quaerat", "voluptatem"
+];
+
+const generateType = document.getElementById('generate-type');
+const amountInput = document.getElementById('amount');
+const listTypeLabel = document.getElementById('list-type-label');
+const listTypeSelect = document.getElementById('list-type');
+const startLoremCheckbox = document.getElementById('start-lorem');
+const wrapHtmlCheckbox = document.getElementById('wrap-html');
+const output = document.getElementById('output');
+const stats = document.getElementById('stats');
+const copyToast = document.getElementById('copyToast');
+
+// Show/hide list type based on generate type
+generateType.addEventListener('change', function() {
+ if (this.value === 'lists') {
+ listTypeLabel.style.display = 'block';
+ listTypeSelect.style.display = 'block';
+ } else {
+ listTypeLabel.style.display = 'none';
+ listTypeSelect.style.display = 'none';
+ }
+});
+
+function getRandomWord() {
+ return loremWords[Math.floor(Math.random() * loremWords.length)];
+}
+
+function capitalizeFirst(str) {
+ return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function generateSentence() {
+ const length = Math.floor(Math.random() * 10) + 5; // 5-15 words
+ let words = [];
+ for (let i = 0; i < length; i++) {
+ words.push(getRandomWord());
+ }
+ return capitalizeFirst(words.join(' ')) + '.';
+}
+
+function generateParagraph() {
+ const numSentences = Math.floor(Math.random() * 4) + 3; // 3-6 sentences
+ let sentences = [];
+ for (let i = 0; i < numSentences; i++) {
+ sentences.push(generateSentence());
+ }
+ return sentences.join(' ');
+}
+
+function generateWords(count) {
+ let words = [];
+ for (let i = 0; i < count; i++) {
+ words.push(getRandomWord());
+ }
+ return words.join(' ');
+}
+
+function generateSentences(count) {
+ let sentences = [];
+ for (let i = 0; i < count; i++) {
+ sentences.push(generateSentence());
+ }
+ return sentences.join(' ');
+}
+
+function generateLists(count) {
+ const listType = listTypeSelect.value;
+ let items = [];
+ for (let i = 0; i < count; i++) {
+ const wordCount = Math.floor(Math.random() * 8) + 4; // 4-12 words
+ let words = [];
+ for (let j = 0; j < wordCount; j++) {
+ words.push(getRandomWord());
+ }
+ items.push(capitalizeFirst(words.join(' ')));
+ }
+ 
+ if (wrapHtmlCheckbox.checked) {
+ const tag = listType === 'ol' ? 'ol' : 'ul';
+ return `<${tag}>\n` + items.map(item => `  <li>${item}</li>`).join('\n') + `\n</${tag}>`;
+ }
+ 
+ return items.map((item, i) => listType === 'ol' ? `${i + 1}. ${item}` : `• ${item}`).join('\n');
+}
+
+function generateText() {
+ const type = generateType.value;
+ const amount = parseInt(amountInput.value) || 3;
+ const wrapHtml = wrapHtmlCheckbox.checked;
+ const startLorem = startLoremCheckbox.checked;
+ 
+ let result = '';
+ 
+ switch (type) {
+ case 'paragraphs':
+ let paragraphs = [];
+ for (let i = 0; i < amount; i++) {
+ let para = generateParagraph();
+ if (i === 0 && startLorem) {
+ para = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ' + para;
+ }
+ if (wrapHtml) {
+ para = `<p>${para}</p>`;
+ }
+ paragraphs.push(para);
+ }
+ result = wrapHtml ? paragraphs.join('\n\n') : paragraphs.join('\n\n');
+ output.innerHTML = wrapHtml ? result.replace(/\n/g, '<br>').replace(/<p>/g, '<p>').replace(/<\/p>/g, '</p>') : paragraphs.map(p => `<p>${p}</p>`).join('');
+ break;
+ 
+ case 'words':
+ result = generateWords(amount);
+ if (startLorem) {
+ result = 'Lorem ipsum dolor sit amet ' + result;
+ }
+ output.innerHTML = `<p>${result}</p>`;
+ break;
+ 
+ case 'sentences':
+ result = generateSentences(amount);
+ if (startLorem) {
+ result = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ' + result;
+ }
+ output.innerHTML = `<p>${result}</p>`;
+ break;
+ 
+ case 'lists':
+ result = generateLists(amount);
+ output.innerHTML = wrapHtml ? `<pre style="font-family:monospace;font-size:13px;white-space:pre-wrap;margin:0">${escapeHtml(result)}</pre>` : `<ul style="margin:0;padding-left:24px">${result.split('\n').map(item => `<li>${item.substring(2)}</li>`).join('')}</ul>`;
+ break;
+ }
+ 
+ // Update stats
+ updateStats(result, type);
+ stats.style.display = 'flex';
+}
+
+function escapeHtml(text) {
+ const div = document.createElement('div');
+ div.textContent = text;
+ return div.innerHTML;
+}
+
+function updateStats(text, type) {
+ let paragraphs = 0, words = 0, chars = text.length;
+ 
+ if (type === 'paragraphs') {
+ paragraphs = text.split(/<\/?p>/).filter(Boolean).length;
+ words = text.replace(/<[^>]*>/g, '').split(/\s+/).filter(w => w.length > 0).length;
+ } else if (type === 'lists' && !wrapHtmlCheckbox.checked) {
+ words = text.split(/\s+/).filter(w => w.length > 0).length;
+ } else if (type === 'lists') {
+ words = text.replace(/<[^>]*>/g, '').split(/\s+/).filter(w => w.length > 0).length;
+ } else {
+ words = text.split(/\s+/).filter(w => w.length > 0).length;
+ }
+ 
+ document.getElementById('stat-paragraphs').textContent = paragraphs || 1;
+ document.getElementById('stat-words').textContent = words;
+ document.getElementById('stat-chars').textContent = chars;
+}
+
+function copyText() {
+ const text = output.innerText;
+ navigator.clipboard.writeText(text).then(() => {
+ copyToast.classList.add('show');
+ setTimeout(() => copyToast.classList.remove('show'), 2000);
+ });
+}
+
+function clearOutput() {
+ output.innerHTML = '<p style="color:var(--muted);text-align:center;margin-top:80px">Click "Generate Text" to create lorem ipsum...</p>';
+ stats.style.display = 'none';
+}
+
+// Generate initial text
+generateText();
+</script>
+</body>
+</html>
