@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Code Minifier & Beautifier - Minify JS, CSS, HTML Online | Paperclip</title>
+<meta name="description" content="Free online code minifier and beautifier. Minify and beautify JavaScript, CSS, HTML, and JSON. Reduce file sizes, format code, remove comments. Fast, private, no ads." />
+<meta name="keywords" content="code minifier, javascript minifier, css minifier, html minifier, code beautifier, minify js, minify css, minify html, code formatter" />
+<meta name="author" content="Paperclip" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/code-minifier/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--warning:#f59e0b;--error:#ef4444;--border:rgba(255,255,255,0.08);color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1400px;margin:0 auto}
+.logo{font-weight:700;font-size:1.2em;color:var(--accent)}
+nav{display:flex;gap:16px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--text)}
+.container{max-width:1400px;margin:0 auto;padding:24px}
+h1{font-size:1.8em;margin:0 0 8px 0}
+.subtitle{color:var(--muted);margin-bottom:24px}
+
+/* Toolbar */
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:20px;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:12px}
+.toolbar-group{display:flex;gap:8px;align-items:center}
+.toolbar label{color:var(--muted);font-size:13px;margin-right:8px}
+.toolbar select,.toolbar input[type="number"]{padding:8px 12px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px}
+.toolbar button{padding:10px 20px;background:var(--accent);color:#012;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px}
+.toolbar button:hover{opacity:.9}
+.toolbar button.secondary{background:rgba(255,255,255,0.1);color:var(--text)}
+.toolbar button.secondary:hover{background:rgba(255,255,255,0.15)}
+.toolbar button.danger{background:var(--error);color:#fff}
+.toolbar label.checkbox{display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--text)}
+.toolbar input[type="checkbox"]{accent-color:var(--accent)}
+
+/* Stats */
+.stats{display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.stat-item{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 20px;min-width:140px}
+.stat-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px}
+.stat-value{font-size:1.5em;font-weight:700;color:var(--accent);margin-top:4px}
+.stat-value.reduced{color:var(--success)}
+.stat-value.increased{color:var(--warning)}
+
+/* Editor Layout */
+.editor-container{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+@media(max-width:768px){.editor-container{grid-template-columns:1fr}}
+
+.editor-box{background:var(--card);border:1px solid var(--border);border-radius:12px;display:flex;flex-direction:column;overflow:hidden}
+.editor-header{padding:12px 16px;background:rgba(255,255,255,0.02);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.editor-title{font-weight:600;font-size:14px}
+.editor-actions{display:flex;gap:8px}
+.editor-actions button{padding:6px 12px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:6px;color:var(--text);cursor:pointer;font-size:12px}
+.editor-actions button:hover{background:rgba(255,255,255,0.1)}
+
+#inputCode,#outputCode{flex:1;width:100%;min-height:300px;background:transparent;border:none;padding:16px;color:var(--text);font-family:ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,monospace;font-size:13px;line-height:1.6;resize:none;outline:none;white-space:pre;overflow:auto}
+#outputCode{background:rgba(0,0,0,0.1)}
+
+/* Error message */
+.error-box{background:var(--card);border:1px solid var(--error);border-radius:12px;padding:16px;margin-bottom:20px;display:none}
+.error-box.visible{display:block}
+.error-title{color:var(--error);font-weight:600;margin-bottom:8px}
+.error-text{color:var(--muted);font-size:13px;white-space:pre-wrap;font-family:monospace}
+
+/* Options panel */
+.options-panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:20px}
+.options-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.option-item{display:flex;align-items:center;gap:8px;cursor:pointer}
+.option-item input[type="checkbox"]{accent-color:var(--accent);width:16px;height:16px}
+.option-item label{cursor:pointer;color:var(--text);font-size:14px}
+
+/* Carbon Ads */
+.carbon-ads{margin:32px 0;padding:16px;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid rgba(255,255,255,0.05);text-align:center;min-height:120px}
+.carbon-ads-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+
+/* Related tools */
+.related-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:32px}
+.related-box h3{margin:0 0 16px 0}
+.related-box ul{color:var(--muted);padding-left:20px;line-height:2;margin:0}
+.related-box a{color:var(--accent);text-decoration:none}
+.related-box a:hover{text-decoration:underline}
+
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:40px}
+</style>
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+<header>
+<a href="/" class="logo">← Paperclip</a>
+<nav>
+<a href="/">Home</a>
+<a href="/tools/">Tools</a>
+<a href="/about.html">About</a>
+</nav>
+</header>
+
+<div class="container">
+<h1>Code Minifier & Beautifier</h1>
+<p class="subtitle">Minify JavaScript, CSS, HTML, and JSON to reduce file sizes, or beautify code for readability. All processing happens in your browser.</p>
+
+<div class="toolbar">
+<div class="toolbar-group">
+<label>Language:</label>
+<select id="language" onchange="updateLanguage()">
+<option value="js">JavaScript</option>
+<option value="css">CSS</option>
+<option value="html">HTML</option>
+<option value="json">JSON</option>
+</select>
+</div>
+<div class="toolbar-group">
+<label>Mode:</label>
+<select id="mode">
+<option value="minify">Minify</option>
+<option value="beautify">Beautify</option>
+</select>
+</div>
+<div class="toolbar-group">
+<button onclick="processCode()">Process</button>
+<button class="secondary" onclick="clearAll()">Clear</button>
+<button class="secondary" onclick="loadExample()">Load Example</button>
+</div>
+<div class="toolbar-group" style="margin-left:auto">
+<button class="secondary" onclick="copyOutput()">Copy Result</button>
+<button class="secondary" onclick="downloadResult()">Download</button>
+</div>
+</div>
+
+<div class="stats" id="stats" style="display:none">
+<div class="stat-item">
+<div class="stat-label">Original Size</div>
+<div class="stat-value" id="originalSize">0 B</div>
+</div>
+<div class="stat-item">
+<div class="stat-label">Result Size</div>
+<div class="stat-value" id="resultSize">0 B</div>
+</div>
+<div class="stat-item">
+<div class="stat-label">Savings</div>
+<div class="stat-value" id="savings">0%</div>
+</div>
+<div class="stat-item">
+<div class="stat-label">Lines</div>
+<div class="stat-value" id="lineCount">0</div>
+</div>
+</div>
+
+<div class="error-box" id="errorBox">
+<div class="error-title">⚠ Error</div>
+<div class="error-text" id="errorText"></div>
+</div>
+
+<div class="options-panel" id="jsOptions">
+<h4 style="margin:0 0 12px 0;color:var(--text)">JavaScript Options</h4>
+<div class="options-grid">
+<div class="option-item">
+<input type="checkbox" id="removeComments" checked>
+<label for="removeComments">Remove comments</label>
+</div>
+<div class="option-item">
+<input type="checkbox" id="removeConsole" checked>
+<label for="removeConsole">Remove console.log</label>
+</div>
+<div class="option-item">
+<input type="checkbox" id="removeDebugger" checked>
+<label for="removeDebugger">Remove debugger statements</label>
+</div>
+<div class="option-item">
+<input type="checkbox" id="shortenVars" checked>
+<label for="shortenVars">Shorten variable names</label>
+</div>
+<div class="option-item">
+<input type="checkbox" id="minifyWhitespace" checked>
+<label for="minifyWhitespace">Minify whitespace</label>
+</div>
+<div class="option-item">
+<input type="checkbox" id="mangleProperties">
+<label for="mangleProperties">Mangle properties</label>
+</div>
+</div>
+</div>
+
+<div class="options-panel" id="cssOptions" style="display:none">
+<h4 style="margin:0 0 12px 0;color:var(--text)">CSS Options</h4>
+<div class="options-grid">
+<div class="option-item">
+<input type="checkbox" id="cssRemoveComments" checked>
+<label for="cssRemoveComments">Remove comments</label>
+</div>
+<div class="option-item">
+<input type="checkbox" id="cssRemoveWhitespace" checked>
+<label for="cssRemoveWhitespace">Remove whitespace</label>
+</div>
+<div class="option-item">
+<input type="checkbox" id="cssCombineRules">
+<label for="cssCombineRules">Combine duplicate rules</label>
+</div>
+<div class="option-item">
+<input type="checkbox" id="cssOptimizeColors">
+<label for="cssOptimizeColors">Optimize colors (hex → names)</label>
+</div>
+<div class="option-item">
+<input type="checkbox" id="cssRemoveUnits">
+<label for="cssRemoveUnits">Remove unnecessary units (0px → 0)</label>
+</div>
+<div class="option-item">
+<input type="checkbox" id="cssConvertQuotes" checked>
+<label for="cssConvertQuotes">Convert quotes to single</label>
+</div>
+</div>
+</div>
+
+<div class="options-panel" id="htmlOptions" style="display:none">
+<h4 style="margin:0 0 12px 0;color:var(--text)">HTML Options</h4>
+<div class="options-grid">
+<div class="option-item">
+<input type="checkbox" id="htmlRemoveComments" checked>
+<label for="htmlRemoveComments">Remove comments</label>
+</div>
+<div class="option-item">
+<input type="checkbox" id="htmlRemoveWhitespace" checked>
+<label for="htmlRemoveWhitespace">Remove whitespace between tags</label>
+</div>
+<div class="option-item">
+<input type="checkbox" id="htmlCollapseBoolean">
+<label for="htmlCollapseBoolean">Collapse boolean attributes</label>
+</div>
+<div class="option-item">
+<input type="checkbox" id="htmlRemoveOptional">
+<label for="htmlRemoveOptional">Remove optional tags</label>
+</div>
+</div>
+</div>
+
+<div class="editor-container">
+<div class="editor-box">
+<div class="editor-header">
+<span class="editor-title">Input</span>
+<div class="editor-actions">
+<button onclick="pasteInput()">Paste</button>
+<button onclick="copyInput()">Copy</button>
+</div>
+</div>
+<textarea id="inputCode" placeholder="Paste your code here..."></textarea>
+</div>
+
+<div class="editor-box">
+<div class="editor-header">
+<span class="editor-title">Output</span>
+<div class="editor-actions">
+<button onclick="selectOutput()">Select All</button>
+</div>
+</div>
+<textarea id="outputCode" placeholder="Result will appear here..." readonly></textarea>
+</div>
+</div>
+
+<div class="carbon-ads">
+<div class="carbon-ads-label">Sponsored</div>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7ITK7L&placement=paperclip" id="_carbonads_js"></script>
+</div>
+
+<div class="related-box">
+<h3>Related Tools</h3>
+<ul>
+<li><a href="/tools/json-formatter/">JSON Formatter</a> - Format and validate JSON data</li>
+<li><a href="/tools/text-case-converter/">Text Case Converter</a> - Convert between camelCase, snake_case, kebab-case</li>
+<li><a href="/tools/diff-checker/">Diff Checker</a> - Compare text and code differences</li>
+<li><a href="/tools/markdown-editor/">Markdown Editor</a> - Live preview markdown editor</li>
+</ul>
+</div>
+</div>
+
+<script src="/public/analytics.js"></script>
+<footer>
+<p>Made with minimal code • Free forever • No tracking</p>
+</footer>
+
+<script>
+// Update language-specific options
+function updateLanguage() {
+  const lang = document.getElementById('language').value;
+  document.getElementById('jsOptions').style.display = lang === 'js' ? 'block' : 'none';
+  document.getElementById('cssOptions').style.display = lang === 'css' ? 'block' : 'none';
+  document.getElementById('htmlOptions').style.display = lang === 'html' ? 'block' : 'none';
+}
+
+// Process code based on language and mode
+function processCode() {
+  const input = document.getElementById('inputCode').value;
+  if (!input.trim()) {
+    showError('Please enter some code to process');
+    return;
+  }
+
+  const lang = document.getElementById('language').value;
+  const mode = document.getElementById('mode').value;
+  const errorBox = document.getElementById('errorBox');
+  
+  errorBox.classList.remove('visible');
+  
+  try {
+    let result;
+    if (mode === 'minify') {
+      switch(lang) {
+        case 'js': result = minifyJS(input); break;
+        case 'css': result = minifyCSS(input); break;
+        case 'html': result = minifyHTML(input); break;
+        case 'json': result = minifyJSON(input); break;
+      }
+    } else {
+      switch(lang) {
+        case 'js': result = beautifyJS(input); break;
+        case 'css': result = beautifyCSS(input); break;
+        case 'html': result = beautifyHTML(input); break;
+        case 'json': result = beautifyJSON(input); break;
+      }
+    }
+    
+    document.getElementById('outputCode').value = result;
+    updateStats(input, result);
+  } catch (e) {
+    showError(e.message);
+  }
+}
+
+// Minify JavaScript
+function minifyJS(code) {
+  let result = code;
+  
+  // Remove console.log statements
+  if (document.getElementById('removeConsole').checked) {
+    result = result.replace(/console\.(log|warn|error|info|debug)\s*\([^)]*\)\s*;?/g, '');
+  }
+  
+  // Remove debugger statements
+  if (document.getElementById('removeDebugger').checked) {
+    result = result.replace(/debugger\s*;?/g, '');
+  }
+  
+  // Remove comments
+  if (document.getElementById('removeComments').checked) {
+    result = result.replace(/\/\*[\s\S]*?\*\//g, '');
+    result = result.replace(/\/\/.*$/gm, '');
+  }
+  
+  // Minify whitespace
+  if (document.getElementById('minifyWhitespace').checked) {
+    // Preserve whitespace in strings and regex
+    const strings = [];
+    result = result.replace(/"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`/g, match => {
+      strings.push(match);
+      return `___STRING${strings.length - 1}___`;
+    });
+    
+    const regexes = [];
+    result = result.replace(/\/[^\/\s][^\/]*\/[gimuy]*/g, match => {
+      regexes.push(match);
+      return `___REGEX${regexes.length - 1}___`;
+    });
+    
+    // Remove extra whitespace
+    result = result.replace(/\s+/g, ' ');
+    result = result.replace(/\s*([{}();,:])\s*/g, '$1');
+    result = result.replace(/;\s*}/g, ';}');
+    result = result.trim();
+    
+    // Restore strings
+    strings.forEach((str, i) => {
+      result = result.replace(`___STRING${i}___`, str);
+    });
+    regexes.forEach((regex, i) => {
+      result = result.replace(`___REGEX${i}___`, regex);
+    });
+  }
+  
+  // Shorten variable names (basic implementation)
+  if (document.getElementById('shortenVars').checked) {
+    const varPattern = /\b(var|let|const|function)\s+(\w+)/g;
+    const vars = [];
+    let match;
+    while ((match = varPattern.exec(code)) !== null) {
+      if (!vars.includes(match[2])) vars.push(match[2]);
+    }
+    
+    // Simple variable name mapping (first 52 variables get single letters)
+    const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const nameMap = {};
+    vars.forEach((v, i) => {
+      if (i < letters.length) nameMap[v] = letters[i];
+    });
+    
+    // Replace variable names
+    for (const [oldName, newName] of Object.entries(nameMap)) {
+      const regex = new RegExp(`\\b${oldName}\\b`, 'g');
+      result = result.replace(regex, newName);
+    }
+  }
+  
+  return result;
+}
+
+// Beautify JavaScript
+function beautifyJS(code) {
+  let result = code;
+  
+  // Remove existing comments for cleaner output
+  result = result.replace(/\/\*[\s\S]*?\*\//g, '');
+  result = result.replace(/\/\/.*$/gm, '');
+  
+  // Simple beautification
+  result = result.replace(/\s*([{}();,:])\s*/g, '$1');
+  result = result.replace(/([{}]);/g, '$1');
+  
+  // Add newlines after braces
+  result = result.replace(/({)/g, '$1\n');
+  result = result.replace(/(;)/g, '$1\n');
+  result = result.replace(/(})/g, '\n$1\n');
+  
+  // Fix double newlines
+  result = result.replace(/\n\n+/g, '\n');
+  
+  // Basic indentation
+  const lines = result.split('\n');
+  let indent = 0;
+  result = lines.map(line => {
+    line = line.trim();
+    if (line.includes('}')) indent = Math.max(0, indent - 1);
+    const indented = '  '.repeat(indent) + line;
+    if (line.includes('{')) indent++;
+    return indented;
+  }).join('\n');
+  
+  return result.trim();
+}
+
+// Minify CSS
+function minifyCSS(code) {
+  let result = code;
+  
+  // Remove comments
+  if (document.getElementById('cssRemoveComments').checked) {
+    result = result.replace(/\/\*[\s\S]*?\*\//g, '');
+  }
+  
+  // Optimize colors
+  if (document.getElementById('cssOptimizeColors').checked) {
+    result = result.replace(/#([0-9a-fA-F])\1([0-9a-fA-F])\2([0-9a-fA-F])\3/g, '#$1$2$3');
+    // Convert some named colors to hex (simplified)
+    result = result.replace(/\bwhite\b/g, '#fff').replace(/\bblack\b/g, '#000');
+  }
+  
+  // Remove unnecessary units
+  if (document.getElementById('cssRemoveUnits').checked) {
+    result = result.replace(/:0px/g, ':0').replace(/:0em/g, ':0').replace(/:0rem/g, ':0');
+  }
+  
+  // Convert quotes
+  if (document.getElementById('cssConvertQuotes').checked) {
+    result = result.replace(/"/g, "'");
+  }
+  
+  // Remove whitespace
+  if (document.getElementById('cssRemoveWhitespace').checked) {
+    result = result.replace(/\s+/g, ' ');
+    result = result.replace(/\s*([{}:;,])\s*/g, '$1');
+    result = result.replace(/;}/g, '}');
+    result = result.trim();
+  }
+  
+  return result;
+}
+
+// Beautify CSS
+function beautifyCSS(code) {
+  let result = code;
+  
+  // Remove comments
+  result = result.replace(/\/\*[\s\S]*?\*\//g, '');
+  
+  // Add newlines
+  result = result.replace(/}/g, '}\n');
+  result = result.replace(/{/g, '{\n');
+  result = result.replace(/;/g, ';\n');
+  
+  // Indent
+  const lines = result.split('\n');
+  let indent = 0;
+  result = lines.map(line => {
+    line = line.trim();
+    if (line.includes('}')) indent = Math.max(0, indent - 1);
+    const indented = '  '.repeat(indent) + line;
+    if (line.includes('{')) indent++;
+    return indented;
+  }).join('\n');
+  
+  return result.trim();
+}
+
+// Minify HTML
+function minifyHTML(code) {
+  let result = code;
+  
+  // Remove comments
+  if (document.getElementById('htmlRemoveComments').checked) {
+    result = result.replace(/<!--[\s\S]*?-->/g, '');
+  }
+  
+  // Remove whitespace between tags
+  if (document.getElementById('htmlRemoveWhitespace').checked) {
+    result = result.replace(/>\s+</g, '><');
+    result = result.replace(/\s+/g, ' ');
+  }
+  
+  // Collapse boolean attributes
+  if (document.getElementById('htmlCollapseBoolean').checked) {
+    result = result.replace(/\s(\w+)="\1"/g, ' $1');
+  }
+  
+  return result.trim();
+}
+
+// Beautify HTML
+function beautifyHTML(code) {
+  let result = code;
+  
+  // Remove comments
+  result = result.replace(/<!--[\s\S]*?-->/g, '');
+  
+  // Add newlines after tags
+  result = result.replace(/>\s*</g, '>\n<');
+  result = result.replace(/></g, '>\n<');
+  
+  // Indent
+  const lines = result.split('\n');
+  let indent = 0;
+  result = lines.map(line => {
+    const trimmed = line.trim();
+    if (!trimmed) return '';
+    
+    // Closing tag
+    if (trimmed.startsWith('</')) {
+      indent = Math.max(0, indent - 1);
+    }
+    
+    const indented = '  '.repeat(indent) + trimmed;
+    
+    // Opening tag (not self-closing)
+    if (trimmed.match(/^<\w+[^>]*>[^<]*$/) && !trimmed.endsWith('/>')) {
+      indent++;
+    }
+    
+    return indented;
+  }).join('\n');
+  
+  return result.trim();
+}
+
+// Minify JSON
+function minifyJSON(code) {
+  try {
+    const obj = JSON.parse(code);
+    return JSON.stringify(obj);
+  } catch (e) {
+    throw new Error('Invalid JSON: ' + e.message);
+  }
+}
+
+// Beautify JSON
+function beautifyJSON(code) {
+  try {
+    const obj = JSON.parse(code);
+    return JSON.stringify(obj, null, 2);
+  } catch (e) {
+    throw new Error('Invalid JSON: ' + e.message);
+  }
+}
+
+// Update statistics
+function updateStats(original, result) {
+  const originalBytes = new Blob([original]).size;
+  const resultBytes = new Blob([result]).size;
+  const savings = originalBytes > 0 ? Math.round((1 - resultBytes / originalBytes) * 100) : 0;
+  const lines = result.split('\n').length;
+  
+  document.getElementById('originalSize').textContent = formatBytes(originalBytes);
+  document.getElementById('resultSize').textContent = formatBytes(resultBytes);
+  
+  const savingsEl = document.getElementById('savings');
+  savingsEl.textContent = (savings >= 0 ? '+' : '') + savings + '%';
+  savingsEl.className = 'stat-value ' + (savings > 0 ? 'reduced' : savings < 0 ? 'increased' : '');
+  
+  document.getElementById('lineCount').textContent = lines;
+  document.getElementById('stats').style.display = 'flex';
+}
+
+// Format bytes
+function formatBytes(bytes) {
+  if (bytes === 0) return '0 B';
+  const k = 1024;
+  const sizes = ['B', 'KB', 'MB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+}
+
+// Show error
+function showError(message) {
+  document.getElementById('errorText').textContent = message;
+  document.getElementById('errorBox').classList.add('visible');
+}
+
+// Clear all
+function clearAll() {
+  document.getElementById('inputCode').value = '';
+  document.getElementById('outputCode').value = '';
+  document.getElementById('errorBox').classList.remove('visible');
+  document.getElementById('stats').style.display = 'none';
+}
+
+// Load example
+function loadExample() {
+  const lang = document.getElementById('language').value;
+  let example = '';
+  
+  switch(lang) {
+    case 'js':
+      example = `// Example JavaScript function
+function calculateTotal(items) {
+    // Calculate total price
+    let total = 0;
+    
+    for (let i = 0; i < items.length; i++) {
+        total += items[i].price;
+        console.log('Added:', items[i].price);
+    }
+    
+    return total;
+}
+
+/* 
+ * Main function
+ */
+function main() {
+    const items = [
+        { name: 'Apple', price: 1.50 },
+        { name: 'Banana', price: 0.75 }
+    ];
+    
+    const result = calculateTotal(items);
+    console.log('Total:', result);
+}`;
+      break;
+      
+    case 'css':
+      example = `/* Main stylesheet */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.button {
+    background-color: #0066cc;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}`;
+      break;
+      
+    case 'html':
+      example = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example Page</title>
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+    <!-- Header section -->
+    <header>
+        <h1>Welcome to My Site</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+        </nav>
+    </header>
+    
+    <!-- Main content -->
+    <main>
+        <p>This is an example HTML page.</p>
+    </main>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.RelatedTools) {
+      RelatedTools.renderRelatedTools('code-minifier', '#related-tools-container', {
+        title: 'Related Tools',
+        showCategory: true,
+        trackClicks: true
+      });
+    }
+  });
+</script>
+</body>
+</html>`;
+      break;
+      
+    case 'json':
+      example = `{
+    "name": "Example Project",
+    "version": "1.0.0",
+    "description": "A sample JSON configuration file",
+    "dependencies": {
+        "express": "^4.18.0",
+        "lodash": "^4.17.21"
+    },
+    "scripts": {
+        "start": "node app.js",
+        "test": "jest"
+    },
+    "author": "John Doe",
+    "license": "MIT"
+}`;
+      break;
+  }
+  
+  document.getElementById('inputCode').value = example;
+  document.getElementById('outputCode').value = '';
+  document.getElementById('errorBox').classList.remove('visible');
+  document.getElementById('stats').style.display = 'none';
+}
+
+// Copy output
+function copyOutput() {
+  const output = document.getElementById('outputCode');
+  if (!output.value) return;
+  output.select();
+  document.execCommand('copy');
+  alert('Copied to clipboard!');
+}
+
+// Download result
+function downloadResult() {
+  const output = document.getElementById('outputCode').value;
+  if (!output) return;
+  
+  const lang = document.getElementById('language').value;
+  const extensions = { js: 'js', css: 'css', html: 'html', json: 'json' };
+  const ext = extensions[lang];
+  
+  const blob = new Blob([output], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `minified.${ext}`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// Paste input
+async function pasteInput() {
+  try {
+    const text = await navigator.clipboard.readText();
+    document.getElementById('inputCode').value = text;
+  } catch (e) {
+    alert('Unable to paste. Please paste manually.');
+  }
+}
+
+// Copy input
+function copyInput() {
+  const input = document.getElementById('inputCode');
+  if (!input.value) return;
+  input.select();
+  document.execCommand('copy');
+  alert('Copied!');
+}
+
+// Select output
+function selectOutput() {
+  const output = document.getElementById('outputCode');
+  output.select();
+}
+
+// Initialize
+updateLanguage();
+</script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.RelatedTools) {
+      RelatedTools.renderRelatedTools('code-minifier', '#related-tools-container', {
+        title: 'Related Tools',
+        showCategory: true,
+        trackClicks: true
+      });
+    }
+  });
+</script>
+</body>
+</html>

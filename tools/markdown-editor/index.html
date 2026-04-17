@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Markdown Editor - Live Preview & GitHub Flavored | Paperclip</title>
+<meta name="description" content="Free online markdown editor with live preview. GitHub-flavored Markdown support, syntax highlighting, toolbar, export to HTML/PDF, drag-and-drop, and auto-save. Fast, private, no ads." />
+<meta name="keywords" content="markdown editor, markdown preview, online markdown editor, markdown to html, markdown live preview, github markdown, markdown editor online" />
+<meta name="author" content="Paperclip" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/markdown-editor/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--warning:#f59e0b;--border:rgba(255,255,255,0.08);color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1600px;margin:0 auto}
+.logo{font-weight:700;font-size:1.2em;color:var(--accent)}
+nav{display:flex;gap:16px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--text)}
+.container{max-width:1600px;margin:0 auto;padding:24px}
+h1{font-size:1.8em;margin:0 0 8px 0}
+.subtitle{color:var(--muted);margin-bottom:24px}
+
+/* Toolbar */
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 16px}
+.toolbar-group{display:flex;gap:4px;align-items:center}
+.toolbar-separator{width:1px;height:28px;background:var(--border);margin:0 8px}
+.toolbar button{padding:8px 12px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:6px;color:var(--text);cursor:pointer;font-size:13px;transition:all .15s}
+.toolbar button:hover{background:rgba(255,255,255,0.1)}
+.toolbar button:active{background:var(--accent);color:#012}
+.toolbar select{padding:8px 12px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px;cursor:pointer}
+.toolbar label{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;cursor:pointer}
+.toolbar input[type="checkbox"]{accent-color:var(--accent);width:16px;height:16px}
+
+/* Editor Layout */
+.editor-container{display:grid;grid-template-columns:1fr 1fr;gap:16px;height:calc(100vh - 280px);min-height:400px}
+@media(max-width:768px){.editor-container{grid-template-columns:1fr;height:auto}}
+
+/* Editor Pane */
+.editor-pane{background:var(--card);border:1px solid var(--border);border-radius:12px;display:flex;flex-direction:column;overflow:hidden}
+.editor-pane.hidden{display:none}
+.pane-header{padding:12px 16px;background:rgba(255,255,255,0.02);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted)}
+.pane-header .pane-title{font-weight:600;color:var(--text)}
+.pane-actions{display:flex;gap:8px}
+.pane-actions button{padding:6px 12px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:6px;color:var(--text);cursor:pointer;font-size:12px}
+.pane-actions button:hover{background:rgba(255,255,255,0.1)}
+
+#editor{flex:1;width:100%;background:transparent;border:none;padding:16px;color:var(--text);font-family:ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,monospace;font-size:14px;line-height:1.6;resize:none;outline:none}
+
+/* Preview Pane */
+.preview-content{flex:1;padding:16px;overflow:auto;background:var(--card)}
+.preview-content h1,.preview-content h2,.preview-content h3,.preview-content h4,.preview-content h5,.preview-content h6{margin-top:0;margin-bottom:16px;color:var(--text)}
+.preview-content h1{font-size:2em;border-bottom:1px solid var(--border);padding-bottom:8px}
+.preview-content h2{font-size:1.5em;border-bottom:1px solid var(--border);padding-bottom:8px}
+.preview-content p{margin:0 0 16px 0;line-height:1.7}
+.preview-content a{color:var(--accent);text-decoration:none}
+.preview-content a:hover{text-decoration:underline}
+.preview-content code{background:rgba(255,255,255,0.05);padding:2px 6px;border-radius:4px;font-family:ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,monospace;font-size:0.85em}
+.preview-content pre{background:rgba(0,0,0,0.2);padding:16px;border-radius:8px;overflow-x:auto;margin:0 0 16px 0}
+.preview-content pre code{background:none;padding:0}
+.preview-content blockquote{border-left:4px solid var(--accent);margin:0 0 16px 0;padding:0 16px;color:var(--muted)}
+.preview-content ul,.preview-content ol{margin:0 0 16px 0;padding-left:24px}
+.preview-content li{margin-bottom:4px}
+.preview-content table{width:100%;border-collapse:collapse;margin:0 0 16px 0}
+.preview-content th,.preview-content td{border:1px solid var(--border);padding:8px 12px;text-align:left}
+.preview-content th{background:rgba(255,255,255,0.05);font-weight:600}
+.preview-content img{max-width:100%;height:auto;border-radius:8px}
+.preview-content hr{border:none;border-top:1px solid var(--border);margin:24px 0}
+.preview-content .task-list-item{list-style:none;margin-left:-24px}
+.preview-content .task-list-item input[type="checkbox"]{margin-right:8px;accent-color:var(--accent)}
+.preview-content .highlight{background:var(--warning);padding:2px 4px;border-radius:3px;color:#012}
+.preview-content del{color:var(--muted);text-decoration:line-through}
+
+/* Syntax Highlighting */
+.hljs-keyword{color:#ff7b72}
+.hljs-string{color:#a5d6ff}
+.hljs-number{color:#79c0ff}
+.hljs-comment{color:#8b949e;font-style:italic}
+.hljs-function{color:#d2a8ff}
+.hljs-operator{color:#ff7b72}
+.hljs-punctuation{color:#c9d1d9}
+.hljs-property{color:#79c0ff}
+
+/* Status Bar */
+.status-bar{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding:12px 16px;background:var(--card);border:1px solid var(--border);border-radius:12px;font-size:13px;color:var(--muted)}
+.status-left,.status-right{display:flex;gap:20px;align-items:center}
+.status-item{display:flex;gap:6px;align-items:center}
+.status-item.saved{color:var(--success)}
+
+/* Drag & Drop Overlay */
+.drag-overlay{position:fixed;inset:0;background:rgba(6,182,212,0.1);border:4px dashed var(--accent);display:none;align-items:center;justify-content:center;z-index:1000;pointer-events:none}
+.drag-overlay.active{display:flex}
+.drag-overlay-text{font-size:1.5em;font-weight:600;color:var(--accent);background:var(--card);padding:24px 48px;border-radius:12px}
+
+/* Export Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;z-index:1000}
+.modal-overlay.active{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;max-width:500px;width:90%;max-height:80vh;overflow:auto}
+.modal h3{margin:0 0 16px 0}
+.modal textarea{width:100%;height:200px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;padding:12px;color:var(--text);font-family:monospace;font-size:13px;resize:vertical}
+.modal-actions{display:flex;gap:12px;margin-top:16px;justify-content:flex-end}
+.modal button{padding:10px 20px;background:var(--accent);color:#012;border:none;border-radius:8px;font-weight:600;cursor:pointer}
+.modal button.secondary{background:rgba(255,255,255,0.1);color:var(--text)}
+.modal button:hover{opacity:.9}
+
+/* Carbon Ads */
+.carbon-ads{margin:32px 0;padding:16px;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid rgba(255,255,255,0.05);text-align:center;min-height:120px}
+.carbon-ads-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+
+/* Mobile View Toggle */
+@media(max-width:768px){
+.view-toggle{display:flex;gap:8px;margin-bottom:16px}
+.view-toggle button{flex:1;padding:12px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;color:var(--text);cursor:pointer}
+.view-toggle button.active{background:var(--accent);color:#012}
+}
+@media(min-width:769px){.view-toggle{display:none}}
+
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:40px}
+</style>
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+<header>
+<a href="/" class="logo">← Paperclip</a>
+<nav>
+<a href="/">Home</a>
+<a href="/tools/">Tools</a>
+<a href="/about.html">About</a>
+</nav>
+</header>
+
+<div class="container">
+<h1>Markdown Editor</h1>
+<p class="subtitle">Clean, distraction-free writing with live preview. All processing happens in your browser - your data never leaves your device.</p>
+
+<div class="toolbar">
+<div class="toolbar-group">
+<button onclick="formatText('bold')" title="Bold (Ctrl+B)"><b>B</b></button>
+<button onclick="formatText('italic')" title="Italic (Ctrl+I)"><i>I</i></button>
+<button onclick="formatText('strikethrough')" title="Strikethrough"><s>S</s></button>
+</div>
+<div class="toolbar-separator"></div>
+<div class="toolbar-group">
+<button onclick="formatText('h1')" title="Heading 1">H1</button>
+<button onclick="formatText('h2')" title="Heading 2">H2</button>
+<button onclick="formatText('h3')" title="Heading 3">H3</button>
+</div>
+<div class="toolbar-separator"></div>
+<div class="toolbar-group">
+<button onclick="formatText('link')" title="Insert Link">🔗</button>
+<button onclick="formatText('image')" title="Insert Image">🖼️</button>
+<button onclick="formatText('code')" title="Code">&lt;/&gt;</button>
+<button onclick="formatText('quote')" title="Quote">❝</button>
+</div>
+<div class="toolbar-separator"></div>
+<div class="toolbar-group">
+<button onclick="formatText('ul')" title="Bullet List">•</button>
+<button onclick="formatText('ol')" title="Numbered List">1.</button>
+<button onclick="formatText('task')" title="Task List">☑</button>
+</div>
+<div class="toolbar-separator"></div>
+<div class="toolbar-group">
+<button onclick="formatText('hr')" title="Horizontal Rule">—</button>
+<button onclick="formatText('table')" title="Table">⊞</button>
+</div>
+<div class="toolbar-separator"></div>
+<div class="toolbar-group">
+<label><input type="checkbox" id="wordWrap" checked> Wrap</label>
+<label><input type="checkbox" id="livePreview" checked> Live</label>
+</div>
+</div>
+
+<div class="view-toggle">
+<button id="editorViewBtn" class="active" onclick="switchView('editor')">Editor</button>
+<button id="previewViewBtn" onclick="switchView('preview')">Preview</button>
+</div>
+
+<div class="editor-container">
+<div class="editor-pane" id="editorPane">
+<div class="pane-header">
+<span class="pane-title">Editor</span>
+<div class="pane-actions">
+<button onclick="copyEditor()">Copy</button>
+<button onclick="clearEditor()">Clear</button>
+</div>
+</div>
+<textarea id="editor" placeholder="# Welcome to Markdown Editor
+
+Start typing here to see the live preview...
+
+## Features
+
+- **Live preview** - See changes instantly
+- **GitHub Flavored Markdown** - Tables, task lists, strikethrough
+- **Syntax highlighting** - Code blocks are highlighted
+- **Auto-save** - Your work is saved automatically
+
+## Try it out!
+
+### Code blocks
+```javascript
+function hello() {
+  console.log('Hello, World!');
+}
+```
+
+### Tables
+| Feature | Status |
+|---------|--------|
+| Editor | ✅ |
+| Preview | ✅ |
+
+### Task List
+- [x] Create editor
+- [ ] Write documentation
+- [ ] Share with friends
+
+Drag and drop a .md file here to edit it!
+"></textarea>
+</div>
+
+<div class="editor-pane" id="previewPane">
+<div class="pane-header">
+<span class="pane-title">Preview</span>
+<div class="pane-actions">
+<button onclick="exportHTML()">Export HTML</button>
+<button onclick="downloadMarkdown()">Download .md</button>
+</div>
+</div>
+<div class="preview-content" id="preview"></div>
+</div>
+</div>
+
+<div class="status-bar">
+<div class="status-left">
+<span class="status-item" id="wordCount">Words: 0</span>
+<span class="status-item" id="charCount">Chars: 0</span>
+<span class="status-item" id="lineCount">Lines: 1</span>
+<span class="status-item" id="readTime">~0 min read</span>
+</div>
+<div class="status-right">
+<span class="status-item" id="saveStatus">Unsaved</span>
+</div>
+</div>
+
+<div class="carbon-ads">
+<div class="carbon-ads-label">Sponsored</div>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7ITK7L&placement=paperclip" id="_carbonads_js"></script>
+</div>
+
+<div class="result-box" style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:32px;">
+<h3 style="margin:0 0 16px 0">Related Tools</h3>
+<ul style="color:var(--muted);padding-left:20px;line-height:2;margin:0;">
+<li><a href="/tools/text-case-converter/" style="color:var(--accent);">Text Case Converter</a> - Transform text between different cases</li>
+<li><a href="/tools/word-counter/" style="color:var(--accent);">Word Counter</a> - Count words, characters, and more</li>
+<li><a href="/tools/diff-checker/" style="color:var(--accent);">Diff Checker</a> - Compare text differences</li>
+<li><a href="/tools/html-encoder/" style="color:var(--accent);">HTML Encoder</a> - Encode special characters</li>
+</ul>
+</div>
+</div>
+
+<div class="drag-overlay" id="dragOverlay">
+<div class="drag-overlay-text">Drop Markdown file to open</div>
+</div>
+
+<div class="modal-overlay" id="exportModal">
+<div class="modal">
+<h3>Exported HTML</h3>
+<textarea id="exportOutput" readonly></textarea>
+<div class="modal-actions">
+<button class="secondary" onclick="closeModal()">Close</button>
+<button onclick="copyExport()">Copy</button>
+<button onclick="downloadHTML()">Download</button>
+</div>
+</div>
+</div>
+
+<script src="/public/analytics.js"></script>
+<footer>
+<p>Made with minimal code • Free forever • No tracking</p>
+</footer>
+
+<script>
+// Simple Markdown Parser (GitHub Flavored)
+const editor = document.getElementById('editor');
+const preview = document.getElementById('preview');
+const saveStatus = document.getElementById('saveStatus');
+
+// Default content
+const defaultContent = `# Welcome to Markdown Editor
+
+Start typing here to see the live preview...
+
+## Features
+
+- **Live preview** - See changes instantly
+- **GitHub Flavored Markdown** - Tables, task lists, strikethrough
+- **Syntax highlighting** - Code blocks are highlighted
+- **Auto-save** - Your work is saved automatically
+
+## Try it out!
+
+### Code blocks
+\`\`\`javascript
+function hello() {
+  console.log('Hello, World!');
+}
+\`\`\`
+
+### Tables
+| Feature | Status |
+|---------|--------|
+| Editor | ✅ |
+| Preview | ✅ |
+
+### Task List
+- [x] Create editor
+- [ ] Write documentation
+- [ ] Share with friends
+
+Drag and drop a .md file here to edit it!
+`;
+
+// Load from localStorage or use default
+const saved = localStorage.getItem('markdown-editor-content');
+if (saved) {
+  editor.value = saved;
+} else {
+  editor.value = defaultContent;
+}
+
+// Render markdown
+function renderMarkdown(text) {
+  let html = text;
+  
+  // Escape HTML
+  html = html.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  
+  // Code blocks
+  html = html.replace(/\`\`\`(\w*)\n([\s\S]*?)\`\`\`/g, (match, lang, code) => {
+    const highlighted = highlightCode(code.trim(), lang);
+    return \`<pre><code class="language-\${lang || 'text'}">\${highlighted}</code></pre>\`;
+  });
+  
+  // Inline code
+  html = html.replace(/\`([^\`]+)\`/g, '<code>$1</code>');
+  
+  // Headers
+  html = html.replace(/^###### (.*$)/gim, '<h6>$1</h6>');
+  html = html.replace(/^##### (.*$)/gim, '<h5>$1</h5>');
+  html = html.replace(/^#### (.*$)/gim, '<h4>$1</h4>');
+  html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+  html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+  html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+  
+  // Bold & Italic
+  html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<b><i>$1</i></b>');
+  html = html.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+  html = html.replace(/\*(.+?)\*/g, '<i>$1</i>');
+  html = html.replace(/___(.+?)___/g, '<b><i>$1</i></b>');
+  html = html.replace(/__(.+?)__/g, '<b>$1</b>');
+  html = html.replace(/_(.+?)_/g, '<i>$1</i>');
+  
+  // Strikethrough
+  html = html.replace(/~~(.+?)~~/g, '<del>$1</del>');
+  
+  // Links
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+  
+  // Images
+  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+  
+  // Blockquotes
+  html = html.replace(/^&gt; (.*$)/gim, '<blockquote>$1</blockquote>');
+  
+  // Horizontal rules
+  html = html.replace(/^---$/gim, '<hr>');
+  html = html.replace(/^\*\*\*$/gim, '<hr>');
+  html = html.replace(/^___$/gim, '<hr>');
+  
+  // Task lists
+  html = html.replace(/^- \[x\] (.*$)/gim, '<li class="task-list-item"><input type="checkbox" checked disabled> $1</li>');
+  html = html.replace(/^- \[ \] (.*$)/gim, '<li class="task-list-item"><input type="checkbox" disabled> $1</li>');
+  
+  // Unordered lists
+  html = html.replace(/^[\*\-\+] (.*$)/gim, '<li>$1</li>');
+  
+  // Ordered lists
+  html = html.replace(/^\d+\. (.*$)/gim, '<li>$1</li>');
+  
+  // Tables
+  const tableRegex = /\|(.+)\|\n\|[-\s|]+\|\n((?:\|.+\|\n?)+)/g;
+  html = html.replace(tableRegex, (match, header, body) => {
+    const headers = header.split('|').filter(h => h.trim()).map(h => \`<th>\${h.trim()}</th>\`).join('');
+    const rows = body.trim().split('\n').map(row => {
+      const cells = row.split('|').filter(c => c.trim()).map(c => \`<td>\${c.trim()}</td>\`).join('');
+      return \`<tr>\${cells}</tr>\`;
+    }).join('');
+    return \`<table><thead><tr>\${headers}</tr></thead><tbody>\${rows}</tbody></table>\`;
+  });
+  
+  // Wrap consecutive list items
+  html = html.replace(/(<li>.*<\/li>\n?)+/g, match => {
+    if (match.includes('type="checkbox"')) {
+      return \`<ul>\${match}</ul>\`;
+    }
+    return \`<ul>\${match}</ul>\`;
+  });
+  
+  // Paragraphs
+  const lines = html.split('\n');
+  let inParagraph = false;
+  const processed = lines.map((line, i) => {
+    const isBlock = /^<[\w\/]/.test(line) || !line.trim();
+    if (!isBlock && !inParagraph) {
+      inParagraph = true;
+      return '<p>' + line;
+    }
+    if ((isBlock || i === lines.length - 1) && inParagraph) {
+      inParagraph = false;
+      if (i === lines.length - 1 && !isBlock) {
+        return line + '</p>';
+      }
+      return '</p>' + (line ? '\n' + line : '');
+    }
+    return line;
+  });
+  html = processed.join('\n');
+  if (inParagraph) html += '</p>';
+  
+  return html;
+}
+
+// Simple syntax highlighting
+function highlightCode(code, lang) {
+  // HTML escape already done
+  if (lang === 'javascript' || lang === 'js' || lang === 'typescript' || lang === 'ts') {
+    code = code.replace(/\b(const|let|var|function|return|if|else|for|while|class|import|export|from|async|await|new|this|typeof|instanceof)\b/g, '<span class="hljs-keyword">$1</span>');
+    code = code.replace(/"([^"]*)"/g, '<span class="hljs-string">"$1"</span>');
+    code = code.replace(/'([^']*)'/g, '<span class="hljs-string">\'$1\'</span>');
+    code = code.replace(/`([^`]*)`/g, '<span class="hljs-string">\`$1\`</span>');
+    code = code.replace(/\b\d+\b/g, '<span class="hljs-number">$&</span>');
+    code = code.replace(/\/\/.*$/gm, '<span class="hljs-comment">$&</span>');
+    code = code.replace(/\b(console|document|window|Math|Date|Array|Object|String|Number)\b/g, '<span class="hljs-property">$1</span>');
+  } else if (lang === 'python' || lang === 'py') {
+    code = code.replace(/\b(def|class|if|elif|else|for|while|return|import|from|as|try|except|with|async|await|lambda|yield)\b/g, '<span class="hljs-keyword">$1</span>');
+    code = code.replace(/"([^"]*)"/g, '<span class="hljs-string">"$1"</span>');
+    code = code.replace(/'([^']*)'/g, '<span class="hljs-string">\'$1\'</span>');
+    code = code.replace(/#.*/g, '<span class="hljs-comment">$&</span>');
+  } else if (lang === 'css') {
+    code = code.replace(/([\w-]+):/g, '<span class="hljs-property">$1</span>:');
+    code = code.replace(/@\w+/g, '<span class="hljs-keyword">$&</span>');
+  }
+  return code;
+}
+
+// Update preview
+function updatePreview() {
+  if (document.getElementById('livePreview').checked) {
+    preview.innerHTML = renderMarkdown(editor.value);
+  }
+  updateStats();
+}
+
+// Update stats
+function updateStats() {
+  const text = editor.value;
+  const words = text.trim().split(/\s+/).filter(w => w).length;
+  const chars = text.length;
+  const lines = text.split('\n').length;
+  const readTime = Math.max(1, Math.round(words / 200));
+  
+  document.getElementById('wordCount').textContent = `Words: ${words}`;
+  document.getElementById('charCount').textContent = `Chars: ${chars}`;
+  document.getElementById('lineCount').textContent = `Lines: ${lines}`;
+  document.getElementById('readTime').textContent = `~${readTime} min read`;
+}
+
+// Auto-save
+let saveTimeout;
+function scheduleSave() {
+  saveStatus.textContent = 'Saving...';
+  saveStatus.className = 'status-item';
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(() => {
+    localStorage.setItem('markdown-editor-content', editor.value);
+    saveStatus.textContent = 'Saved';
+    saveStatus.className = 'status-item saved';
+    setTimeout(() => {
+      saveStatus.textContent = 'Saved';
+    }, 2000);
+  }, 500);
+}
+
+// Format text
+function formatText(type) {
+  const start = editor.selectionStart;
+  const end = editor.selectionEnd;
+  const text = editor.value;
+  const selected = text.substring(start, end);
+  
+  const formats = {
+    bold: { before: '**', after: '**' },
+    italic: { before: '*', after: '*' },
+    strikethrough: { before: '~~', after: '~~' },
+    h1: { before: '# ', after: '', lineMode: true },
+    h2: { before: '## ', after: '', lineMode: true },
+    h3: { before: '### ', after: '', lineMode: true },
+    code: { before: '\`\`\`\n', after: '\n\`\`\`' },
+    quote: { before: '> ', after: '', lineMode: true },
+    ul: { before: '- ', after: '', lineMode: true },
+    ol: { before: '1. ', after: '', lineMode: true },
+    task: { before: '- [ ] ', after: '', lineMode: true },
+    link: { before: '[', after: '](url)' },
+    image: { before: '![', after: '](url)' },
+    hr: { before: '---\n', after: '' },
+    table: { before: '| Header 1 | Header 2 |\n|----------|----------|\n| Cell 1 | Cell 2 |\n| Cell 3 | Cell 4 |\n', after: '' }
+  };
+  
+  const fmt = formats[type];
+  if (!fmt) return;
+  
+  let newText, newStart, newEnd;
+  
+  if (fmt.lineMode) {
+    // Find line start
+    let lineStart = start;
+    while (lineStart > 0 && text[lineStart - 1] !== '\n') lineStart--;
+    const line = text.substring(lineStart, end);
+    
+    // Remove existing header markers
+    let cleanLine = line.replace(/^#+ /, '').replace(/^> /, '').replace(/^- /, '').replace(/^\d+\. /, '').replace(/^- \[.\] /, '');
+    
+    newText = text.substring(0, lineStart) + fmt.before + cleanLine + fmt.after + text.substring(end);
+    newStart = lineStart + fmt.before.length;
+    newEnd = newStart + cleanLine.length;
+  } else {
+    if (selected) {
+      newText = text.substring(0, start) + fmt.before + selected + fmt.after + text.substring(end);
+      newStart = start + fmt.before.length;
+      newEnd = newStart + selected.length;
+    } else {
+      const placeholder = type === 'link' ? 'link text' : type === 'image' ? 'alt text' : type === 'code' ? 'code here' : '';
+      newText = text.substring(0, start) + fmt.before + placeholder + fmt.after + text.substring(end);
+      newStart = start + fmt.before.length;
+      newEnd = newStart + placeholder.length;
+    }
+  }
+  
+  editor.value = newText;
+  editor.focus();
+  editor.setSelectionRange(newStart, newEnd);
+  updatePreview();
+  scheduleSave();
+}
+
+// Copy editor content
+function copyEditor() {
+  editor.select();
+  document.execCommand('copy');
+  editor.setSelectionRange(editor.value.length, editor.value.length);
+  alert('Copied to clipboard!');
+}
+
+// Clear editor
+function clearEditor() {
+  if (confirm('Clear all content?')) {
+    editor.value = '';
+    updatePreview();
+    scheduleSave();
+  }
+}
+
+// Export HTML
+function exportHTML() {
+  const rendered = renderMarkdown(editor.value);
+  const fullHTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exported Markdown</title>
+<style>
+body{font-family:system-ui,-apple-system,sans-serif;max-width:800px;margin:0 auto;padding:40px;line-height:1.7;color:#333}
+h1,h2,h3,h4,h5,h6{margin-top:24px;margin-bottom:16px;font-weight:600}
+h1{font-size:2em;border-bottom:1px solid #eaecef;padding-bottom:8px}
+h2{font-size:1.5em;border-bottom:1px solid #eaecef;padding-bottom:8px}
+code{background:#f6f8fa;padding:2px 6px;border-radius:3px;font-family:monospace;font-size:85%}
+pre{background:#f6f8fa;padding:16px;border-radius:6px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{border-left:4px solid #dfe2e5;padding:0 16px;margin:0;color:#6a737d}
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid #dfe2e5;padding:8px 12px}
+th{background:#f6f8fa;font-weight:600}
+a{color:#0366d6;text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%}
+</style>
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+${rendered}
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.RelatedTools) {
+      RelatedTools.renderRelatedTools('markdown-editor', '#related-tools-container', {
+        title: 'Related Tools',
+        showCategory: true,
+        trackClicks: true
+      });
+    }
+  });
+</script>
+</body>
+</html>`;
+  document.getElementById('exportOutput').value = fullHTML;
+  document.getElementById('exportModal').classList.add('active');
+}
+
+// Close modal
+function closeModal() {
+  document.getElementById('exportModal').classList.remove('active');
+}
+
+// Copy export
+function copyExport() {
+  const output = document.getElementById('exportOutput');
+  output.select();
+  document.execCommand('copy');
+  alert('Copied to clipboard!');
+}
+
+// Download HTML
+function downloadHTML() {
+  const content = document.getElementById('exportOutput').value;
+  const blob = new Blob([content], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'document.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// Download Markdown
+function downloadMarkdown() {
+  const content = editor.value;
+  const blob = new Blob([content], { type: 'text/markdown' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'document.md';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// Mobile view switch
+function switchView(view) {
+  const editorPane = document.getElementById('editorPane');
+  const previewPane = document.getElementById('previewPane');
+  const editorBtn = document.getElementById('editorViewBtn');
+  const previewBtn = document.getElementById('previewViewBtn');
+  
+  if (view === 'editor') {
+    editorPane.classList.remove('hidden');
+    previewPane.classList.add('hidden');
+    editorBtn.classList.add('active');
+    previewBtn.classList.remove('active');
+  } else {
+    editorPane.classList.add('hidden');
+    previewPane.classList.remove('hidden');
+    previewBtn.classList.add('active');
+    editorBtn.classList.remove('active');
+    updatePreview();
+  }
+}
+
+// Drag & drop
+const dragOverlay = document.getElementById('dragOverlay');
+
+document.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dragOverlay.classList.add('active');
+});
+
+document.addEventListener('dragleave', (e) => {
+  if (e.target === dragOverlay) {
+    dragOverlay.classList.remove('active');
+  }
+});
+
+document.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dragOverlay.classList.remove('active');
+  
+  const file = e.dataTransfer.files[0];
+  if (file && (file.name.endsWith('.md') || file.name.endsWith('.markdown') || file.name.endsWith('.txt'))) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      editor.value = event.target.result;
+      updatePreview();
+      scheduleSave();
+    };
+    reader.readAsText(file);
+  }
+});
+
+// Event listeners
+editor.addEventListener('input', () => {
+  updatePreview();
+  scheduleSave();
+});
+
+editor.addEventListener('keydown', (e) => {
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    const start = editor.selectionStart;
+    const end = editor.selectionEnd;
+    editor.value = editor.value.substring(0, start) + '  ' + editor.value.substring(end);
+    editor.setSelectionRange(start + 2, start + 2);
+    updatePreview();
+    scheduleSave();
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey || e.metaKey) {
+    switch(e.key) {
+      case 'b':
+        e.preventDefault();
+        formatText('bold');
+        break;
+      case 'i':
+        e.preventDefault();
+        formatText('italic');
+        break;
+      case 's':
+        if (e.shiftKey) {
+          e.preventDefault();
+          formatText('strikethrough');
+        }
+        break;
+    }
+  }
+});
+
+document.getElementById('wordWrap').addEventListener('change', (e) => {
+  editor.style.whiteSpace = e.target.checked ? 'pre-wrap' : 'pre';
+  editor.style.overflowWrap = e.target.checked ? 'break-word' : 'normal';
+});
+
+// Initialize
+updatePreview();
+</script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.RelatedTools) {
+      RelatedTools.renderRelatedTools('markdown-editor', '#related-tools-container', {
+        title: 'Related Tools',
+        showCategory: true,
+        trackClicks: true
+      });
+    }
+  });
+</script>
+</body>
+</html>

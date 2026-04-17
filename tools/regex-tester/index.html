@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Regex Tester & Pattern Library | Paperclip</title>
+  <meta name="description" content="Test, debug, and learn regular expressions with live matching, visual explanations, and a library of common patterns. JavaScript regex tester with instant results." />
+  <meta name="keywords" content="regex tester, regular expression tester, regex debugger, regex patterns, regex cheat sheet, javascript regex" />
+  <meta name="author" content="Paperclip" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/regex-tester/" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--warning:#f59e0b;--error:#ef4444;--match:#10b981;--group1:#f59e0b;--group2:#8b5cf6;--group3:#ec4899;color-scheme:dark}
+    *{box-sizing:border-box}
+    html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1400px;margin:0 auto}
+    .logo{font-weight:700;font-size:1.2em;color:var(--accent);text-decoration:none}
+    nav{display:flex;gap:16px}
+    nav a{color:var(--muted);text-decoration:none;font-size:14px}
+    nav a:hover{color:var(--text)}
+    .container{max-width:1400px;margin:0 auto;padding:24px}
+    h1{font-size:1.8em;margin:0 0 8px 0}
+    .subtitle{color:var(--muted);margin-bottom:24px}
+    
+    /* Main Grid */
+    .main-grid{display:grid;grid-template-columns:1fr 320px;gap:24px}
+    @media (max-width: 1024px){.main-grid{grid-template-columns:1fr}}
+    
+    /* Cards */
+    .card{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin-bottom:24px}
+    .card h2{margin:0 0 20px 0;font-size:1.2em;color:var(--accent)}
+    .card h3{margin:0 0 16px 0;font-size:1em;color:var(--text)}
+    
+    /* Pattern Input */
+    .pattern-section{margin-bottom:20px}
+    .pattern-input-wrapper{position:relative;display:flex;align-items:center;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;font-family:monospace;font-size:14px}
+    .pattern-input-wrapper:focus-within{border-color:var(--accent)}
+    .slash{color:var(--muted);padding:0 4px}
+    #pattern-input{flex:1;background:transparent;border:none;color:var(--text);font-family:monospace;font-size:14px;outline:none;min-width:0}
+    .flags-select{background:transparent;border:none;color:var(--muted);font-size:14px;cursor:pointer;outline:none;padding-left:8px}
+    .flags-select:focus{color:var(--text)}
+    
+    /* Test String */
+    .test-string{width:100%;min-height:120px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;color:var(--text);font-family:monospace;font-size:14px;resize:vertical;outline:none}
+    .test-string:focus{border-color:var(--accent)}
+    
+    /* Results */
+    .results-area{margin-top:16px;padding:16px;background:rgba(255,255,255,0.02);border-radius:8px;min-height:80px;font-family:monospace;font-size:14px;white-space:pre-wrap;word-break:break-word}
+    .match{background:var(--match);color:#000;padding:2px 4px;border-radius:3px}
+    .group1{background:var(--group1);color:#000;padding:2px 4px;border-radius:3px}
+    .group2{background:var(--group2);color:#fff;padding:2px 4px;border-radius:3px}
+    .group3{background:var(--group3);color:#fff;padding:2px 4px;border-radius:3px}
+    
+    /* Matches List */
+    .matches-list{margin-top:16px}
+    .match-item{padding:12px;background:rgba(255,255,255,0.03);border-radius:8px;margin-bottom:8px}
+    .match-item:last-child{margin-bottom:0}
+    .match-header{display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px}
+    .match-index{color:var(--accent);font-weight:600}
+    .match-range{color:var(--muted)}
+    .match-text{font-family:monospace;font-size:14px}
+    
+    /* Explanation */
+    .explanation{margin-top:16px;padding:16px;background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.2);border-radius:8px}
+    .explanation-item{display:flex;gap:12px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.05)}
+    .explanation-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+    .explanation-pattern{font-family:monospace;font-size:14px;color:var(--accent);white-space:nowrap}
+    .explanation-meaning{color:var(--muted);font-size:14px}
+    
+    /* Pattern Library */
+    .pattern-library{max-height:600px;overflow-y:auto}
+    .pattern-category{margin-bottom:20px}
+    .pattern-category-title{font-size:14px;color:var(--accent);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.1)}
+    .pattern-item{padding:12px;background:rgba(255,255,255,0.03);border-radius:8px;margin-bottom:8px;cursor:pointer;transition:background .2s}
+    .pattern-item:hover{background:rgba(255,255,255,0.06)}
+    .pattern-item-name{font-size:13px;font-weight:600;margin-bottom:4px}
+    .pattern-item-regex{font-family:monospace;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    
+    /* Reference */
+    .reference-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+    .reference-section h3{font-size:14px;color:var(--accent);margin-bottom:12px}
+    .reference-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:14px}
+    .reference-item:last-child{border-bottom:none}
+    .ref-pattern{font-family:monospace;color:var(--accent)}
+    .ref-desc{color:var(--muted);font-size:13px}
+    
+    /* Replace Section */
+    .replace-section{margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1)}
+    .replace-input{width:100%;padding:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:var(--text);font-family:monospace;font-size:14px;outline:none}
+    .replace-input:focus{border-color:var(--accent)}
+    .replace-result{margin-top:12px;padding:12px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:8px;font-family:monospace;font-size:14px}
+    
+    /* Error */
+    .error-message{padding:12px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;color:var(--error);font-size:14px;margin-top:12px}
+    
+    /* Stats */
+    .stats{display:flex;gap:24px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1)}
+    .stat{text-align:center}
+    .stat-value{font-size:1.5em;font-weight:700;color:var(--accent)}
+    .stat-label{font-size:12px;color:var(--muted);margin-top:4px}
+    
+    /* Buttons */
+    .btn{display:inline-block;padding:10px 18px;background:var(--accent);color:#012;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px;text-decoration:none}
+    .btn:hover{opacity:.9}
+    .btn-secondary{background:rgba(255,255,255,0.1);color:var(--text)}
+    .btn-secondary:hover{background:rgba(255,255,255,0.15)}
+    
+    /* Tips */
+    .tips{margin-top:32px;padding:20px;background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(37,99,235,0.1));border-radius:12px;border:1px solid rgba(6,182,212,0.3)}
+    .tips h3{margin:0 0 16px 0;color:var(--accent)}
+    .tips ul{margin:0;padding-left:20px;color:var(--muted)}
+    .tips li{margin-bottom:8px}
+    
+    footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
+  </style>
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+  <header>
+    <a href="/" class="logo">← Paperclip</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/tools/">Tools</a>
+      <a href="/about.html">About</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Regex Tester & Pattern Library</h1>
+    <p class="subtitle">Test, debug, and understand regular expressions with live matching and visual explanations.</p>
+
+    <div class="main-grid">
+      <div class="left-column">
+        <!-- Pattern Input -->
+        <div class="card">
+          <h2>Regular Expression</h2>
+          <div class="pattern-section">
+            <div class="pattern-input-wrapper">
+              <span class="slash">/</span>
+              <input type="text" id="pattern-input" placeholder="Enter your regex pattern..." value="([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})">
+              <span class="slash">/</span>
+              <select class="flags-select" id="flags-input">
+                <option value="">No flags</option>
+                <option value="g" selected>g (global)</option>
+                <option value="gi">gi (global + ignore case)</option>
+                <option value="gm">gm (global + multiline)</option>
+                <option value="gim">gim (global + ignore case + multiline)</option>
+                <option value="i">i (ignore case)</option>
+                <option value="m">m (multiline)</option>
+                <option value="s">s (dotAll)</option>
+                <option value="u">u (unicode)</option>
+                <option value="y">y (sticky)</option>
+              </select>
+            </div>
+          </div>
+          
+          <label style="display:block;margin-bottom:8px;color:var(--muted);font-size:14px">Test String</label>
+          <textarea id="test-input" class="test-string" placeholder="Enter text to test against the regex...">Contact us at support@example.com or sales@company.co.uk&#10;&#10;Alternative email: hello-world_2024@test.org&#10;Invalid: not-an-email, @example.com, user@</textarea>
+          
+          <div id="error-container"></div>
+          
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-value" id="match-count">0</div>
+              <div class="stat-label">Matches</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value" id="group-count">0</div>
+              <div class="stat-label">Groups</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value" id="exec-time">0ms</div>
+              <div class="stat-label">Execution</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results -->
+        <div class="card">
+          <h2>Matches</h2>
+          <div id="matches-container">
+            <div class="results-area" id="highlighted-result"></div>
+            <div class="matches-list" id="matches-list"></div>
+          </div>
+        </div>
+
+        <!-- Explanation -->
+        <div class="card">
+          <h2>Pattern Explanation</h2>
+          <div id="explanation-container" class="explanation">
+            <p style="color:var(--muted);margin:0">Enter a pattern to see explanation</p>
+          </div>
+        </div>
+
+        <!-- Replace -->
+        <div class="card">
+          <h2>Replace / Transform</h2>
+          <div class="replace-section">
+            <label style="display:block;margin-bottom:8px;color:var(--muted);font-size:14px">Replacement Pattern (use $1, $2 for groups)</label>
+            <input type="text" id="replace-input" class="replace-input" placeholder="e.g., $1 at $2">
+            <div class="replace-result" id="replace-result" style="display:none"></div>
+          </div>
+        </div>
+
+        <!-- Reference -->
+        <div class="card">
+          <h2>Quick Reference</h2>
+          <div class="reference-grid">
+            <div class="reference-section">
+              <h3>Character Classes</h3>
+              <div class="reference-item"><span class="ref-pattern">.</span><span class="ref-desc">Any character</span></div>
+              <div class="reference-item"><span class="ref-pattern">\d</span><span class="ref-desc">Digit [0-9]</span></div>
+              <div class="reference-item"><span class="ref-pattern">\D</span><span class="ref-desc">Non-digit</span></div>
+              <div class="reference-item"><span class="ref-pattern">\w</span><span class="ref-desc">Word [a-zA-Z0-9_]</span></div>
+              <div class="reference-item"><span class="ref-pattern">\W</span><span class="ref-desc">Non-word</span></div>
+              <div class="reference-item"><span class="ref-pattern">\s</span><span class="ref-desc">Whitespace</span></div>
+              <div class="reference-item"><span class="ref-pattern">\S</span><span class="ref-desc">Non-whitespace</span></div>
+            </div>
+            <div class="reference-section">
+              <h3>Anchors</h3>
+              <div class="reference-item"><span class="ref-pattern">^</span><span class="ref-desc">Start of string</span></div>
+              <div class="reference-item"><span class="ref-pattern">$</span><span class="ref-desc">End of string</span></div>
+              <div class="reference-item"><span class="ref-pattern">\b</span><span class="ref-desc">Word boundary</span></div>
+              <div class="reference-item"><span class="ref-pattern">\B</span><span class="ref-desc">Non-word boundary</span></div>
+            </div>
+            <div class="reference-section">
+              <h3>Quantifiers</h3>
+              <div class="reference-item"><span class="ref-pattern">*</span><span class="ref-desc">0 or more</span></div>
+              <div class="reference-item"><span class="ref-pattern">+</span><span class="ref-desc">1 or more</span></div>
+              <div class="reference-item"><span class="ref-pattern">?</span><span class="ref-desc">0 or 1</span></div>
+              <div class="reference-item"><span class="ref-pattern">{n}</span><span class="ref-desc">Exactly n</span></div>
+              <div class="reference-item"><span class="ref-pattern">{n,}</span><span class="ref-desc">n or more</span></div>
+              <div class="reference-item"><span class="ref-pattern">{n,m}</span><span class="ref-desc">n to m</span></div>
+            </div>
+            <div class="reference-section">
+              <h3>Groups & Ranges</h3>
+              <div class="reference-item"><span class="ref-pattern">(abc)</span><span class="ref-desc">Capture group</span></div>
+              <div class="reference-item"><span class="ref-pattern">(?:abc)</span><span class="ref-desc">Non-capturing</span></div>
+              <div class="reference-item"><span class="ref-pattern">[abc]</span><span class="ref-desc">Character set</span></div>
+              <div class="reference-item"><span class="ref-pattern">[^abc]</span><span class="ref-desc">Negated set</span></div>
+              <div class="reference-item"><span class="ref-pattern">[a-z]</span><span class="ref-desc">Range</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pro Tips -->
+        <div class="tips">
+          <h3>Pro Tips</h3>
+          <ul>
+            <li><strong>Test incrementally:</strong> Build your pattern piece by piece, testing each addition</li>
+            <li><strong>Use non-capturing groups:</strong> (?:...) is faster than (...) when you don't need the match</li>
+            <li><strong>Be specific:</strong> [a-z] is faster than \w if you only need letters</li>
+            <li><strong>Avoid catastrophic backtracking:</strong> Patterns like (a+)+ can freeze on certain inputs</li>
+            <li><strong>Use ^ and $ anchors:</strong> For full string matching, always include anchors</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="right-column">
+        <!-- Pattern Library -->
+        <div class="card pattern-library">
+          <h2>Pattern Library</h2>
+          
+          <div class="pattern-category">
+            <div class="pattern-category-title">Email & Contact</div>
+            <div class="pattern-item" data-pattern="([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})" data-flags="g" data-test="john@example.com, support@company.org">
+              <div class="pattern-item-name">Email Address</div>
+              <div class="pattern-item-regex">([a-zA-Z0-9._%+-]+)@([a-zA-Z...</div>
+            </div>
+            <div class="pattern-item" data-pattern="\b\d{3}[-.]?\d{3}[-.]?\d{4}\b" data-flags="g" data-test="(555) 123-4567, 555.987.6543">
+              <div class="pattern-item-name">US Phone Number</div>
+              <div class="pattern-item-regex">\b\d{3}[-.]?\d{3}[-.]?\d{4}\b</div>
+            </div>
+            <div class="pattern-item" data-pattern="@(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$" data-flags="g" data-test="@github.com, @https://www.example.com">
+              <div class="pattern-item-name">URL</div>
+              <div class="pattern-item-regex">@(https?:\/\/)?([\da-z\.-...</div>
+            </div>
+          </div>
+
+          <div class="pattern-category">
+            <div class="pattern-category-title">Numbers</div>
+            <div class="pattern-item" data-pattern="^-?\d+$" data-flags="" data-test="-123, 456, 0">
+              <div class="pattern-item-name">Integer</div>
+              <div class="pattern-item-regex">^-?\d+$</div>
+            </div>
+            <div class="pattern-item" data-pattern="^-?\d*\.?\d+$" data-flags="" data-test="3.14, -0.5, 42">
+              <div class="pattern-item-name">Decimal Number</div>
+              <div class="pattern-item-regex">^-?\d*\.?\d+$</div>
+            </div>
+            <div class="pattern-item" data-pattern="\b\d{1,3}(,\d{3})*(\.\d+)?\b" data-flags="g" data-test="1,234, 1,234.56, 999">
+              <div class="pattern-item-name">Formatted Number</div>
+              <div class="pattern-item-regex">\b\d{1,3}(,\d{3})*(\.\d+)...</div>
+            </div>
+          </div>
+
+          <div class="pattern-category">
+            <div class="pattern-category-title">Network</div>
+            <div class="pattern-item" data-pattern="\b(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b" data-flags="g" data-test="192.168.1.1, 10.0.0.1, 255.255.255.0">
+              <div class="pattern-item-name">IPv4 Address</div>
+              <div class="pattern-item-regex">\b(?:25[0-5]|2[0-4][0-9]...</div>
+            </div>
+            <div class="pattern-item" data-pattern="(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):(\d{1,5})\b" data-flags="g" data-test="192.168.1.1:8080, 10.0.0.1:3000">
+              <div class="pattern-item-name">IP:Port</div>
+              <div class="pattern-item-regex">(?:(?:25[0-5]|2[0-4][0-9...</div>
+            </div>
+            <div class="pattern-item" data-pattern="\b(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}\b" data-flags="g" data-test="2001:0db8:85a3:0000:0000:8a2e:0370:7334">
+              <div class="pattern-item-name">IPv6 Address</div>
+              <div class="pattern-item-regex">\b(?:[0-9A-Fa-f]{1,4}:)...</div>
+            </div>
+          </div>
+
+          <div class="pattern-category">
+            <div class="pattern-category-title">Code & Dev</div>
+            <div class="pattern-item" data-pattern="^[a-zA-Z_$][a-zA-Z0-9_$]*$" data-flags="" data-test="myVariable, _private, $jquery">
+              <div class="pattern-item-name">JavaScript Variable</div>
+              <div class="pattern-item-regex">^[a-zA-Z_$][a-zA-Z0-9_$]...</div>
+            </div>
+            <div class="pattern-item" data-pattern="^[a-z]+([A-Z][a-z]+)*$" data-flags="" data-test="camelCase, myVariableName, getUserById">
+              <div class="pattern-item-name">camelCase</div>
+              <div class="pattern-item-regex">^[a-z]+([A-Z][a-z]+)*$</div>
+            </div>
+            <div class="pattern-item" data-pattern="^[a-z]+(-[a-z]+)*$" data-flags="" data-test="kebab-case, my-variable-name, get-user-by-id">
+              <div class="pattern-item-name">kebab-case</div>
+              <div class="pattern-item-regex">^[a-z]+(-[a-z]+)*$</div>
+            </div>
+            <div class="pattern-item" data-pattern="^[a-z]+(_[a-z]+)*$" data-flags="" data-test="snake_case, my_variable_name, get_user_by_id">
+              <div class="pattern-item-name">snake_case</div>
+              <div class="pattern-item-regex">^[a-z]+(_[a-z]+)*$</div>
+            </div>
+            <div class="pattern-item" data-pattern="^([A-Z][a-z0-9]+)+$" data-flags="" data-test="PascalCase, MyClassName, HttpResponse">
+              <div class="pattern-item-name">PascalCase</div>
+              <div class="pattern-item-regex">^([A-Z][a-z0-9]+)+$</div>
+            </div>
+          </div>
+
+          <div class="pattern-category">
+            <div class="pattern-category-title">Date & Time</div>
+            <div class="pattern-item" data-pattern="\d{4}-\d{2}-\d{2}" data-flags="g" data-test="2026-04-02, 1999-12-31">
+              <div class="pattern-item-name">ISO Date (YYYY-MM-DD)</div>
+              <div class="pattern-item-regex">\d{4}-\d{2}-\d{2}</div>
+            </div>
+            <div class="pattern-item" data-pattern="(0[1-9]|1[0-2])/(0[1-9]|[12]\d|3[01])/\d{4}" data-flags="g" data-test="04/02/2026, 12/31/1999">
+              <div class="pattern-item-name">US Date (MM/DD/YYYY)</div>
+              <div class="pattern-item-regex">(0[1-9]|1[0-2])/(0[1-9]...</div>
+            </div>
+            <div class="pattern-item" data-pattern="([01]?\d|2[0-3]):([0-5]\d)(:[0-5]\d)?" data-flags="g" data-test="14:30, 09:15:30, 23:59">
+              <div class="pattern-item-name">Time (24h)</div>
+              <div class="pattern-item-regex">([01]?\d|2[0-3]):([0-5]...</div>
+            </div>
+          </div>
+
+          <div class="pattern-category">
+            <div class="pattern-category-title">Security</div>
+            <div class="pattern-item" data-pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" data-flags="" data-test="MyP@ssw0rd, Secure123!">
+              <div class="pattern-item-name">Strong Password</div>
+              <div class="pattern-item-regex">^(?=.*[a-z])(?=.*[A-Z])...</div>
+            </div>
+            <div class="pattern-item" data-pattern="^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$" data-flags="" data-test="550e8400-e29b-41d4-a716-446655440000">
+              <div class="pattern-item-name">UUID</div>
+              <div class="pattern-item-regex">^[0-9a-fA-F]{8}-[0-9a-f...</div>
+            </div>
+            <div class="pattern-item" data-pattern="^#[0-9A-Fa-f]{6}$" data-flags="g" data-test="#FF5733, #06b6d4, #0f1724">
+              <div class="pattern-item-name">Hex Color</div>
+              <div class="pattern-item-regex">^#[0-9A-Fa-f]{6}$</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="/public/analytics.js"></script>
+  <footer>
+    <p>Regex Tester • Paperclip Developer Tools</p>
+    <p style="font-size:12px;margin-top:8px">All processing happens in your browser — your data never leaves your device</p>
+  </footer>
+
+  <script>
+    // DOM Elements
+    const patternInput = document.getElementById('pattern-input');
+    const flagsInput = document.getElementById('flags-input');
+    const testInput = document.getElementById('test-input');
+    const replaceInput = document.getElementById('replace-input');
+    const errorContainer = document.getElementById('error-container');
+    const highlightedResult = document.getElementById('highlighted-result');
+    const matchesList = document.getElementById('matches-list');
+    const explanationContainer = document.getElementById('explanation-container');
+    const replaceResult = document.getElementById('replace-result');
+    const matchCount = document.getElementById('match-count');
+    const groupCount = document.getElementById('group-count');
+    const execTime = document.getElementById('exec-time');
+    
+    // Pattern explanation map
+    const explanations = {
+      '\\d': 'Matches any digit (0-9)',
+      '\\D': 'Matches any non-digit',
+      '\\w': 'Matches word character (letter, number, underscore)',
+      '\\W': 'Matches non-word character',
+      '\\s': 'Matches whitespace (space, tab, newline)',
+      '\\S': 'Matches non-whitespace',
+      '\\b': 'Word boundary',
+      '\\B': 'Non-word boundary',
+      '.': 'Matches any character except newline',
+      '^': 'Start of string/line',
+      '$': 'End of string/line',
+      '*': 'Zero or more of preceding',
+      '+': 'One or more of preceding',
+      '?': 'Zero or one of preceding',
+      '{n}': 'Exactly n occurrences',
+      '{n,}': 'n or more occurrences',
+      '{n,m}': 'Between n and m occurrences',
+      '|': 'Alternation (OR)',
+      '(...)': 'Capturing group',
+      '(?:...)': 'Non-capturing group',
+      '(?=...)': 'Positive lookahead',
+      '(?!...)': 'Negative lookahead',
+      '[...]': 'Character class',
+      '[^...]': 'Negated character class',
+      '[a-z]': 'Lowercase letters',
+      '[A-Z]': 'Uppercase letters',
+      '[0-9]': 'Digits',
+      '[a-zA-Z]': 'Letters',
+      '[a-zA-Z0-9]': 'Alphanumeric',
+    };
+    
+    let lastValidRegex = null;
+    
+    // Debounce function
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+    
+    // Test regex
+    function testRegex() {
+      const pattern = patternInput.value;
+      const flags = flagsInput.value;
+      const testString = testInput.value;
+      const replacePattern = replaceInput.value;
+      
+      // Clear previous results
+      errorContainer.innerHTML = '';
+      
+      if (!pattern) {
+        highlightedResult.innerHTML = '';
+        matchesList.innerHTML = '';
+        matchCount.textContent = '0';
+        groupCount.textContent = '0';
+        return;
+      }
+      
+      const startTime = performance.now();
+      
+      try {
+        // Create regex
+        const regex = new RegExp(pattern, flags);
+        lastValidRegex = regex;
+        
+        // Find all matches
+        const matches = [];
+        let match;
+        const globalRegex = flags.includes('g') ? regex : new RegExp(pattern, flags + 'g');
+        
+        // Reset lastIndex
+        globalRegex.lastIndex = 0;
+        
+        while ((match = globalRegex.exec(testString)) !== null) {
+          matches.push({
+            text: match[0],
+            index: match.index,
+            groups: match.slice(1),
+            length: match[0].length
+          });
+          
+          // Prevent infinite loop on zero-width matches
+          if (match[0].length === 0) {
+            globalRegex.lastIndex++;
+          }
+          
+          // Stop after 100 matches to prevent freezing
+          if (matches.length >= 100) break;
+        }
+        
+        // Update stats
+        const endTime = performance.now();
+        matchCount.textContent = matches.length;
+        groupCount.textContent = matches.length > 0 ? matches[0].groups.length : 0;
+        execTime.textContent = (endTime - startTime).toFixed(1) + 'ms';
+        
+        // Display highlighted result
+        displayHighlightedResult(testString, matches);
+        
+        // Display match details
+        displayMatchDetails(matches);
+        
+        // Update explanation
+        updateExplanation(pattern);
+        
+        // Show replacement
+        if (replacePattern && matches.length > 0) {
+          showReplacement(testString, regex, replacePattern, flags);
+        } else {
+          replaceResult.style.display = 'none';
+        }
+        
+      } catch (e) {
+        // Show error
+        errorContainer.innerHTML = `<div class="error-message">Invalid regex: ${e.message}</div>`;
+        execTime.textContent = '-';
+      }
+    }
+    
+    // Display highlighted result
+    function displayHighlightedResult(text, matches) {
+      if (matches.length === 0) {
+        highlightedResult.innerHTML = '<span style="color:var(--muted)">No matches found</span>';
+        return;
+      }
+      
+      let html = '';
+      let lastIndex = 0;
+      
+      matches.forEach((match, i) => {
+        // Add text before match
+        if (match.index > lastIndex) {
+          html += escapeHtml(text.slice(lastIndex, match.index));
+        }
+        
+        // Add highlighted match with groups
+        let matchHtml = escapeHtml(match.text);
+        
+        // If there are groups, try to highlight them
+        if (match.groups && match.groups.length > 0 && match.groups[0] !== undefined) {
+          // This is a simplified group highlighting - in practice you'd need more sophisticated parsing
+          matchHtml = `<span class="match">${matchHtml}</span>`;
+        } else {
+          matchHtml = `<span class="match">${matchHtml}</span>`;
+        }
+        
+        html += matchHtml;
+        lastIndex = match.index + match.length;
+      });
+      
+      // Add remaining text
+      if (lastIndex < text.length) {
+        html += escapeHtml(text.slice(lastIndex));
+      }
+      
+      highlightedResult.innerHTML = html;
+    }
+    
+    // Display match details
+    function displayMatchDetails(matches) {
+      if (matches.length === 0) {
+        matchesList.innerHTML = '';
+        return;
+      }
+      
+      let html = '';
+      matches.forEach((match, i) => {
+        html += `<div class="match-item">
+          <div class="match-header">
+            <span class="match-index">Match ${i + 1}</span>
+            <span class="match-range">Index ${match.index} - ${match.index + match.length}</span>
+          </div>
+          <div class="match-text">${escapeHtml(match.text)}</div>`;
+        
+        if (match.groups && match.groups.length > 0 && match.groups[0] !== undefined) {
+          html += `<div style="margin-top:8px;padding-left:12px;border-left:2px solid var(--accent)">`;
+          match.groups.forEach((group, j) => {
+            if (group !== undefined) {
+              html += `<div style="font-size:12px;color:var(--muted);margin-top:4px">Group ${j + 1}: <span style="color:var(--text)">${escapeHtml(group)}</span></div>`;
+            }
+          });
+          html += `</div>`;
+        }
+        
+        html += `</div>`;
+      });
+      
+      matchesList.innerHTML = html;
+    }
+    
+    // Update explanation
+    function updateExplanation(pattern) {
+      const parts = parsePattern(pattern);
+      
+      if (parts.length === 0) {
+        explanationContainer.innerHTML = '<p style="color:var(--muted);margin:0">Enter a pattern to see explanation</p>';
+        return;
+      }
+      
+      let html = '';
+      parts.forEach(part => {
+        const meaning = explanations[part] || getCustomExplanation(part);
+        html += `<div class="explanation-item">
+          <span class="explanation-pattern">${escapeHtml(part)}</span>
+          <span class="explanation-meaning">${meaning}</span>
+        </div>`;
+      });
+      
+      explanationContainer.innerHTML = html;
+    }
+    
+    // Parse pattern into parts
+    function parsePattern(pattern) {
+      const parts = [];
+      let i = 0;
+      
+      while (i < pattern.length) {
+        let part;
+        
+        // Check for multi-character sequences
+        if (pattern[i] === '\\' && i + 1 < pattern.length) {
+          part = '\\' + pattern[i + 1];
+          if (explanations[part]) {
+            parts.push(part);
+            i += 2;
+            continue;
+          }
+        }
+        
+        // Check for groups
+        if (pattern[i] === '(') {
+          if (pattern.substring(i, i + 3) === '(?:') {
+            parts.push('(?:...)');
+            i = findClosingParen(pattern, i) + 1;
+            continue;
+          } else if (pattern.substring(i, i + 3) === '(?=') {
+            parts.push('(?=...)');
+            i = findClosingParen(pattern, i) + 1;
+            continue;
+          } else if (pattern.substring(i, i + 3) === '(?!') {
+            parts.push('(?!...)');
+            i = findClosingParen(pattern, i) + 1;
+            continue;
+          } else {
+            parts.push('(...)');
+            i = findClosingParen(pattern, i) + 1;
+            continue;
+          }
+        }
+        
+        // Check for character classes
+        if (pattern[i] === '[') {
+          const end = pattern.indexOf(']', i);
+          if (end !== -1) {
+            const content = pattern.substring(i + 1, end);
+            if (content.startsWith('^')) {
+              parts.push('[^...]');
+            } else if (content === 'a-z') {
+              parts.push('[a-z]');
+            } else if (content === 'A-Z') {
+              parts.push('[A-Z]');
+            } else if (content === '0-9') {
+              parts.push('[0-9]');
+            } else if (content === 'a-zA-Z') {
+              parts.push('[a-zA-Z]');
+            } else if (content === 'a-zA-Z0-9') {
+              parts.push('[a-zA-Z0-9]');
+            } else {
+              parts.push('[...]');
+            }
+            i = end + 1;
+            continue;
+          }
+        }
+        
+        // Check for quantifiers
+        if (pattern[i] === '{') {
+          const end = pattern.indexOf('}', i);
+          if (end !== -1) {
+            const content = pattern.substring(i + 1, end);
+            if (content.includes(',')) {
+              if (content.endsWith(',')) {
+                parts.push('{n,}');
+              } else {
+                parts.push('{n,m}');
+              }
+            } else {
+              parts.push('{n}');
+            }
+            i = end + 1;
+            continue;
+          }
+        }
+        
+        // Single character tokens
+        part = pattern[i];
+        if (explanations[part]) {
+          parts.push(part);
+        }
+        i++;
+      }
+      
+      return parts;
+    }
+    
+    // Find closing parenthesis
+    function findClosingParen(pattern, start) {
+      let depth = 1;
+      let i = start + 1;
+      while (i < pattern.length && depth > 0) {
+        if (pattern[i] === '(' && pattern[i - 1] !== '\\') depth++;
+        if (pattern[i] === ')' && pattern[i - 1] !== '\\') depth--;
+        i++;
+      }
+      return i - 1;
+    }
+    
+    // Get custom explanation
+    function getCustomExplanation(part) {
+      if (part.startsWith('[')) return 'Character set';
+      if (part.startsWith('(')) return 'Group';
+      if (part.startsWith('{')) return 'Quantifier';
+      return 'Literal character';
+    }
+    
+    // Show replacement
+    function showReplacement(text, regex, replacePattern, flags) {
+      try {
+        const result = text.replace(regex, replacePattern);
+        replaceResult.textContent = result;
+        replaceResult.style.display = 'block';
+      } catch (e) {
+        replaceResult.style.display = 'none';
+      }
+    }
+    
+    // Escape HTML
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+    
+    // Event listeners
+    const debouncedTest = debounce(testRegex, 150);
+    
+    patternInput.addEventListener('input', debouncedTest);
+    flagsInput.addEventListener('change', debouncedTest);
+    testInput.addEventListener('input', debouncedTest);
+    replaceInput.addEventListener('input', debouncedTest);
+    
+    // Pattern library click handlers
+    document.querySelectorAll('.pattern-item').forEach(item => {
+      item.addEventListener('click', () => {
+        patternInput.value = item.dataset.pattern;
+        flagsInput.value = item.dataset.flags || '';
+        if (item.dataset.test) {
+          testInput.value = item.dataset.test;
+        }
+        testRegex();
+      });
+    });
+    
+    // Initial test
+    testRegex();
+    
+    // Track tool usage
+    if (typeof PaperclipAnalytics !== 'undefined') {
+      PaperclipAnalytics.tool.track('regex-tester', 'load');
+      
+      patternInput.addEventListener('change', () => {
+        PaperclipAnalytics.tool.track('regex-tester', 'pattern_change');
+      });
+    }
+  </script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.RelatedTools) {
+      RelatedTools.renderRelatedTools('regex-tester', '#related-tools-container', {
+        title: 'Related Tools',
+        showCategory: true,
+        trackClicks: true
+      });
+    }
+  });
+</script>
+</body>
+</html>

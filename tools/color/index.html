@@ -9,6 +9,8 @@
 <meta name="author" content="Paperclip" />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/color/" />
+<link rel="preconnect" href="https://cdn.carbonads.com" crossorigin>
+<link rel="preconnect" href="https://via.placeholder.com" crossorigin>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <style>
 :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--border:rgba(255,255,255,0.08);color-scheme:dark}
@@ -71,6 +73,7 @@ h1{font-size:2em;margin:0 0 8px 0}
  .affiliate-banner a:hover{text-decoration:underline}
  footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:60px}
 </style>
+<link rel="stylesheet" href="/tools/related-tools.css">
 </head>
 <body>
 <header>
@@ -190,7 +193,7 @@ h1{font-size:2em;margin:0 0 8px 0}
  </div>
 
  <div class="affiliate-banner">
- <img src="https://via.placeholder.com/60x60/2563eb/ffffff?text=Ps" alt="Adobe Photoshop" onerror="this.style.display='none'">
+ <img loading="lazy" src="https://via.placeholder.com/60x60/2563eb/ffffff?text=Ps" alt="Adobe Photoshop" onerror="this.style.display='none'">
  <div class="content">
  <h4>Adobe Creative Cloud</h4>
  <p>Industry-standard design tools. Photoshop, Illustrator, and XD with cloud syncing. Perfect for professional color work.</p>
@@ -199,6 +202,7 @@ h1{font-size:2em;margin:0 0 8px 0}
  </div>
  </div>
 
+<script src="/public/analytics.js"></script>
 <footer>
 <p>Made with minimal code • Free forever • No tracking</p>
 </footer>
@@ -380,6 +384,21 @@ navigator.clipboard.writeText(cssOutput.textContent + '\n' + bgOutput.textConten
 hexInput.addEventListener('input', updateFromHex);
 rgbInput.addEventListener('input', updateFromRgb);
 hslInput.addEventListener('input', updateFromHsl);
+</script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.RelatedTools) {
+      RelatedTools.renderRelatedTools('color', '#related-tools-container', {
+        title: 'Related Tools',
+        showCategory: true,
+        trackClicks: true
+      });
+    }
+  });
 </script>
 </body>
 </html>

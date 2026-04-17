@@ -216,30 +216,40 @@ function updateCrackTime(entropy) {
 
 // Copy password
 function copyPassword() {
-    if (!passwordOutput.value) return;
-    
-    passwordOutput.select();
-    passwordOutput.setSelectionRange(0, 99999);
-    
-    navigator.clipboard.writeText(passwordOutput.value).then(() => {
-        const originalBtn = document.getElementById('copyBtn').innerHTML;
-        document.getElementById('copyBtn').innerHTML = '✓';
-        
-        setTimeout(() => {
-            document.getElementById('copyBtn').innerHTML = originalBtn;
-        }, 2000);
-    });
+  if (!passwordOutput.value) return;
+
+  passwordOutput.select();
+  passwordOutput.setSelectionRange(0, 99999);
+
+  navigator.clipboard.writeText(passwordOutput.value).then(() => {
+    const originalBtn = document.getElementById('copyBtn').innerHTML;
+    document.getElementById('copyBtn').innerHTML = '✓';
+
+    setTimeout(() => {
+      document.getElementById('copyBtn').innerHTML = originalBtn;
+    }, 2000);
+
+    // Track copy action
+    if (window.PaperclipAnalytics) {
+      PaperclipAnalytics.tool.track('password-generator', 'copy', {});
+    }
+  });
 }
 
-// Track password generation for lead capture
+// Track password generation for lead capture and analytics
 function trackGeneration() {
-    const count = parseInt(localStorage.getItem('passwordGenCount') || '0') + 1;
-    localStorage.setItem('passwordGenCount', count.toString());
-    
-    // Show lead modal after 2 generations
-    if (count === 2 && !localStorage.getItem('leadCaptured')) {
-        setTimeout(showLeadModal, 1000);
-    }
+  const count = parseInt(localStorage.getItem('passwordGenCount') || '0') + 1;
+  localStorage.setItem('passwordGenCount', count.toString());
+
+  // Track in Paperclip Analytics
+  if (window.PaperclipAnalytics) {
+    PaperclipAnalytics.tool.track('password-generator', 'generate', {});
+  }
+
+  // Show lead modal after 2 generations
+  if (count === 2 && !localStorage.getItem('leadCaptured')) {
+    setTimeout(showLeadModal, 1000);
+  }
 }
 
 // Show lead modal

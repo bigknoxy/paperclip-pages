@@ -104,6 +104,7 @@
       .tool-card{padding:20px}
     }
   </style>
+<link rel="stylesheet" href="/tools/related-tools.css">
 </head>
 <body>
   <header>
@@ -193,6 +194,7 @@
     </div>
   </div>
 
+<script src="/public/analytics.js"></script>
   <footer>
     <p>Made with minimal code • Free batch conversion • No tracking</p>
   </footer>
@@ -457,5 +459,20 @@
       `;
     }
   </script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.RelatedTools) {
+      RelatedTools.renderRelatedTools('batch-converter', '#related-tools-container', {
+        title: 'Related Tools',
+        showCategory: true,
+        trackClicks: true
+      });
+    }
+  });
+</script>
 </body>
 </html>

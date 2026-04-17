@@ -97,6 +97,7 @@ textarea::placeholder{color:var(--muted)}
 
 footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:60px}
 </style>
+<link rel="stylesheet" href="/tools/related-tools.css">
 </head>
 <body>
 <header>
@@ -293,6 +294,7 @@ Jane Smith,jane@example.com,25</div>
 </div>
 </div>
 
+<script src="/public/analytics.js"></script>
 <footer>
 <p>Made with minimal code • Free forever • No tracking</p>
 </footer>
@@ -600,6 +602,21 @@ function updateStats(rows, cols, chars) {
 function hideStats() {
   document.getElementById('stats').style.display = 'none';
 }
+</script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.RelatedTools) {
+      RelatedTools.renderRelatedTools('csv-json', '#related-tools-container', {
+        title: 'Related Tools',
+        showCategory: true,
+        trackClicks: true
+      });
+    }
+  });
 </script>
 </body>
 </html>

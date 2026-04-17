@@ -9,6 +9,8 @@
 <meta name="author" content="Paperclip" />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/word-counter/" />
+<link rel="preconnect" href="https://cdn.carbonads.com" crossorigin>
+<link rel="preconnect" href="https://via.placeholder.com" crossorigin>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <style>
 :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--border:rgba(255,255,255,0.08);color-scheme:dark}
@@ -62,6 +64,7 @@ textarea:focus{outline:none;border-color:var(--accent)}
  .affiliate-banner a:hover{text-decoration:underline}
  footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:60px}
 </style>
+<link rel="stylesheet" href="/tools/related-tools.css">
 </head>
 <body>
 <header>
@@ -169,7 +172,7 @@ textarea:focus{outline:none;border-color:var(--accent)}
  </div>
 
  <div class="affiliate-banner">
- <img src="https://via.placeholder.com/60x60/2563eb/ffffff?text=Wr" alt="Notion" onerror="this.style.display='none'">
+ <img loading="lazy" src="https://via.placeholder.com/60x60/2563eb/ffffff?text=Wr" alt="Notion" onerror="this.style.display='none'">
  <div class="content">
  <h4>Notion — All-in-One Workspace</h4>
  <p>Write, plan, and collaborate in one place. Perfect for writers, bloggers, and content teams. Free personal plan.</p>
@@ -178,6 +181,7 @@ textarea:focus{outline:none;border-color:var(--accent)}
  </div>
  </div>
 
+<script src="/public/analytics.js"></script>
 <footer>
 <p>Made with minimal code • Free forever • No tracking</p>
 </footer>
@@ -231,6 +235,21 @@ alert('Unable to paste. Please use Ctrl+V instead.');
 
 textarea.addEventListener('input', updateStats);
 updateStats();
+</script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.RelatedTools) {
+      RelatedTools.renderRelatedTools('word-counter', '#related-tools-container', {
+        title: 'Related Tools',
+        showCategory: true,
+        trackClicks: true
+      });
+    }
+  });
 </script>
 </body>
 </html>

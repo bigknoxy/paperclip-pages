@@ -7,6 +7,7 @@
     <meta name="description" content="Free online unit converter for length, weight, temperature, time, and data units. Convert instantly between metric and imperial systems.">
     <meta name="keywords" content="unit converter, length converter, weight converter, temperature converter, data converter">
     <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/tools/related-tools.css">
 </head>
 <body>
     <header class="header">
@@ -137,6 +138,22 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="/public/analytics.js"></script>
+<script src="script.js"></script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.RelatedTools) {
+      RelatedTools.renderRelatedTools('unit-converter', '#related-tools-container', {
+        title: 'Related Tools',
+        showCategory: true,
+        trackClicks: true
+      });
+    }
+  });
+</script>
 </body>
 </html>

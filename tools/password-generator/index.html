@@ -6,6 +6,7 @@
     <title>Advanced Password Generator - Create Secure Passwords</title>
     <meta name="description" content="Generate secure passwords with entropy analysis. Customizable length, character types, and strength meter. Free online password generator.">
     <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/tools/related-tools.css">
 </head>
 <body>
     <header class="header">
@@ -155,7 +156,7 @@
  </div>
 
  <div class="affiliate-banner" style="margin: 24px 0; padding: 16px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 10%); border-radius: 12px; border: 1px solid #fbbf24; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
- <img src="https://via.placeholder.com/60x60/2563eb/ffffff?text=1P" alt="1Password" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;" onerror="this.style.display='none'">
+ <img loading="lazy" src="https://via.placeholder.com/60x60/2563eb/ffffff?text=1P" alt="1Password" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;" onerror="this.style.display='none'">
  <div style="flex: 1; min-width: 200px;">
  <h4 style="margin: 0 0 4px 0; color: #1e293b;">LastPass Password Manager</h4>
  <p style="margin: 0 0 8px 0; color: #64748b; font-size: 13px;">Auto-fill passwords, generate strong passwords, and get dark web monitoring. Free for personal use.</p>
@@ -209,6 +210,22 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="/public/analytics.js"></script>
+<script src="script.js"></script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.RelatedTools) {
+      RelatedTools.renderRelatedTools('password-generator', '#related-tools-container', {
+        title: 'Related Tools',
+        showCategory: true,
+        trackClicks: true
+      });
+    }
+  });
+</script>
 </body>
 </html>

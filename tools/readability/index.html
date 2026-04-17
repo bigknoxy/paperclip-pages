@@ -68,6 +68,7 @@ th{color:var(--muted);font-weight:600;font-size:13px}
 .cta-button{display:inline-block;padding:12px 24px;background:var(--accent);color:#012;text-decoration:none;border-radius:8px;font-weight:600}
 footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:60px}
 </style>
+<link rel="stylesheet" href="/tools/related-tools.css">
 </head>
 <body>
 <header>
@@ -195,6 +196,7 @@ footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;bor
 </div>
 </div>
 
+<script src="/public/analytics.js"></script>
 <footer>
 <p>Made with minimal code • Free forever • No tracking</p>
 </footer>
@@ -283,6 +285,21 @@ document.getElementById('results').style.display = 'none';
 document.getElementById('interpretation').style.display = 'none';
 textarea.focus();
 }
+</script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.RelatedTools) {
+      RelatedTools.renderRelatedTools('readability', '#related-tools-container', {
+        title: 'Related Tools',
+        showCategory: true,
+        trackClicks: true
+      });
+    }
+  });
 </script>
 </body>
 </html>

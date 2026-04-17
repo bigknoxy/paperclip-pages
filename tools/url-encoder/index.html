@@ -9,7 +9,9 @@
   <meta name="author" content="Paperclip" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/url-encoder/" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://cdn.carbonads.com" crossorigin>
+<link rel="preconnect" href="https://via.placeholder.com" crossorigin>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <style>
     :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--error:#ef4444;color-scheme:dark}
     *{box-sizing:border-box}
@@ -56,6 +58,7 @@
  .affiliate-banner a:hover{text-decoration:underline}
  footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
   </style>
+<link rel="stylesheet" href="/tools/related-tools.css">
 </head>
 <body>
   <header>
@@ -127,7 +130,7 @@
  </div>
 
  <div class="affiliate-banner">
- <img src="https://via.placeholder.com/60x60/2563eb/ffffff?text=API" alt="Insomnia" onerror="this.style.display='none'">
+ <img loading="lazy" src="https://via.placeholder.com/60x60/2563eb/ffffff?text=API" alt="Insomnia" onerror="this.style.display='none'">
  <div class="content">
  <h4>Insomnia API Client</h4>
  <p>The most intuitive REST API client. Auto-encode URL parameters, generate code snippets, and collaborate with your team.</p>
@@ -147,6 +150,7 @@
  </div>
  </div>
 
+<script src="/public/analytics.js"></script>
 <footer>
 <p>Made with minimal code • Free forever • No tracking</p>
 </footer>
@@ -206,5 +210,20 @@
       message.textContent = '';
     }
   </script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.RelatedTools) {
+      RelatedTools.renderRelatedTools('url-encoder', '#related-tools-container', {
+        title: 'Related Tools',
+        showCategory: true,
+        trackClicks: true
+      });
+    }
+  });
+</script>
 </body>
 </html>

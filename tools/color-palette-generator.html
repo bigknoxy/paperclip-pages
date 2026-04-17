@@ -726,6 +726,7 @@
             display: block;
         }
     </style>
+<link rel="stylesheet" href="/tools/related-tools.css">
 </head>
 <body>
     <header>
@@ -1626,5 +1627,20 @@
         renderSavedPalettes();
         loadPaletteFromURL();
     </script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.RelatedTools) {
+      RelatedTools.renderRelatedTools('color-palette-generator', '#related-tools-container', {
+        title: 'Related Tools',
+        showCategory: true,
+        trackClicks: true
+      });
+    }
+  });
+</script>
 </body>
 </html>

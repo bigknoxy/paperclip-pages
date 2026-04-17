@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Analytics Dashboard | Paperclip</title>
+<meta name="description" content="Revenue and traffic analytics for Paperclip developer tools" />
+<style>
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--warning:#f59e0b;--error:#ef4444;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1400px;margin:0 auto;border-bottom:1px solid rgba(255,255,255,0.05)}
+.logo{font-weight:700;font-size:1.2em;color:var(--accent);text-decoration:none}
+nav{display:flex;gap:16px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--text)}
+.container{max-width:1400px;margin:0 auto;padding:24px}
+h1{font-size:2em;margin:0 0 8px 0}
+.subtitle{color:var(--muted);margin-bottom:32px}
+
+/* Date Range Selector */
+.date-range{display:flex;gap:12px;margin-bottom:24px;align-items:center}
+.date-range button{padding:8px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:var(--text);cursor:pointer;font-size:14px}
+.date-range button:hover{background:rgba(255,255,255,0.1)}
+.date-range button.active{background:var(--accent);color:#012;border-color:var(--accent)}
+.date-range span{color:var(--muted);font-size:14px}
+
+/* Stats Grid */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-bottom:32px}
+.stat-card{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px}
+.stat-card h3{margin:0 0 8px 0;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:0.5px}
+.stat-value{margin:0;font-size:2.5em;font-weight:700;color:var(--accent)}
+.stat-change{margin-top:8px;font-size:14px}
+.stat-change.positive{color:var(--success)}
+.stat-change.negative{color:var(--error)}
+.stat-change.neutral{color:var(--muted)}
+
+/* Charts */
+.chart-container{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin-bottom:24px}
+.chart-container h2{margin:0 0 20px 0;font-size:1.3em}
+.chart-svg{width:100%;height:200px}
+.bar-chart{display:flex;align-items:end;gap:8px;height:180px;padding:20px 0}
+.bar{flex:1;background:var(--accent);border-radius:4px 4px 0 0;min-width:30px;transition:all 0.3s;position:relative}
+.bar:hover{opacity:0.8}
+.bar-label{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--muted);white-space:nowrap}
+.bar-value{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:12px;color:var(--text);font-weight:600}
+
+/* Tables */
+.card{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin-bottom:24px}
+.card h2{margin:0 0 20px 0;font-size:1.3em}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:12px;color:var(--muted);font-size:13px;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.1)}
+td{padding:12px;border-bottom:1px solid rgba(255,255,255,0.05)}
+tr:hover{background:rgba(255,255,255,0.02)}
+.revenue{color:var(--success);font-weight:600}
+.metric{color:var(--accent)}
+
+/* Two Column Layout */
+.two-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:24px}
+
+/* Real-time Badge */
+.realtime-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:999px;font-size:12px;color:var(--success)}
+.realtime-badge::before{content:'';width:8px;height:8px;background:var(--success);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+
+/* Export Button */
+.export-btn{float:right;padding:8px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:var(--text);cursor:pointer;font-size:13px}
+.export-btn:hover{background:rgba(255,255,255,0.1)}
+
+/* Empty State */
+.empty-state{text-align:center;padding:40px;color:var(--muted)}
+.empty-state svg{width:64px;height:64px;margin-bottom:16px;opacity:0.5}
+
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:60px}
+</style>
+</head>
+<body>
+<header>
+<a href="/" class="logo">← Paperclip</a>
+<nav>
+<a href="/">Home</a>
+<a href="/tools/">Tools</a>
+<a href="/analytics-dashboard.html" style="color:var(--text)">Analytics</a>
+</nav>
+</header>
+
+<div class="container">
+<h1>Analytics Dashboard <span class="realtime-badge">Live</span></h1>
+<p class="subtitle">Real-time metrics and insights. Last updated: <span id="last-updated">Just now</span></p>
+
+<!-- Date Range Selector -->
+<div class="date-range">
+<span>Time range:</span>
+<button class="range-btn" data-days="7">Last 7 days</button>
+<button class="range-btn active" data-days="30">Last 30 days</button>
+<button class="range-btn" data-days="90">Last 90 days</button>
+</div>
+
+<!-- Key Metrics -->
+<div class="stats-grid">
+<div class="stat-card">
+<h3>Total Page Views</h3>
+<div class="stat-value" id="total-views">-</div>
+<div class="stat-change neutral" id="views-change">Loading...</div>
+</div>
+<div class="stat-card">
+<h3>Unique Visitors</h3>
+<div class="stat-value" id="unique-visitors">-</div>
+<div class="stat-change neutral" id="visitors-change">Loading...</div>
+</div>
+<div class="stat-card">
+<h3>Tool Uses</h3>
+<div class="stat-value" id="tool-uses">-</div>
+<div class="stat-change neutral" id="tools-change">Loading...</div>
+</div>
+<div class="stat-card">
+<h3>Avg. Session</h3>
+<div class="stat-value" id="avg-session">-</div>
+<div class="stat-change neutral" id="session-change">Loading...</div>
+</div>
+</div>
+
+<!-- Traffic Chart -->
+<div class="chart-container">
+<h2>Daily Page Views</h2>
+<div class="bar-chart" id="traffic-chart">
+<!-- Bars injected by JS -->
+</div>
+</div>
+
+<div class="two-col">
+<!-- Top Pages -->
+<div class="card">
+<h2>Top 10 Pages</h2>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Views</th>
+<th>%</th>
+</tr>
+</thead>
+<tbody id="top-pages">
+<!-- Injected by JS -->
+</tbody>
+</table>
+</div>
+
+<!-- Tool Usage -->
+<div class="card">
+<h2>Tool Usage Leaderboard <button class="export-btn" onclick="exportToolData()">Export CSV</button></h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Uses</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody id="tool-stats">
+<!-- Injected by JS -->
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- Traffic Sources -->
+<div class="card">
+<h2>Traffic Sources</h2>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Sessions</th>
+<th>% of Total</th>
+</tr>
+</thead>
+<tbody id="traffic-sources">
+<!-- Injected by JS -->
+</tbody>
+</table>
+</div>
+
+<!-- Device & Engagement -->
+<div class="two-col">
+<div class="card">
+<h2>Device Breakdown</h2>
+<table>
+<thead>
+<tr>
+<th>Device</th>
+<th>Sessions</th>
+<th>%</th>
+</tr>
+</thead>
+<tbody id="device-stats">
+<!-- Injected by JS -->
+</tbody>
+</table>
+</div>
+
+<div class="card">
+<h2>Engagement Metrics</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody id="engagement-stats">
+<!-- Injected by JS -->
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- Recent Events Log -->
+<div class="card">
+<h2>Recent Events <span style="font-size:13px;color:var(--muted);font-weight:normal">(Last 50)</span></h2>
+<table>
+<thead>
+<tr>
+<th>Time</th>
+<th>Event</th>
+<th>Page</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody id="events-log">
+<!-- Injected by JS -->
+</tbody>
+</table>
+</div>
+</div>
+
+<footer>
+<p>Analytics Dashboard • Paperclip Developer Tools</p>
+<p style="font-size:12px;margin-top:8px">Data updates automatically • Privacy-first analytics</p>
+</footer>
+
+<script>
+// Analytics Dashboard - Displays real data from localStorage
+const AnalyticsDashboard = {
+  currentRange: 30,
+
+  init() {
+    this.loadData();
+    this.renderDashboard();
+    this.setupEventListeners();
+    this.startAutoRefresh();
+  },
+
+  loadData() {
+    // Load events from localStorage
+    const stored = localStorage.getItem('pc_analytics_events');
+    this.events = stored ? JSON.parse(stored) : [];
+
+    // Also check for session/page data
+    this.firstVisit = localStorage.getItem('pc_first_visit');
+    this.sessionCount = parseInt(localStorage.getItem('pc_session_count') || '0');
+  },
+
+  getFilteredEvents() {
+    const cutoff = Date.now() - (this.currentRange * 24 * 60 * 60 * 1000);
+    return this.events.filter(e => e.timestamp >= cutoff);
+  },
+
+  getStats() {
+    const events = this.getFilteredEvents();
+    const pageViews = events.filter(e => e.name === 'page_view');
+    const toolUsage = events.filter(e => e.name === 'tool_usage');
+    const sessions = [...new Set(events.map(e => e.session_id).filter(Boolean))];
+
+    // Calculate daily views
+    const dailyViews = {};
+    for (let i = 0; i < this.currentRange; i++) {
+      const date = new Date(Date.now() - i * 24 * 60 * 60 * 1000);
+      const key = date.toISOString().split('T')[0];
+      dailyViews[key] = 0;
+    }
+    pageViews.forEach(pv => {
+      const date = new Date(pv.timestamp).toISOString().split('T')[0];
+      if (dailyViews[date] !== undefined) dailyViews[date]++;
+    });
+
+    // Top pages
+    const pageCounts = {};
+    pageViews.forEach(pv => {
+      const page = pv.page || '/';
+      pageCounts[page] = (pageCounts[page] || 0) + 1;
+    });
+
+    // Tool stats
+    const toolStats = {};
+    toolUsage.forEach(tu => {
+      const tool = tu.tool || 'unknown';
+      if (!toolStats[tool]) {
+        toolStats[tool] = { uses: 0, actions: {} };
+      }
+      toolStats[tool].uses++;
+      const action = tu.action || 'unknown';
+      toolStats[tool].actions[action] = (toolStats[tool].actions[action] || 0) + 1;
+    });
+
+    // Traffic sources
+    const sources = {};
+    events.forEach(e => {
+      const source = e.source || 'direct';
+      sources[source] = (sources[source] || 0) + 1;
+    });
+
+    // Device stats
+    const devices = {};
+    events.forEach(e => {
+      const device = e.device || 'unknown';
+      devices[device] = (devices[device] || 0) + 1;
+    });
+
+    // Engagement metrics
+    const engagementTimes = events
+      .filter(e => e.engagement_time)
+      .map(e => e.engagement_time);
+    const avgEngagement = engagementTimes.length
+      ? Math.round(engagementTimes.reduce((a, b) => a + b, 0) / engagementTimes.length)
+      : 0;
+
+    const scrollDepths = events
+      .filter(e => e.name === 'scroll_depth')
+      .map(e => e.depth || 0);
+    const avgScroll = scrollDepths.length
+      ? Math.round(scrollDepths.reduce((a, b) => a + b, 0) / scrollDepths.length)
+      : 0;
+
+    return {
+      totalViews: pageViews.length,
+      uniqueSessions: sessions.length,
+      toolUses: toolUsage.length,
+      dailyViews,
+      topPages: Object.entries(pageCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10),
+      toolStats: Object.entries(toolStats)
+        .sort((a, b) => b[1].uses - a[1].uses),
+      sources: Object.entries(sources)
+        .sort((a, b) => b[1] - a[1]),
+      devices: Object.entries(devices)
+        .sort((a, b) => b[1] - a[1]),
+      avgEngagement,
+      avgScroll,
+      events: events.slice(-50).reverse()
+    };
+  },
+
+  renderDashboard() {
+    const stats = this.getStats();
+
+    // Update metrics
+    document.getElementById('total-views').textContent = stats.totalViews.toLocaleString();
+    document.getElementById('unique-visitors').textContent = stats.uniqueSessions.toLocaleString();
+    document.getElementById('tool-uses').textContent = stats.toolUses.toLocaleString();
+    document.getElementById('avg-session').textContent = this.formatDuration(stats.avgEngagement);
+
+    // Update changes (compare to previous period - simulated)
+    document.getElementById('views-change').textContent = 'Last ' + this.currentRange + ' days';
+    document.getElementById('visitors-change').textContent = 'Unique sessions';
+    document.getElementById('tools-change').textContent = 'Total interactions';
+    document.getElementById('session-change').textContent = 'Average time on site';
+
+    // Render traffic chart
+    this.renderTrafficChart(stats.dailyViews);
+
+    // Render top pages
+    this.renderTopPages(stats.topPages, stats.totalViews);
+
+    // Render tool stats
+    this.renderToolStats(stats.toolStats);
+
+    // Render traffic sources
+    this.renderTrafficSources(stats.sources, events.length);
+
+    // Render device stats
+    this.renderDeviceStats(stats.devices);
+
+    // Render engagement
+    this.renderEngagement(stats);
+
+    // Render events log
+    this.renderEventsLog(stats.events);
+
+    // Update timestamp
+    document.getElementById('last-updated').textContent = new Date().toLocaleTimeString();
+  },
+
+  renderTrafficChart(dailyViews) {
+    const container = document.getElementById('traffic-chart');
+    const dates = Object.keys(dailyViews).sort();
+    const maxViews = Math.max(...Object.values(dailyViews), 1);
+
+    container.innerHTML = dates.map(date => {
+      const views = dailyViews[date];
+      const height = (views / maxViews) * 100;
+      const label = new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      return `
+        <div class="bar" style="height:${height}%" title="${views} views on ${date}">
+          <span class="bar-value">${views}</span>
+          <span class="bar-label">${label}</span>
+        </div>
+      `;
+    }).join('');
+  },
+
+  renderTopPages(pages, totalViews) {
+    const tbody = document.getElementById('top-pages');
+    if (pages.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="3" class="empty-state">No page view data yet</td></tr>';
+      return;
+    }
+    tbody.innerHTML = pages.map(([page, views]) => {
+      const percent = totalViews > 0 ? Math.round((views / totalViews) * 100) : 0;
+      const displayPage = page.length > 30 ? page.substring(0, 30) + '...' : page;
+      return `
+        <tr>
+          <td><code>${displayPage}</code></td>
+          <td class="metric">${views.toLocaleString()}</td>
+          <td>${percent}%</td>
+        </tr>
+      `;
+    }).join('');
+  },
+
+  renderToolStats(toolStats) {
+    const tbody = document.getElementById('tool-stats');
+    if (toolStats.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="3" class="empty-state">No tool usage data yet</td></tr>';
+      return;
+    }
+    tbody.innerHTML = toolStats.map(([tool, data]) => {
+      const actions = Object.entries(data.actions)
+        .map(([a, c]) => `${a}: ${c}`)
+        .join(', ');
+      return `
+        <tr>
+          <td><strong>${this.formatToolName(tool)}</strong></td>
+          <td class="metric">${data.uses.toLocaleString()}</td>
+          <td style="font-size:12px;color:var(--muted)">${actions}</td>
+        </tr>
+      `;
+    }).join('');
+  },
+
+  renderTrafficSources(sources, total) {
+    const tbody = document.getElementById('traffic-sources');
+    if (sources.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="3" class="empty-state">No traffic source data yet</td></tr>';
+      return;
+    }
+    tbody.innerHTML = sources.slice(0, 10).map(([source, count]) => {
+      const percent = total > 0 ? Math.round((count / total) * 100) : 0;
+      const displaySource = source === 'null' || source === 'undefined' ? 'Direct' : source;
+      return `
+        <tr>
+          <td>${displaySource}</td>
+          <td>${count.toLocaleString()}</td>
+          <td>${percent}%</td>
+        </tr>
+      `;
+    }).join('');
+  },
+
+  renderDeviceStats(devices) {
+    const tbody = document.getElementById('device-stats');
+    const total = devices.reduce((a, b) => a + b[1], 0);
+    if (devices.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="3" class="empty-state">No device data yet</td></tr>';
+      return;
+    }
+    tbody.innerHTML = devices.map(([device, count]) => {
+      const percent = total > 0 ? Math.round((count / total) * 100) : 0;
+      const icon = device === 'mobile' ? '📱' : device === 'tablet' ? '📲' : '💻';
+      return `
+        <tr>
+          <td>${icon} ${device.charAt(0).toUpperCase() + device.slice(1)}</td>
+          <td>${count.toLocaleString()}</td>
+          <td>${percent}%</td>
+        </tr>
+      `;
+    }).join('');
+  },
+
+  renderEngagement(stats) {
+    const tbody = document.getElementById('engagement-stats');
+    tbody.innerHTML = `
+      <tr>
+        <td>Average Engagement Time</td>
+        <td class="metric">${this.formatDuration(stats.avgEngagement)}</td>
+      </tr>
+      <tr>
+        <td>Average Scroll Depth</td>
+        <td class="metric">${stats.avgScroll}%</td>
+      </tr>
+      <tr>
+        <td>Total Events Tracked</td>
+        <td class="metric">${this.events.length.toLocaleString()}</td>
+      </tr>
+    `;
+  },
+
+  renderEventsLog(events) {
+    const tbody = document.getElementById('events-log');
+    if (events.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" class="empty-state">No events recorded yet. Use the tools to generate analytics data.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = events.map(e => {
+      const time = new Date(e.timestamp).toLocaleTimeString();
+      const details = e.tool ? `${e.action} (${e.tool})` : e.page || '-';
+      return `
+        <tr>
+          <td style="font-size:12px;color:var(--muted)">${time}</td>
+          <td><span class="badge" style="background:rgba(255,255,255,0.05);padding:2px 8px;border-radius:4px;font-size:12px">${e.name}</span></td>
+          <td style="font-size:12px;max-width:150px;overflow:hidden;text-overflow:ellipsis">${e.page || '-'}</td>
+          <td style="font-size:12px;color:var(--muted)">${details}</td>
+        </tr>
+      `;
+    }).join('');
+  },
+
+  setupEventListeners() {
+    // Date range buttons
+    document.querySelectorAll('.range-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.range-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        this.currentRange = parseInt(e.target.dataset.days);
+        this.renderDashboard();
+      });
+    });
+  },
+
+  startAutoRefresh() {
+    // Refresh every 30 seconds
+    setInterval(() => {
+      this.loadData();
+      this.renderDashboard();
+    }, 30000);
+  },
+
+  formatToolName(name) {
+    return name.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  },
+
+  formatDuration(seconds) {
+    if (seconds < 60) return seconds + 's';
+    if (seconds < 3600) return Math.floor(seconds / 60) + 'm ' + (seconds % 60) + 's';
+    return Math.floor(seconds / 3600) + 'h ' + Math.floor((seconds % 3600) / 60) + 'm';
+  }
+};
+
+// Export function
+function exportToolData() {
+  const stored = localStorage.getItem('pc_analytics_events');
+  const events = stored ? JSON.parse(stored) : [];
+  const toolEvents = events.filter(e => e.name === 'tool_usage');
+
+  const csv = [
+    'Tool,Action,Timestamp,Page',
+    ...toolEvents.map(e => `${e.tool || ''},${e.action || ''},${new Date(e.timestamp).toISOString()},${e.page || ''}`)
+  ].join('\n');
+
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `paperclip-tool-usage-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => AnalyticsDashboard.init());
+</script>
+</body>
+</html>

@@ -90,21 +90,26 @@
         document.getElementById('qrSize').addEventListener('input', updateSliderValue);
     }
 
-    function switchTab(type) {
-        currentType = type;
-        
-        // Update tab buttons
-        tabBtns.forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.type === type);
-        });
+function switchTab(type) {
+  currentType = type;
 
-        // Show/hide panels
-        Object.keys(panels).forEach(key => {
-            if (panels[key]) {
-                panels[key].classList.toggle('hidden', key !== type);
-            }
-        });
+  // Update tab buttons
+  tabBtns.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.type === type);
+  });
+
+  // Show/hide panels
+  Object.keys(panels).forEach(key => {
+    if (panels[key]) {
+      panels[key].classList.toggle('hidden', key !== type);
     }
+  });
+
+  // Track analytics event
+  if (window.PaperclipAnalytics) {
+    window.PaperclipAnalytics.track('tab_switch', { tool: 'qr-generator', tab: type });
+  }
+}
 
     function updateColorDisplay(e) {
         const display = e.target.nextElementSibling;
@@ -172,51 +177,56 @@
         }
     }
 
-    function generateQR() {
-        const content = getContent();
-        
-        if (!content) {
-            showError('Please enter content to generate a QR code');
-            return;
-        }
+function generateQR() {
+  const content = getContent();
 
-        // Clear previous
-        qrPreview.innerHTML = '';
-        
-        // Get options
-        const size = parseInt(document.getElementById('qrSize').value, 10);
-        const color = document.getElementById('qrColor').value;
-        const bgColor = document.getElementById('qrBgColor').value;
-        const errorCorrection = document.getElementById('qrErrorCorrection').value;
+  if (!content) {
+    showError('Please enter content to generate a QR code');
+    return;
+  }
 
-        // Generate QR code
-        try {
-            currentQR = new QRCode(qrPreview, {
-                text: content,
-                width: size,
-                height: size,
-                colorDark: color,
-                colorLight: bgColor,
-                correctLevel: QRCode.CorrectLevel[errorCorrection]
-            });
+  // Clear previous
+  qrPreview.innerHTML = '';
 
-            // Show download options
-            downloadOptions.classList.remove('hidden');
+  // Get options
+  const size = parseInt(document.getElementById('qrSize').value, 10);
+  const color = document.getElementById('qrColor').value;
+  const bgColor = document.getElementById('qrBgColor').value;
+  const errorCorrection = document.getElementById('qrErrorCorrection').value;
 
-            // Track generation
-            generationCount++;
-            saveState();
+  // Generate QR code
+  try {
+    currentQR = new QRCode(qrPreview, {
+      text: content,
+      width: size,
+      height: size,
+      colorDark: color,
+      colorLight: bgColor,
+      correctLevel: QRCode.CorrectLevel[errorCorrection]
+    });
 
-            // Check for lead capture trigger
-            if (!isPremium && generationCount >= 2) {
-                setTimeout(() => openModal(), 500);
-            }
+    // Show download options
+    downloadOptions.classList.remove('hidden');
 
-        } catch (error) {
-            showError('Failed to generate QR code. Please try again.');
-            console.error('QR generation error:', error);
-        }
+    // Track generation
+    generationCount++;
+    saveState();
+
+    // Track analytics event
+    if (window.PaperclipAnalytics) {
+      window.PaperclipAnalytics.tool.trackGenerate('qr-generator', { type: currentType, size: size });
     }
+
+    // Check for lead capture trigger
+    if (!isPremium && generationCount >= 2) {
+      setTimeout(() => openModal(), 500);
+    }
+
+  } catch (error) {
+    showError('Failed to generate QR code. Please try again.');
+    console.error('QR generation error:', error);
+  }
+}
 
     function downloadQR(format) {
         if (!currentQR) return;

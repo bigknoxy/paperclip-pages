@@ -104,6 +104,7 @@ h1{font-size:2em;margin:0 0 8px 0}
 
 footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:60px}
 </style>
+<link rel="stylesheet" href="/tools/related-tools.css">
 </head>
 <body>
 <header>
@@ -420,6 +421,7 @@ footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;bor
 </div>
 </div>
 
+<script src="/public/analytics.js"></script>
 <footer>
 <p>Made with minimal code • Free forever • No tracking</p>
 </footer>
@@ -626,6 +628,21 @@ function copyCSS() {
 
 // Initialize
 updateFlexbox();
+</script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.RelatedTools) {
+      RelatedTools.renderRelatedTools('css-layout', '#related-tools-container', {
+        title: 'Related Tools',
+        showCategory: true,
+        trackClicks: true
+      });
+    }
+  });
 </script>
 </body>
 </html>

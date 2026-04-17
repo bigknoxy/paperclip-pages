@@ -58,6 +58,7 @@ button.copied{background:var(--copied);color:#fff}
 footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
 @media (max-width:600px){.output-grid{grid-template-columns:1fr}}
 </style>
+<link rel="stylesheet" href="/tools/related-tools.css">
 </head>
 <body>
 <header>
@@ -170,6 +171,7 @@ footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;bor
 </div>
 </div>
 
+<script src="/public/analytics.js"></script>
 <footer>
 <p>Made with minimal code • Free forever • No tracking</p>
 </footer>
@@ -323,6 +325,21 @@ input.addEventListener('input', function() {
 if (input.value.trim()) {
   convertAll();
 }
+</script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.RelatedTools) {
+      RelatedTools.renderRelatedTools('text-case-converter', '#related-tools-container', {
+        title: 'Related Tools',
+        showCategory: true,
+        trackClicks: true
+      });
+    }
+  });
 </script>
 </body>
 </html>
