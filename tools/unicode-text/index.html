@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unicode Text Converter - Fancy Text Generator | Paperclip</title>
+    <meta name="description" content="Free Unicode text converter. Transform text into bold, italic, monospace, script, and decorative Unicode styles. Perfect for social media.">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #0a0e14; --card: #11181f; --surface: #1a232e; --accent: #f97316; --success: #22c55e; --text: #f8fafc; --text-muted: #94a3b8; --border: rgba(148,163,184,0.15); --radius: 12px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Outfit',system-ui,sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+        header { padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; }
+        .logo { font-weight: 700; font-size: 1.3em; color: var(--accent); text-decoration: none; }
+        nav { display: flex; gap: 24px; }
+        nav a { color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 500; }
+        nav a:hover { color: var(--text); }
+        .container { max-width: 1400px; margin: 0 auto; padding: 24px 32px 60px; }
+        .hero { text-align: center; margin-bottom: 48px; }
+        .hero h1 { font-size: clamp(2.5rem,5vw,4rem); font-weight: 700; margin-bottom: 16px; background: linear-gradient(135deg,var(--text) 0%,var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { color: var(--text-muted); font-size: 1.1em; max-width: 600px; margin: 0 auto 32px; }
+        .input-section { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 24px; }
+        textarea { width: 100%; padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 16px; min-height: 100px; }
+        textarea:focus { outline: none; border-color: var(--accent); }
+        .btn { padding: 12px 24px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; background: var(--accent); color: white; margin-top: 16px; }
+        .btn:hover { background: #ea580c; }
+        .styles-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 16px; }
+        .style-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; cursor: pointer; }
+        .style-card:hover { border-color: var(--accent); }
+        .style-card.copied { border-color: var(--success); }
+        .style-name { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-bottom: 12px; }
+        .style-preview { font-size: 18px; word-break: break-word; }
+        footer { text-align: center; padding: 40px; color: var(--text-muted); font-size: 14px; border-top: 1px solid var(--border); margin-top: 60px; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">Paperclip</a>
+        <nav><a href="/">Home</a><a href="/tools/">Tools</a></nav>
+    </header>
+    <div class="container">
+        <div class="hero">
+            <h1>Unicode Text Converter</h1>
+            <p>Transform your text into fancy Unicode styles instantly. Perfect for social media, gaming, and creative designs.</p>
+        </div>
+        <div class="input-section">
+            <textarea id="inputText" placeholder="Type something here...">Hello World</textarea>
+            <button class="btn" id="copyAllBtn">Copy All Styles</button>
+        </div>
+        <div class="styles-grid" id="stylesGrid"></div>
+    </div>
+    <footer>
+        <p>Built with love by <a href="https://github.com/bigknoxy/paperclip-pages" target="_blank">Paperclip</a></p>
+    </footer>
+    <script>
+        const latin = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        const styles = [
+            { name: 'Bold', chars: '𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵' },
+            { name: 'Italic', chars: '𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡𝘢𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻0123456789' },
+            { name: 'Bold Italic', chars: '𝘼𝘽𝘾𝘿𝙀𝙁𝙂𝙃𝙄𝙅𝙆𝙇𝙈𝙉𝙊𝙋𝙌𝙍𝙎𝙏𝙐𝙑𝙒𝙓𝙔𝙕𝙖𝙗𝙘𝙙𝙚𝙛𝙜𝙝𝙞𝙟𝙠𝙡𝙢𝙣𝙤𝙥𝙦𝙧𝙨𝙩𝙪𝙫𝙬𝙭𝙮𝙯𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗' },
+            { name: 'Monospace', chars: '𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣𝟶𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿' },
+            { name: 'Script', chars: '𝒜ℬ𝒞𝒟ℰℱ𝒢ℋℐ𝒥𝒦ℒℳ𝒩𝒪𝒫𝒬ℛ𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵𝒶𝒷𝒸𝒹ℯ𝒻ℊ𝒽𝒾𝒿𝓀𝓁𝓂𝓃ℴ𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏0123456789' },
+            { name: 'Double-Struck', chars: '𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡' },
+            { name: 'Circled', chars: 'ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ①②③④⑤⑥⑦⑧⑨⓪' },
+            { name: 'Squared', chars: '🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉🅰🅱🅲🅳🅴🅵🅶🅷🅸🅹🅺🅻🅼🅽🅾🅿🆀🆁🆂🆃🆄🆅🆆🆇🆈🆉1234567890' }
+        ];
+        function convert(text, styleChars) {
+            let result = '';
+            for (let char of text) {
+                const idx = latin.indexOf(char);
+                result += idx >= 0 ? styleChars[idx] : char;
+            }
+            return result;
+        }
+        function render() {
+            const text = document.getElementById('inputText').value || 'Hello World';
+            const grid = document.getElementById('stylesGrid');
+            grid.innerHTML = styles.map(s => {
+                const converted = convert(text, s.chars);
+                return '<div class="style-card" data-text="' + converted + '"><div class="style-name">' + s.name + '</div><div class="style-preview">' + converted + '</div></div>';
+            }).join('');
+            document.querySelectorAll('.style-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    navigator.clipboard.writeText(card.dataset.text);
+                    card.classList.add('copied');
+                    setTimeout(() => card.classList.remove('copied'), 1000);
+                });
+            });
+        }
+        document.getElementById('inputText').addEventListener('input', render);
+        document.getElementById('copyAllBtn').addEventListener('click', () => {
+            const text = document.getElementById('inputText').value || 'Hello World';
+            const all = styles.map(s => s.name + ': ' + convert(text, s.chars)).join('\n');
+            navigator.clipboard.writeText(all);
+            alert('All styles copied!');
+        });
+        render();
+    </script>
+</body>
+</html>
