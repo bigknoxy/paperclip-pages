@@ -1,81 +1,248 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url>
-  <loc>https://bigknoxy.github.io/paperclip-pages/</loc>
-  <lastmod>2026-03-26</lastmod>
-  <changefreq>weekly</changefreq>
-  <priority>1.0</priority>
-</url>
-<url>
-  <loc>https://bigknoxy.github.io/paperclip-pages/about.html</loc>
-  <lastmod>2026-03-26</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.8</priority>
-</url>
-<url>
-  <loc>https://bigknoxy.github.io/paperclip-pages/tools/</loc>
-  <lastmod>2026-03-26</lastmod>
-  <changefreq>weekly</changefreq>
-  <priority>0.9</priority>
-</url>
-<url>
-  <loc>https://bigknoxy.github.io/paperclip-pages/tools/base64/</loc>
-  <lastmod>2026-03-26</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.9</priority>
-</url>
-<url>
-  <loc>https://bigknoxy.github.io/paperclip-pages/tools/json-formatter/</loc>
-  <lastmod>2026-03-26</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.9</priority>
-</url>
-<url>
-  <loc>https://bigknoxy.github.io/paperclip-pages/tools/url-encoder/</loc>
-  <lastmod>2026-03-26</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.9</priority>
-</url>
-<url>
-  <loc>https://bigknoxy.github.io/paperclip-pages/content/what-is-base64-guide.html</loc>
-  <lastmod>2026-03-26</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.8</priority>
-</url>
-<url>
-  <loc>https://bigknoxy.github.io/paperclip-pages/content/base64-vs-url-encoding.html</loc>
-  <lastmod>2026-03-26</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.8</priority>
-</url>
-<url>
-  <loc>https://bigknoxy.github.io/paperclip-pages/content/base64-troubleshooting.html</loc>
-  <lastmod>2026-03-26</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.7</priority>
-</url>
-<url>
-  <loc>https://bigknoxy.github.io/paperclip-pages/content/developer-tools-every-programmer-should-know.html</loc>
-  <lastmod>2026-03-26</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.8</priority>
-</url>
-<url>
-<loc>https://bigknoxy.github.io/paperclip-pages/content/how-to-use-online-developer-tools-safely.html</loc>
-<lastmod>2026-03-26</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.7</priority>
-</url>
-<url>
-<loc>https://bigknoxy.github.io/paperclip-pages/tools/text-case-converter/</loc>
-<lastmod>2026-04-02</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
-</url>
-<url>
-<loc>https://bigknoxy.github.io/paperclip-pages/tools/yaml-json/</loc>
-<lastmod>2026-04-17</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
-</url>
+  <!-- Main pages -->
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/about.html</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/analytics-dashboard.html</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Developer Tools -->
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/base64/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/url-encoder/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/html-encoder/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/json-formatter/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/yaml-json/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/csv-json/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/jwt-decoder/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/hash/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/regex-tester/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/diff-checker/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/code-minifier/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/markdown-editor/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/batch-converter/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- CSS Tools -->
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/css-gradient/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/box-shadow/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/glassmorphism/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/css-layout/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Text Tools -->
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/text-case-converter/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/unicode-text/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/text-processor/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/word-counter/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/lorem-ipsum/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/readability/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Utility Tools -->
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/password-generator/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/qr-generator/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/unit-converter/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/time-converter/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/cron-expression-generator/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/color/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/image-to-base64/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Content pages -->
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/content/what-is-base64-guide.html</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/content/base64-vs-url-encoding.html</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/content/base64-troubleshooting.html</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/content/developer-tools-every-programmer-should-know.html</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/content/how-to-use-online-developer-tools-safely.html</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

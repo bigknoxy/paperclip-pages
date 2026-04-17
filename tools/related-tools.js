@@ -5,15 +5,23 @@
 
 // Tool metadata with categories and relationships
 const TOOL_METADATA = {
-  // Developer Tools
-  'base64': {
-    name: 'Base64 Encoder/Decoder',
-    path: '/tools/base64/',
-    category: 'Developer Tools',
-    icon: '🔐',
-    description: 'Encode and decode Base64 strings',
-    related: ['url-encoder', 'html-encoder', 'hash', 'jwt-decoder']
-  },
+// Developer Tools
+'base64': {
+name: 'Base64 Encoder/Decoder',
+path: '/tools/base64/',
+category: 'Developer Tools',
+icon: '🔐',
+description: 'Encode and decode Base64 strings',
+related: ['url-encoder', 'html-encoder', 'hash', 'jwt-decoder']
+},
+'image-to-base64': {
+name: 'Image to Base64 Converter',
+path: '/tools/image-to-base64/',
+category: 'Developer Tools',
+icon: '🖼️',
+description: 'Convert images to Base64 data URIs',
+related: ['base64', 'color', 'css-layout', 'qr-generator']
+},
   'url-encoder': {
     name: 'URL Encoder/Decoder',
     path: '/tools/url-encoder/',
@@ -134,14 +142,14 @@ const TOOL_METADATA = {
   },
 
   // Data/Conversion Tools
-  'csv-json': {
-name: 'CSV ↔ JSON Converter',
-path: '/tools/csv-json/',
-category: 'Data & Conversion',
-icon: '🔄',
-description: 'Convert between CSV and JSON',
-related: ['json-formatter', 'yaml-json', 'batch-converter', 'text-processor']
-},
+'csv-json': {
+    name: 'CSV ↔ JSON Converter',
+    path: '/tools/csv-json/',
+    category: 'Data & Conversion',
+    icon: '🔄',
+    description: 'Bidirectional CSV/JSON converter with drag-drop and multiple delimiters',
+    related: ['json-formatter', 'yaml-json', 'batch-converter', 'text-processor']
+  },
 'yaml-json': {
 name: 'YAML ↔ JSON Converter',
 path: '/tools/yaml-json/',

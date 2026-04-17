@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Image to Base64 Data URI Converter | Paperclip</title>
+<meta name="description" content="Convert images to Base64 data URIs instantly. Supports PNG, JPG, GIF, SVG, WebP. Copy-ready output for CSS, HTML, and JavaScript. Free, private, works offline." />
+<meta name="keywords" content="image to base64, base64 image converter, data uri generator, image encoder, base64 data uri" />
+<meta name="author" content="Paperclip" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/image-to-base64/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://cdn.carbonads.com" crossorigin>
+<style>
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--error:#ef4444;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+.logo{font-weight:700;font-size:1.2em;color:var(--accent)}
+nav{display:flex;gap:16px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--text)}
+.container{max-width:900px;margin:0 auto;padding:24px}
+h1{font-size:1.8em;margin:0 0 8px 0}
+.subtitle{color:var(--muted);margin-bottom:24px}
+.tool-box{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin-bottom:20px}
+.drop-zone{border:2px dashed rgba(6,182,212,0.3);border-radius:12px;padding:48px 24px;text-align:center;cursor:pointer;transition:all .2s;background:rgba(6,182,212,0.02)}
+.drop-zone:hover,.drop-zone.drag-over{border-color:var(--accent);background:rgba(6,182,212,0.05)}
+.drop-zone-icon{font-size:48px;margin-bottom:16px;opacity:.8}
+.drop-zone-text{color:var(--muted);font-size:14px;margin-bottom:8px}
+.drop-zone-hint{color:var(--muted);font-size:12px;opacity:.7}
+.drop-zone input[type="file"]{display:none}
+.preview-area{margin-top:24px;display:none}
+.preview-area.visible{display:block}
+.preview-container{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:16px;text-align:center}
+.preview-image{max-width:100%;max-height:300px;border-radius:4px}
+.file-info{margin-top:12px;color:var(--muted);font-size:13px}
+.output-area{margin-top:24px;display:none}
+.output-area.visible{display:block}
+.output-tabs{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.tab-btn{padding:8px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:var(--text);cursor:pointer;font-size:13px;transition:all .2s}
+.tab-btn:hover{background:rgba(255,255,255,0.1)}
+.tab-btn.active{background:var(--accent);color:#012;border-color:var(--accent)}
+.output-box{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:16px;min-height:120px;max-height:300px;overflow:auto;font-family:monospace;font-size:13px;word-break:break-all;white-space:pre-wrap}
+.output-stats{margin-top:12px;display:flex;gap:24px;flex-wrap:wrap;color:var(--muted);font-size:13px}
+.output-stat{display:flex;align-items:center;gap:6px}
+.output-stat-value{color:var(--text);font-weight:600}
+.button-group{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}
+button{padding:12px 24px;background:var(--accent);color:#012;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px}
+button:hover{opacity:.9}
+button.secondary{background:rgba(255,255,255,0.1);color:var(--text)}
+button.secondary:hover{background:rgba(255,255,255,0.15)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.message{margin-top:12px;padding:12px 16px;border-radius:8px;font-size:14px;display:none}
+.message.visible{display:block}
+.message.success{background:rgba(34,197,94,.1);color:var(--success)}
+.message.error{background:rgba(239,68,68,.1);color:var(--error)}
+.tips{margin-top:32px;padding:20px;background:var(--card);border-radius:12px;border:1px solid rgba(255,255,255,0.05)}
+.tips h3{margin:0 0 12px 0;color:var(--accent)}
+.tips ul{margin:0;padding-left:20px;color:var(--muted)}
+.tips li{margin-bottom:8px}
+.format-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:16px}
+.format-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px}
+.format-card h4{margin:0 0 8px 0;font-size:13px;color:var(--text)}
+.format-card code{font-size:11px;color:var(--muted);word-break:break-all}
+.carbon-ads{margin:32px 0;padding:16px;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid rgba(255,255,255,0.05);text-align:center;min-height:120px}
+.carbon-ads-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
+</style>
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+<header>
+<a href="/" class="logo">← Paperclip</a>
+<nav>
+<a href="/">Home</a>
+<a href="/about.html">About</a>
+<a href="/demo">Demo</a>
+</nav>
+</header>
+
+<div class="container">
+<h1>Image to Base64 Data URI Converter</h1>
+<p class="subtitle">Convert any image to a Base64 data URI. Perfect for embedding images in CSS, HTML, or JavaScript. All processing happens in your browser - no server upload.</p>
+
+<div class="tool-box">
+<div class="drop-zone" id="dropZone">
+<div class="drop-zone-icon">📤</div>
+<div class="drop-zone-text">Drop an image here or click to browse</div>
+<div class="drop-zone-hint">Supports PNG, JPG, GIF, SVG, WebP (max 10MB)</div>
+<input type="file" id="fileInput" accept="image/*">
+</div>
+
+<div class="preview-area" id="previewArea">
+<label>Preview</label>
+<div class="preview-container">
+<img id="previewImage" class="preview-image" alt="Preview">
+<div class="file-info" id="fileInfo"></div>
+</div>
+</div>
+
+<div class="output-area" id="outputArea">
+<label>Output Format</label>
+<div class="output-tabs">
+<button class="tab-btn active" data-format="data-uri">Data URI</button>
+<button class="tab-btn" data-format="css">CSS Background</button>
+<button class="tab-btn" data-format="html">HTML Image</button>
+<button class="tab-btn" data-format="markdown">Markdown</button>
+</div>
+<div class="output-box" id="outputBox"></div>
+<div class="output-stats">
+<div class="output-stat">
+<span>Original size:</span>
+<span class="output-stat-value" id="originalSize">-</span>
+</div>
+<div class="output-stat">
+<span>Base64 size:</span>
+<span class="output-stat-value" id="base64Size">-</span>
+</div>
+<div class="output-stat">
+<span>Size increase:</span>
+<span class="output-stat-value" id="sizeIncrease">-</span>
+</div>
+</div>
+<div class="button-group">
+<button onclick="copyOutput()">Copy to Clipboard</button>
+<button class="secondary" onclick="downloadOutput()">Download as File</button>
+<button class="secondary" onclick="clearAll()">Clear</button>
+</div>
+</div>
+
+<div class="message" id="message"></div>
+</div>
+
+<div class="carbon-ads">
+<div class="carbon-ads-label">Sponsored</div>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7ITK7L&placement=paperclip" id="_carbonads_js"></script>
+</div>
+
+<div class="tips">
+<h3>Common Use Cases</h3>
+<ul>
+<li><strong>CSS Background Images:</strong> Embed small icons directly in your stylesheets to reduce HTTP requests</li>
+<li><strong>HTML Emails:</strong> Many email clients block external images - base64 embeds display immediately</li>
+<li><strong>Data URIs in APIs:</strong> Include images directly in JSON responses without separate file hosting</li>
+<li><strong>Offline Web Apps:</strong> Cache images as data URIs for instant loading without network requests</li>
+<li><strong>SVG Embedding:</strong> Convert SVG files to base64 for broader browser compatibility</li>
+</ul>
+
+<h3 style="margin-top:20px">Output Format Examples</h3>
+<div class="format-grid">
+<div class="format-card">
+<h4>Data URI</h4>
+<code>data:image/png;base64,iVBORw0KGgo...</code>
+</div>
+<div class="format-card">
+<h4>CSS Background</h4>
+<code>background: url('data:image/png;base64,...')</code>
+</div>
+<div class="format-card">
+<h4>HTML Image</h4>
+<code>&lt;img src="data:image/png;base64,..."&gt;</code>
+</div>
+<div class="format-card">
+<h4>Markdown</h4>
+<code>![Alt text](data:image/png;base64,...)</code>
+</div>
+</div>
+
+<h3 style="margin-top:20px">Tips</h3>
+<ul>
+<li>Base64 encoding increases file size by ~33% - use for small images only</li>
+<li>Images larger than a few KB should remain as separate files</li>
+<li>Data URIs work in all modern browsers and most email clients</li>
+<li>Cached base64 images load instantly since they're part of the document</li>
+</ul>
+
+<h3>Related Resources</h3>
+<ul>
+<li><a href="/tools/base64">Base64 Encoder/Decoder</a> - Encode and decode text to Base64</li>
+<li><a href="/content/complete-base64-guide">Complete Base64 Guide</a> - Learn how Base64 works</li>
+</ul>
+</div>
+</div>
+
+<footer>
+<p>Made with minimal code • Free forever • No tracking</p>
+</footer>
+
+<script src="/public/analytics.js"></script>
+<script>
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const previewArea = document.getElementById('previewArea');
+const previewImage = document.getElementById('previewImage');
+const fileInfo = document.getElementById('fileInfo');
+const outputArea = document.getElementById('outputArea');
+const outputBox = document.getElementById('outputBox');
+const message = document.getElementById('message');
+const originalSizeEl = document.getElementById('originalSize');
+const base64SizeEl = document.getElementById('base64Size');
+const sizeIncreaseEl = document.getElementById('sizeIncrease');
+
+let currentBase64 = '';
+let currentMimeType = '';
+let currentFormat = 'data-uri';
+
+// Track tool usage
+function trackImageToBase64(action, fileSize) {
+if (window.PaperclipAnalytics) {
+PaperclipAnalytics.tool.track('image-to-base64', action, { file_size: fileSize });
+}
+}
+
+function showMessage(text, type) {
+message.textContent = text;
+message.className = 'message ' + type + ' visible';
+setTimeout(() => {
+message.className = 'message';
+}, 3000);
+}
+
+function formatBytes(bytes) {
+if (bytes === 0) return '0 B';
+const k = 1024;
+const sizes = ['B', 'KB', 'MB', 'GB'];
+const i = Math.floor(Math.log(bytes) / Math.log(k));
+return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+function handleFile(file) {
+if (!file.type.startsWith('image/')) {
+showMessage('Please select an image file', 'error');
+return;
+}
+
+if (file.size > 10 * 1024 * 1024) {
+showMessage('File too large (max 10MB)', 'error');
+return;
+}
+
+const reader = new FileReader();
+reader.onload = function(e) {
+currentBase64 = e.target.result;
+currentMimeType = file.type;
+
+// Show preview
+previewImage.src = currentBase64;
+fileInfo.textContent = `${file.name} • ${formatBytes(file.size)} • ${file.type}`;
+previewArea.classList.add('visible');
+
+// Show output
+updateOutput();
+outputArea.classList.add('visible');
+
+// Update stats
+const base64Size = currentBase64.length;
+const sizeIncrease = ((base64Size / file.size - 1) * 100).toFixed(1);
+
+originalSizeEl.textContent = formatBytes(file.size);
+base64SizeEl.textContent = formatBytes(base64Size);
+sizeIncreaseEl.textContent = '+' + sizeIncrease + '%';
+
+showMessage('Image converted successfully!', 'success');
+trackImageToBase64('convert', file.size);
+};
+reader.readAsDataURL(file);
+}
+
+function updateOutput() {
+if (!currentBase64) return;
+
+let output = '';
+
+switch (currentFormat) {
+case 'data-uri':
+output = currentBase64;
+break;
+case 'css':
+output = `background-image: url('${currentBase64}');\nbackground-size: cover;\nbackground-position: center;`;
+break;
+case 'html':
+const filename = fileInfo.textContent.split('•')[0].trim() || 'image';
+output = `<img src="${currentBase64}" alt="${filename}" width="auto" height="auto">`;
+break;
+case 'markdown':
+const altText = fileInfo.textContent.split('•')[0].trim() || 'image';
+output = `![${altText}](${currentBase64})`;
+break;
+}
+
+outputBox.textContent = output;
+}
+
+function copyOutput() {
+if (!outputBox.textContent) return;
+
+navigator.clipboard.writeText(outputBox.textContent).then(() => {
+showMessage('Copied to clipboard!', 'success');
+trackImageToBase64('copy', currentBase64.length);
+}).catch(() => {
+showMessage('Failed to copy', 'error');
+});
+}
+
+function downloadOutput() {
+if (!currentBase64) return;
+
+const blob = new Blob([outputBox.textContent], { type: 'text/plain' });
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = 'image-base64.txt';
+a.click();
+URL.revokeObjectURL(url);
+
+trackImageToBase64('download', currentBase64.length);
+}
+
+function clearAll() {
+fileInput.value = '';
+currentBase64 = '';
+currentMimeType = '';
+previewArea.classList.remove('visible');
+outputArea.classList.remove('visible');
+outputBox.textContent = '';
+originalSizeEl.textContent = '-';
+base64SizeEl.textContent = '-';
+sizeIncreaseEl.textContent = '-';
+}
+
+// Tab switching
+document.querySelectorAll('.tab-btn').forEach(btn => {
+btn.addEventListener('click', function() {
+document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+this.classList.add('active');
+currentFormat = this.dataset.format;
+updateOutput();
+trackImageToBase64('format_' + currentFormat, currentBase64.length);
+});
+});
+
+// Drop zone events
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', (e) => {
+e.preventDefault();
+dropZone.classList.add('drag-over');
+});
+dropZone.addEventListener('dragleave', () => {
+dropZone.classList.remove('drag-over');
+});
+dropZone.addEventListener('drop', (e) => {
+e.preventDefault();
+dropZone.classList.remove('drag-over');
+const file = e.dataTransfer.files[0];
+if (file) handleFile(file);
+});
+
+fileInput.addEventListener('change', (e) => {
+const file = e.target.files[0];
+if (file) handleFile(file);
+});
+
+// Prevent default drag behavior on document
+document.addEventListener('dragover', (e) => e.preventDefault());
+document.addEventListener('drop', (e) => {
+if (e.target.closest('#dropZone')) return;
+e.preventDefault();
+});
+</script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+if (window.RelatedTools) {
+RelatedTools.renderRelatedTools('image-to-base64', '#related-tools-container', {
+title: 'Related Tools',
+showCategory: true,
+trackClicks: true
+});
+}
+});
+</script>
+</body>
+</html>
