@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Cron Expression Generator & Parser | Paperclip</title>
+<meta name="description" content="Build and understand cron expressions with an interactive generator. Visual editor, common presets, next execution preview, and human-readable explanations. ~15K monthly searches." />
+<meta name="keywords" content="cron generator, cron expression builder, cron parser, crontab generator, schedule generator, cron syntax, cron helper" />
+<meta name="author" content="Paperclip" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/cron-expression-generator/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--warning:#f59e0b;--error:#ef4444;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+.logo{font-weight:700;font-size:1.2em;color:var(--accent);text-decoration:none}
+nav{display:flex;gap:16px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--text)}
+.container{max-width:1200px;margin:0 auto;padding:24px}
+h1{font-size:1.8em;margin:0 0 8px 0}
+.subtitle{color:var(--muted);margin-bottom:24px}
+.main-grid{display:grid;grid-template-columns:1fr 320px;gap:24px}
+@media (max-width: 900px){.main-grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin-bottom:24px}
+.card h2{margin:0 0 20px 0;font-size:1.2em;color:var(--accent)}
+.card h3{margin:0 0 16px 0;font-size:1em;color:var(--text)}
+.expression-display{background:rgba(0,0,0,0.3);border:2px solid var(--accent);border-radius:12px;padding:20px;margin-bottom:24px;text-align:center;position:relative}
+.expression-value{font-family:monospace;font-size:28px;color:var(--accent);font-weight:600;letter-spacing:2px}
+.expression-human{color:var(--muted);margin-top:12px;font-size:15px;line-height:1.5}
+.copy-btn{position:absolute;top:12px;right:12px;padding:8px 14px;background:rgba(255,255,255,0.1);border:none;border-radius:6px;color:var(--text);font-size:13px;cursor:pointer;transition:all .2s}
+.copy-btn:hover{background:rgba(255,255,255,0.2)}
+.copy-btn.copied{background:var(--success);color:#000}
+.tabs{display:flex;gap:8px;margin-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.tab{padding:12px 20px;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--muted);font-size:14px;cursor:pointer;transition:all .2s}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.field-group{margin-bottom:20px}
+.field-label{display:flex;align-items:center;gap:8px;margin-bottom:10px;color:var(--text);font-size:14px;font-weight:500}
+.field-help{color:var(--muted);font-size:12px;font-weight:normal}
+.checkbox-group{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.checkbox-btn{padding:8px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:6px;cursor:pointer;font-size:13px;transition:all .2s;user-select:none}
+.checkbox-btn:hover{background:rgba(255,255,255,0.08)}
+.checkbox-btn.selected{background:var(--accent);color:#012;border-color:var(--accent)}
+.checkbox-btn.every{background:rgba(34,197,94,0.1);border-color:var(--success);color:var(--success)}
+.checkbox-btn.every.selected{background:var(--success);color:#fff}
+.preset-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.preset-btn{padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:10px;cursor:pointer;transition:all .2s;text-align:left}
+.preset-btn:hover{border-color:var(--accent);background:rgba(6,182,212,0.05)}
+.preset-name{font-weight:600;font-size:14px;color:var(--text);margin-bottom:4px}
+.preset-cron{font-family:monospace;font-size:12px;color:var(--accent)}
+.preset-desc{font-size:12px;color:var(--muted);margin-top:4px}
+.parser-input{width:100%;padding:14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:var(--text);font-family:monospace;font-size:18px;text-align:center;letter-spacing:1px;outline:none}
+.parser-input:focus{border-color:var(--accent)}
+.parser-input.error{border-color:var(--error)}
+.execution-list{margin-top:16px}
+.execution-item{display:flex;align-items:center;gap:12px;padding:12px;background:rgba(255,255,255,0.03);border-radius:8px;margin-bottom:8px}
+.execution-item:last-child{margin-bottom:0}
+.execution-time{font-family:monospace;font-size:14px;color:var(--accent);min-width:140px}
+.execution-ago{color:var(--muted);font-size:13px}
+.examples-list{display:grid;gap:10px}
+.example-item{padding:12px;background:rgba(255,255,255,0.03);border-radius:8px;cursor:pointer;transition:all .2s}
+.example-item:hover{background:rgba(255,255,255,0.06)}
+.example-cron{font-family:monospace;font-size:13px;color:var(--accent);margin-bottom:4px}
+.example-desc{font-size:13px;color:var(--muted)}
+.ref-table{width:100%;border-collapse:collapse;font-size:13px}
+.ref-table th,.ref-table td{padding:10px 8px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.05)}
+.ref-table th{color:var(--accent);font-weight:600}
+.ref-table td{color:var(--muted)}
+.ref-table tr:last-child td{border-bottom:none}
+.ref-table code{font-family:monospace;background:rgba(255,255,255,0.05);padding:2px 6px;border-radius:4px;color:var(--text)}
+.syntax-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.syntax-item{padding:12px;background:rgba(255,255,255,0.03);border-radius:8px}
+.syntax-char{font-family:monospace;font-size:16px;color:var(--accent);margin-bottom:4px}
+.syntax-meaning{font-size:12px;color:var(--muted)}
+.tips{margin-top:24px;padding:20px;background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(37,99,235,0.1));border-radius:12px;border:1px solid rgba(6,182,212,0.3)}
+.tips h3{margin:0 0 16px 0;color:var(--accent)}
+.tips ul{margin:0;padding-left:20px;color:var(--muted)}
+.tips li{margin-bottom:10px}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
+</style>
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+<header>
+<a href="/" class="logo">← Paperclip</a>
+<nav>
+<a href="/">Home</a>
+<a href="/tools/">Tools</a>
+<a href="/about.html">About</a>
+</nav>
+</header>
+<div class="container">
+<h1>Cron Expression Generator</h1>
+<p class="subtitle">Build, parse, and understand cron expressions with an interactive visual editor. See next execution times and common presets.</p>
+<div class="expression-display">
+<button class="copy-btn" id="copy-btn" onclick="copyExpression()">Copy</button>
+<div class="expression-value" id="cron-expression">* * * * *</div>
+<div class="expression-human" id="human-readable">Every minute</div>
+</div>
+<div class="main-grid">
+<div class="left-column">
+<div class="tabs">
+<button class="tab active" onclick="switchTab('builder')">Visual Builder</button>
+<button class="tab" onclick="switchTab('parser')">Parse Expression</button>
+<button class="tab" onclick="switchTab('presets')">Quick Presets</button>
+</div>
+<div id="builder-tab" class="tab-content active">
+<div class="card">
+<h2>Build Your Schedule</h2>
+<div class="field-group">
+<div class="field-label"><strong>Minutes</strong><span class="field-help">(0-59)</span></div>
+<div class="checkbox-group" id="minutes-group"></div>
+</div>
+<div class="field-group">
+<div class="field-label"><strong>Hours</strong><span class="field-help">(0-23)</span></div>
+<div class="checkbox-group" id="hours-group"></div>
+</div>
+<div class="field-group">
+<div class="field-label"><strong>Day of Month</strong><span class="field-help">(1-31)</span></div>
+<div class="checkbox-group" id="dom-group"></div>
+</div>
+<div class="field-group">
+<div class="field-label"><strong>Month</strong></div>
+<div class="checkbox-group" id="month-group">
+<div class="checkbox-btn" data-value="1">Jan</div>
+<div class="checkbox-btn" data-value="2">Feb</div>
+<div class="checkbox-btn" data-value="3">Mar</div>
+<div class="checkbox-btn" data-value="4">Apr</div>
+<div class="checkbox-btn" data-value="5">May</div>
+<div class="checkbox-btn" data-value="6">Jun</div>
+<div class="checkbox-btn" data-value="7">Jul</div>
+<div class="checkbox-btn" data-value="8">Aug</div>
+<div class="checkbox-btn" data-value="9">Sep</div>
+<div class="checkbox-btn" data-value="10">Oct</div>
+<div class="checkbox-btn" data-value="11">Nov</div>
+<div class="checkbox-btn" data-value="12">Dec</div>
+</div>
+</div>
+<div class="field-group">
+<div class="field-label"><strong>Day of Week</strong><span class="field-help">(0=Sun, 6=Sat)</span></div>
+<div class="checkbox-group" id="dow-group">
+<div class="checkbox-btn" data-value="0">Sun</div>
+<div class="checkbox-btn" data-value="1">Mon</div>
+<div class="checkbox-btn" data-value="2">Tue</div>
+<div class="checkbox-btn" data-value="3">Wed</div>
+<div class="checkbox-btn" data-value="4">Thu</div>
+<div class="checkbox-btn" data-value="5">Fri</div>
+<div class="checkbox-btn" data-value="6">Sat</div>
+</div>
+</div>
+</div>
+<div class="card">
+<h2>Cron Syntax Reference</h2>
+<div class="syntax-grid">
+<div class="syntax-item"><div class="syntax-char">*</div><div class="syntax-meaning">Any value</div></div>
+<div class="syntax-item"><div class="syntax-char">,</div><div class="syntax-meaning">List separator</div></div>
+<div class="syntax-item"><div class="syntax-char">-</div><div class="syntax-meaning">Range</div></div>
+<div class="syntax-item"><div class="syntax-char">/</div><div class="syntax-meaning">Step values</div></div>
+<div class="syntax-item"><div class="syntax-char">*/5</div><div class="syntax-meaning">Every 5 units</div></div>
+<div class="syntax-item"><div class="syntax-char">1-5</div><div class="syntax-meaning">Range 1 to 5</div></div>
+<div class="syntax-item"><div class="syntax-char">1,3,5</div><div class="syntax-meaning">List of values</div></div>
+<div class="syntax-item"><div class="syntax-char">L</div><div class="syntax-meaning">Last day (some)</div></div>
+</div>
+</div>
+</div>
+<div id="parser-tab" class="tab-content">
+<div class="card">
+<h2>Parse Cron Expression</h2>
+<p style="color:var(--muted);margin-bottom:16px">Enter a cron expression to see what it means and get next execution times.</p>
+<input type="text" class="parser-input" id="parser-input" placeholder="* * * * *" value="* * * * *" oninput="parseExpression()">
+<div id="parser-error" style="color:var(--error);margin-top:8px;font-size:14px;display:none"></div>
+<div class="execution-list" id="execution-list">
+<h3 style="margin:20px 0 12px 0;color:var(--accent)">Next 5 Executions</h3>
+<div id="next-executions"></div>
+</div>
+</div>
+<div class="card">
+<h2>Field Reference</h2>
+<table class="ref-table">
+<thead><tr><th>Field</th><th>Allowed</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Minute</td><td><code>0-59</code></td><td>Minute of the hour</td></tr>
+<tr><td>Hour</td><td><code>0-23</code></td><td>Hour of the day</td></tr>
+<tr><td>Day</td><td><code>1-31</code></td><td>Day of month</td></tr>
+<tr><td>Month</td><td><code>1-12</code> or names</td><td>Month of year</td></tr>
+<tr><td>Weekday</td><td><code>0-6</code> or names</td><td>Day of week (0=Sun)</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="presets-tab" class="tab-content">
+<div class="card">
+<h2>Common Cron Presets</h2>
+<p style="color:var(--muted);margin-bottom:16px">Click any preset to load it.</p>
+<div class="preset-grid" id="preset-grid">
+<div class="preset-btn" onclick="loadPreset('* * * * *', 'Every minute')"><div class="preset-name">Every Minute</div><div class="preset-cron">* * * * *</div></div>
+<div class="preset-btn" onclick="loadPreset('*/5 * * * *', 'Every 5 minutes')"><div class="preset-name">Every 5 Minutes</div><div class="preset-cron">*/5 * * * *</div></div>
+<div class="preset-btn" onclick="loadPreset('0 * * * *', 'Every hour')"><div class="preset-name">Every Hour</div><div class="preset-cron">0 * * * *</div></div>
+<div class="preset-btn" onclick="loadPreset('0 0 * * *', 'Daily at midnight')"><div class="preset-name">Daily at Midnight</div><div class="preset-cron">0 0 * * *</div></div>
+<div class="preset-btn" onclick="loadPreset('0 12 * * *', 'Daily at noon')"><div class="preset-name">Daily at Noon</div><div class="preset-cron">0 12 * * *</div></div>
+<div class="preset-btn" onclick="loadPreset('0 2 * * *', 'Daily at 2am')"><div class="preset-name">Daily at 2 AM</div><div class="preset-cron">0 2 * * *</div><div class="preset-desc">Good for backups</div></div>
+<div class="preset-btn" onclick="loadPreset('0 0 * * 0', 'Weekly on Sunday')"><div class="preset-name">Weekly (Sunday)</div><div class="preset-cron">0 0 * * 0</div></div>
+<div class="preset-btn" onclick="loadPreset('0 0 * * 1', 'Weekly on Monday')"><div class="preset-name">Weekly (Monday)</div><div class="preset-cron">0 0 * * 1</div></div>
+<div class="preset-btn" onclick="loadPreset('0 0 1 * *', 'First of month')"><div class="preset-name">Monthly (1st)</div><div class="preset-cron">0 0 1 * *</div></div>
+<div class="preset-btn" onclick="loadPreset('0 0 1 1 *', 'Yearly on Jan 1')"><div class="preset-name">Yearly</div><div class="preset-cron">0 0 1 1 *</div></div>
+<div class="preset-btn" onclick="loadPreset('*/15 * * * *', 'Every 15 minutes')"><div class="preset-name">Every 15 Minutes</div><div class="preset-cron">*/15 * * * *</div></div>
+<div class="preset-btn" onclick="loadPreset('0 */6 * * *', 'Every 6 hours')"><div class="preset-name">Every 6 Hours</div><div class="preset-cron">0 */6 * * *</div></div>
+<div class="preset-btn" onclick="loadPreset('0 9-17 * * 1-5', 'Business hours')"><div class="preset-name">Business Hours</div><div class="preset-cron">0 9-17 * * 1-5</div><div class="preset-desc">9am-5pm weekdays</div></div>
+<div class="preset-btn" onclick="loadPreset('*/5 9-17 * * 1-5', 'Business mins')"><div class="preset-name">Every 5 min business</div><div class="preset-cron">*/5 9-17 * * 1-5</div><div class="preset-desc">Every 5 min, 9-5 M-F</div></div>
+<div class="preset-btn" onclick="loadPreset('0 9 * * 1', 'Monday 9am')"><div class="preset-name">Monday 9 AM</div><div class="preset-cron">0 9 * * 1</div><div class="preset-desc">Start of work week</div></div>
+<div class="preset-btn" onclick="loadPreset('0 17 * * 5', 'Friday 5pm')"><div class="preset-name">Friday 5 PM</div><div class="preset-cron">0 17 * * 5</div><div class="preset-desc">End of work week</div></div>
+<div class="preset-btn" onclick="loadPreset('0 0 1-7 * 1', 'First Monday')"><div class="preset-name">First Monday</div><div class="preset-cron">0 0 1-7 * 1</div><div class="preset-desc">Of each month</div></div>
+<div class="preset-btn" onclick="loadPreset('@reboot', 'On reboot')"><div class="preset-name">On System Reboot</div><div class="preset-cron">@reboot</div><div class="preset-desc">Special string</div></div>
+</div>
+</div>
+</div>
+<div class="tips">
+<h3>Pro Tips</h3>
+<ul>
+<li><strong>Use specific times:</strong> Instead of */5, consider 0,15,30,45 for exact quarter-hours</li>
+<li><strong>Avoid midnight rush:</strong> Many cron jobs run at 0:00 - consider 2:00 or 3:00 instead</li>
+<li><strong>Test first:</strong> Use <code>/bin/true</code> as your command to test timing before running real commands</li>
+<li><strong>Redirect output:</strong> Append <code>> /dev/null 2>&1</code> to prevent email spam from output</li>
+<li><strong>Check timezone:</strong> Cron typically uses system time - verify with <code>date</code></li>
+</ul>
+</div>
+</div>
+<div class="right-column">
+<div class="card">
+<h2>Next Executions</h2>
+<div class="execution-list" id="sidebar-executions">
+<div style="color:var(--muted)">Build or enter an expression to see upcoming times</div>
+</div>
+</div>
+<div class="card">
+<h2>Common Examples</h2>
+<div class="examples-list">
+<div class="example-item" onclick="loadPreset('0 2 * * *')"><div class="example-cron">0 2 * * *</div><div class="example-desc">Daily backup at 2 AM</div></div>
+<div class="example-item" onclick="loadPreset('*/15 * * * *')"><div class="example-cron">*/15 * * * *</div><div class="example-desc">Every 15 minutes</div></div>
+<div class="example-item" onclick="loadPreset('0 0 * * 0')"><div class="example-cron">0 0 * * 0</div><div class="example-desc">Weekly cleanup</div></div>
+<div class="example-item" onclick="loadPreset('0 9-17 * * 1-5')"><div class="example-cron">0 9-17 * * 1-5</div><div class="example-desc">Business hours check</div></div>
+</div>
+</div>
+<div class="card">
+<h2>Special Strings</h2>
+<table class="ref-table">
+<tbody>
+<tr><td><code>@yearly</code></td><td>0 0 1 1 *</td></tr>
+<tr><td><code>@monthly</code></td><td>0 0 1 * *</td></tr>
+<tr><td><code>@weekly</code></td><td>0 0 * * 0</td></tr>
+<tr><td><code>@daily</code></td><td>0 0 * * *</td></tr>
+<tr><td><code>@hourly</code></td><td>0 * * * *</td></tr>
+<tr><td><code>@reboot</code></td><td>At startup</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<script src="/public/analytics.js"></script>
+<footer>
+<p>Cron Expression Generator • Paperclip Developer Tools</p>
+<p style="font-size:12px;margin-top:8px">All processing happens in your browser</p>
+</footer>
+<script>
+let currentCron = ['*','*','*','*','*'];
+let currentTab = 'builder';
+function init() {
+const minutesGroup = document.getElementById('minutes-group');
+minutesGroup.innerHTML = '<div class="checkbox-btn every" data-value="*" data-every="true">Every minute</div>';
+for(let i=0;i<60;i++)minutesGroup.innerHTML+=`<div class="checkbox-btn" data-value="${i}">${i.toString().padStart(2,'0')}</div>`;
+const hoursGroup = document.getElementById('hours-group');
+hoursGroup.innerHTML = '<div class="checkbox-btn every" data-value="*" data-every="true">Every hour</div>';
+for(let i=0;i<24;i++)hoursGroup.innerHTML+=`<div class="checkbox-btn" data-value="${i}">${i.toString().padStart(2,'0')}</div>`;
+const domGroup = document.getElementById('dom-group');
+domGroup.innerHTML = '<div class="checkbox-btn every" data-value="*" data-every="true">Every day</div>';
+for(let i=1;i<=31;i++)domGroup.innerHTML+=`<div class="checkbox-btn" data-value="${i}">${i}</div>`;
+setupCheckboxHandlers('minutes-group',0);
+setupCheckboxHandlers('hours-group',1);
+setupCheckboxHandlers('dom-group',2);
+setupCheckboxHandlers('month-group',3);
+setupCheckboxHandlers('dow-group',4);
+updateExpression();
+parseExpression();
+if(typeof PaperclipAnalytics!=='undefined')PaperclipAnalytics.tool.track('cron-expression-generator','load');
+}
+function setupCheckboxHandlers(groupId,cronIndex){
+const group=document.getElementById(groupId);
+group.addEventListener('click',e=>{
+if(e.target.classList.contains('checkbox-btn')){
+const btn=e.target;
+const isEvery=btn.dataset.every==='true';
+if(isEvery){
+group.querySelectorAll('.checkbox-btn').forEach(b=>b.classList.remove('selected'));
+btn.classList.add('selected');
+currentCron[cronIndex]='*';
+}else{
+const everyBtn=group.querySelector('[data-every="true"]');
+if(everyBtn)everyBtn.classList.remove('selected');
+btn.classList.toggle('selected');
+const selected=group.querySelectorAll('.checkbox-btn.selected:not([data-every])');
+if(selected.length===0){
+currentCron[cronIndex]='*';
+if(everyBtn)everyBtn.classList.add('selected');
+}else{
+const values=Array.from(selected).map(b=>b.dataset.value).sort((a,b)=>parseInt(a)-parseInt(b));
+currentCron[cronIndex]=compressValues(values);
+}
+}
+updateExpression();
+}
+});
+}
+function compressValues(values){
+if(values.length===0)return'*';
+if(values.length===1)return values[0];
+const nums=values.map(v=>parseInt(v)).sort((a,b)=>a-b);
+const ranges=[];
+let start=nums[0],prev=nums[0];
+for(let i=1;i<=nums.length;i++){
+if(i<nums.length&&nums[i]===prev+1){prev=nums[i];}
+else{if(start===prev)ranges.push(start.toString());else ranges.push(`${start}-${prev}`);
+if(i<nums.length){start=nums[i];prev=nums[i];}
+}
+}
+return ranges.join(',');
+}
+function updateExpression(){
+const expr=currentCron.join(' ');
+document.getElementById('cron-expression').textContent=expr;
+document.getElementById('parser-input').value=expr;
+document.getElementById('human-readable').textContent=humanizeCron(expr);
+document.getElementById('copy-btn').classList.remove('copied');
+document.getElementById('copy-btn').textContent='Copy';
+updateNextExecutions(expr,'sidebar-executions');
+}
+function humanizeCron(expr){
+const specials={'@yearly':'Once a year on Jan 1 at midnight','@monthly':'Once a month on the 1st at midnight','@weekly':'Once a week on Sunday at midnight','@daily':'Once a day at midnight','@hourly':'At the start of every hour','@reboot':'When the system starts'};
+if(specials[expr])return specials[expr];
+const parts=expr.split(' ');
+if(parts.length!==5)return'Invalid expression';
+const[min,hour,dom,month,dow]=parts;
+let desc=[];
+if(min==='*'&&hour==='*'){desc.push('Every minute');}
+else if(min==='0'&&hour==='*'){desc.push('Every hour');}
+else if(min==='0'&&hour==='0'){desc.push('At midnight');}
+else if(min==='0'){
+if(hour.includes(','))desc.push(`At hours: ${hour}`);
+else if(hour.includes('-'))desc.push(`Every hour from ${hour.replace('-',' to ')}`);
+else if(hour.includes('/'))desc.push(`Every ${hour.split('/')[1]} hours`);
+else desc.push(`At ${hour.padStart(2,'0')}:00`);
+}else if(min.startsWith('*/')){desc.push(`Every ${min.split('/')[1]} minutes`);}
+else if(hour!=='*'){desc.push(`At ${hour.padStart(2,'0')}:${min.padStart(2,'0')}`);}
+else{desc.push(`At minute ${min}`);}
+if(dow!=='*'){
+const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+if(dow.includes(','))desc.push(`on ${dow.split(',').map(d=>days[parseInt(d)]||d).join(', ')}`);
+else if(dow.includes('-'))desc.push('Monday through Friday');
+else if(!isNaN(parseInt(dow)))desc.push(`on ${days[parseInt(dow)]}`);
+}
+if(dom!=='*'&&dow==='*'){
+if(dom==='L')desc.push('on the last day of the month');
+else if(dom.includes(','))desc.push(`on days ${dom}`);
+else desc.push(`on day ${dom} of the month`);
+}
+if(month!=='*'){
+const months=['','January','February','March','April','May','June','July','August','September','October','November','December'];
+if(month.includes(','))desc.push(`in ${month.split(',').map(m=>months[parseInt(m)]||m).join(', ')}`);
+else if(!isNaN(parseInt(month)))desc.push(`in ${months[parseInt(month)]}`);
+}
+return desc.join(' ');
+}
+function switchTab(tabName){
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+event.target.classList.add('active');
+document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+document.getElementById(tabName+'-tab').classList.add('active');
+if(tabName==='parser'){document.getElementById('parser-input').value=currentCron.join(' ');parseExpression();}
+currentTab=tabName;
+}
+function parseExpression(){
+const input=document.getElementById('parser-input').value.trim();
+const errorDiv=document.getElementById('parser-error');
+const specials=['@yearly','@monthly','@weekly','@daily','@hourly','@reboot'];
+if(specials.includes(input)){
+errorDiv.style.display='none';
+document.getElementById('parser-input').classList.remove('error');
+document.getElementById('human-readable').textContent=humanizeCron(input);
+updateNextExecutions(input,'next-executions');
+return;
+}
+const parts=input.split(/\s+/);
+if(parts.length!==5){
+errorDiv.textContent='Cron expression must have 5 fields';
+errorDiv.style.display='block';
+document.getElementById('parser-input').classList.add('error');
+document.getElementById('next-executions').innerHTML='';
+return;
+}
+const[min,hour,dom,month,dow]=parts;
+const isValid=validateField(min,0,59)&&validateField(hour,0,23)&&validateField(dom,1,31)&&validateField(month,1,12)&&validateField(dow,0,6);
+if(!isValid){
+errorDiv.textContent='Invalid field values';
+errorDiv.style.display='block';
+document.getElementById('parser-input').classList.add('error');
+return;
+}
+errorDiv.style.display='none';
+document.getElementById('parser-input').classList.remove('error');
+document.getElementById('human-readable').textContent=humanizeCron(input);
+updateNextExecutions(input,'next-executions');
+currentCron=parts;
+updateBuilderUI();
+}
+function validateField(field,min,max){
+if(field==='*'||field==='L')return true;
+if(field.includes('/')){const[base,step]=field.split('/');if(base!=='*'&&!validateField(base,min,max))return false;return !isNaN(parseInt(step))&&parseInt(step)>0;}
+if(field.includes('-')){const[start,end]=field.split('-').map(v=>parseInt(v));return !isNaN(start)&&!isNaN(end)&&start>=min&&end<=max&&start<=end;}
+if(field.includes(','))return field.split(',').every(v=>validateField(v.trim(),min,max));
+const val=parseInt(field);return !isNaN(val)&&val>=min&&val<=max;
+}
+function updateBuilderUI(){
+updateFieldGroup('minutes-group',currentCron[0],0,59);
+updateFieldGroup('hours-group',currentCron[1],0,23);
+updateFieldGroup('dom-group',currentCron[2],1,31);
+updateFieldGroup('month-group',currentCron[3],1,12);
+updateFieldGroup('dow-group',currentCron[4],0,6);
+}
+function updateFieldGroup(groupId,value,min,max){
+const group=document.getElementById(groupId);
+const buttons=group.querySelectorAll('.checkbox-btn');
+buttons.forEach(btn=>btn.classList.remove('selected'));
+if(value==='*'){const everyBtn=group.querySelector('[data-every="true"]');if(everyBtn)everyBtn.classList.add('selected');return;}
+const values=expandCronValue(value,min,max);
+values.forEach(v=>{const btn=group.querySelector(`[data-value="${v}"]`);if(btn)btn.classList.add('selected');});
+}
+function expandCronValue(value,min,max){
+if(value==='*')return[];
+const result=[];
+if(value.includes('/')){const[base,step]=value.split('/');const stepNum=parseInt(step);if(base==='*')for(let i=min;i<=max;i+=stepNum)result.push(i);return result;}
+if(value.includes(',')){value.split(',').forEach(v=>result.push(...expandCronValue(v.trim(),min,max)));return result;}
+if(value.includes('-')){const[start,end]=value.split('-').map(v=>parseInt(v));for(let i=start;i<=end;i++)result.push(i);return result;}
+const val=parseInt(value);if(!isNaN(val))result.push(val);return result;
+}
+function updateNextExecutions(expr,containerId){
+const container=document.getElementById(containerId);
+const specialMap={'@yearly':'0 0 1 1 *','@monthly':'0 0 1 * *','@weekly':'0 0 * * 0','@daily':'0 0 * * *','@hourly':'0 * * * *','@reboot':null};
+if(expr==='@reboot'){container.innerHTML='<div style="color:var(--muted)">Executes when the system starts</div>';return;}
+const resolvedExpr=specialMap[expr]||expr;
+const parts=resolvedExpr.split(' ');
+if(parts.length!==5){container.innerHTML='<div style="color:var(--muted)">Enter a valid cron expression</div>';return;}
+const times=calculateNextExecutions(parts,5);
+if(times.length===0){container.innerHTML='<div style="color:var(--muted)">No upcoming executions in the next year</div>';return;}
+let html='';
+if(containerId==='next-executions')html='<h3 style="margin:20px 0 12px 0;color:var(--accent)">Next 5 Executions</h3>';
+times.forEach(time=>{
+const timeStr=time.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+const diff=time.getTime()-Date.now();
+const ago=diff<60000?'just now':diff<3600000?'in '+Math.ceil(diff/60000)+' min':diff<86400000?'in '+Math.ceil(diff/3600000)+' hours':'in '+Math.ceil(diff/86400000)+' days';
+html+=`<div class="execution-item"><div class="execution-time">${timeStr}</div><div class="execution-ago">${ago}</div></div>`;
+});
+container.innerHTML=html;
+}
+function calculateNextExecutions(parts,count){
+const[minExpr,hourExpr,domExpr,monthExpr,dowExpr]=parts;
+const minutes=parseField(minExpr,0,59);
+const hours=parseField(hourExpr,0,23);
+const daysOfMonth=parseField(domExpr,1,31);
+const months=parseField(monthExpr,1,12);
+const daysOfWeek=parseField(dowExpr,0,6);
+const now=new Date();
+const start=new Date(now.getFullYear(),now.getMonth(),now.getDate(),now.getHours(),now.getMinutes()+1);
+const end=new Date(start);end.setFullYear(end.getFullYear()+1);
+const times=[];
+for(let d=new Date(start);d<=end&&times.length<count;d.setMinutes(d.getMinutes()+1)){
+if(matchesCron(d,minutes,hours,daysOfMonth,months,daysOfWeek))times.push(new Date(d));
+}
+return times;
+}
+function parseField(expr,min,max){
+if(expr==='*'){const result=[];for(let i=min;i<=max;i++)result.push(i);return result;}
+if(expr.includes('/')){const[base,step]=expr.split('/');const stepNum=parseInt(step);const result=[];if(base==='*')for(let i=min;i<=max;i+=stepNum)result.push(i);else if(base.includes('-')){const[s,e]=base.split('-').map(v=>parseInt(v));for(let i=s;i<=e;i+=stepNum)result.push(i);}return result;}
+if(expr.includes('-')){const[start,end]=expr.split('-').map(v=>parseInt(v));const result=[];for(let i=start;i<=end;i++)result.push(i);return result;}
+if(expr.includes(',')){const result=[];expr.split(',').forEach(v=>result.push(parseInt(v.trim())));return result;}
+return[parseInt(expr)];
+}
+function matchesCron(date,minutes,hours,daysOfMonth,months,daysOfWeek){
+const min=date.getMinutes(),hour=date.getHours(),dom=date.getDate(),month=date.getMonth()+1,dow=date.getDay();
+if(!minutes.includes(min))return false;
+if(!hours.includes(hour))return false;
+if(!months.includes(month))return false;
+const domRestricted=daysOfMonth.length<31;
+const dowRestricted=daysOfWeek.length<7;
+if(domRestricted&&dowRestricted){if(!daysOfMonth.includes(dom)||!daysOfWeek.includes(dow))return false;}
+else if(domRestricted){if(!daysOfMonth.includes(dom))return false;}
+else if(dowRestricted){if(!daysOfWeek.includes(dow))return false;}
+return true;
+}
+function loadPreset(cron,desc){
+currentCron=cron.split(' ');
+if(currentCron.length===1&&cron.startsWith('@')){
+updateExpression();
+}else{
+updateExpression();
+updateBuilderUI();
+}
+switchTab('builder');
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+document.querySelector('.tab').classList.add('active');
+}
+function copyExpression(){
+const expr=document.getElementById('cron-expression').textContent;
+navigator.clipboard.writeText(expr).then(()=>{
+const btn=document.getElementById('copy-btn');
+btn.textContent='Copied!';
+btn.classList.add('copied');
+setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied');},2000);
+});
+}
+init();
+</script>
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+if(window.RelatedTools){
+RelatedTools.renderRelatedTools('cron-expression-generator','#related-tools-container',{
+title:'Related Tools',
+showCategory:true,
+trackClicks:true
+});
+}
+});
+</script>
+</body>
+</html>

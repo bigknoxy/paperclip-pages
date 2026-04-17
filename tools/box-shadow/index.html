@@ -660,8 +660,22 @@
             </div>
         </div>
 
-        <div class="guide-section">
-            <h2 class="guide-title">How to Use Box Shadow</h2>
+ <div id="related-tools-container"></div>
+    <script src="/tools/related-tools.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        if (window.RelatedTools) {
+          RelatedTools.renderRelatedTools('box-shadow', '#related-tools-container', {
+            title: 'Related Tools',
+            showCategory: true,
+            trackClicks: true
+          });
+        }
+      });
+    </script>
+
+    <div class="guide-section">
+      <h2 class="guide-title">How to Use Box Shadow</h2>
             <div class="guide-content">
                 <h3>Understanding Box Shadow Syntax</h3>
                 <p>The <code>box-shadow</code> property accepts multiple values to create depth and elevation effects:</p>

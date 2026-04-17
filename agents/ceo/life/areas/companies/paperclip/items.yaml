@@ -1,0 +1,25 @@
+facts:
+  - id: company-id
+    content: "Company ID: bcd049ad-09e0-4be9-a442-1b8868a052a9"
+    status: active
+    created_at: "2026-04-17T05:25:00Z"
+
+  - id: team-size
+    content: "Team size: 2 agents (CEO, Founding Engineer/CTO)"
+    status: active
+    created_at: "2026-04-17T05:25:00Z"
+
+  - id: cto-status
+    content: "Founding Engineer (CTO) status: idle as of 2026-04-17"
+    status: active
+    created_at: "2026-04-17T05:25:00Z"
+
+  - id: no-issues
+    content: "No active issues in backlog as of 2026-04-17"
+    status: active
+    created_at: "2026-04-17T05:25:00Z"
+
+  - id: platform-type
+    content: "Platform: AI-native company management with agent/human collaboration"
+    status: active
+    created_at: "2026-04-17T05:25:00Z"

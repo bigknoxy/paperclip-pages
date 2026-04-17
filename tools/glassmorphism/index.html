@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glassmorphism CSS Generator - Create Frosted Glass Effects | Paperclip</title>
+<meta name="description" content="Free online glassmorphism CSS generator. Create beautiful frosted glass effects with blur, transparency, border, and shadow controls. Copy CSS code instantly. ~2,400 monthly searches.">
+<meta name="keywords" content="glassmorphism generator, frosted glass css, glass effect css, css glassmorphism, backdrop-filter blur, glass card generator, transparent blur effect">
+<meta name="author" content="Paperclip">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/glassmorphism/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+--bg: #0a0e14;
+--card: #11181f;
+--surface: #1a232e;
+--surface-hover: #243240;
+--accent: #f97316;
+--accent-glow: rgba(249, 115, 22, 0.3);
+--secondary: #06b6d4;
+--success: #22c55e;
+--text: #f8fafc;
+--text-muted: #94a3b8;
+--border: rgba(148, 163, 184, 0.15);
+--shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+--shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+--radius: 12px;
+--radius-sm: 8px;
+}
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: 'Outfit', system-ui, sans-serif;
+background: var(--bg);
+color: var(--text);
+line-height: 1.6;
+min-height: 100vh;
+}
+
+header {
+padding: 20px 32px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+max-width: 1400px;
+margin: 0 auto;
+}
+
+.logo {
+font-weight: 700;
+font-size: 1.3em;
+color: var(--accent);
+text-decoration: none;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.logo svg {
+width: 28px;
+height: 28px;
+}
+
+nav {
+display: flex;
+gap: 24px;
+}
+
+nav a {
+color: var(--text-muted);
+text-decoration: none;
+font-size: 14px;
+font-weight: 500;
+transition: color 0.2s;
+}
+
+nav a:hover {
+color: var(--text);
+}
+
+.container {
+max-width: 1400px;
+margin: 0 auto;
+padding: 24px 32px 60px;
+}
+
+.hero {
+text-align: center;
+margin-bottom: 48px;
+}
+
+.hero h1 {
+font-size: clamp(2.5rem, 5vw, 4rem);
+font-weight: 700;
+margin-bottom: 16px;
+background: linear-gradient(135deg, var(--text) 0%, var(--accent) 50%, var(--secondary) 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+
+.hero p {
+color: var(--text-muted);
+font-size: 1.1em;
+max-width: 600px;
+margin: 0 auto 32px;
+}
+
+.tool-wrapper {
+display: grid;
+grid-template-columns: 380px 1fr;
+gap: 32px;
+align-items: start;
+}
+
+@media (max-width: 1024px) {
+.tool-wrapper {
+grid-template-columns: 1fr;
+}
+}
+
+.controls-panel {
+background: var(--card);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+padding: 24px;
+}
+
+.panel-title {
+font-size: 1.1em;
+font-weight: 600;
+margin-bottom: 20px;
+color: var(--text);
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.control-group {
+margin-bottom: 24px;
+}
+
+.control-group:last-child {
+margin-bottom: 0;
+}
+
+.control-label {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 10px;
+font-size: 13px;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.control-value {
+color: var(--text);
+font-weight: 600;
+font-family: 'Space Mono', monospace;
+}
+
+input[type="range"] {
+width: 100%;
+height: 6px;
+background: var(--surface);
+border-radius: 3px;
+outline: none;
+-webkit-appearance: none;
+appearance: none;
+cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+-webkit-appearance: none;
+appearance: none;
+width: 18px;
+height: 18px;
+background: var(--accent);
+border-radius: 50%;
+cursor: pointer;
+transition: transform 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+transform: scale(1.1);
+}
+
+input[type="range"]::-moz-range-thumb {
+width: 18px;
+height: 18px;
+background: var(--accent);
+border-radius: 50%;
+cursor: pointer;
+border: none;
+}
+
+.color-control {
+display: flex;
+align-items: center;
+gap: 12px;
+}
+
+input[type="color"] {
+width: 50px;
+height: 40px;
+border: none;
+border-radius: var(--radius-sm);
+cursor: pointer;
+background: transparent;
+}
+
+.color-input-wrapper {
+flex: 1;
+position: relative;
+}
+
+.color-input-wrapper input[type="text"] {
+width: 100%;
+padding: 10px 12px;
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius-sm);
+color: var(--text);
+font-family: 'Space Mono', monospace;
+font-size: 14px;
+}
+
+.color-input-wrapper input[type="text"]:focus {
+outline: none;
+border-color: var(--accent);
+}
+
+.checkbox-control {
+display: flex;
+align-items: center;
+gap: 12px;
+cursor: pointer;
+}
+
+.checkbox-control input[type="checkbox"] {
+width: 20px;
+height: 20px;
+accent-color: var(--accent);
+cursor: pointer;
+}
+
+.toggle-group {
+display: flex;
+gap: 8px;
+background: var(--surface);
+padding: 4px;
+border-radius: var(--radius-sm);
+}
+
+.toggle-btn {
+flex: 1;
+padding: 8px 12px;
+background: transparent;
+border: none;
+border-radius: 6px;
+color: var(--text-muted);
+font-size: 13px;
+font-weight: 500;
+cursor: pointer;
+transition: all 0.2s;
+}
+
+.toggle-btn:hover {
+color: var(--text);
+}
+
+.toggle-btn.active {
+background: var(--accent);
+color: white;
+}
+
+.preview-panel {
+background: var(--card);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+padding: 32px;
+min-height: 500px;
+}
+
+.preview-title {
+font-size: 1.1em;
+font-weight: 600;
+margin-bottom: 20px;
+color: var(--text);
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.preview-area {
+position: relative;
+border-radius: var(--radius);
+height: 350px;
+overflow: hidden;
+margin-bottom: 24px;
+background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+background-size: 400% 400%;
+animation: gradientShift 15s ease infinite;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+@keyframes gradientShift {
+0% { background-position: 0% 50%; }
+50% { background-position: 100% 50%; }
+100% { background-position: 0% 50%; }
+}
+
+.glass-card {
+width: 280px;
+padding: 32px;
+border-radius: var(--radius);
+transition: all 0.3s ease;
+}
+
+.glass-card h3 {
+margin: 0 0 12px 0;
+font-size: 1.4em;
+}
+
+.glass-card p {
+margin: 0;
+opacity: 0.9;
+font-size: 14px;
+line-height: 1.6;
+}
+
+.code-output {
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius-sm);
+padding: 16px;
+position: relative;
+}
+
+.code-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 12px;
+padding-bottom: 12px;
+border-bottom: 1px solid var(--border);
+}
+
+.code-label {
+font-size: 12px;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.copy-btn {
+padding: 8px 16px;
+background: var(--accent);
+color: white;
+border: none;
+border-radius: 6px;
+font-size: 13px;
+font-weight: 500;
+cursor: pointer;
+transition: all 0.2s;
+display: flex;
+align-items: center;
+gap: 6px;
+}
+
+.copy-btn:hover {
+background: #ea580c;
+transform: translateY(-1px);
+}
+
+.copy-btn.copied {
+background: var(--success);
+}
+
+.code-content {
+font-family: 'Space Mono', monospace;
+font-size: 13px;
+line-height: 1.6;
+color: var(--text);
+overflow-x: auto;
+white-space: pre-wrap;
+word-break: break-all;
+}
+
+.presets-section {
+margin-top: 24px;
+padding-top: 24px;
+border-top: 1px solid var(--border);
+}
+
+.presets-title {
+font-size: 14px;
+font-weight: 600;
+margin-bottom: 16px;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.presets-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+gap: 12px;
+}
+
+.preset-item {
+aspect-ratio: 1;
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+border: 2px solid transparent;
+border-radius: var(--radius-sm);
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.2s;
+position: relative;
+overflow: hidden;
+}
+
+.preset-item:hover {
+border-color: var(--accent);
+transform: translateY(-2px);
+}
+
+.preset-glass {
+width: 60px;
+padding: 12px;
+border-radius: 6px;
+font-size: 10px;
+text-align: center;
+}
+
+.guide-section {
+max-width: 800px;
+margin: 60px auto 0;
+}
+
+.guide-title {
+font-size: 1.8em;
+font-weight: 700;
+margin-bottom: 24px;
+text-align: center;
+}
+
+.guide-content {
+color: var(--text-muted);
+line-height: 1.8;
+}
+
+.guide-content h3 {
+color: var(--text);
+margin: 32px 0 16px;
+font-size: 1.3em;
+}
+
+.guide-content p {
+margin-bottom: 16px;
+}
+
+.guide-content code {
+background: var(--surface);
+padding: 2px 8px;
+border-radius: 4px;
+font-family: 'Space Mono', monospace;
+font-size: 0.9em;
+color: var(--accent);
+}
+
+.guide-content ul {
+padding-left: 24px;
+margin-bottom: 16px;
+}
+
+.guide-content li {
+margin-bottom: 8px;
+}
+
+.features-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 24px;
+margin: 40px 0;
+}
+
+.feature-card {
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+padding: 24px;
+transition: transform 0.2s;
+}
+
+.feature-card:hover {
+transform: translateY(-4px);
+}
+
+.feature-card h4 {
+color: var(--accent);
+margin-bottom: 12px;
+font-size: 1.1rem;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.feature-card p {
+margin: 0;
+font-size: 0.95rem;
+color: var(--text-muted);
+}
+
+footer {
+text-align: center;
+padding: 40px 32px;
+color: var(--text-muted);
+font-size: 14px;
+border-top: 1px solid var(--border);
+margin-top: 60px;
+}
+
+footer a {
+color: var(--accent);
+text-decoration: none;
+}
+
+@media (max-width: 768px) {
+.tool-wrapper {
+grid-template-columns: 1fr;
+}
+
+.preview-area {
+height: 250px;
+}
+
+.glass-card {
+width: 200px;
+padding: 20px;
+}
+}
+</style>
+</head>
+<body>
+<header>
+<a href="/" class="logo">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+</svg>
+Paperclip
+</a>
+<nav>
+<a href="/">Home</a>
+<a href="/tools/">Tools</a>
+<a href="https://github.com/bigknoxy/paperclip-pages" target="_blank">GitHub</a>
+</nav>
+</header>
+
+<div class="container">
+<div class="hero">
+<h1>Glassmorphism CSS Generator</h1>
+<p>Create beautiful frosted glass effects with customizable blur, transparency, border, and shadow controls. Perfect for modern UI designs.</p>
+</div>
+
+<div class="tool-wrapper">
+<div class="controls-panel">
+<div class="panel-title">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/>
+</svg>
+Glassmorphism Settings
+</div>
+
+<div class="control-group">
+<div class="control-label">
+<span>Blur Amount</span>
+<span class="control-value" id="blurValue">10px</span>
+</div>
+<input type="range" id="blur" min="0" max="40" value="10">
+</div>
+
+<div class="control-group">
+<div class="control-label">
+<span>Transparency</span>
+<span class="control-value" id="opacityValue">25%</span>
+</div>
+<input type="range" id="opacity" min="0" max="100" value="25">
+</div>
+
+<div class="control-group">
+<div class="control-label">
+<span>Saturation</span>
+<span class="control-value" id="saturationValue">180%</span>
+</div>
+<input type="range" id="saturation" min="100" max="200" value="180">
+</div>
+
+<div class="control-group">
+<div class="control-label">
+<span>Border Opacity</span>
+<span class="control-value" id="borderOpacityValue">30%</span>
+</div>
+<input type="range" id="borderOpacity" min="0" max="100" value="30">
+</div>
+
+<div class="control-group">
+<div class="control-label">
+<span>Border Width</span>
+<span class="control-value" id="borderWidthValue">1px</span>
+</div>
+<input type="range" id="borderWidth" min="0" max="5" value="1">
+</div>
+
+<div class="control-group">
+<div class="control-label">
+<span>Border Radius</span>
+<span class="control-value" id="borderRadiusValue">16px</span>
+</div>
+<input type="range" id="borderRadius" min="0" max="50" value="16">
+</div>
+
+<div class="control-group">
+<div class="control-label">
+<span>Shadow Blur</span>
+<span class="control-value" id="shadowBlurValue">20px</span>
+</div>
+<input type="range" id="shadowBlur" min="0" max="60" value="20">
+</div>
+
+<div class="control-group">
+<div class="control-label">
+<span>Shadow Opacity</span>
+<span class="control-value" id="shadowOpacityValue">20%</span>
+</div>
+<input type="range" id="shadowOpacity" min="0" max="100" value="20">
+</div>
+
+<div class="control-group">
+<div class="control-label">
+<span>Background Color</span>
+</div>
+<div class="color-control">
+<input type="color" id="bgColor" value="#ffffff">
+<div class="color-input-wrapper">
+<input type="text" id="bgColorText" value="#ffffff" placeholder="#ffffff">
+</div>
+</div>
+</div>
+
+<div class="presets-section">
+<div class="presets-title">Quick Presets</div>
+<div class="presets-grid" id="presetsGrid">
+<!-- Presets will be added here -->
+</div>
+</div>
+</div>
+
+<div class="preview-panel">
+<div class="preview-title">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="12" cy="12" r="3"/>
+<path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/>
+</svg>
+Live Preview
+</div>
+<div class="preview-area" id="previewArea">
+<div class="glass-card" id="glassCard">
+<h3>Glass Card</h3>
+<p>This is a glassmorphism card with backdrop blur and transparency effects.</p>
+</div>
+</div>
+
+<div class="code-output">
+<div class="code-header">
+<span class="code-label">Generated CSS</span>
+<button class="copy-btn" id="copyBtn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+</svg>
+Copy CSS
+</button>
+</div>
+<pre class="code-content" id="cssOutput">/* Glassmorphism CSS */
+.glass-card {
+background: rgba(255, 255, 255, 0.25);
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+border-radius: 16px;
+box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}</pre>
+</div>
+</div>
+</div>
+
+<div class="guide-section">
+<h2 class="guide-title">Understanding Glassmorphism</h2>
+<div class="guide-content">
+<h3>What is Glassmorphism?</h3>
+<p>Glassmorphism is a modern UI design trend that creates frosted glass-like elements using CSS. It combines <code>backdrop-filter: blur()</code> with semi-transparent backgrounds and subtle borders to create a sense of depth and layering.</p>
+
+<div class="features-grid">
+<div class="feature-card">
+<h4>
+<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+Backdrop Filter
+</h4>
+<p>The blur effect is created using <code>backdrop-filter: blur()</code>, which applies a Gaussian blur to the area behind the element.</p>
+</div>
+<div class="feature-card">
+<h4>
+<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+Semi-Transparent
+</h4>
+<p>Using <code>rgba()</code> colors with alpha transparency allows content behind the glass element to show through.</p>
+</div>
+<div class="feature-card">
+<h4>
+<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01"/></svg>
+Subtle Borders
+</h4>
+<p>A thin, semi-transparent border creates the edge definition that mimics real glass surfaces.</p>
+</div>
+<div class="feature-card">
+<h4>
+<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+Soft Shadows
+</h4>
+<p>Large, diffuse shadows create elevation and help the glass element appear to float above the background.</p>
+</div>
+</div>
+
+<h3>CSS Properties Used</h3>
+<ul>
+<li><strong>backdrop-filter</strong> - Applies blur, brightness, and saturation effects to the background behind the element</li>
+<li><strong>-webkit-backdrop-filter</strong> - Safari vendor prefix for backdrop-filter support</li>
+<li><strong>background</strong> - Uses rgba() for semi-transparent backgrounds</li>
+<li><strong>border</strong> - Creates the glass edge with rgba() colors</li>
+<li><strong>box-shadow</strong> - Adds depth with large, soft shadows</li>
+</ul>
+
+<h3>Browser Support</h3>
+<p>Glassmorphism works in all modern browsers including Chrome, Firefox, Safari, and Edge. The <code>backdrop-filter</code> property requires browser support, but falls back gracefully to semi-transparent backgrounds in older browsers.</p>
+
+<h3>Best Practices</h3>
+<ul>
+<li><strong>Contrast is key</strong> - Ensure text remains readable against busy backgrounds</li>
+<li><strong>Subtle effects</strong> - Start with lower blur values (5-15px) and adjust</li>
+<li><strong>Layer carefully</strong> - Too many glass layers can create visual confusion</li>
+<li><strong>Test on mobile</strong> - Backdrop-filter can impact performance on lower-end devices</li>
+<li><strong>Fallbacks</strong> - Always provide solid color fallbacks for older browsers</li>
+</ul>
+
+<h3>Common Use Cases</h3>
+<ul>
+<li><strong>Navigation bars</strong> - Fixed headers that blur content as you scroll</li>
+<li><strong>Modal dialogs</strong> - Overlays that partially reveal the content beneath</li>
+<li><strong>Cards</strong> - Feature cards with a modern, premium feel</li>
+<li><strong>Sidebars</strong> - Secondary navigation with depth</li>
+<li><strong>Tooltips</strong> - Contextual information that doesn't fully obscure content</li>
+</ul>
+</div>
+</div>
+
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+if (window.RelatedTools) {
+RelatedTools.renderRelatedTools('glassmorphism', '#related-tools-container', {
+title: 'Related Tools',
+showCategory: true,
+trackClicks: true
+});
+}
+});
+</script>
+</div>
+
+<footer>
+<p>Built with ❤️ by <a href="https://github.com/bigknoxy/paperclip-pages" target="_blank">Paperclip</a></p>
+<p style="margin-top: 8px; opacity: 0.7;">Free tool • No data stored • Generated CSS is yours</p>
+</footer>
+
+<script>
+// Presets
+const presets = [
+{
+name: 'Classic',
+blur: 10,
+opacity: 25,
+saturation: 180,
+borderOpacity: 30,
+borderWidth: 1,
+borderRadius: 16,
+shadowBlur: 20,
+shadowOpacity: 20,
+bgColor: '#ffffff'
+},
+{
+name: 'Heavy',
+blur: 20,
+opacity: 15,
+saturation: 200,
+borderOpacity: 40,
+borderWidth: 2,
+borderRadius: 24,
+shadowBlur: 30,
+shadowOpacity: 30,
+bgColor: '#ffffff'
+},
+{
+name: 'Light',
+blur: 5,
+opacity: 40,
+saturation: 150,
+borderOpacity: 20,
+borderWidth: 1,
+borderRadius: 12,
+shadowBlur: 15,
+shadowOpacity: 10,
+bgColor: '#ffffff'
+},
+{
+name: 'Dark',
+blur: 12,
+opacity: 20,
+saturation: 180,
+borderOpacity: 25,
+borderWidth: 1,
+borderRadius: 16,
+shadowBlur: 25,
+shadowOpacity: 35,
+bgColor: '#000000'
+},
+{
+name: 'Neon',
+blur: 15,
+opacity: 30,
+saturation: 200,
+borderOpacity: 50,
+borderWidth: 2,
+borderRadius: 20,
+shadowBlur: 40,
+shadowOpacity: 25,
+bgColor: '#00ffff'
+},
+{
+name: 'Minimal',
+blur: 8,
+opacity: 10,
+saturation: 120,
+borderOpacity: 15,
+borderWidth: 1,
+borderRadius: 8,
+shadowBlur: 10,
+shadowOpacity: 5,
+bgColor: '#ffffff'
+}
+];
+
+// State
+let state = {
+blur: 10,
+opacity: 25,
+saturation: 180,
+borderOpacity: 30,
+borderWidth: 1,
+borderRadius: 16,
+shadowBlur: 20,
+shadowOpacity: 20,
+bgColor: '#ffffff'
+};
+
+// DOM Elements
+const glassCard = document.getElementById('glassCard');
+const cssOutput = document.getElementById('cssOutput');
+const copyBtn = document.getElementById('copyBtn');
+const presetsGrid = document.getElementById('presetsGrid');
+
+// Control elements
+const blurInput = document.getElementById('blur');
+const opacityInput = document.getElementById('opacity');
+const saturationInput = document.getElementById('saturation');
+const borderOpacityInput = document.getElementById('borderOpacity');
+const borderWidthInput = document.getElementById('borderWidth');
+const borderRadiusInput = document.getElementById('borderRadius');
+const shadowBlurInput = document.getElementById('shadowBlur');
+const shadowOpacityInput = document.getElementById('shadowOpacity');
+const bgColorInput = document.getElementById('bgColor');
+const bgColorText = document.getElementById('bgColorText');
+
+// Value displays
+const blurValue = document.getElementById('blurValue');
+const opacityValue = document.getElementById('opacityValue');
+const saturationValue = document.getElementById('saturationValue');
+const borderOpacityValue = document.getElementById('borderOpacityValue');
+const borderWidthValue = document.getElementById('borderWidthValue');
+const borderRadiusValue = document.getElementById('borderRadiusValue');
+const shadowBlurValue = document.getElementById('shadowBlurValue');
+const shadowOpacityValue = document.getElementById('shadowOpacityValue');
+
+// Initialize
+function init() {
+renderPresets();
+updateGlass();
+setupEventListeners();
+}
+
+// Render presets
+function renderPresets() {
+presetsGrid.innerHTML = presets.map((preset, index) => `
+<div class="preset-item" data-index="${index}" title="${preset.name}">
+<div class="preset-glass" style="
+background: rgba(${hexToRgb(preset.bgColor)}, ${preset.opacity / 100});
+backdrop-filter: blur(${preset.blur}px);
+-webkit-backdrop-filter: blur(${preset.blur}px);
+border: ${preset.borderWidth}px solid rgba(${hexToRgb(preset.bgColor)}, ${preset.borderOpacity / 100});
+border-radius: ${preset.borderRadius / 2}px;
+box-shadow: 0 8px ${preset.shadowBlur}px rgba(0,0,0,${preset.shadowOpacity / 100});
+">${preset.name}</div>
+</div>
+`).join('');
+
+// Add click handlers
+presetsGrid.querySelectorAll('.preset-item').forEach(item => {
+item.addEventListener('click', () => {
+const preset = presets[parseInt(item.dataset.index)];
+applyPreset(preset);
+});
+});
+}
+
+// Apply preset
+function applyPreset(preset) {
+state = { ...preset };
+
+// Update inputs
+blurInput.value = state.blur;
+opacityInput.value = state.opacity;
+saturationInput.value = state.saturation;
+borderOpacityInput.value = state.borderOpacity;
+borderWidthInput.value = state.borderWidth;
+borderRadiusInput.value = state.borderRadius;
+shadowBlurInput.value = state.shadowBlur;
+shadowOpacityInput.value = state.shadowOpacity;
+bgColorInput.value = state.bgColor;
+bgColorText.value = state.bgColor;
+
+// Update displays
+updateDisplays();
+updateGlass();
+}
+
+// Hex to RGB helper
+function hexToRgb(hex) {
+const r = parseInt(hex.slice(1, 3), 16);
+const g = parseInt(hex.slice(3, 5), 16);
+const b = parseInt(hex.slice(5, 7), 16);
+return `${r}, ${g}, ${b}`;
+}
+
+// Update value displays
+function updateDisplays() {
+blurValue.textContent = state.blur + 'px';
+opacityValue.textContent = state.opacity + '%';
+saturationValue.textContent = state.saturation + '%';
+borderOpacityValue.textContent = state.borderOpacity + '%';
+borderWidthValue.textContent = state.borderWidth + 'px';
+borderRadiusValue.textContent = state.borderRadius + 'px';
+shadowBlurValue.textContent = state.shadowBlur + 'px';
+shadowOpacityValue.textContent = state.shadowOpacity + '%';
+}
+
+// Update glass card and CSS output
+function updateGlass() {
+const bgRgb = hexToRgb(state.bgColor);
+const bgRgba = `rgba(${bgRgb}, ${state.opacity / 100})`;
+const borderRgba = `rgba(${bgRgb}, ${state.borderOpacity / 100})`;
+const shadowRgba = `rgba(0, 0, 0, ${state.shadowOpacity / 100})`;
+
+// Apply styles to preview card
+glassCard.style.background = bgRgba;
+glassCard.style.backdropFilter = `blur(${state.blur}px) saturate(${state.saturation}%)`;
+glassCard.style.webkitBackdropFilter = `blur(${state.blur}px) saturate(${state.saturation}%)`;
+glassCard.style.border = `${state.borderWidth}px solid ${borderRgba}`;
+glassCard.style.borderRadius = `${state.borderRadius}px`;
+glassCard.style.boxShadow = `0 8px ${state.shadowBlur}px ${shadowRgba}`;
+
+// Generate CSS output
+const css = `/* Glassmorphism CSS */
+.glass-card {
+background: ${bgRgba};
+backdrop-filter: blur(${state.blur}px) saturate(${state.saturation}%);
+-webkit-backdrop-filter: blur(${state.blur}px) saturate(${state.saturation}%);
+border: ${state.borderWidth}px solid ${borderRgba};
+border-radius: ${state.borderRadius}px;
+box-shadow: 0 8px ${state.shadowBlur}px ${shadowRgba};
+}`;
+
+cssOutput.textContent = css;
+}
+
+// Setup event listeners
+function setupEventListeners() {
+blurInput.addEventListener('input', () => {
+state.blur = parseInt(blurInput.value);
+blurValue.textContent = state.blur + 'px';
+updateGlass();
+});
+
+opacityInput.addEventListener('input', () => {
+state.opacity = parseInt(opacityInput.value);
+opacityValue.textContent = state.opacity + '%';
+updateGlass();
+});
+
+saturationInput.addEventListener('input', () => {
+state.saturation = parseInt(saturationInput.value);
+saturationValue.textContent = state.saturation + '%';
+updateGlass();
+});
+
+borderOpacityInput.addEventListener('input', () => {
+state.borderOpacity = parseInt(borderOpacityInput.value);
+borderOpacityValue.textContent = state.borderOpacity + '%';
+updateGlass();
+});
+
+borderWidthInput.addEventListener('input', () => {
+state.borderWidth = parseInt(borderWidthInput.value);
+borderWidthValue.textContent = state.borderWidth + 'px';
+updateGlass();
+});
+
+borderRadiusInput.addEventListener('input', () => {
+state.borderRadius = parseInt(borderRadiusInput.value);
+borderRadiusValue.textContent = state.borderRadius + 'px';
+updateGlass();
+});
+
+shadowBlurInput.addEventListener('input', () => {
+state.shadowBlur = parseInt(shadowBlurInput.value);
+shadowBlurValue.textContent = state.shadowBlur + 'px';
+updateGlass();
+});
+
+shadowOpacityInput.addEventListener('input', () => {
+state.shadowOpacity = parseInt(shadowOpacityInput.value);
+shadowOpacityValue.textContent = state.shadowOpacity + '%';
+updateGlass();
+});
+
+bgColorInput.addEventListener('input', () => {
+state.bgColor = bgColorInput.value;
+bgColorText.value = state.bgColor;
+updateGlass();
+});
+
+bgColorText.addEventListener('change', () => {
+let color = bgColorText.value;
+if (!color.startsWith('#')) color = '#' + color;
+if (/^#[0-9A-F]{6}$/i.test(color)) {
+state.bgColor = color;
+bgColorInput.value = color;
+updateGlass();
+}
+});
+
+// Copy button
+copyBtn.addEventListener('click', () => {
+navigator.clipboard.writeText(cssOutput.textContent).then(() => {
+copyBtn.classList.add('copied');
+copyBtn.innerHTML = '✓ Copied!';
+setTimeout(() => {
+copyBtn.classList.remove('copied');
+copyBtn.innerHTML = `
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+</svg>
+Copy CSS
+`;
+}, 2000);
+});
+}
+
+// Initialize
+init();
+</script>
+</body>
+</html>

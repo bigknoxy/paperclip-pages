@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Hash Generator | Paperclip</title>
-<meta name="description" content="Free online hash generator. Generate MD5, SHA-1, SHA-256, SHA-512 hashes from text. Fast, private, client-side only. No ads." />
-<meta name="keywords" content="hash generator, md5 hash, sha256 hash, online hash generator, text hash generator" />
+<title>Hash Generator Suite | Paperclip</title>
+<meta name="description" content="Free online hash generator suite. Generate MD5, SHA-1, SHA-256, SHA-512 hashes from text or files. Compare hashes, verify checksums. Fast, private, client-side only." />
+<meta name="keywords" content="hash generator, md5 hash, sha256 hash, sha512 hash, file hash, checksum generator, hash compare, online hash generator" />
 <meta name="author" content="Paperclip" />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/hash/" />
@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://via.placeholder.com" crossorigin>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <style>
-:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--error:#ef4444;color-scheme:dark}
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--error:#ef4444;--warning:#f59e0b;color-scheme:dark}
 *{box-sizing:border-box}
 html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
 header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
@@ -21,41 +21,83 @@ header{padding:18px 28px;display:flex;justify-content:space-between;align-items:
 nav{display:flex;gap:16px}
 nav a{color:var(--muted);text-decoration:none;font-size:14px}
 nav a:hover{color:var(--text)}
-.container{max-width:800px;margin:0 auto;padding:24px}
+.container{max-width:900px;margin:0 auto;padding:24px}
 h1{font-size:1.8em;margin:0 0 8px 0}
 .subtitle{color:var(--muted);margin-bottom:24px}
 .tool-box{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin-bottom:20px}
+.input-tabs{display:flex;gap:8px;margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.tab-btn{padding:10px 20px;background:transparent;color:var(--muted);border:none;border-bottom:2px solid transparent;cursor:pointer;font-size:14px;transition:all .2s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-content{display:none}
+.tab-content.active{display:block}
 label{display:block;margin-bottom:8px;color:var(--muted);font-size:14px}
 textarea{width:100%;min-height:120px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;color:var(--text);font-family:monospace;font-size:13px;resize:vertical}
 textarea:focus{outline:none;border-color:var(--accent)}
+.drop-zone{border:2px dashed rgba(255,255,255,0.2);border-radius:8px;padding:40px;text-align:center;transition:all .2s;cursor:pointer}
+.drop-zone:hover,.drop-zone.dragover{border-color:var(--accent);background:rgba(6,182,212,0.05)}
+.drop-zone-text{color:var(--muted);font-size:14px}
+.drop-zone-text strong{color:var(--accent);display:block;margin-top:8px}
+.file-info{display:flex;align-items:center;gap:12px;margin-top:12px;padding:12px;background:rgba(255,255,255,0.03);border-radius:8px}
+.file-info .file-icon{font-size:24px}
+.file-info .file-details{flex:1}
+.file-info .file-name{font-weight:500;color:var(--text)}
+.file-info .file-size{color:var(--muted);font-size:13px}
+.file-info .remove-file{background:none;border:none;color:var(--error);cursor:pointer;font-size:18px;padding:4px}
+.hash-algorithms{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0}
+.hash-algo{display:flex;align-items:center;gap:8px;padding:10px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;cursor:pointer;transition:all .2s}
+.hash-algo:hover{border-color:var(--accent)}
+.hash-algo.selected{border-color:var(--accent);background:rgba(6,182,212,0.1)}
+.hash-algo input{cursor:pointer}
+.hash-algo label{cursor:pointer;margin:0;color:var(--text);font-size:14px}
 .button-group{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}
 button{padding:10px 20px;background:var(--accent);color:#012;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px}
 button:hover{opacity:.9}
 button.secondary{background:rgba(255,255,255,0.1);color:var(--text)}
 button.secondary:hover{background:rgba(255,255,255,0.15)}
+button.success{background:var(--success);color:#fff}
 .hash-output{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);border-radius:8px;padding:16px;margin-bottom:12px}
 .hash-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .hash-name{color:var(--accent);font-size:14px;font-weight:600}
-.hash-value{font-family:monospace;font-size:13px;color:var(--text);word-break:break-all;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px}
- .copy-btn{background:rgba(255,255,255,0.1);color:var(--text);border:none;border-radius:4px;padding:4px 8px;font-size:12px;cursor:pointer}
- .copy-btn:hover{background:rgba(255,255,255,0.2)}
- .pro-tips{margin-top:32px;padding:20px;background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(37,99,235,0.1));border-radius:12px;border:1px solid rgba(6,182,212,0.3)}
- .pro-tips h3{margin:0 0 16px 0;color:var(--accent)}
- .pro-tips h4{margin:16px 0 8px 0;color:var(--text);font-size:14px}
- .pro-tips ul{margin:0;padding-left:20px;color:var(--muted)}
- .pro-tips li{margin-bottom:12px}
- .pro-tips a{color:var(--accent);text-decoration:none}
- .pro-tips a:hover{text-decoration:underline}
- .carbon-ads{margin:32px 0;padding:16px;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid rgba(255,255,255,0.05);text-align:center;min-height:120px}
- .carbon-ads-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
- .affiliate-banner{margin:24px 0;padding:16px;background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(251,191,36,0.05));border-radius:12px;border:1px solid rgba(245,158,11,0.3);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
- .affiliate-banner img{width:60px;height:60px;object-fit:cover;border-radius:8px}
- .affiliate-banner .content{flex:1;min-width:200px}
- .affiliate-banner h4{margin:0 0 4px 0;color:var(--text)}
- .affiliate-banner p{margin:0 0 8px 0;color:var(--muted);font-size:13px}
- .affiliate-banner a{color:var(--accent);text-decoration:none;font-weight:600}
- .affiliate-banner a:hover{text-decoration:underline}
- footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
+.hash-value{font-family:monospace;font-size:13px;color:var(--text);word-break:break-all;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;min-height:36px;display:flex;align-items:center}
+.hash-value.empty{color:var(--muted);font-style:italic}
+.copy-btn{background:rgba(255,255,255,0.1);color:var(--text);border:none;border-radius:4px;padding:4px 8px;font-size:12px;cursor:pointer}
+.copy-btn:hover{background:rgba(255,255,255,0.2)}
+.compare-section{margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1)}
+.compare-section h3{margin:0 0 16px 0;color:var(--accent);font-size:16px}
+.compare-inputs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.compare-input{position:relative}
+.compare-input label{display:block;margin-bottom:6px;font-size:13px}
+.compare-input input{width:100%;padding:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:var(--text);font-family:monospace;font-size:13px}
+.compare-input input:focus{outline:none;border-color:var(--accent)}
+.compare-result{display:flex;align-items:center;justify-content:center;gap:8px;padding:16px;border-radius:8px;font-weight:600;margin-top:12px}
+.compare-result.match{background:rgba(34,197,94,0.1);border:1px solid var(--success);color:var(--success)}
+.compare-result.no-match{background:rgba(239,68,68,0.1);border:1px solid var(--error);color:var(--error)}
+.compare-result.pending{background:rgba(245,158,11,0.1);border:1px solid var(--warning);color:var(--warning)}
+.progress-bar{height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-top:8px;overflow:hidden;display:none}
+.progress-bar.active{display:block}
+.progress-bar-fill{height:100%;background:var(--accent);width:0%;transition:width .3s}
+.pro-tips{margin-top:32px;padding:20px;background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(37,99,235,0.1));border-radius:12px;border:1px solid rgba(6,182,212,0.3)}
+.pro-tips h3{margin:0 0 16px 0;color:var(--accent)}
+.pro-tips h4{margin:16px 0 8px 0;color:var(--text);font-size:14px}
+.pro-tips ul{margin:0;padding-left:20px;color:var(--muted)}
+.pro-tips li{margin-bottom:12px}
+.pro-tips a{color:var(--accent);text-decoration:none}
+.pro-tips a:hover{text-decoration:underline}
+.carbon-ads{margin:32px 0;padding:16px;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid rgba(255,255,255,0.05);text-align:center;min-height:120px}
+.carbon-ads-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+.affiliate-banner{margin:24px 0;padding:16px;background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(251,191,36,0.05));border-radius:12px;border:1px solid rgba(245,158,11,0.3);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.affiliate-banner img{width:60px;height:60px;object-fit:cover;border-radius:8px}
+.affiliate-banner .content{flex:1;min-width:200px}
+.affiliate-banner h4{margin:0 0 4px 0;color:var(--text)}
+.affiliate-banner p{margin:0 0 8px 0;color:var(--muted);font-size:13px}
+.affiliate-banner a{color:var(--accent);text-decoration:none;font-weight:600}
+.affiliate-banner a:hover{text-decoration:underline}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
+@media (max-width: 600px) {
+.compare-inputs{grid-template-columns:1fr}
+.hash-algorithms{justify-content:center}
+}
 </style>
 <link rel="stylesheet" href="/tools/related-tools.css">
 </head>
@@ -70,121 +112,308 @@ button.secondary:hover{background:rgba(255,255,255,0.15)}
 </header>
 
 <div class="container">
-<h1>Hash Generator</h1>
-<p class="subtitle">Generate MD5, SHA-1, SHA-256, and SHA-512 hashes from any text. All processing happens in your browser.</p>
+<h1>Hash Generator Suite</h1>
+<p class="subtitle">Generate MD5, SHA-1, SHA-256, and SHA-512 hashes from text or files. Compare hashes and verify checksums. All processing happens in your browser.</p>
 
 <div class="tool-box">
-<label for="input">Input Text</label>
-<textarea id="input" placeholder="Enter text to hash..." spellcheck="false"></textarea>
+<div class="input-tabs">
+<button class="tab-btn active" onclick="switchTab('text')">Text Input</button>
+<button class="tab-btn" onclick="switchTab('file')">File Input</button>
+</div>
+
+<div id="text-tab" class="tab-content active">
+<label for="text-input">Enter text to hash</label>
+<textarea id="text-input" placeholder="Type or paste your text here..." spellcheck="false"></textarea>
+</div>
+
+<div id="file-tab" class="tab-content">
+<div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+<div class="drop-zone-text">
+<span style="font-size:48px">📄</span>
+<strong>Click to select a file</strong>
+or drag and drop here
+</div>
+</div>
+<input type="file" id="file-input" style="display:none" onchange="handleFileSelect(event)">
+<div id="file-info" class="file-info" style="display:none">
+<span class="file-icon">📁</span>
+<div class="file-details">
+<div class="file-name" id="file-name"></div>
+<div class="file-size" id="file-size"></div>
+</div>
+<button class="remove-file" onclick="clearFile()" title="Remove file">×</button>
+</div>
+<div class="progress-bar" id="file-progress">
+<div class="progress-bar-fill" id="progress-fill"></div>
+</div>
+</div>
+
+<label style="margin-top:16px">Select hash algorithms</label>
+<div class="hash-algorithms">
+<label class="hash-algo selected" onclick="toggleAlgo(this, 'md5')">
+<input type="checkbox" checked data-algo="md5">
+<span>MD5</span>
+</label>
+<label class="hash-algo selected" onclick="toggleAlgo(this, 'sha1')">
+<input type="checkbox" checked data-algo="sha1">
+<span>SHA-1</span>
+</label>
+<label class="hash-algo selected" onclick="toggleAlgo(this, 'sha256')">
+<input type="checkbox" checked data-algo="sha256">
+<span>SHA-256</span>
+</label>
+<label class="hash-algo" onclick="toggleAlgo(this, 'sha512')">
+<input type="checkbox" data-algo="sha512">
+<span>SHA-512</span>
+</label>
+</div>
 
 <div class="button-group">
 <button onclick="generateHashes()">Generate Hashes</button>
-<button class="secondary" onclick="clearAll()">Clear</button>
-</div>
+<button class="secondary" onclick="clearAll()">Clear All</button>
 </div>
 
-<div id="output" style="display:none">
-<div class="hash-output">
+<div id="hash-outputs" style="display:none">
+<div class="hash-output" id="output-md5" style="display:none">
 <div class="hash-label">
 <span class="hash-name">MD5</span>
-<button class="copy-btn" onclick="copyToClipboard('md5')">Copy</button>
+<button class="copy-btn" onclick="copyToClipboard('hash-md5')">Copy</button>
 </div>
-<div class="hash-value" id="md5"></div>
+<div class="hash-value" id="hash-md5"></div>
 </div>
 
-<div class="hash-output">
+<div class="hash-output" id="output-sha1" style="display:none">
 <div class="hash-label">
 <span class="hash-name">SHA-1</span>
-<button class="copy-btn" onclick="copyToClipboard('sha1')">Copy</button>
+<button class="copy-btn" onclick="copyToClipboard('hash-sha1')">Copy</button>
 </div>
-<div class="hash-value" id="sha1"></div>
+<div class="hash-value" id="hash-sha1"></div>
 </div>
 
-<div class="hash-output">
+<div class="hash-output" id="output-sha256" style="display:none">
 <div class="hash-label">
 <span class="hash-name">SHA-256</span>
-<button class="copy-btn" onclick="copyToClipboard('sha256')">Copy</button>
+<button class="copy-btn" onclick="copyToClipboard('hash-sha256')">Copy</button>
 </div>
-<div class="hash-value" id="sha256"></div>
+<div class="hash-value" id="hash-sha256"></div>
 </div>
 
-<div class="hash-output">
+<div class="hash-output" id="output-sha512" style="display:none">
 <div class="hash-label">
 <span class="hash-name">SHA-512</span>
-<button class="copy-btn" onclick="copyToClipboard('sha512')">Copy</button>
+<button class="copy-btn" onclick="copyToClipboard('hash-sha512')">Copy</button>
 </div>
-<div class="hash-value" id="sha512"></div>
+<div class="hash-value" id="hash-sha512"></div>
 </div>
- </div>
+</div>
+</div>
 
- <div class="pro-tips">
- <h3>Pro Tools for Security Professionals</h3>
- <ul>
- <li><strong><a href="https://www.hashcat.net/hashcat/?ref=paperclip" target="_blank" rel="nofollow">Hashcat</a></strong> - World's fastest password recovery tool. Supports 300+ hash types with GPU acceleration. Industry standard for security audits.</li>
- <li><strong><a href="https://crackstation.net/?ref=paperclip" target="_blank" rel="nofollow">CrackStation</a></strong> - Massive hash lookup tables for quick password recovery. Free online hash cracker with billions of precomputed hashes.</li>
- <li><strong><a href="https://www.virustotal.com/?ref=paperclip" target="_blank" rel="nofollow">VirusTotal</a></strong> - Analyze files and hashes against 70+ antivirus engines. Essential for malware analysis and security research.</li>
- </ul>
- <p style="margin-top:16px;font-size:13px;color:var(--muted)">Start a career in cybersecurity with <a href="https://www.coursera.org/professional-certificates/google-cybersecurity" target="_blank">Google Cybersecurity Certificate</a>.</p>
- </div>
+<div class="tool-box compare-section">
+<h3>🔍 Hash Compare</h3>
+<p style="color:var(--muted);font-size:14px;margin-bottom:16px">Compare two hashes to verify they match. Useful for checking file integrity.</p>
+<div class="compare-inputs">
+<div class="compare-input">
+<label for="compare-1">Original Hash</label>
+<input type="text" id="compare-1" placeholder="Paste hash here..." oninput="compareHashes()">
+</div>
+<div class="compare-input">
+<label for="compare-2">Comparison Hash</label>
+<input type="text" id="compare-2" placeholder="Paste hash here..." oninput="compareHashes()">
+</div>
+</div>
+<div id="compare-result" class="compare-result pending" style="display:none">
+<span id="compare-icon">⏳</span>
+<span id="compare-text">Enter both hashes to compare</span>
+</div>
+</div>
 
- <div class="carbon-ads">
- <div class="carbon-ads-label">Sponsored</div>
- <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7ITK7L&placement=paperclip" id="_carbonads_js"></script>
- </div>
+<div class="pro-tips">
+<h3>Pro Tools for Security Professionals</h3>
+<ul>
+<li><strong><a href="https://www.hashcat.net/hashcat/?ref=paperclip" target="_blank" rel="nofollow">Hashcat</a></strong> - World's fastest password recovery tool. Supports 300+ hash types with GPU acceleration. Industry standard for security audits.</li>
+<li><strong><a href="https://crackstation.net/?ref=paperclip" target="_blank" rel="nofollow">CrackStation</a></strong> - Massive hash lookup tables for quick password recovery. Free online hash cracker with billions of precomputed hashes.</li>
+<li><strong><a href="https://www.virustotal.com/?ref=paperclip" target="_blank" rel="nofollow">VirusTotal</a></strong> - Analyze files and hashes against 70+ antivirus engines. Essential for malware analysis and security research.</li>
+</ul>
+<p style="margin-top:16px;font-size:13px;color:var(--muted)">Start a career in cybersecurity with <a href="https://www.coursera.org/professional-certificates/google-cybersecurity" target="_blank">Google Cybersecurity Certificate</a>.</p>
+</div>
 
- <div class="affiliate-banner">
- <img loading="lazy" src="https://via.placeholder.com/60x60/2563eb/ffffff?text=Sec" alt="NordPass" onerror="this.style.display='none'">
- <div class="content">
- <h4>NordPass Business Password Manager</h4>
- <p>Secure password sharing for teams. Zero-knowledge architecture with SCIM provisioning. Protect your company's credentials.</p>
- <a href="https://nordpass.com/business/?ref=paperclip" target="_blank" rel="nofollow">Try Free for 14 Days →</a>
- </div>
- </div>
- </div>
+<div class="carbon-ads">
+<div class="carbon-ads-label">Sponsored</div>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7ITK7L&placement=paperclip" id="_carbonads_js"></script>
+</div>
+
+<div class="affiliate-banner">
+<img loading="lazy" src="https://via.placeholder.com/60x60/2563eb/ffffff?text=Sec" alt="NordPass" onerror="this.style.display='none'">
+<div class="content">
+<h4>NordPass Business Password Manager</h4>
+<p>Secure password sharing for teams. Zero-knowledge architecture with SCIM provisioning. Protect your company's credentials.</p>
+<a href="https://nordpass.com/business/?ref=paperclip" target="_blank" rel="nofollow">Try Free for 14 Days →</a>
+</div>
+</div>
+</div>
 
 <script src="/public/analytics.js"></script>
 <footer>
 <p>Made with minimal code • Free forever • No tracking</p>
 </footer>
 
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+if (window.RelatedTools) {
+RelatedTools.renderRelatedTools('hash', '#related-tools-container', {
+title: 'Related Tools',
+showCategory: true,
+trackClicks: true
+});
+}
+
+// Setup drag and drop
+document.getElementById('drop-zone').addEventListener('dragover', handleDragOver);
+document.getElementById('drop-zone').addEventListener('dragleave', handleDragLeave);
+document.getElementById('drop-zone').addEventListener('drop', handleDrop);
+});
+
+let currentFile = null;
+
+function switchTab(tab) {
+document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+event.target.classList.add('active');
+document.getElementById(tab + '-tab').classList.add('active');
+}
+
+function toggleAlgo(el, algo) {
+const checkbox = el.querySelector('input');
+checkbox.checked = !checkbox.checked;
+el.classList.toggle('selected', checkbox.checked);
+}
+
+function getSelectedAlgos() {
+return Array.from(document.querySelectorAll('.hash-algo input:checked')).map(cb => cb.dataset.algo);
+}
+
+function handleDragOver(e) {
+e.preventDefault();
+e.currentTarget.classList.add('dragover');
+}
+
+function handleDragLeave(e) {
+e.currentTarget.classList.remove('dragover');
+}
+
+function handleDrop(e) {
+e.preventDefault();
+e.currentTarget.classList.remove('dragover');
+const files = e.dataTransfer.files;
+if (files.length > 0) {
+processFile(files[0]);
+}
+}
+
+function handleFileSelect(e) {
+const files = e.target.files;
+if (files.length > 0) {
+processFile(files[0]);
+}
+}
+
+function processFile(file) {
+currentFile = file;
+document.getElementById('file-name').textContent = file.name;
+document.getElementById('file-size').textContent = formatFileSize(file.size);
+document.getElementById('file-info').style.display = 'flex';
+document.querySelector('#file-tab .drop-zone').style.display = 'none';
+}
+
+function formatFileSize(bytes) {
+if (bytes === 0) return '0 Bytes';
+const k = 1024;
+const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+const i = Math.floor(Math.log(bytes) / Math.log(k));
+return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+function clearFile() {
+currentFile = null;
+document.getElementById('file-input').value = '';
+document.getElementById('file-info').style.display = 'none';
+document.querySelector('#file-tab .drop-zone').style.display = 'block';
+}
+
 async function generateHashes() {
-const input = document.getElementById('input').value;
-if (!input) {
-document.getElementById('output').style.display = 'none';
+const algos = getSelectedAlgos();
+if (algos.length === 0) {
+alert('Please select at least one hash algorithm');
 return;
 }
 
-const encoder = new TextEncoder();
-const data = encoder.encode(input);
+const activeTab = document.querySelector('.tab-content.active').id;
+let data;
 
-// MD5 (using a simple implementation)
-const md5Hash = await md5(input);
-document.getElementById('md5').textContent = md5Hash;
-
-// SHA-1
-const sha1Buffer = await crypto.subtle.digest('SHA-1', data);
-document.getElementById('sha1').textContent = bufferToHex(sha1Buffer);
-
-// SHA-256
-const sha256Buffer = await crypto.subtle.digest('SHA-256', data);
-document.getElementById('sha256').textContent = bufferToHex(sha256Buffer);
-
-// SHA-512
-const sha512Buffer = await crypto.subtle.digest('SHA-512', data);
-document.getElementById('sha512').textContent = bufferToHex(sha512Buffer);
-
-document.getElementById('output').style.display = 'block';
+if (activeTab === 'text-tab') {
+const text = document.getElementById('text-input').value;
+if (!text) {
+hideOutputs();
+return;
+}
+data = new TextEncoder().encode(text);
+} else {
+if (!currentFile) {
+alert('Please select a file');
+return;
+}
+data = await readFile(currentFile);
 }
 
-function bufferToHex(buffer) {
-return Array.from(new Uint8Array(buffer))
-.map(b => b.toString(16).padStart(2, '0'))
-.join('');
+// Show selected outputs
+hideOutputs();
+for (const algo of algos) {
+document.getElementById('output-' + algo).style.display = 'block';
+document.getElementById('hash-' + algo).textContent = 'Computing...';
+document.getElementById('hash-' + algo).classList.add('empty');
+}
+document.getElementById('hash-outputs').style.display = 'block';
+
+// Generate hashes
+for (const algo of algos) {
+let hash;
+if (algo === 'md5') {
+hash = await md5(new TextDecoder().decode(data));
+} else {
+const algoName = algo === 'sha1' ? 'SHA-1' : algo === 'sha256' ? 'SHA-256' : 'SHA-512';
+hash = bufferToHex(await crypto.subtle.digest(algoName, data));
+}
+document.getElementById('hash-' + algo).textContent = hash;
+document.getElementById('hash-' + algo).classList.remove('empty');
+}
+}
+
+function readFile(file) {
+return new Promise((resolve, reject) => {
+const reader = new FileReader();
+reader.onload = (e) => resolve(new Uint8Array(e.target.result));
+reader.onerror = reject;
+reader.readAsArrayBuffer(file);
+});
+}
+
+function hideOutputs() {
+document.getElementById('hash-outputs').style.display = 'none';
+document.querySelectorAll('[id^="output-"]').forEach(el => el.style.display = 'none');
+}
+
+function clearAll() {
+document.getElementById('text-input').value = '';
+clearFile();
+hideOutputs();
 }
 
 function copyToClipboard(id) {
 const text = document.getElementById(id).textContent;
+if (!text || text === 'Computing...') return;
 navigator.clipboard.writeText(text).then(() => {
 const btn = event.target;
 const original = btn.textContent;
@@ -193,12 +422,45 @@ setTimeout(() => btn.textContent = original, 1000);
 });
 }
 
-function clearAll() {
-document.getElementById('input').value = '';
-document.getElementById('output').style.display = 'none';
+function compareHashes() {
+const hash1 = document.getElementById('compare-1').value.trim().toLowerCase();
+const hash2 = document.getElementById('compare-2').value.trim().toLowerCase();
+const resultDiv = document.getElementById('compare-result');
+const iconSpan = document.getElementById('compare-icon');
+const textSpan = document.getElementById('compare-text');
+
+if (!hash1 && !hash2) {
+resultDiv.style.display = 'none';
+return;
 }
 
-// Simple MD5 implementation for browser compatibility
+resultDiv.style.display = 'flex';
+
+if (!hash1 || !hash2) {
+resultDiv.className = 'compare-result pending';
+iconSpan.textContent = '⏳';
+textSpan.textContent = 'Enter both hashes to compare';
+return;
+}
+
+if (hash1 === hash2) {
+resultDiv.className = 'compare-result match';
+iconSpan.textContent = '✓';
+textSpan.textContent = 'Hashes match!';
+} else {
+resultDiv.className = 'compare-result no-match';
+iconSpan.textContent = '✗';
+textSpan.textContent = 'Hashes do not match';
+}
+}
+
+function bufferToHex(buffer) {
+return Array.from(new Uint8Array(buffer))
+.map(b => b.toString(16).padStart(2, '0'))
+.join('');
+}
+
+// MD5 implementation
 async function md5(string) {
 function rotateLeft(lValue, iShiftBits) {
 return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));
@@ -363,21 +625,6 @@ d = addUnsigned(d, DD);
 var tempValue = wordToHex(a) + wordToHex(b) + wordToHex(c) + wordToHex(d);
 return tempValue.toLowerCase();
 }
-</script>
-
-<!-- Related Tools Widget -->
-<div id="related-tools-container"></div>
-<script src="/tools/related-tools.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    if (window.RelatedTools) {
-      RelatedTools.renderRelatedTools('hash', '#related-tools-container', {
-        title: 'Related Tools',
-        showCategory: true,
-        trackClicks: true
-      });
-    }
-  });
 </script>
 </body>
 </html>

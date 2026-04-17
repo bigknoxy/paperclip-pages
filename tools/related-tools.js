@@ -123,31 +123,57 @@ const TOOL_METADATA = {
     related: ['password-generator', 'base64', 'jwt-decoder', 'text-processor']
   },
 
+// Developer Tools
+  'cron-expression-generator': {
+    name: 'Cron Expression Generator',
+    path: '/tools/cron-expression-generator/',
+    category: 'Developer Tools',
+    icon: '⏰',
+    description: 'Build and validate cron schedules',
+    related: ['time-converter', 'regex-tester', 'text-processor', 'diff-checker']
+  },
+
   // Data/Conversion Tools
   'csv-json': {
-    name: 'CSV ↔ JSON Converter',
-    path: '/tools/csv-json/',
-    category: 'Data & Conversion',
-    icon: '🔄',
-    description: 'Convert between CSV and JSON',
-    related: ['json-formatter', 'batch-converter', 'text-processor', 'unit-converter']
-  },
-  'unit-converter': {
-    name: 'Unit Converter',
-    path: '/tools/unit-converter/',
-    category: 'Data & Conversion',
-    icon: '📏',
-    description: 'Convert between units of measurement',
-    related: ['csv-json', 'batch-converter', 'text-processor', 'color']
-  },
-  'batch-converter': {
-    name: 'Batch Converter',
-    path: '/tools/batch-converter/',
-    category: 'Data & Conversion',
-    icon: '⚡',
-    description: 'Convert multiple files at once',
-    related: ['csv-json', 'unit-converter', 'text-processor', 'code-minifier']
-  },
+name: 'CSV ↔ JSON Converter',
+path: '/tools/csv-json/',
+category: 'Data & Conversion',
+icon: '🔄',
+description: 'Convert between CSV and JSON',
+related: ['json-formatter', 'yaml-json', 'batch-converter', 'text-processor']
+},
+'yaml-json': {
+name: 'YAML ↔ JSON Converter',
+path: '/tools/yaml-json/',
+category: 'Data & Conversion',
+icon: '📋',
+description: 'Bidirectional YAML/JSON converter with validation',
+related: ['json-formatter', 'csv-json', 'text-processor', 'code-minifier']
+},
+'unit-converter': {
+name: 'Unit Converter',
+path: '/tools/unit-converter/',
+category: 'Data & Conversion',
+icon: '📏',
+description: 'Convert between units of measurement',
+related: ['csv-json', 'batch-converter', 'text-processor', 'color']
+},
+'batch-converter': {
+name: 'Batch Converter',
+path: '/tools/batch-converter/',
+category: 'Data & Conversion',
+icon: '⚡',
+description: 'Convert multiple files at once',
+related: ['csv-json', 'unit-converter', 'text-processor', 'code-minifier']
+},
+'time-converter': {
+name: 'Developer Time Converter',
+path: '/tools/time-converter/',
+category: 'Data & Conversion',
+icon: '⏱️',
+description: 'Convert epoch timestamps, ISO 8601 dates, timezones, and relative time',
+related: ['unit-converter', 'json-formatter', 'base64', 'hash']
+},
 
   // Design Tools
   'color': {
@@ -174,6 +200,30 @@ const TOOL_METADATA = {
     description: 'Generate CSS layouts',
     related: ['color', 'code-minifier', 'color-palette-generator', 'text-processor']
   },
+'box-shadow': {
+name: 'CSS Box Shadow Generator',
+path: '/tools/box-shadow/',
+category: 'Design',
+icon: '🌑',
+description: 'Create beautiful multi-layered CSS box shadows',
+related: ['css-layout', 'css-gradient', 'glassmorphism', 'color']
+},
+'css-gradient': {
+name: 'CSS Gradient Generator',
+path: '/tools/css-gradient/',
+category: 'Design',
+icon: '🌈',
+description: 'Create linear, radial, and conic CSS gradients',
+related: ['color-palette-generator', 'box-shadow', 'glassmorphism', 'color']
+},
+'glassmorphism': {
+name: 'Glassmorphism CSS Generator',
+path: '/tools/glassmorphism/',
+category: 'Design',
+icon: '💎',
+description: 'Create frosted glass effects with backdrop-filter',
+related: ['css-gradient', 'box-shadow', 'css-layout', 'color-palette-generator']
+},
 
   // Testing Tools
   'regex-tester': {

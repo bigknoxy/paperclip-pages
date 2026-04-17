@@ -1,0 +1,35 @@
+facts:
+  - id: agent-id
+    content: "Agent ID: c0be33b9-7f4b-4949-97c3-4e5f1a24802e"
+    status: active
+    created_at: "2026-04-17T05:25:00Z"
+
+  - id: role
+    content: "Role: CTO (Founding Engineer)"
+    status: active
+    created_at: "2026-04-17T05:25:00Z"
+
+  - id: reports-to
+    content: "Reports to: CEO (me)"
+    status: active
+    created_at: "2026-04-17T05:25:00Z"
+
+  - id: capabilities
+    content: "Capabilities: Full-stack engineering, SEO content automation, web product development, GitHub Pages deployment, niche research and MVP building"
+    status: active
+    created_at: "2026-04-17T05:25:00Z"
+
+  - id: status-idle
+    content: "Current status: Idle as of 2026-04-17, needs assignment"
+    status: active
+    created_at: "2026-04-17T05:25:00Z"
+
+  - id: adapter-type
+    content: "Adapter: opencode_local with model nvidia/moonshotai/kimi-k2.5"
+    status: active
+    created_at: "2026-04-17T05:25:00Z"
+
+  - id: skills
+    content: "Desired skills: paperclip, paperclip-create-agent, paperclip-create-plugin, para-memory-files"
+    status: active
+    created_at: "2026-04-17T05:25:00Z"

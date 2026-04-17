@@ -12,44 +12,71 @@
 <link rel="preconnect" href="https://cdn.carbonads.com" crossorigin>
 <link rel="preconnect" href="https://via.placeholder.com" crossorigin>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<style>
-:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--error:#ef4444;color-scheme:dark}
-*{box-sizing:border-box}
-html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
-header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
-.logo{font-weight:700;font-size:1.2em;color:var(--accent)}
-nav{display:flex;gap:16px}
-nav a{color:var(--muted);text-decoration:none;font-size:14px}
-nav a:hover{color:var(--text)}
-.container{max-width:1000px;margin:0 auto;padding:24px}
-h1{font-size:1.8em;margin:0 0 8px 0}
-.subtitle{color:var(--muted);margin-bottom:24px}
-.tool-box{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin-bottom:20px}
-label{display:block;margin-bottom:8px;color:var(--muted);font-size:14px}
-textarea{width:100%;min-height:100px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;color:var(--text);font-family:monospace;font-size:13px;resize:vertical}
-textarea:focus{outline:none;border-color:var(--accent)}
-.button-group{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}
-button{padding:10px 20px;background:var(--accent);color:#012;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px}
-button:hover{opacity:.9}
-button.secondary{background:rgba(255,255,255,0.1);color:var(--text)}
-button.secondary:hover{background:rgba(255,255,255,0.15)}
-.status{margin-top:8px;padding:8px 12px;border-radius:6px;font-size:14px}
-.status.success{background:rgba(34,197,94,.1);color:var(--success)}
-.status.error{background:rgba(239,68,68,.1);color:var(--error)}
-.output-section{margin-top:20px}
-.output-box{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);border-radius:8px;padding:16px;margin-bottom:16px}
-.output-box h4{margin:0 0 12px 0;color:var(--accent);font-size:14px;text-transform:uppercase;letter-spacing:0.5px}
-.output-box pre{margin:0;font-family:monospace;font-size:13px;white-space:pre-wrap;word-break:break-all;color:var(--muted)}
-.output-box code{color:var(--text)}
-.jwt-part{padding:12px;margin-bottom:12px;border-radius:6px;font-family:monospace;font-size:12px;word-break:break-all}
-.jwt-header{background:rgba(251,191,36,0.1);border-left:3px solid #fbbf24}
-.jwt-payload{background:rgba(34,197,94,0.1);border-left:3px solid #22c55e}
-.jwt-signature{background:rgba(239,68,68,0.1);border-left:3px solid #ef4444}
-.jwt-label{font-size:11px;color:var(--muted);margin-bottom:4px;text-transform:uppercase}
-.jwt-claims{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-.claim-row{display:flex;gap:8px;align-items:center;padding:8px;background:rgba(255,255,255,0.02);border-radius:4px}
- .claim-key{color:var(--accent);font-family:monospace;font-size:12px}
- .claim-value{color:var(--text);font-size:13px}
+ <style>
+ :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--error:#ef4444;--warning:#f59e0b;--info:#3b82f6;color-scheme:dark}
+ *{box-sizing:border-box}
+ html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+ header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+ .logo{font-weight:700;font-size:1.2em;color:var(--accent)}
+ nav{display:flex;gap:16px}
+ nav a{color:var(--muted);text-decoration:none;font-size:14px}
+ nav a:hover{color:var(--text)}
+ .container{max-width:1000px;margin:0 auto;padding:24px}
+ h1{font-size:1.8em;margin:0 0 8px 0}
+ .subtitle{color:var(--muted);margin-bottom:24px}
+ .tool-box{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin-bottom:20px}
+ label{display:block;margin-bottom:8px;color:var(--muted);font-size:14px}
+ textarea{width:100%;min-height:100px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;color:var(--text);font-family:monospace;font-size:13px;resize:vertical}
+ textarea:focus{outline:none;border-color:var(--accent)}
+ .button-group{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}
+ button{padding:10px 20px;background:var(--accent);color:#012;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px}
+ button:hover{opacity:.9}
+ button.secondary{background:rgba(255,255,255,0.1);color:var(--text)}
+ button.secondary:hover{background:rgba(255,255,255,0.15)}
+ button.small{padding:6px 12px;font-size:12px}
+ .status{margin-top:8px;padding:8px 12px;border-radius:6px;font-size:14px}
+ .status.success{background:rgba(34,197,94,.1);color:var(--success)}
+ .status.error{background:rgba(239,68,68,.1);color:var(--error)}
+ .status.warning{background:rgba(245,158,11,.1);color:var(--warning)}
+ .status.info{background:rgba(59,130,246,.1);color:var(--info)}
+ .output-section{margin-top:20px}
+ .output-box{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);border-radius:8px;padding:16px;margin-bottom:16px}
+ .output-box h4{margin:0 0 12px 0;color:var(--accent);font-size:14px;text-transform:uppercase;letter-spacing:0.5px;display:flex;align-items:center;gap:8px}
+ .output-box pre{margin:0;font-family:monospace;font-size:13px;white-space:pre-wrap;word-break:break-all;color:var(--muted)}
+ .output-box code{color:var(--text)}
+ .jwt-part{padding:12px;margin-bottom:12px;border-radius:6px;font-family:monospace;font-size:12px;word-break:break-all}
+ .jwt-header{background:rgba(251,191,36,0.1);border-left:3px solid #fbbf24}
+ .jwt-payload{background:rgba(34,197,94,0.1);border-left:3px solid #22c55e}
+ .jwt-signature{background:rgba(239,68,68,0.1);border-left:3px solid #ef4444}
+ .jwt-label{font-size:11px;color:var(--muted);margin-bottom:4px;text-transform:uppercase}
+ .jwt-claims{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+ @media(max-width:768px){.jwt-claims{grid-template-columns:1fr}}
+ .claim-row{display:flex;gap:8px;align-items:flex-start;padding:8px;background:rgba(255,255,255,0.02);border-radius:4px}
+ .claim-row.expired{background:rgba(239,68,68,0.1);border-left:2px solid var(--error)}
+ .claim-row.valid{background:rgba(34,197,94,0.1);border-left:2px solid var(--success)}
+ .claim-key{color:var(--accent);font-family:monospace;font-size:12px;white-space:nowrap}
+ .claim-value{color:var(--text);font-size:13px;word-break:break-word}
+ .claim-value.time{color:var(--muted);font-size:11px}
+ .claim-value.time.expired{color:var(--error)}
+ .claim-value.time.valid{color:var(--success)}
+ .copy-btn{cursor:pointer;padding:4px 8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:var(--muted);font-size:11px;margin-left:auto}
+ .copy-btn:hover{background:rgba(255,255,255,0.1);color:var(--text)}
+ .security-alert{margin:16px 0;padding:12px 16px;border-radius:8px;font-size:13px;display:flex;align-items:flex-start;gap:12px}
+ .security-alert.critical{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:var(--error)}
+ .security-alert.warning{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:var(--warning)}
+ .security-alert.info{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);color:var(--info)}
+ .security-alert-icon{font-size:18px}
+ .token-meta{display:flex;gap:16px;flex-wrap:wrap;margin:16px 0;padding:12px;background:rgba(255,255,255,0.02);border-radius:8px}
+ .token-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+ .token-meta-item .label{color:var(--accent);font-weight:500}
+ .share-section{margin-top:16px;padding:12px;background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.2);border-radius:8px}
+ .share-section label{margin-bottom:8px}
+ .share-url{width:100%;padding:8px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:var(--text);font-family:monospace;font-size:12px;word-break:break-all}
+ .claim-help{font-size:11px;color:var(--muted);cursor:help;border-bottom:1px dotted var(--muted)}
+ .claim-help:hover{color:var(--accent);border-color:var(--accent)}
+ .tooltip{position:relative;display:inline-block}
+ .tooltip .tooltip-text{visibility:hidden;width:280px;background:var(--card);border:1px solid rgba(255,255,255,0.1);color:var(--text);text-align:left;padding:10px;border-radius:6px;position:absolute;z-index:1;bottom:125%;left:50%;margin-left:-140px;font-size:12px;opacity:0;transition:opacity 0.3s}
+ .tooltip:hover .tooltip-text{visibility:visible;opacity:1}
  .pro-tips{margin-top:32px;padding:20px;background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(37,99,235,0.1));border-radius:12px;border:1px solid rgba(6,182,212,0.3)}
  .pro-tips h3{margin:0 0 16px 0;color:var(--accent)}
  .pro-tips h4{margin:16px 0 8px 0;color:var(--text);font-size:14px}
@@ -67,7 +94,7 @@ button.secondary:hover{background:rgba(255,255,255,0.15)}
  .affiliate-banner a{color:var(--accent);text-decoration:none;font-weight:600}
  .affiliate-banner a:hover{text-decoration:underline}
  footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
-</style>
+ </style>
 <link rel="stylesheet" href="/tools/related-tools.css">
 </head>
 <body>
@@ -96,22 +123,45 @@ button.secondary:hover{background:rgba(255,255,255,0.15)}
 <div id="status"></div>
 </div>
 
-<div class="output-section" id="output" style="display:none">
-<div class="output-box">
-<h4>🔴 Header (Algorithm)</h4>
-<div id="header-content"></div>
-</div>
+ <div class="output-section" id="output" style="display:none">
+ <!-- Security Analysis -->
+ <div id="security-analysis"></div>
 
-<div class="output-box">
-<h4>🟢 Payload (Data)</h4>
-<div id="payload-content"></div>
-</div>
+ <!-- Token Metadata -->
+ <div class="token-meta" id="token-meta"></div>
 
-<div class="output-box">
-<h4>🔵 Signature (Verification)</h4>
-<div class="jwt-signature">
-<div class="jwt-label">Signature Hash</div>
-<div id="signature-content"></div>
+ <div class="output-box">
+ <h4>🟡 Header (Algorithm)
+ <button class="copy-btn secondary small" onclick="copyToClipboard('header-raw')">Copy</button>
+ </h4>
+ <div id="header-content"></div>
+ <pre id="header-raw" style="display:none"></pre>
+ </div>
+
+ <div class="output-box">
+ <h4>🟢 Payload (Data)
+ <button class="copy-btn secondary small" onclick="copyToClipboard('payload-raw')">Copy</button>
+ </h4>
+ <div id="payload-content"></div>
+ <pre id="payload-raw" style="display:none"></pre>
+ </div>
+
+ <div class="output-box">
+ <h4>🔵 Signature (Verification)</h4>
+ <div class="jwt-signature">
+ <div class="jwt-label">Signature Hash</div>
+ <div id="signature-content"></div>
+ </div>
+ <div id="signature-verification" style="margin-top:12px"></div>
+ </div>
+
+ <!-- Share Section -->
+ <div class="share-section" id="share-section">
+ <label>Shareable Link</label>
+ <div style="display:flex;gap:8px;align-items:center">
+ <input type="text" id="share-url" class="share-url" readonly>
+ <button class="secondary small" onclick="copyShareUrl()">Copy</button>
+ </div>
  </div>
  </div>
 
@@ -146,102 +196,429 @@ button.secondary:hover{background:rgba(255,255,255,0.15)}
  <p>Made with minimal code • Free forever • No tracking</p>
 </footer>
 
-<script>
-const input = document.getElementById('input');
-const output = document.getElementById('output');
-const status = document.getElementById('status');
+ <script>
+ const input = document.getElementById('input');
+ const output = document.getElementById('output');
+ const status = document.getElementById('status');
 
-function showStatus(text, type) {
-status.textContent = text;
-status.className = 'status ' + type;
-}
+ // JWT claim definitions with descriptions
+ const CLAIM_DESCRIPTIONS = {
+ iss: { desc: 'Issuer - Identifies the principal that issued the JWT', example: 'https://auth.example.com' },
+ sub: { desc: 'Subject - Identifies the principal that is the subject of the JWT', example: 'user123' },
+ aud: { desc: 'Audience - Identifies the recipients that the JWT is intended for', example: 'https://api.example.com' },
+ exp: { desc: 'Expiration Time - The time after which the JWT must not be accepted', example: 'Unix timestamp' },
+ nbf: { desc: 'Not Before - The time before which the JWT must not be accepted', example: 'Unix timestamp' },
+ iat: { desc: 'Issued At - The time at which the JWT was issued', example: 'Unix timestamp' },
+ jti: { desc: 'JWT ID - Unique identifier for the JWT', example: 'uuid-v4-string' },
+ auth_time: { desc: 'Authentication Time - When the user was authenticated', example: 'Unix timestamp' },
+ azp: { desc: 'Authorized Party - The party to which the ID Token was issued', example: 'client-id' },
+ scope: { desc: 'Scope - OAuth scopes granted', example: 'read write' },
+ name: { desc: 'Full Name - User\'s full display name', example: 'John Doe' },
+ email: { desc: 'Email Address - User\'s email', example: 'user@example.com' },
+ email_verified: { desc: 'Email Verified - Whether the email has been verified', example: 'true/false' },
+ picture: { desc: 'Profile Picture - URL to user\'s profile image', example: 'https://...' },
+ preferred_username: { desc: 'Preferred Username - User\'s preferred username', example: 'johndoe' },
+ groups: { desc: 'Groups - User\'s group memberships', example: '["admin", "users"]' },
+ roles: { desc: 'Roles - User\'s assigned roles', example: '["admin", "editor"]' },
+ permissions: { desc: 'Permissions - User\'s granted permissions', example: '["read", "write"]' },
+ tenant: { desc: 'Tenant - Organization or tenant identifier', example: 'acme-corp' },
+ org_id: { desc: 'Organization ID - Organization identifier', example: 'org_123' },
+ session_id: { desc: 'Session ID - Current session identifier', example: 'sess_abc123' }
+ };
 
-function decode() {
-try {
-const token = input.value.trim();
-if (!token) {
-showStatus('Please enter a JWT token', 'error');
-output.style.display = 'none';
-return;
-}
+ // Known JWT signing algorithms
+ const ALGORITHMS = {
+ // Symmetric (HMAC)
+ HS256: { name: 'HMAC SHA-256', type: 'symmetric', secure: true },
+ HS384: { name: 'HMAC SHA-384', type: 'symmetric', secure: true },
+ HS512: { name: 'HMAC SHA-512', type: 'symmetric', secure: true },
+ // Asymmetric (RSA)
+ RS256: { name: 'RSA SHA-256', type: 'asymmetric', secure: true },
+ RS384: { name: 'RSA SHA-384', type: 'asymmetric', secure: true },
+ RS512: { name: 'RSA SHA-512', type: 'asymmetric', secure: true },
+ // Asymmetric (ECDSA)
+ ES256: { name: 'ECDSA SHA-256', type: 'asymmetric', secure: true },
+ ES384: { name: 'ECDSA SHA-384', type: 'asymmetric', secure: true },
+ ES512: { name: 'ECDSA SHA-512', type: 'asymmetric', secure: true },
+ // Asymmetric (PSS)
+ PS256: { name: 'RSA-PSS SHA-256', type: 'asymmetric', secure: true },
+ PS384: { name: 'RSA-PSS SHA-384', type: 'asymmetric', secure: true },
+ PS512: { name: 'RSA-PSS SHA-512', type: 'asymmetric', secure: true },
+ // EdDSA
+ EdDSA: { name: 'EdDSA (Ed25519)', type: 'asymmetric', secure: true },
+ // Insecure algorithms
+ none: { name: 'No Algorithm', type: 'none', secure: false },
+ '': { name: 'No Algorithm', type: 'none', secure: false }
+ };
 
-const parts = token.split('.');
-if (parts.length !== 3) {
-showStatus('Invalid JWT format. Expected 3 parts separated by dots.', 'error');
-output.style.display = 'none';
-return;
-}
+ // Known token types
+ const TOKEN_TYPES = {
+ JWT: 'JSON Web Token',
+ at: 'Access Token',
+ rt: 'Refresh Token',
+ id: 'ID Token'
+ };
 
-// Decode header
-const header = JSON.parse(atob(parts[0].replace(/-/g, '+').replace(/_/g, '/')));
-document.getElementById('header-content').innerHTML = `
-<div class="jwt-header">
-<div class="jwt-label">Decoded JSON</div>
-<code>${JSON.stringify(header, null, 2)}</code>
-</div>
-<div class="jwt-claims">
-${Object.entries(header).map(([key, value]) => `
-<div class="claim-row">
-<span class="claim-key">${key}:</span>
-<span class="claim-value">${value}</span>
-</div>
-`).join('')}
-</div>
-`;
+ function showStatus(text, type) {
+ status.textContent = text;
+ status.className = 'status ' + type;
+ }
 
-// Decode payload
-const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
-let claimsHtml = '';
-const timeClaims = ['exp', 'iat', 'nbf', 'auth_time'];
+ function getClaimDescription(key) {
+ return CLAIM_DESCRIPTIONS[key];
+ }
 
-for (const [key, value] of Object.entries(payload)) {
-let displayValue = value;
-if (timeClaims.includes(key) && typeof value === 'number') {
-const date = new Date(value * 1000);
-displayValue = `${value} (${date.toLocaleString()})`;
-}
-claimsHtml += `
-<div class="claim-row">
-<span class="claim-key">${key}:</span>
-<span class="claim-value">${displayValue}</span>
-</div>
-`;
-}
+ function formatClaimHelp(key) {
+ const claim = getClaimDescription(key);
+ if (claim) {
+ return `<span class="tooltip claim-help">${key}<span class="tooltip-text"><strong>${key}</strong><br>${claim.desc}<br><em>Example: ${claim.example}</em></span></span>`;
+ }
+ return key;
+ }
 
-document.getElementById('payload-content').innerHTML = `
-<div class="jwt-payload">
-<div class="jwt-label">Decoded JSON</div>
-<code>${JSON.stringify(payload, null, 2)}</code>
-</div>
-<div class="jwt-claims">
-${claimsHtml}
-</div>
-`;
+ function getTimeStatus(value) {
+ const now = Math.floor(Date.now() / 1000);
+ const diff = value - now;
+ const date = new Date(value * 1000);
+ const dateStr = date.toLocaleString();
 
-// Show signature (can't decode, it's a hash)
-document.getElementById('signature-content').textContent = parts[2];
+ if (diff < 0) {
+ return { status: 'expired', text: `${value} (${dateStr})`, className: 'expired', message: `Expired ${Math.abs(Math.round(diff / 60))} minutes ago` };
+ } else if (diff < 300) {
+ return { status: 'expiring', text: `${value} (${dateStr})`, className: 'expired', message: `Expires in ${Math.round(diff / 60)} minutes` };
+ } else if (diff < 3600) {
+ return { status: 'valid', text: `${value} (${dateStr})`, className: 'valid', message: `Expires in ${Math.round(diff / 60)} minutes` };
+ } else if (diff < 86400) {
+ return { status: 'valid', text: `${value} (${dateStr})`, className: 'valid', message: `Expires in ${Math.round(diff / 3600)} hours` };
+ } else {
+ return { status: 'valid', text: `${value} (${dateStr})`, className: 'valid', message: `Expires in ${Math.round(diff / 86400)} days` };
+ }
+ }
 
-output.style.display = 'block';
-showStatus('JWT decoded successfully!', 'success');
+ function analyzeAlgorithm(header) {
+ const alg = header.alg || '';
+ const algInfo = ALGORITHMS[alg] || { name: alg || 'Unknown', type: 'unknown', secure: true };
 
-} catch (e) {
-showStatus('Error decoding JWT: ' + e.message, 'error');
-output.style.display = 'none';
-}
-}
+ let alerts = [];
 
-function clearAll() {
-input.value = '';
-output.style.display = 'none';
-status.textContent = '';
-status.className = '';
-}
+ if (alg === 'none' || alg === '') {
+ alerts.push({
+ level: 'critical',
+ icon: '⚠️',
+ title: 'Insecure Algorithm: "none"',
+ message: 'This JWT uses the "none" algorithm, which provides no signature verification. This is a critical security vulnerability.'
+ });
+ } else if (algInfo.type === 'symmetric') {
+ alerts.push({
+ level: 'info',
+ icon: 'ℹ️',
+ title: `Algorithm: ${algInfo.name}`,
+ message: 'This JWT uses a symmetric signing algorithm. The same secret key is used for both signing and verification. Ensure the secret is properly protected.'
+ });
+ } else if (algInfo.type === 'asymmetric') {
+ alerts.push({
+ level: 'info',
+ icon: 'ℹ️',
+ title: `Algorithm: ${algInfo.name}`,
+ message: 'This JWT uses an asymmetric signing algorithm. The signature is verified using a public key, while signing requires a private key.'
+ });
+ }
 
-// Auto-decode on paste
-input.addEventListener('paste', function() {
-setTimeout(decode, 100);
-});
-</script>
+ // Check for algorithm confusion attacks
+ if (header.jku) {
+ alerts.push({
+ level: 'warning',
+ icon: '⚡',
+ title: 'JWK Set URL Present',
+ message: 'The "jku" header contains a URL for fetching public keys. Ensure this URL is from a trusted source to prevent key injection attacks.'
+ });
+ }
+
+ if (header.jwk) {
+ alerts.push({
+ level: 'warning',
+ icon: '⚡',
+ title: 'Embedded JWK Present',
+ message: 'The "jwk" header contains an embedded public key. This could allow attackers to specify their own verification key.'
+ });
+ }
+
+ return { algInfo, alerts };
+ }
+
+ function generateSecurityAnalysis(header, payload) {
+ const { algInfo, alerts } = analyzeAlgorithm(header);
+
+ // Check token expiration
+ if (payload.exp) {
+ const expStatus = getTimeStatus(payload.exp);
+ if (expStatus.status === 'expired') {
+ alerts.push({
+ level: 'critical',
+ icon: '⏰',
+ title: 'Token Expired',
+ message: expStatus.message
+ });
+ } else if (expStatus.status === 'expiring') {
+ alerts.push({
+ level: 'warning',
+ icon: '⏰',
+ title: 'Token Expiring Soon',
+ message: expStatus.message
+ });
+ }
+ }
+
+ // Check not-before time
+ if (payload.nbf) {
+ const nbfStatus = getTimeStatus(payload.nbf);
+ if (nbfStatus.status === 'expired') {
+ alerts.push({
+ level: 'warning',
+ icon: '⏳',
+ title: 'Token Not Yet Valid',
+ message: `This token will not be valid until ${nbfStatus.text.split('(')[1].replace(')', '')}`
+ });
+ }
+ }
+
+ // Check for missing standard claims
+ if (!payload.iss && !payload.sub) {
+ alerts.push({
+ level: 'info',
+ icon: '📝',
+ title: 'Minimal Claims',
+ message: 'This JWT does not contain standard "iss" (issuer) or "sub" (subject) claims. It may be a custom or simplified token.'
+ });
+ }
+
+ // Check token age
+ if (payload.iat) {
+ const age = Math.floor(Date.now() / 1000) - payload.iat;
+ if (age > 86400) {
+ alerts.push({
+ level: 'info',
+ icon: '📅',
+ title: 'Token Age',
+ message: `This token was issued ${Math.round(age / 86400)} days ago.`
+ });
+ }
+ }
+
+ return alerts;
+ }
+
+ function renderSecurityAnalysis(alerts) {
+ const container = document.getElementById('security-analysis');
+ if (alerts.length === 0) {
+ container.innerHTML = '';
+ return;
+ }
+
+ container.innerHTML = alerts.map(alert => `
+ <div class="security-alert ${alert.level}">
+ <span class="security-alert-icon">${alert.icon}</span>
+ <div>
+ <strong>${alert.title}</strong><br>
+ ${alert.message}
+ </div>
+ </div>
+ `).join('');
+ }
+
+ function renderTokenMeta(header, payload, parts) {
+ const container = document.getElementById('token-meta');
+ const tokenLength = parts.join('.').length;
+ const headerSize = parts[0].length;
+ const payloadSize = parts[1].length;
+ const signatureSize = parts[2].length;
+
+ let typeInfo = '';
+ if (header.typ) {
+ typeInfo = TOKEN_TYPES[header.typ] || header.typ;
+ }
+
+ const metaItems = [
+ `<span class="label">Total Size:</span> ${tokenLength} bytes`,
+ `<span class="label">Header:</span> ${headerSize} bytes`,
+ `<span class="label">Payload:</span> ${payloadSize} bytes`,
+ `<span class="label">Signature:</span> ${signatureSize} bytes`
+ ];
+
+ if (typeInfo) {
+ metaItems.unshift(`<span class="label">Type:</span> ${typeInfo}`);
+ }
+
+ if (header.alg) {
+ metaItems.push(`<span class="label">Algorithm:</span> ${header.alg}`);
+ }
+
+ if (header.kid) {
+ metaItems.push(`<span class="label">Key ID:</span> ${header.kid}`);
+ }
+
+ container.innerHTML = metaItems.map(item => `<div class="token-meta-item">${item}</div>`).join('');
+ }
+
+ function decode() {
+ try {
+ const token = input.value.trim();
+ if (!token) {
+ showStatus('Please enter a JWT token', 'error');
+ output.style.display = 'none';
+ return;
+ }
+
+ const parts = token.split('.');
+ if (parts.length !== 3) {
+ showStatus('Invalid JWT format. Expected 3 parts separated by dots.', 'error');
+ output.style.display = 'none';
+ return;
+ }
+
+ // Decode header
+ const header = JSON.parse(atob(parts[0].replace(/-/g, '+').replace(/_/g, '/')));
+ const headerJson = JSON.stringify(header, null, 2);
+ document.getElementById('header-raw').textContent = headerJson;
+
+ document.getElementById('header-content').innerHTML = `
+ <div class="jwt-header">
+ <div class="jwt-label">Decoded JSON</div>
+ <code>${headerJson}</code>
+ </div>
+ <div class="jwt-claims">
+ ${Object.entries(header).map(([key, value]) => `
+ <div class="claim-row">
+ <span class="claim-key">${key}:</span>
+ <span class="claim-value">${value}</span>
+ </div>
+ `).join('')}
+ </div>
+ `;
+
+ // Decode payload
+ const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+ const payloadJson = JSON.stringify(payload, null, 2);
+ document.getElementById('payload-raw').textContent = payloadJson;
+
+ let claimsHtml = '';
+ const timeClaims = ['exp', 'iat', 'nbf', 'auth_time'];
+
+ for (const [key, value] of Object.entries(payload)) {
+ let displayValue = value;
+ let rowClass = '';
+ let valueClass = '';
+
+ if (timeClaims.includes(key) && typeof value === 'number') {
+ const timeStatus = getTimeStatus(value);
+ displayValue = timeStatus.text;
+ valueClass = `time ${timeStatus.className}`;
+ rowClass = timeStatus.className === 'expired' ? 'expired' : 'valid';
+ }
+
+ claimsHtml += `
+ <div class="claim-row ${rowClass}">
+ <span class="claim-key">${formatClaimHelp(key)}:</span>
+ <span class="claim-value ${valueClass}">${displayValue}</span>
+ </div>
+ `;
+ }
+
+ document.getElementById('payload-content').innerHTML = `
+ <div class="jwt-payload">
+ <div class="jwt-label">Decoded JSON</div>
+ <code>${payloadJson}</code>
+ </div>
+ <div class="jwt-claims">
+ ${claimsHtml}
+ </div>
+ `;
+
+ // Show signature
+ document.getElementById('signature-content').textContent = parts[2];
+
+ // Signature verification note
+ document.getElementById('signature-verification').innerHTML = `
+ <div class="status info">
+ ℹ️ <strong>Note:</strong> Signature verification requires the secret key or public key. This tool decodes the token only - it cannot verify the signature without the key.
+ </div>
+ `;
+
+ // Generate and display security analysis
+ const alerts = generateSecurityAnalysis(header, payload);
+ renderSecurityAnalysis(alerts);
+
+ // Display token metadata
+ renderTokenMeta(header, payload, parts);
+
+ // Generate shareable URL
+ generateShareUrl(token);
+
+ output.style.display = 'block';
+ showStatus('JWT decoded successfully!', 'success');
+
+ } catch (e) {
+ showStatus('Error decoding JWT: ' + e.message, 'error');
+ output.style.display = 'none';
+ }
+ }
+
+ function clearAll() {
+ input.value = '';
+ output.style.display = 'none';
+ status.textContent = '';
+ status.className = '';
+ document.getElementById('security-analysis').innerHTML = '';
+ document.getElementById('token-meta').innerHTML = '';
+ }
+
+ function copyToClipboard(elementId) {
+ const element = document.getElementById(elementId);
+ const text = element.textContent;
+ navigator.clipboard.writeText(text).then(() => {
+ showStatus('Copied to clipboard!', 'success');
+ setTimeout(() => {
+ status.textContent = '';
+ status.className = '';
+ }, 2000);
+ }).catch(err => {
+ showStatus('Failed to copy: ' + err.message, 'error');
+ });
+ }
+
+ function generateShareUrl(token) {
+ const baseUrl = window.location.origin + window.location.pathname;
+ const shareUrl = `${baseUrl}?token=${encodeURIComponent(token)}`;
+ document.getElementById('share-url').value = shareUrl;
+ }
+
+ function copyShareUrl() {
+ const shareUrl = document.getElementById('share-url');
+ shareUrl.select();
+ navigator.clipboard.writeText(shareUrl.value).then(() => {
+ showStatus('Shareable URL copied!', 'success');
+ setTimeout(() => {
+ status.textContent = '';
+ status.className = '';
+ }, 2000);
+ });
+ }
+
+ // Auto-decode on paste
+ input.addEventListener('paste', function() {
+ setTimeout(decode, 100);
+ });
+
+ // Check for token in URL params on load
+ document.addEventListener('DOMContentLoaded', function() {
+ const urlParams = new URLSearchParams(window.location.search);
+ const token = urlParams.get('token');
+ if (token) {
+ input.value = token;
+ decode();
+ }
+ });
+ </script>
 
 <!-- Related Tools Widget -->
 <div id="related-tools-container"></div>

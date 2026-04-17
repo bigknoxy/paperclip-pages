@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Gradient Generator - Create Beautiful Gradients | Paperclip</title>
+<meta name="description" content="Free online CSS gradient generator. Create beautiful linear and radial gradients with multiple color stops. Copy CSS code instantly. Perfect for web designers and developers.">
+<meta name="keywords" content="css gradient generator, gradient maker, linear gradient, radial gradient, color gradient, css gradient tool, web design gradient">
+<meta name="author" content="Paperclip">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/css-gradient/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0e14;
+  --card: #11181f;
+  --surface: #1a232e;
+  --surface-hover: #243240;
+  --accent: #f97316;
+  --accent-glow: rgba(249, 115, 22, 0.3);
+  --secondary: #06b6d4;
+  --success: #22c55e;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: rgba(148, 163, 184, 0.15);
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Outfit', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+header {
+  padding: 20px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.3em;
+  color: var(--accent);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo svg {
+  width: 28px;
+  height: 28px;
+}
+
+nav {
+  display: flex;
+  gap: 24px;
+}
+
+nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+nav a:hover {
+  color: var(--text);
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 32px 60px;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 50%, var(--success) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.main-layout {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 32px;
+}
+
+@media (max-width: 1100px) {
+  .main-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+}
+
+.card-title svg {
+  width: 20px;
+  height: 20px;
+  color: var(--accent);
+}
+
+/* Gradient Preview */
+.preview-container {
+  position: relative;
+  height: 300px;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 2px solid var(--border);
+}
+
+#gradientPreview {
+  width: 100%;
+  height: 100%;
+  transition: background 0.3s ease;
+}
+
+.checkerboard {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(45deg, #1a232e 25%, transparent 25%),
+    linear-gradient(-45deg, #1a232e 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #1a232e 75%),
+    linear-gradient(-45deg, transparent 75%, #1a232e 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  z-index: -1;
+}
+
+/* Controls */
+.control-group {
+  margin-bottom: 24px;
+}
+
+.control-group:last-child {
+  margin-bottom: 0;
+}
+
+.control-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.control-label .value {
+  font-family: 'Space Mono', monospace;
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+
+.gradient-type {
+  display: flex;
+  gap: 8px;
+}
+
+.type-btn {
+  flex: 1;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.type-btn:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.type-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.type-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Sliders */
+.slider-container {
+  position: relative;
+}
+
+.slider {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--surface);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  border: 3px solid var(--card);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  border: 3px solid var(--card);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.angle-display {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  margin: 16px auto;
+  position: relative;
+  background: var(--surface);
+  cursor: grab;
+}
+
+.angle-display:active {
+  cursor: grabbing;
+}
+
+.angle-display::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 40%;
+  background: var(--accent);
+  transform-origin: bottom center;
+  transform: translate(-50%, -100%) rotate(0deg);
+}
+
+.angle-indicator {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  border-radius: 50%;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Color Stops */
+.color-stops-container {
+  margin-bottom: 16px;
+}
+
+.stop-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+  transition: all 0.2s;
+}
+
+.stop-item:hover {
+  background: var(--surface-hover);
+}
+
+.stop-item.dragging {
+  opacity: 0.5;
+}
+
+.color-picker-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.color-picker-wrapper input[type="color"] {
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  background: transparent;
+}
+
+.stop-position {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stop-position input {
+  width: 60px;
+  padding: 8px 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.stop-position span {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.btn-icon:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.btn-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.btn-drag {
+  cursor: grab;
+}
+
+.btn-drag:hover {
+  background: var(--card);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-drag:active {
+  cursor: grabbing;
+}
+
+.btn-add {
+  width: 100%;
+  padding: 14px;
+  background: var(--surface);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.btn-add:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-add svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Color Stop Strip */
+.color-strip {
+  height: 40px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.strip-stop {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  cursor: ew-resize;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  transition: transform 0.1s;
+}
+
+.strip-stop:hover {
+  transform: scaleX(1.5);
+}
+
+.strip-stop::before,
+.strip-stop::after {
+  content: '';
+  position: absolute;
+  left: -6px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+}
+
+.strip-stop::before {
+  top: -8px;
+  border-bottom: 8px solid rgba(255, 255, 255, 0.9);
+}
+
+.strip-stop::after {
+  bottom: -8px;
+  border-top: 8px solid rgba(255, 255, 255, 0.9);
+}
+
+/* Gradient Bar */
+.gradient-bar {
+  height: 60px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 20px;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.bar-stop {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  margin-left: -10px;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bar-stop::before {
+  content: '';
+  width: 4px;
+  height: 100%;
+  background: white;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
+}
+
+.bar-stop:hover::before {
+  width: 6px;
+}
+
+.bar-stop:active {
+  cursor: grabbing;
+}
+
+/* Presets */
+.presets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+}
+
+.preset-item {
+  height: 60px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.preset-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+
+.preset-item::after {
+  content: attr(data-name);
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.preset-item:hover::after {
+  opacity: 1;
+}
+
+/* Code Output */
+.code-section {
+  margin-top: 24px;
+}
+
+.code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.code-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.code-tab {
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.code-tab:hover {
+  color: var(--text);
+}
+
+.code-tab.active {
+  background: var(--surface);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.code-output {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.code-output pre {
+  margin: 0;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 8px 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.copy-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.copy-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Action Buttons */
+.action-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.btn {
+  flex: 1;
+  padding: 14px 24px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent) 0%, #ea580c 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px var(--accent-glow);
+}
+
+.btn-secondary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.btn-secondary:hover {
+  background: var(--surface-hover);
+  border-color: var(--text-muted);
+}
+
+/* Saved Gradients */
+.saved-gradients {
+  margin-top: 24px;
+}
+
+.saved-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.saved-item {
+  height: 80px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.saved-item:hover {
+  transform: scale(1.05);
+  border-color: var(--accent);
+}
+
+.saved-item .delete-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  background: rgba(239, 68, 68, 0.9);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.saved-item:hover .delete-btn {
+  opacity: 1;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 16px 24px;
+  background: var(--success);
+  color: white;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.toast svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* SEO Content */
+.seo-content {
+  margin-top: 80px;
+  padding-top: 60px;
+  border-top: 1px solid var(--border);
+}
+
+.seo-content h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.seo-content h3 {
+  font-size: 1.3rem;
+  margin: 32px 0 16px 0;
+  color: var(--accent);
+}
+
+.seo-content p {
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+.seo-content ul {
+  color: var(--text-muted);
+  padding-left: 24px;
+  line-height: 1.8;
+}
+
+.seo-content li {
+  margin-bottom: 8px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin: 40px 0;
+}
+
+.feature-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: transform 0.2s;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+}
+
+.feature-card h4 {
+  color: var(--accent);
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.feature-card p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  header {
+    padding: 16px 20px;
+  }
+  
+  nav {
+    gap: 16px;
+  }
+  
+  nav a {
+    font-size: 13px;
+  }
+  
+  .container {
+    padding: 16px 20px 40px;
+  }
+  
+  .hero h1 {
+    font-size: 2rem;
+  }
+  
+  .hero p {
+    font-size: 1rem;
+  }
+  
+  .card {
+    padding: 20px;
+  }
+  
+  .type-btn span {
+    display: none;
+  }
+  
+  .presets-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .saved-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Related Tools */
+.related-tools {
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+
+.related-tools h3 {
+  font-size: 1.2rem;
+  margin-bottom: 24px;
+  color: var(--text);
+}
+
+.tools-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tools-list a {
+  padding: 10px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.tools-list a:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+footer {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
+  font-size: 13px;
+  border-top: 1px solid var(--border);
+  margin-top: 60px;
+}
+</style>
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+<header>
+  <a href="/" class="logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/>
+    </svg>
+    Paperclip
+  </a>
+  <nav>
+    <a href="/tools/">Tools</a>
+    <a href="/">Home</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="hero">
+    <h1>CSS Gradient Generator</h1>
+    <p>Create stunning CSS gradients with multiple color stops, custom angles, and live preview. Copy the CSS code instantly.</p>
+  </div>
+
+  <div class="main-layout">
+    <!-- Left Panel - Controls -->
+    <div class="controls-panel">
+      <div class="card">
+        <div class="card-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+          Gradient Type
+        </div>
+        <div class="control-group">
+          <div class="gradient-type">
+            <button class="type-btn active" data-type="linear">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4l16 16M4 20L20 4"/></svg>
+              <span>Linear</span>
+            </button>
+            <button class="type-btn" data-type="radial">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+              <span>Radial</span>
+            </button>
+            <button class="type-btn" data-type="conic">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14"/></svg>
+              <span>Conic</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="control-group" id="angleControl">
+          <div class="control-label">
+            <span>Angle</span>
+            <span class="value" id="angleValue">90°</span>
+          </div>
+          <div class="angle-display" id="angleDisplay">
+            <div class="angle-indicator"></div>
+          </div>
+          <input type="range" class="slider" id="angleSlider" min="0" max="360" value="90">
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 24px;">
+        <div class="card-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+          Color Stops
+        </div>
+        <div class="control-group">
+          <div class="control-label">
+            <span>Gradient Bar</span>
+            <span class="value">Click to add • Drag to move</span>
+          </div>
+          <div class="gradient-bar" id="gradientBar">
+            <div class="bar-stop" data-index="0" style="left: 0%"></div>
+            <div class="bar-stop" data-index="1" style="left: 100%"></div>
+          </div>
+        </div>
+        <div class="color-stops-container" id="colorStopsContainer">
+          <!-- Stops will be added dynamically -->
+        </div>
+        <button class="btn-add" id="addStopBtn">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+          Add Color Stop
+        </button>
+      </div>
+
+      <div class="card" style="margin-top: 24px;">
+        <div class="card-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+          Presets
+        </div>
+        <div class="presets-grid" id="presetsGrid">
+          <!-- Presets will be added dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel - Preview & Code -->
+    <div class="preview-panel">
+      <div class="card">
+        <div class="card-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          Live Preview
+        </div>
+        <div class="preview-container">
+          <div class="checkerboard"></div>
+          <div id="gradientPreview"></div>
+        </div>
+        <div class="action-row">
+          <button class="btn btn-secondary" id="randomBtn">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            Randomize
+          </button>
+          <button class="btn btn-primary" id="saveBtn">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+            Save Gradient
+          </button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 24px;">
+        <div class="card-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+          CSS Code
+        </div>
+        <div class="code-section">
+          <div class="code-header">
+            <div class="code-tabs">
+              <button class="code-tab active" data-format="css">CSS</button>
+              <button class="code-tab" data-format="scss">SCSS</button>
+              <button class="code-tab" data-format="tailwind">Tailwind</button>
+            </div>
+          </div>
+          <div class="code-output">
+            <button class="copy-btn" id="copyBtn">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+            <pre id="codeOutput">background: linear-gradient(90deg, #f97316 0%, #22c55e 100%);</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="card saved-gradients" style="margin-top: 24px; display: none;" id="savedCard">
+        <div class="card-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+          Saved Gradients
+        </div>
+        <div class="saved-grid" id="savedGrid">
+          <!-- Saved gradients will be added here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEO Content -->
+  <div class="seo-content">
+    <h2>CSS Gradient Generator</h2>
+    <p>Create beautiful CSS gradients with our free online tool. Whether you need linear gradients for buttons and backgrounds, radial gradients for spotlight effects, or conic gradients for pie charts and color wheels, our generator makes it easy.</p>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <h4>
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Real-time Preview
+        </h4>
+        <p>See your gradient update instantly as you adjust colors, positions, and angles. No waiting, no refreshing.</p>
+      </div>
+      <div class="feature-card">
+        <h4>
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+          Multiple Color Stops
+        </h4>
+        <p>Add unlimited color stops to create complex multi-color gradients. Drag them to adjust positions precisely.</p>
+      </div>
+      <div class="feature-card">
+        <h4>
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+          One-Click Copy
+        </h4>
+        <p>Copy your gradient CSS code instantly. Export as CSS, SCSS variables, or Tailwind classes.</p>
+      </div>
+      <div class="feature-card">
+        <h4>
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          Save & Share
+        </h4>
+        <p>Save your favorite gradients to local storage. Build your own gradient library for future projects.</p>
+      </div>
+    </div>
+
+    <h3>Gradient Types Explained</h3>
+    <ul>
+      <li><strong>Linear Gradients</strong> - Colors transition along a straight line. Perfect for backgrounds, buttons, and cards. Control the angle from 0-360 degrees.</li>
+      <li><strong>Radial Gradients</strong> - Colors radiate from a center point outward. Great for spotlight effects, sunbursts, and circular backgrounds.</li>
+      <li><strong>Conic Gradients</strong> - Colors sweep around a center point like a color wheel. Ideal for pie charts, color wheels, and angular patterns.</li>
+    </ul>
+
+    <h3>CSS Gradient Syntax</h3>
+    <p>Our generator produces standard CSS that works in all modern browsers:</p>
+    <ul>
+      <li><code>linear-gradient(angle, color1 pos1, color2 pos2, ...)</code> - Linear gradient with custom angle</li>
+      <li><code>radial-gradient(shape size at position, colors...)</code> - Radial gradient from center</li>
+      <li><code>conic-gradient(from angle at position, colors...)</code> - Conic gradient around center</li>
+    </ul>
+
+    <h3>Common Use Cases</h3>
+    <ul>
+      <li><strong>Hero Sections</strong> - Eye-catching gradient backgrounds for landing pages</li>
+      <li><strong>Buttons</strong> - Smooth color transitions on CTA buttons</li>
+      <li><strong>Cards</strong> - Subtle gradients to add depth to UI elements</li>
+      <li><strong>Text Effects</strong> - Gradient text using background-clip</li>
+      <li><strong>Charts</strong> - Conic gradients for simple pie/donut charts</li>
+      <li><strong>Overlays</strong> - Gradient overlays on images for better text readability</li>
+    </ul>
+
+    <h3>Browser Compatibility</h3>
+    <p>CSS gradients are supported in all modern browsers. For older browsers, consider using a solid color fallback or autoprefixer tools. Linear and radial gradients have excellent support (IE10+), while conic gradients require modern browsers (Chrome 69+, Firefox 83+, Safari 12.1+).</p>
+  </div>
+
+  <!-- Related Tools -->
+  <div class="related-tools">
+    <h3>Related Tools</h3>
+    <div class="tools-list">
+      <a href="/tools/color/">Color Converter</a>
+      <a href="/tools/color-palette-generator.html">Color Palette Generator</a>
+      <a href="/tools/css-layout/">CSS Layout Generator</a>
+      <a href="/tools/code-minifier/">CSS Minifier</a>
+      <a href="/tools/base64/">Base64 Encoder</a>
+      <a href="/tools/json-formatter/">JSON Formatter</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Made with minimal code • Free forever • No tracking</p>
+</footer>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast">
+  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+  <span id="toastMessage">Copied to clipboard!</span>
+</div>
+
+<script>
+// State
+let state = {
+  type: 'linear',
+  angle: 90,
+  stops: [
+    { color: '#f97316', position: 0 },
+    { color: '#22c55e', position: 100 }
+  ]
+};
+
+let savedGradients = JSON.parse(localStorage.getItem('savedGradients') || '[]');
+let draggedIndex = null;
+
+// DOM Elements
+const gradientPreview = document.getElementById('gradientPreview');
+const gradientBar = document.getElementById('gradientBar');
+const colorStopsContainer = document.getElementById('colorStopsContainer');
+const angleSlider = document.getElementById('angleSlider');
+const angleValue = document.getElementById('angleValue');
+const codeOutput = document.getElementById('codeOutput');
+const copyBtn = document.getElementById('copyBtn');
+const toast = document.getElementById('toast');
+const toastMessage = document.getElementById('toastMessage');
+const savedCard = document.getElementById('savedCard');
+const savedGrid = document.getElementById('savedGrid');
+
+// Presets
+const presets = [
+  { name: 'Sunset', stops: [{ color: '#f97316', position: 0 }, { color: '#ec4899', position: 100 }] },
+  { name: 'Ocean', stops: [{ color: '#06b6d4', position: 0 }, { color: '#3b82f6', position: 50 }, { color: '#6366f1', position: 100 }] },
+  { name: 'Forest', stops: [{ color: '#22c55e', position: 0 }, { color: '#10b981', position: 50 }, { color: '#14b8a6', position: 100 }] },
+  { name: 'Berry', stops: [{ color: '#8b5cf6', position: 0 }, { color: '#ec4899', position: 100 }] },
+  { name: 'Midnight', stops: [{ color: '#1e1b4b', position: 0 }, { color: '#4c1d95', position: 50 }, { color: '#7c3aed', position: 100 }] },
+  { name: 'Fire', stops: [{ color: '#fbbf24', position: 0 }, { color: '#ef4444', position: 50 }, { color: '#dc2626', position: 100 }] },
+  { name: 'Cotton', stops: [{ color: '#fce7f3', position: 0 }, { color: '#ddd6fe', position: 50 }, { color: '#bfdbfe', position: 100 }] },
+  { name: 'Neon', stops: [{ color: '#f0f', position: 0 }, { color: '#0ff', position: 100 }] },
+  { name: 'Gold', stops: [{ color: '#fbbf24', position: 0 }, { color: '#f59e0b', position: 50 }, { color: '#d97706', position: 100 }] },
+  { name: 'Berry Pop', stops: [{ color: '#f43f5e', position: 0 }, { color: '#a855f7', position: 100 }] },
+  { name: 'Lime', stops: [{ color: '#84cc16', position: 0 }, { color: '#10b981', position: 100 }] },
+  { name: 'Dusk', stops: [{ color: '#fb7185', position: 0 }, { color: '#7c3aed', position: 50 }, { color: '#1e1b4b', position: 100 }] }
+];
+
+// Initialize
+function init() {
+  renderStops();
+  renderPresets();
+  updateGradient();
+  renderSavedGradients();
+  setupEventListeners();
+}
+
+// Event Listeners
+function setupEventListeners() {
+  // Type buttons
+  document.querySelectorAll('.type-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.type = btn.dataset.type;
+      document.getElementById('angleControl').style.display = state.type === 'linear' ? 'block' : 'none';
+      updateGradient();
+    });
+  });
+
+  // Angle slider
+  angleSlider.addEventListener('input', (e) => {
+    state.angle = parseInt(e.target.value);
+    angleValue.textContent = state.angle + '°';
+    updateAngleDisplay();
+    updateGradient();
+  });
+
+  // Add stop button
+  document.getElementById('addStopBtn').addEventListener('click', addStop);
+
+  // Copy button
+  copyBtn.addEventListener('click', copyCode);
+
+  // Code tabs
+  document.querySelectorAll('.code-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      updateCode(tab.dataset.format);
+    });
+  });
+
+  // Randomize
+  document.getElementById('randomBtn').addEventListener('click', randomizeGradient);
+
+  // Save gradient
+  document.getElementById('saveBtn').addEventListener('click', saveGradient);
+
+  // Gradient bar click to add stop
+  gradientBar.addEventListener('click', (e) => {
+    if (e.target === gradientBar) {
+      const rect = gradientBar.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const position = Math.round((x / rect.width) * 100);
+      
+      // Interpolate color at position
+      const color = interpolateColor(position);
+      state.stops.push({ color, position });
+      state.stops.sort((a, b) => a.position - b.position);
+      renderStops();
+      updateGradient();
+    }
+  });
+}
+
+// Render stops
+function renderStops() {
+  colorStopsContainer.innerHTML = '';
+  
+  state.stops.forEach((stop, index) => {
+    const stopEl = document.createElement('div');
+    stopEl.className = 'stop-item';
+    stopEl.innerHTML = `
+      <div class="color-picker-wrapper">
+        <input type="color" value="${stop.color}" data-index="${index}">
+      </div>
+      <div class="stop-position">
+        <input type="number" value="${stop.position}" min="0" max="100" data-index="${index}">
+        <span>%</span>
+      </div>
+      <button class="btn-icon btn-drag" data-index="${index}" title="Drag to reorder">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/></svg>
+      </button>
+      ${state.stops.length > 2 ? `<button class="btn-icon" data-index="${index}" title="Remove"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>` : ''}
+    `;
+    colorStopsContainer.appendChild(stopEl);
+
+    // Color picker
+    stopEl.querySelector('input[type="color"]').addEventListener('input', (e) => {
+      state.stops[index].color = e.target.value;
+      updateGradient();
+      updateBarStops();
+    });
+
+    // Position input
+    stopEl.querySelector('input[type="number"]').addEventListener('input', (e) => {
+      state.stops[index].position = parseInt(e.target.value) || 0;
+      state.stops.sort((a, b) => a.position - b.position);
+      renderStops();
+      updateGradient();
+    });
+
+    // Delete button
+    const deleteBtn = stopEl.querySelector('.btn-icon:last-child');
+    if (deleteBtn && !deleteBtn.classList.contains('btn-drag')) {
+      deleteBtn.addEventListener('click', () => {
+        state.stops.splice(index, 1);
+        renderStops();
+        updateGradient();
+      });
+    }
+  });
+
+  updateBarStops();
+}
+
+// Update bar stops
+function updateBarStops() {
+  gradientBar.innerHTML = '';
+  state.stops.forEach((stop, index) => {
+    const barStop = document.createElement('div');
+    barStop.className = 'bar-stop';
+    barStop.dataset.index = index;
+    barStop.style.left = stop.position + '%';
+    gradientBar.appendChild(barStop);
+
+    // Drag functionality
+    let isDragging = false;
+    
+    barStop.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      draggedIndex = index;
+      barStop.style.cursor = 'grabbing';
+      e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging || draggedIndex === null) return;
+      
+      const rect = gradientBar.getBoundingClientRect();
+      const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+      const position = Math.round((x / rect.width) * 100);
+      
+      state.stops[draggedIndex].position = position;
+      state.stops.sort((a, b) => a.position - b.position);
+      
+      // Update UI
+      renderStops();
+      updateGradient();
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        draggedIndex = null;
+        barStop.style.cursor = 'grab';
+      }
+    });
+  });
+}
+
+// Update gradient
+function updateGradient() {
+  const gradient = generateGradientCSS();
+  gradientPreview.style.background = gradient;
+  gradientBar.style.background = gradient;
+  updateCode('css');
+}
+
+// Generate gradient CSS
+function generateGradientCSS() {
+  const stopsString = state.stops.map(s => `${s.color} ${s.position}%`).join(', ');
+  
+  switch (state.type) {
+    case 'linear':
+      return `linear-gradient(${state.angle}deg, ${stopsString})`;
+    case 'radial':
+      return `radial-gradient(circle at center, ${stopsString})`;
+    case 'conic':
+      return `conic-gradient(from 0deg at center, ${stopsString})`;
+    default:
+      return `linear-gradient(${state.angle}deg, ${stopsString})`;
+  }
+}
+
+// Update code output
+function updateCode(format) {
+  const gradient = generateGradientCSS();
+  let code = '';
+  
+  switch (format) {
+    case 'css':
+      code = `background: ${gradient};`;
+      break;
+    case 'scss':
+      const stopVars = state.stops.map((s, i) => `$color-${i + 1}: ${s.color};`).join('\n');
+      code = `${stopVars}\n\n.gradient {\n  background: ${gradient};\n}`;
+      break;
+    case 'tailwind':
+      // Convert to closest Tailwind syntax or arbitrary values
+      const stopsTw = state.stops.map(s => s.color).join('-');
+      code = `// Add to tailwind.config.js:\nbackgroundImage: {\n  'custom': '${gradient}'\n}\n\n// Or use arbitrary values:\nbg-[${gradient}]`;
+      break;
+  }
+  
+  codeOutput.textContent = code;
+}
+
+// Copy code
+function copyCode() {
+  navigator.clipboard.writeText(codeOutput.textContent).then(() => {
+    showToast('CSS copied to clipboard!');
+  });
+}
+
+// Update angle display
+function updateAngleDisplay() {
+  const indicator = document.querySelector('.angle-indicator');
+  if (indicator) {
+    indicator.style.transform = `translateX(-50%) rotate(${state.angle}deg)`;
+    indicator.style.transformOrigin = 'center 24px';
+  }
+}
+
+// Add stop
+function addStop() {
+  const positions = state.stops.map(s => s.position);
+  let newPos = 50;
+  
+  // Find gap
+  for (let i = 0; i < positions.length - 1; i++) {
+    const gap = positions[i + 1] - positions[i];
+    if (gap > 20) {
+      newPos = Math.round((positions[i] + positions[i + 1]) / 2);
+      break;
+    }
+  }
+  
+  const color = interpolateColor(newPos);
+  state.stops.push({ color, position: newPos });
+  state.stops.sort((a, b) => a.position - b.position);
+  renderStops();
+  updateGradient();
+}
+
+// Interpolate color
+function interpolateColor(position) {
+  const sorted = [...state.stops].sort((a, b) => a.position - b.position);
+  
+  for (let i = 0; i < sorted.length - 1; i++) {
+    if (position >= sorted[i].position && position <= sorted[i + 1].position) {
+      const t = (position - sorted[i].position) / (sorted[i + 1].position - sorted[i].position);
+      return blendColors(sorted[i].color, sorted[i + 1].color, t);
+    }
+  }
+  
+  return sorted[0]?.color || '#f97316';
+}
+
+// Blend colors
+function blendColors(color1, color2, t) {
+  const rgb1 = hexToRgb(color1);
+  const rgb2 = hexToRgb(color2);
+  
+  const r = Math.round(rgb1.r + (rgb2.r - rgb1.r) * t);
+  const g = Math.round(rgb1.g + (rgb2.g - rgb1.g) * t);
+  const b = Math.round(rgb1.b + (rgb2.b - rgb1.b) * t);
+  
+  return rgbToHex(r, g, b);
+}
+
+// Hex to RGB
+function hexToRgb(hex) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : { r: 249, g: 115, b: 22 };
+}
+
+// RGB to Hex
+function rgbToHex(r, g, b) {
+  return '#' + [r, g, b].map(x => {
+    const hex = Math.max(0, Math.min(255, x)).toString(16);
+    return hex.length === 1 ? '0' + hex : hex;
+  }).join('');
+}
+
+// Randomize
+function randomizeGradient() {
+  const hue = Math.floor(Math.random() * 360);
+  const hue2 = (hue + 180) % 360;
+  const hue3 = (hue + Math.floor(Math.random() * 120 + 60)) % 360;
+  
+  state.stops = [
+    { color: `hsl(${hue}, 80%, 50%)`, position: 0 },
+    { color: `hsl(${hue2}, 70%, 55%)`, position: 50 },
+    { color: `hsl(${hue3}, 75%, 45%)`, position: 100 }
+  ];
+  
+  // Convert HSL to Hex for inputs
+  state.stops.forEach(s => {
+    const match = s.color.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
+    if (match) {
+      s.color = hslToHex(parseInt(match[1]), parseInt(match[2]), parseInt(match[3]));
+    }
+  });
+  
+  state.angle = Math.floor(Math.random() * 360);
+  angleSlider.value = state.angle;
+  angleValue.textContent = state.angle + '°';
+  
+  renderStops();
+  updateGradient();
+  updateAngleDisplay();
+}
+
+// HSL to Hex
+function hslToHex(h, s, l) {
+  l /= 100;
+  const a = s * Math.min(l, 1 - l) / 100;
+  const f = n => {
+    const k = (n + h / 30) % 12;
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * color).toString(16).padStart(2, '0');
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+// Save gradient
+function saveGradient() {
+  const gradient = {
+    type: state.type,
+    angle: state.angle,
+    stops: [...state.stops],
+    timestamp: Date.now()
+  };
+  
+  savedGradients.unshift(gradient);
+  if (savedGradients.length > 20) savedGradients.pop();
+  
+  localStorage.setItem('savedGradients', JSON.stringify(savedGradients));
+  renderSavedGradients();
+  showToast('Gradient saved!');
+}
+
+// Render saved gradients
+function renderSavedGradients() {
+  if (savedGradients.length === 0) {
+    savedCard.style.display = 'none';
+    return;
+  }
+  
+  savedCard.style.display = 'block';
+  savedGrid.innerHTML = '';
+  
+  savedGradients.forEach((grad, index) => {
+    const stops = grad.stops.map(s => `${s.color} ${s.position}%`).join(', ');
+    const bg = grad.type === 'linear' 
+      ? `linear-gradient(${grad.angle}deg, ${stops})`
+      : grad.type === 'radial'
+      ? `radial-gradient(circle at center, ${stops})`
+      : `conic-gradient(from 0deg at center, ${stops})`;
+    
+    const item = document.createElement('div');
+    item.className = 'saved-item';
+    item.style.background = bg;
+    item.innerHTML = `<button class="delete-btn" data-index="${index}"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>`;
+    
+    item.addEventListener('click', (e) => {
+      if (e.target.closest('.delete-btn')) {
+        savedGradients.splice(index, 1);
+        localStorage.setItem('savedGradients', JSON.stringify(savedGradients));
+        renderSavedGradients();
+        return;
+      }
+      
+      state.type = grad.type;
+      state.angle = grad.angle;
+      state.stops = JSON.parse(JSON.stringify(grad.stops));
+      
+      document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector(`[data-type="${grad.type}"]`).classList.add('active');
+      
+      angleSlider.value = grad.angle;
+      angleValue.textContent = grad.angle + '°';
+      document.getElementById('angleControl').style.display = grad.type === 'linear' ? 'block' : 'none';
+      
+      renderStops();
+      updateGradient();
+      updateAngleDisplay();
+    });
+    
+    savedGrid.appendChild(item);
+  });
+}
+
+// Render presets
+function renderPresets() {
+  const presetsGrid = document.getElementById('presetsGrid');
+  
+  presets.forEach(preset => {
+    const stops = preset.stops.map(s => `${s.color} ${s.position}%`).join(', ');
+    const item = document.createElement('div');
+    item.className = 'preset-item';
+    item.style.background = `linear-gradient(135deg, ${stops})`;
+    item.dataset.name = preset.name;
+    
+    item.addEventListener('click', () => {
+      state.stops = JSON.parse(JSON.stringify(preset.stops));
+      renderStops();
+      updateGradient();
+    });
+    
+    presetsGrid.appendChild(item);
+  });
+}
+
+// Show toast
+function showToast(message) {
+  toastMessage.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+// Initialize
+init();
+</script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.RelatedTools) {
+    RelatedTools.renderRelatedTools('css-gradient', '#related-tools-container', {
+      title: 'Related Tools',
+      showCategory: true,
+      trackClicks: true
+    });
+  }
+});
+</script>
+</body>
+</html>

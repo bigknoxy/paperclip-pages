@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Developer Time Converter - Epoch, ISO 8601, Timezone Tool</title>
+<meta name="description" content="Convert between Unix epoch timestamps, ISO 8601 dates, relative time, and timezones. Essential tool for developers working with dates and APIs.">
+<meta name="keywords" content="epoch converter, timestamp converter, Unix timestamp, ISO 8601, timezone converter, developer tools">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+<header class="header">
+<nav class="nav">
+<a href="/" class="logo">Paperclip</a>
+<div class="nav-links">
+<a href="/tools/">Tools</a>
+<a href="/content/">Blog</a>
+<a href="/#about">About</a>
+</div>
+</nav>
+</header>
+
+<main class="main">
+<div class="container">
+<h1>Developer Time Converter</h1>
+<p class="subtitle">Convert between Unix epoch timestamps, ISO 8601 dates, and timezones. Perfect for debugging APIs and working with date formats.</p>
+
+<div class="converter-tabs">
+<button class="tab-btn active" data-mode="epoch">Unix Epoch</button>
+<button class="tab-btn" data-mode="iso">ISO 8601</button>
+<button class="tab-btn" data-mode="relative">Relative Time</button>
+<button class="tab-btn" data-mode="timezone">Timezone</button>
+</div>
+
+<!-- Epoch Converter -->
+<div class="converter-panel active" id="epochPanel">
+<div class="converter-box">
+<div class="epoch-display" id="currentEpoch">
+<div class="epoch-value">
+<span class="epoch-label">Current Timestamp</span>
+<span class="epoch-number" id="liveEpoch">--</span>
+</div>
+<div class="epoch-buttons">
+<button class="btn-copy" data-copy="seconds" title="Copy seconds">Seconds</button>
+<button class="btn-copy" data-copy="milliseconds" title="Copy milliseconds">Milliseconds</button>
+</div>
+</div>
+
+<div class="input-section">
+<label>Convert Timestamp</label>
+<div class="input-row">
+<input type="text" id="epochInput" placeholder="Enter timestamp (e.g., 1704067200)">
+<select id="epochUnit">
+<option value="seconds">Seconds</option>
+<option value="milliseconds">Milliseconds</option>
+</select>
+</div>
+</div>
+
+<div class="result-grid">
+<div class="result-item">
+<span class="result-label">Local Time</span>
+<span class="result-value" id="epochLocal">--</span>
+</div>
+<div class="result-item">
+<span class="result-label">UTC Time</span>
+<span class="result-value" id="epochUTC">--</span>
+</div>
+<div class="result-item">
+<span class="result-label">ISO 8601</span>
+<span class="result-value" id="epochISO">--</span>
+</div>
+<div class="result-item">
+<span class="result-label">Relative</span>
+<span class="result-value" id="epochRelative">--</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ISO 8601 Converter -->
+<div class="converter-panel" id="isoPanel">
+<div class="converter-box">
+<div class="input-section">
+<label>Enter ISO 8601 Date</label>
+<input type="text" id="isoInput" placeholder="2024-01-01T00:00:00Z">
+</div>
+
+<div class="quick-buttons">
+<button class="quick-btn" data-iso="now">Now</button>
+<button class="quick-btn" data-iso="today">Today</button>
+<button class="quick-btn" data-iso="yesterday">Yesterday</button>
+<button class="quick-btn" data-iso="tomorrow">Tomorrow</button>
+</div>
+
+<div class="result-grid">
+<div class="result-item">
+<span class="result-label">Epoch (Seconds)</span>
+<span class="result-value" id="isoEpochSeconds">--</span>
+</div>
+<div class="result-item">
+<span class="result-label">Epoch (Milliseconds)</span>
+<span class="result-value" id="isoEpochMs">--</span>
+</div>
+<div class="result-item">
+<span class="result-label">Local Time</span>
+<span class="result-value" id="isoLocal">--</span>
+</div>
+<div class="result-item">
+<span class="result-label">UTC Time</span>
+<span class="result-value" id="isoUTC">--</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Relative Time -->
+<div class="converter-panel" id="relativePanel">
+<div class="converter-box">
+<div class="input-section">
+<label>Enter Date/Time</label>
+<input type="text" id="relativeInput" placeholder="2024-01-01 or '2 hours ago', 'in 3 days'">
+</div>
+
+<div class="quick-buttons">
+<button class="quick-btn" data-relative="now">Now</button>
+<button class="quick-btn" data-relative="+1h">+1 Hour</button>
+<button class="quick-btn" data-relative="+1d">+1 Day</button>
+<button class="quick-btn" data-relative="-1d">-1 Day</button>
+<button class="quick-btn" data-relative="+1w">+1 Week</button>
+</div>
+
+<div class="result-grid">
+<div class="result-item full-width">
+<span class="result-label">Relative Time</span>
+<span class="result-value large" id="relativeResult">--</span>
+</div>
+<div class="result-item">
+<span class="result-label">Epoch (Seconds)</span>
+<span class="result-value" id="relativeEpoch">--</span>
+</div>
+<div class="result-item">
+<span class="result-label">Local Time</span>
+<span class="result-value" id="relativeLocal">--</span>
+</div>
+<div class="result-item">
+<span class="result-label">ISO 8601</span>
+<span class="result-value" id="relativeISO">--</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Timezone Converter -->
+<div class="converter-panel" id="timezonePanel">
+<div class="converter-box">
+<div class="input-section">
+<label>Date & Time</label>
+<input type="datetime-local" id="tzInput" step="1">
+</div>
+
+<div class="timezone-row">
+<div class="tz-group">
+<label>From Timezone</label>
+<select id="fromTimezone"></select>
+</div>
+<div class="tz-arrow">→</div>
+<div class="tz-group">
+<label>To Timezone</label>
+<select id="toTimezone"></select>
+</div>
+</div>
+
+<div class="result-section">
+<div class="tz-result">
+<span class="tz-result-label">Converted Time</span>
+<span class="tz-result-value" id="tzResult">--</span>
+</div>
+<div class="tz-offset" id="tzOffset">--</div>
+</div>
+</div>
+</div>
+
+<div class="related-tools">
+<h3>Related Tools</h3>
+<div class="tool-grid">
+<a href="/tools/unit-converter/" class="tool-card">
+<h4>Unit Converter</h4>
+<p>Convert between units of measurement</p>
+</a>
+<a href="/tools/json-formatter/" class="tool-card">
+<h4>JSON Formatter</h4>
+<p>Format and validate JSON data</p>
+</a>
+</div>
+</div>
+</div>
+</main>
+
+<footer class="footer">
+<div class="container">
+<p>&copy; 2026 Paperclip. Free online developer tools.</p>
+</div>
+</footer>
+
+<script src="/public/analytics.js"></script>
+<script src="script.js"></script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+if (window.RelatedTools) {
+RelatedTools.renderRelatedTools('time-converter', '#related-tools-container', {
+title: 'Related Tools',
+showCategory: true,
+trackClicks: true
+});
+}
+});
+</script>
+</body>
+</html>
