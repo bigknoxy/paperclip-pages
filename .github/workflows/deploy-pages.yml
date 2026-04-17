@@ -27,6 +27,12 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Copy tools to dist
+        run: cp -r tools/ dist/tools/
+
+      - name: Copy content to dist
+        run: cp -r content/ dist/content/ || echo "No content folder"
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
