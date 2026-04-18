@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>UUID Generator | Free Online UUID v4 & v7 Generator | Paperclip</title>
+<meta name="description" content="Free UUID generator supporting v4 (random) and v7 (time-ordered) formats. Bulk generation, copy buttons, validation, custom separators, and case options. Perfect for database design and API development." />
+<meta name="keywords" content="uuid generator, uuid v4 generator, uuid v7 generator, bulk uuid generator, generate uuid online, random uuid generator" />
+<meta name="author" content="Paperclip" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/uuid-generator/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://cdn.carbonads.com" crossorigin>
+<style>
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--error:#ef4444;--border:rgba(255,255,255,0.08);color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+.logo{font-weight:700;font-size:1.2em;color:var(--accent);text-decoration:none}
+nav{display:flex;gap:16px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--text)}
+.container{max-width:900px;margin:0 auto;padding:24px}
+h1{font-size:1.8em;margin:0 0 8px 0}
+.subtitle{color:var(--muted);margin-bottom:24px}
+.tool-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px}
+.options-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px}
+.option-group{display:flex;flex-direction:column;gap:8px}
+.option-group label{color:var(--muted);font-size:14px}
+.option-group select,.option-group input{width:100%;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px}
+.option-group select:focus,.option-group input:focus{outline:none;border-color:var(--accent)}
+.checkbox-group{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:20px}
+.checkbox-label{display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--muted);font-size:14px}
+.checkbox-label input{cursor:pointer}
+.button-group{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.btn{padding:12px 24px;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s}
+.btn-primary{background:var(--accent);color:#012}
+.btn-secondary{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border)}
+.btn:hover{opacity:.9}
+.output-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:16px;min-height:150px;max-height:300px;overflow-y:auto;font-family:monospace;font-size:14px;line-height:1.6}
+.output-box ul,.output-box ol{margin:0;padding-left:24px}
+.output-box li{margin-bottom:4px}
+.output-box .uuid-line{display:flex;align-items:center;gap:8px;padding:4px 0}
+.output-box .uuid-text{flex:1;font-family:monospace;word-break:break-all}
+.output-box .copy-btn{padding:4px 12px;font-size:12px;background:rgba(255,255,255,0.08);border:1px solid var(--border);border-radius:4px;color:var(--text);cursor:pointer}
+.output-box .copy-btn:hover{background:var(--accent);color:#012}
+.stats-bar{display:flex;gap:24px;padding:16px;background:rgba(255,255,255,0.02);border-radius:8px;margin-top:16px;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column;align-items:center}
+.stat-value{font-size:1.5em;font-weight:700;color:var(--accent)}
+.stat-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-top:4px}
+.pro-tips{margin-top:32px;padding:20px;background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(37,99,235,0.1));border-radius:12px;border:1px solid rgba(6,182,212,0.3)}
+.pro-tips h3{margin:0 0 16px 0;color:var(--accent)}
+.pro-tips ul{margin:0;padding-left:20px;color:var(--muted)}
+.pro-tips li{margin-bottom:12px}
+.pro-tips a{color:var(--accent);text-decoration:none}
+.pro-tips a:hover{text-decoration:underline}
+.carbon-ads{margin:32px 0;padding:16px;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid rgba(255,255,255,0.05);text-align:center;min-height:120px}
+.carbon-ads-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+.affiliate-banner{margin:24px 0;padding:16px;background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(251,191,36,0.05));border-radius:12px;border:1px solid rgba(245,158,11,0.3);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.affiliate-banner img{width:60px;height:60px;object-fit:cover;border-radius:8px}
+.affiliate-banner .content{flex:1;min-width:200px}
+.affiliate-banner h4{margin:0 0 4px 0;color:var(--text)}
+.affiliate-banner p{margin:0 0 8px 0;color:var(--muted);font-size:13px}
+.affiliate-banner a{color:var(--accent);text-decoration:none;font-weight:600}
+.affiliate-banner a:hover{text-decoration:underline}
+.tips{margin-top:32px;padding:20px;background:var(--card);border-radius:12px;border:1px solid var(--border)}
+.tips h3{margin:0 0 12px 0;color:var(--accent)}
+.tips ul{margin:0;padding-left:20px;color:var(--muted)}
+.tips li{margin-bottom:8px}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:60px}
+.copy-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--accent);color:#012;padding:12px 24px;border-radius:8px;font-weight:600;opacity:0;transition:all .3s;z-index:1000}
+.copy-toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.validation-result{margin-top:12px;padding:12px;border-radius:8px;font-size:14px}
+.validation-result.valid{background:rgba(34,197,94,.1);color:var(--success)}
+.validation-result.invalid{background:rgba(239,68,68,.1);color:var(--error)}
+.radio-group{display:flex;gap:16px;flex-wrap:wrap}
+.radio-label{display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--muted);font-size:14px}
+.radio-label input{cursor:pointer}
+.tabs{display:flex;gap:8px;margin-bottom:20px;border-bottom:1px solid var(--border)}
+.tab{padding:12px 24px;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-size:14px;cursor:pointer;font-weight:600}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab:hover{color:var(--text)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+</style>
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+<header>
+<a href="/" class="logo">← Paperclip</a>
+<nav>
+<a href="/">Home</a>
+<a href="/about.html">About</a>
+<a href="/tools/">Tools</a>
+</nav>
+</header>
+
+<div class="container">
+<h1>UUID Generator</h1>
+<p class="subtitle">Generate UUIDs (Universally Unique Identifiers) with v4 (random) and v7 (time-ordered) formats. Essential for database design and API development.</p>
+
+<div class="tool-box">
+<div class="tabs">
+<button class="tab active" data-tab="generate" onclick="switchTab('generate')">Generate UUIDs</button>
+<button class="tab" data-tab="validate" onclick="switchTab('validate')">Validate UUID</button>
+</div>
+
+<div id="generate-tab" class="tab-content active">
+<div class="options-grid">
+<div class="option-group">
+<label for="uuid-version">UUID Version</label>
+<select id="uuid-version">
+<option value="v4">v4 (Random)</option>
+<option value="v7">v7 (Time-ordered)</option>
+</select>
+</div>
+<div class="option-group">
+<label for="amount">Count</label>
+<input type="number" id="amount" value="1" min="1" max="100">
+</div>
+<div class="option-group">
+<label for="separator">Separator</label>
+<select id="separator">
+<option value="newline">New Line</option>
+<option value="comma">Comma (,)</option>
+<option value="semicolon">Semicolon (;)</option>
+<option value="space">Space</option>
+<option value="pipe">Pipe (|)</option>
+</select>
+</div>
+<div class="option-group">
+<label for="case-format">Case Format</label>
+<select id="case-format">
+<option value="lowercase">Lowercase</option>
+<option value="uppercase">Uppercase</option>
+</select>
+</div>
+</div>
+
+<div class="checkbox-group">
+<label class="checkbox-label">
+<input type="checkbox" id="remove-hyphens">
+<span>Remove hyphens</span>
+</label>
+<label class="checkbox-label">
+<input type="checkbox" id="add-quotes">
+<span>Wrap in quotes (CSV)</span>
+</label>
+</div>
+
+<div class="button-group">
+<button class="btn btn-primary" onclick="generateUUIDs()">Generate UUIDs</button>
+<button class="btn btn-secondary" onclick="copyAllUUIDs()">Copy All</button>
+<button class="btn btn-secondary" onclick="clearOutput()">Clear</button>
+</div>
+
+<div class="output-box" id="output">
+<p style="color:var(--muted);text-align:center;margin-top:60px">Click "Generate UUIDs" to create unique identifiers...</p>
+</div>
+
+<div class="stats-bar" id="stats" style="display:none">
+<div class="stat">
+<div class="stat-value" id="stat-count">0</div>
+<div class="stat-label">Generated</div>
+</div>
+<div class="stat">
+<div class="stat-value" id="stat-version">-</div>
+<div class="stat-label">Version</div>
+</div>
+<div class="stat">
+<div class="stat-value" id="stat-timestamp">-</div>
+<div class="stat-label">Last Generated</div>
+</div>
+</div>
+</div>
+
+<div id="validate-tab" class="tab-content">
+<div class="option-group" style="margin-bottom:16px">
+<label for="uuid-input">Enter UUID to Validate</label>
+<input type="text" id="uuid-input" placeholder="e.g., 550e8400-e29b-41d4-a716-446655440000" style="font-family:monospace">
+</div>
+
+<div class="button-group">
+<button class="btn btn-primary" onclick="validateUUID()">Validate UUID</button>
+<button class="btn btn-secondary" onclick="clearValidation()">Clear</button>
+</div>
+
+<div id="validation-result"></div>
+</div>
+</div>
+
+<div class="pro-tips">
+<h3>Pro Tools for Developers</h3>
+<ul>
+<li><strong><a href="https://www.postgresql.org/?ref=paperclip" target="_blank" rel="nofollow">PostgreSQL</a></strong> - The world's most advanced open source relational database with native UUID support. Perfect for storing UUIDs efficiently.</li>
+<li><strong><a href="https://www.mongodb.com/?ref=paperclip" target="_blank" rel="nofollow">MongoDB</a></strong> - Leading NoSQL database that uses UUID-like ObjectIDs by default. Excellent for scalable applications.</li>
+<li><strong><a href="https://redis.io/?ref=paperclip" target="_blank" rel="nofollow">Redis</a></strong> - Ultra-fast in-memory data store. Use UUIDs as keys for distributed session management and caching.</li>
+</ul>
+<p style="margin-top:16px;font-size:13px;color:var(--muted)">Master database design with <a href="https://www.udacity.com/course/database-systems-concepts-design--ud150" target="_blank">Udacity's Database Systems Course</a>.</p>
+</div>
+
+<div class="carbon-ads">
+<div class="carbon-ads-label">Sponsored</div>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7ITK7L&placement=paperclip" id="_carbonads_js"></script>
+</div>
+
+<div class="affiliate-banner">
+<img loading="lazy" src="https://via.placeholder.com/60x60/2563eb/ffffff?text=DB" alt="Database">
+<div class="content">
+<h4>PlanetScale — Serverless MySQL Database</h4>
+<p>Branch your database like you branch your code. Built-in deploy requests, schema changes, and horizontal scaling. Perfect for applications using UUIDs.</p>
+<a href="https://planetscale.com/?ref=paperclip" target="_blank" rel="nofollow">Start Free →</a>
+</div>
+</div>
+
+<div class="tips">
+<h3>What are UUIDs?</h3>
+<ul>
+<li><strong>UUID</strong> stands for Universally Unique Identifier - a 128-bit number used to identify information</li>
+<li><strong>UUID v4</strong> uses random data for maximum uniqueness. Perfect for database primary keys.</li>
+<li><strong>UUID v7</strong> is time-ordered, providing natural sorting by creation time. Better for indexed storage.</li>
+<li>Standard format is 8-4-4-4-12 hexadecimal digits (e.g., 550e8400-e29b-41d4-a716-446655440000)</li>
+<li>Over 5.3 undecillion (5.3 × 10³⁶) possible UUIDs - collision is practically impossible</li>
+</ul>
+
+<h3>Use Cases</h3>
+<ul>
+<li><strong>Database Primary Keys:</strong> Distributed systems need globally unique identifiers without coordination</li>
+<li><strong>API Development:</strong> Resource IDs that don't expose database structure or sequence</li>
+<li><strong>Session Management:</strong> Secure, unpredictable session tokens</li>
+<li><strong>File Uploads:</strong> Prevent filename collisions in shared storage</li>
+<li><strong>Event Sourcing:</strong> Unique event IDs in message queues and logs</li>
+<li><strong>Microservices:</strong> Trace IDs for distributed request tracking</li>
+</ul>
+
+<h3>UUID v4 vs v7</h3>
+<ul>
+<li><strong>v4 (Random):</strong> Complete randomness, no pattern, maximum entropy. Best for security tokens.</li>
+<li><strong>v7 (Time-ordered):</strong> First 48 bits are timestamp, rest are random. Best for database indexes - sorts by time without extra timestamp column.</li>
+<li><strong>Migration:</strong> Many teams are moving from v4 to v7 for better database performance.</li>
+</ul>
+</div>
+</div>
+
+<script src="/public/analytics.js"></script>
+<footer>
+<p>Made with minimal code • Free forever • No tracking</p>
+</footer>
+
+<div class="copy-toast" id="copyToast">Copied to clipboard!</div>
+
+<script>
+const output = document.getElementById('output');
+const stats = document.getElementById('stats');
+const copyToast = document.getElementById('copyToast');
+let lastGeneratedUUIDs = [];
+
+function switchTab(tabName) {
+  document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+  document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+  document.getElementById(`${tabName}-tab`).classList.add('active');
+}
+
+// UUID v4 generator (random)
+function generateUUIDv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+// UUID v7 generator (time-ordered)
+function generateUUIDv7() {
+  const now = BigInt(Date.now());
+  const timestamp = now.toString(16).padStart(12, '0');
+  const randomA = Math.floor(Math.random() * 0x1000).toString(16).padStart(3, '0');
+  const version = '7';
+  const randomB = Math.floor(Math.random() * 0x1000).toString(16).padStart(3, '0');
+  const variant = (Math.floor(Math.random() * 4) + 8).toString(16);
+  const randomC = Math.floor(Math.random() * 0x1000000000000).toString(16).padStart(12, '0');
+  
+  return `${timestamp.slice(0, 8)}-${timestamp.slice(8)}-${version}${randomA}-${variant}${randomB}-${randomC}`;
+}
+
+function formatUUID(uuid, removeHyphens, uppercase, wrapInQuotes) {
+  let result = uuid;
+  if (removeHyphens) {
+    result = result.replace(/-/g, '');
+  }
+  if (uppercase) {
+    result = result.toUpperCase();
+  }
+  if (wrapInQuotes) {
+    result = `"${result}"`;
+  }
+  return result;
+}
+
+function getSeparator(separatorType) {
+  switch (separatorType) {
+    case 'comma': return ',';
+    case 'semicolon': return ';';
+    case 'space': return ' ';
+    case 'pipe': return '|';
+    default: return '\n';
+  }
+}
+
+function generateUUIDs() {
+  const version = document.getElementById('uuid-version').value;
+  const amount = parseInt(document.getElementById('amount').value) || 1;
+  const separator = document.getElementById('separator').value;
+  const caseFormat = document.getElementById('case-format').value;
+  const removeHyphens = document.getElementById('remove-hyphens').checked;
+  const addQuotes = document.getElementById('add-quotes').checked;
+  
+  const uuids = [];
+  for (let i = 0; i < amount; i++) {
+    const uuid = version === 'v4' ? generateUUIDv4() : generateUUIDv7();
+    const formatted = formatUUID(uuid, removeHyphens, caseFormat === 'uppercase', addQuotes);
+    uuids.push({ original: uuid, formatted: formatted });
+  }
+  
+  lastGeneratedUUIDs = uuids;
+  
+  // Build output HTML with individual copy buttons
+  let html = '';
+  uuids.forEach((item, index) => {
+    html += `
+      <div class="uuid-line">
+        <span class="uuid-text">${escapeHtml(item.formatted)}</span>
+        <button class="copy-btn" onclick="copySingleUUID(${index})">Copy</button>
+      </div>
+    `;
+  });
+  
+  output.innerHTML = html;
+  
+  // Update stats
+  document.getElementById('stat-count').textContent = amount;
+  document.getElementById('stat-version').textContent = version.toUpperCase();
+  document.getElementById('stat-timestamp').textContent = new Date().toLocaleTimeString();
+  stats.style.display = 'flex';
+  
+  // Track usage
+  if (window.PaperclipAnalytics) {
+    PaperclipAnalytics.tool.track('uuid-generator', 'generate', { 
+      version: version, 
+      count: amount 
+    });
+  }
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function copySingleUUID(index) {
+  if (lastGeneratedUUIDs[index]) {
+    navigator.clipboard.writeText(lastGeneratedUUIDs[index].formatted).then(() => {
+      showToast();
+    });
+  }
+}
+
+function copyAllUUIDs() {
+  if (lastGeneratedUUIDs.length === 0) {
+    showToast('No UUIDs to copy!');
+    return;
+  }
+  const separator = getSeparator(document.getElementById('separator').value);
+  const text = lastGeneratedUUIDs.map(u => u.formatted).join(separator);
+  navigator.clipboard.writeText(text).then(() => {
+    showToast(`Copied ${lastGeneratedUUIDs.length} UUID${lastGeneratedUUIDs.length > 1 ? 's' : ''}`);
+  });
+}
+
+function showToast(message = 'Copied to clipboard!') {
+  copyToast.textContent = message;
+  copyToast.classList.add('show');
+  setTimeout(() => copyToast.classList.remove('show'), 2000);
+}
+
+function clearOutput() {
+  output.innerHTML = '<p style="color:var(--muted);text-align:center;margin-top:60px">Click "Generate UUIDs" to create unique identifiers...</p>';
+  stats.style.display = 'none';
+  lastGeneratedUUIDs = [];
+}
+
+// UUID Validation
+function validateUUID() {
+  const input = document.getElementById('uuid-input').value.trim();
+  const resultDiv = document.getElementById('validation-result');
+  
+  if (!input) {
+    resultDiv.innerHTML = '<div class="validation-result invalid">Please enter a UUID to validate</div>';
+    return;
+  }
+  
+  // UUID regex patterns
+  const uuidPattern = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-7][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
+  const noHyphenPattern = /^[0-9a-fA-F]{32}$/;
+  
+  let isValid = false;
+  let version = null;
+  let details = '';
+  
+  if (uuidPattern.test(input)) {
+    isValid = true;
+    const parts = input.split('-');
+    version = parseInt(parts[2][0], 16);
+    details = `Valid UUID v${version}`;
+    
+    // Additional analysis
+    if (version === 4) {
+      details += ' (Random)';
+    } else if (version === 7) {
+      const timestampHex = parts[0] + parts[1].slice(0, 4);
+      const timestamp = parseInt(timestampHex, 16);
+      const date = new Date(timestamp);
+      details += ` (Time-ordered, created: ${date.toLocaleString()})`;
+    }
+  } else if (noHyphenPattern.test(input)) {
+    isValid = true;
+    version = 'unknown';
+    details = 'Valid UUID format (no hyphens, version unknown)';
+  }
+  
+  if (isValid) {
+    resultDiv.innerHTML = `
+      <div class="validation-result valid">
+        ✓ ${details}
+      </div>
+    `;
+  } else {
+    resultDiv.innerHTML = `
+      <div class="validation-result invalid">
+        ✗ Invalid UUID format<br>
+        <small>Expected: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx (8-4-4-4-12 hex digits)</small>
+      </div>
+    `;
+  }
+  
+  // Track validation
+  if (window.PaperclipAnalytics) {
+    PaperclipAnalytics.tool.track('uuid-generator', 'validate', { valid: isValid });
+  }
+}
+
+function clearValidation() {
+  document.getElementById('uuid-input').value = '';
+  document.getElementById('validation-result').innerHTML = '';
+}
+
+// Generate initial UUID
+generateUUIDs();
+</script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.RelatedTools) {
+    RelatedTools.renderRelatedTools('uuid-generator', '#related-tools-container', {
+      title: 'Related Tools',
+      showCategory: true,
+      trackClicks: true
+    });
+  }
+});
+</script>
+</body>
+</html>

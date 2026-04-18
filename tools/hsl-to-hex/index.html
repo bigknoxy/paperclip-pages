@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>HSL to HEX Color Converter | Free Online Tool | Paperclip</title>
+<meta name="description" content="Free HSL to HEX color converter tool. Convert HSL (Hue, Saturation, Lightness) to HEX color codes instantly. Includes live preview, CSS output, and one-click copy. Perfect for web developers and designers." />
+<meta name="keywords" content="hsl to hex, color converter, hsl converter, hex color, css colors, web design tools" />
+<meta name="author" content="Paperclip" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/hsl-to-hex/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--border:rgba(255,255,255,0.08);--input-bg:#0d1522;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+.logo{font-weight:700;font-size:1.2em;color:var(--accent);text-decoration:none}
+nav{display:flex;gap:16px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--text)}
+.container{max-width:900px;margin:0 auto;padding:24px}
+h1{font-size:2em;margin:0 0 8px 0}
+.subtitle{color:var(--muted);margin-bottom:24px}
+
+.converter-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;margin-bottom:32px}
+
+.color-preview{height:140px;border-radius:12px;margin-bottom:28px;border:1px solid var(--border);transition:background-color .2s;box-shadow:0 4px 20px rgba(0,0,0,0.3)}
+
+.hsl-inputs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+@media(max-width:600px){.hsl-inputs{grid-template-columns:1fr}}
+
+.input-group{position:relative}
+.input-group label{display:block;color:var(--muted);font-size:13px;margin-bottom:8px;font-weight:500}
+.input-group input{width:100%;padding:14px 16px;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:monospace;font-size:16px;transition:border-color .2s}
+.input-group input:focus{outline:none;border-color:var(--accent)}
+.input-group .suffix{position:absolute;right:16px;bottom:14px;color:var(--muted);font-size:14px;pointer-events:none}
+
+.slider-group{margin-bottom:20px}
+.slider-group label{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px;margin-bottom:10px;font-weight:500}
+.slider-group label span{color:var(--text);font-family:monospace;font-size:14px}
+.slider-group input[type="range"]{width:100%;-webkit-appearance:none;height:8px;background:linear-gradient(to right,var(--accent),var(--accent));border-radius:4px;outline:none}
+.slider-group input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;background:var(--accent);border-radius:50%;cursor:pointer;transition:transform .1s}
+.slider-group input[type="range"]::-webkit-slider-thumb:hover{transform:scale(1.1)}
+.slider-group input[type="range"]::-moz-range-thumb{width:20px;height:20px;background:var(--accent);border-radius:50%;cursor:pointer;border:none}
+
+.output-section{background:var(--input-bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:24px}
+.output-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.output-row label{color:var(--muted);font-size:13px;min-width:60px}
+.output-value{font-family:monospace;font-size:18px;color:var(--accent);flex:1;min-width:200px;word-break:break-all}
+.copy-btn{padding:10px 20px;background:rgba(6,182,212,0.1);border:1px solid var(--accent);border-radius:8px;color:var(--accent);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+.copy-btn:hover{background:var(--accent);color:#012}
+.copy-btn.copied{background:#22c55e;border-color:#22c55e;color:#fff}
+
+.css-output{background:var(--input-bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:24px}
+.css-output h3{margin:0 0 16px 0;font-size:14px;color:var(--muted);font-weight:500}
+.css-code{font-family:monospace;font-size:14px;color:var(--text);line-height:1.6}
+.css-code .property{color:#c084fc}
+.css-code .value{color:#4ade80}
+.css-code .punctuation{color:var(--muted)}
+
+.button-row{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+.btn{padding:12px 24px;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s}
+.btn-primary{background:var(--accent);color:#012}
+.btn-secondary{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border)}
+.btn:hover{opacity:.9}
+
+.preset-section{margin-top:32px}
+.preset-section h3{margin:0 0 16px 0;font-size:1.1em}
+.preset-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:12px}
+.preset-color{height:60px;border-radius:10px;cursor:pointer;position:relative;transition:transform .2s,border-color .2s;border:2px solid transparent}
+.preset-color:hover{transform:scale(1.05);border-color:var(--accent)}
+.preset-color::after{content:attr(data-name);position:absolute;bottom:4px;left:4px;right:4px;font-size:10px;background:rgba(0,0,0,0.7);color:#fff;padding:2px 6px;border-radius:4px;opacity:0;transition:opacity .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+.preset-color:hover::after{opacity:1}
+
+.seo-content{margin-top:48px;padding-top:40px;border-top:1px solid var(--border)}
+.seo-content h2{font-size:1.5em;margin-bottom:16px}
+.seo-content h3{font-size:1.2em;margin:24px 0 12px 0;color:var(--accent)}
+.seo-content p{line-height:1.8;color:var(--muted)}
+.seo-content ul{padding-left:20px;line-height:1.9;color:var(--muted)}
+.seo-content li{margin-bottom:8px}
+
+.hsl-visualizer{margin:24px 0;padding:20px;background:var(--input-bg);border-radius:12px;border:1px solid var(--border)}
+.hsl-visualizer h4{margin:0 0 16px 0;font-size:14px;color:var(--muted);font-weight:500}
+.hsl-bar{height:24px;border-radius:6px;margin-bottom:12px;position:relative;overflow:hidden}
+.hsl-bar-label{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:600;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.5);z-index:1}
+
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:60px}
+</style>
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+<header>
+<a href="/" class="logo">← Paperclip</a>
+<nav>
+<a href="/tools/">Tools</a>
+<a href="/">Home</a>
+</nav>
+</header>
+
+<div class="container">
+<h1>HSL to HEX Color Converter</h1>
+<p class="subtitle">Convert HSL (Hue, Saturation, Lightness) to HEX color codes instantly. Perfect for CSS and web design.</p>
+
+<div class="converter-card">
+<div class="color-preview" id="color-preview" style="background-color:#06b6d4"></div>
+
+<div class="hsl-inputs">
+<div class="input-group">
+<label for="hsl-h">Hue</label>
+<input type="number" id="hsl-h" min="0" max="360" value="187" placeholder="0-360">
+<span class="suffix">°</span>
+</div>
+<div class="input-group">
+<label for="hsl-s">Saturation</label>
+<input type="number" id="hsl-s" min="0" max="100" value="94" placeholder="0-100">
+<span class="suffix">%</span>
+</div>
+<div class="input-group">
+<label for="hsl-l">Lightness</label>
+<input type="number" id="hsl-l" min="0" max="100" value="43" placeholder="0-100">
+<span class="suffix">%</span>
+</div>
+</div>
+
+<div class="slider-group">
+<label>Hue <span id="hue-val">187°</span></label>
+<input type="range" id="hue-slider" min="0" max="360" value="187">
+</div>
+<div class="slider-group">
+<label>Saturation <span id="sat-val">94%</span></label>
+<input type="range" id="sat-slider" min="0" max="100" value="94">
+</div>
+<div class="slider-group">
+<label>Lightness <span id="light-val">43%</span></label>
+<input type="range" id="light-slider" min="0" max="100" value="43">
+</div>
+
+<div class="output-section">
+<div class="output-row">
+<label>HEX</label>
+<div class="output-value" id="hex-output">#06b6d4</div>
+<button class="copy-btn" id="copy-hex" onclick="copyHex()">Copy</button>
+</div>
+</div>
+
+<div class="css-output">
+<h3>CSS Code</h3>
+<div class="css-code">
+<span class="property">color</span><span class="punctuation">:</span> <span class="value" id="css-color">#06b6d4</span><span class="punctuation">;</span><br>
+<span class="property">background-color</span><span class="punctuation">:</span> <span class="value" id="css-bg">hsl(187, 94%, 43%)</span><span class="punctuation">;</span>
+</div>
+</div>
+
+<div class="hsl-visualizer">
+<h4>HSL Component Preview</h4>
+<div class="hsl-bar" id="hue-bar" style="background:linear-gradient(to right,hsl(0,100%,50%),hsl(60,100%,50%),hsl(120,100%,50%),hsl(180,100%,50%),hsl(240,100%,50%),hsl(300,100%,50%),hsl(360,100%,50%))"><span class="hsl-bar-label">Hue Spectrum</span></div>
+<div class="hsl-bar" id="sat-bar" style="background:linear(to right,hsl(187,0%,43%),hsl(187,100%,43%))"><span class="hsl-bar-label">Saturation at current hue</span></div>
+<div class="hsl-bar" id="light-bar" style="background:linear(to right,hsl(187,94%,0%),hsl(187,94%,50%),hsl(187,94%,100%))"><span class="hsl-bar-label">Lightness at current hue/sat</span></div>
+</div>
+
+<div class="button-row">
+<button class="btn btn-secondary" onclick="randomColor()">Random Color</button>
+<button class="btn btn-secondary" onclick="copyCSS()">Copy CSS</button>
+</div>
+</div>
+
+<div class="preset-section">
+<h3>Color Presets</h3>
+<div class="preset-grid" id="preset-grid"></div>
+</div>
+
+<div class="seo-content">
+<h2>Why Use HSL to HEX Converter?</h2>
+<p>HSL (Hue, Saturation, Lightness) is an intuitive way to describe colors that's perfect for design workflows. Unlike HEX codes that can be cryptic, HSL lets you think about colors in a human-friendly way - hue for the color family, saturation for intensity, and lightness for brightness.</p>
+
+<h3>When to Use HSL</h3>
+<ul>
+<li><strong>Design iteration</strong> - Quickly adjust lightness for hover states or saturation for emphasis</li>
+<li><strong>Theme creation</strong> - Keep hue constant while adjusting saturation/lightness for harmonious palettes</li>
+<li><strong>Accessibility</strong> - Easily ensure sufficient contrast by adjusting lightness values</li>
+<li><strong>Animation</strong> - Animate hue values for color transitions (HEX can't be interpolated)</li>
+</ul>
+
+<h3>When to Use HEX</h3>
+<ul>
+<li><strong>Performance</strong> - Slightly shorter than HSL for CSS file size</li>
+<li><strong>Legacy support</strong> - Some older tools expect HEX format</li>
+<li><strong>Consistency</strong> - Many design systems standardize on HEX</li>
+<li><strong>Copy-paste</strong> - Easy to share and communicate 6-character codes</li>
+</ul>
+
+<h3>HSL vs Other Formats</h3>
+<ul>
+<li><strong>HEX</strong> - Compact, widely supported, but not human-readable</li>
+<li><strong>RGB</strong> - Good for screen calculations, but hard to reason about</li>
+<li><strong>HSL</strong> - Intuitive, great for programmatic color manipulation</li>
+</ul>
+
+<h3>Common HSL Values</h3>
+<ul>
+<li><strong>Red:</strong> hsl(0, 100%, 50%)</li>
+<li><strong>Orange:</strong> hsl(30, 100%, 50%)</li>
+<li><strong>Yellow:</strong> hsl(60, 100%, 50%)</li>
+<li><strong>Green:</strong> hsl(120, 100%, 50%)</li>
+<li><strong>Cyan:</strong> hsl(180, 100%, 50%)</li>
+<li><strong>Blue:</strong> hsl(240, 100%, 50%)</li>
+<li><strong>Purple:</strong> hsl(270, 100%, 50%)</li>
+<li><strong>Pink:</strong> hsl(330, 100%, 50%)</li>
+</ul>
+</div>
+</div>
+
+<footer>
+<p>Made with minimal code • Free forever • No tracking</p>
+</footer>
+
+<script src="/public/analytics.js"></script>
+
+<script>
+const hInput = document.getElementById('hsl-h');
+const sInput = document.getElementById('hsl-s');
+const lInput = document.getElementById('hsl-l');
+const hSlider = document.getElementById('hue-slider');
+const sSlider = document.getElementById('sat-slider');
+const lSlider = document.getElementById('light-slider');
+const preview = document.getElementById('color-preview');
+const hexOutput = document.getElementById('hex-output');
+const cssColor = document.getElementById('css-color');
+const cssBg = document.getElementById('css-bg');
+const hueVal = document.getElementById('hue-val');
+const satVal = document.getElementById('sat-val');
+const lightVal = document.getElementById('light-val');
+const satBar = document.getElementById('sat-bar');
+const lightBar = document.getElementById('light-bar');
+
+const presets = [
+{ name: 'Cyan', h: 187, s: 94, l: 43 },
+{ name: 'Red', h: 0, s: 100, l: 50 },
+{ name: 'Orange', h: 30, s: 100, l: 50 },
+{ name: 'Yellow', h: 60, s: 100, l: 50 },
+{ name: 'Lime', h: 90, s: 100, l: 50 },
+{ name: 'Green', h: 120, s: 100, l: 50 },
+{ name: 'Teal', h: 150, s: 100, l: 40 },
+{ name: 'Cyan', h: 180, s: 100, l: 50 },
+{ name: 'Blue', h: 240, s: 100, l: 50 },
+{ name: 'Purple', h: 270, s: 100, l: 50 },
+{ name: 'Magenta', h: 300, s: 100, l: 50 },
+{ name: 'Pink', h: 330, s: 100, l: 50 },
+{ name: 'Black', h: 0, s: 0, l: 0 },
+{ name: 'White', h: 0, s: 0, l: 100 },
+{ name: 'Gray', h: 0, s: 0, l: 50 },
+];
+
+function hslToRgb(h, s, l) {
+h /= 360; s /= 100; l /= 100;
+let r, g, b;
+if (s === 0) {
+r = g = b = l;
+} else {
+const hue2rgb = (p, q, t) => {
+if (t < 0) t += 1;
+if (t > 1) t -= 1;
+if (t < 1/6) return p + (q - p) * 6 * t;
+if (t < 1/2) return q;
+if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+return p;
+};
+const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+const p = 2 * l - q;
+r = hue2rgb(p, q, h + 1/3);
+g = hue2rgb(p, q, h);
+b = hue2rgb(p, q, h - 1/3);
+}
+return {
+r: Math.round(r * 255),
+g: Math.round(g * 255),
+b: Math.round(b * 255)
+};
+}
+
+function rgbToHex(r, g, b) {
+return '#' + [r, g, b].map(x => {
+const hex = Math.round(x).toString(16);
+return hex.length === 1 ? '0' + hex : hex;
+}).join('');
+}
+
+function hslToHex(h, s, l) {
+const rgb = hslToRgb(h, s, l);
+return rgbToHex(rgb.r, rgb.g, rgb.b);
+}
+
+function updateColor() {
+const h = parseInt(hInput.value) || 0;
+const s = parseInt(sInput.value) || 0;
+const l = parseInt(lInput.value) || 0;
+
+const hex = hslToHex(h, s, l);
+
+preview.style.backgroundColor = hex;
+hexOutput.textContent = hex;
+cssColor.textContent = hex;
+cssBg.textContent = `hsl(${h}, ${s}%, ${l}%)`;
+
+hueVal.textContent = h + '°';
+satVal.textContent = s + '%';
+lightVal.textContent = l + '%';
+
+satBar.style.background = `linear-gradient(to right, hsl(${h}, 0%, ${l}%), hsl(${h}, 100%, ${l}%))`;
+lightBar.style.background = `linear-gradient(to right, hsl(${h}, ${s}%, 0%), hsl(${h}, ${s}%, 50%), hsl(${h}, ${s}%, 100%))`;
+}
+
+function syncInputs(source) {
+if (source === 'number') {
+hSlider.value = hInput.value;
+sSlider.value = sInput.value;
+lSlider.value = lInput.value;
+} else {
+hInput.value = hSlider.value;
+sInput.value = sSlider.value;
+lInput.value = lSlider.value;
+}
+updateColor();
+}
+
+function setColor(h, s, l) {
+hInput.value = h;
+sInput.value = s;
+lInput.value = l;
+hSlider.value = h;
+sSlider.value = s;
+lSlider.value = l;
+updateColor();
+}
+
+function randomColor() {
+setColor(
+Math.floor(Math.random() * 360),
+Math.floor(Math.random() * 100),
+Math.floor(Math.random() * 100)
+);
+}
+
+function copyHex() {
+navigator.clipboard.writeText(hexOutput.textContent).then(() => {
+const btn = document.getElementById('copy-hex');
+const original = btn.textContent;
+btn.textContent = 'Copied!';
+btn.classList.add('copied');
+setTimeout(() => {
+btn.textContent = original;
+btn.classList.remove('copied');
+}, 1500);
+});
+}
+
+function copyCSS() {
+const css = `color: ${hexOutput.textContent};\nbackground-color: ${cssBg.textContent};`;
+navigator.clipboard.writeText(css).then(() => {
+const btn = event.target;
+const original = btn.textContent;
+btn.textContent = 'Copied!';
+setTimeout(() => btn.textContent = original, 1500);
+});
+}
+
+function renderPresets() {
+const grid = document.getElementById('preset-grid');
+grid.innerHTML = presets.map(p => {
+const hex = hslToHex(p.h, p.s, p.l);
+return `<div class="preset-color" style="background-color:${hex}" data-name="${p.name}" onclick="setColor(${p.h}, ${p.s}, ${p.l})"></div>`;
+}).join('');
+}
+
+hInput.addEventListener('input', () => syncInputs('number'));
+sInput.addEventListener('input', () => syncInputs('number'));
+lInput.addEventListener('input', () => syncInputs('number'));
+hSlider.addEventListener('input', () => syncInputs('slider'));
+sSlider.addEventListener('input', () => syncInputs('slider'));
+lSlider.addEventListener('input', () => syncInputs('slider'));
+
+renderPresets();
+updateColor();
+</script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+if (window.RelatedTools) {
+RelatedTools.renderRelatedTools('hsl-to-hex', '#related-tools-container', {
+title: 'Related Tools',
+showCategory: true,
+trackClicks: true
+});
+}
+});
+</script>
+</body>
+</html>

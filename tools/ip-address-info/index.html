@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IP Address Info Tool - IPv4/IPv6 Validation, Subnet Calculator, CIDR</title>
+<meta name="description" content="Free IP address information tool. Validate IPv4 and IPv6 addresses, calculate subnets, convert CIDR notation, detect private/loopback/reserved IPs, and find your public IP. Network admin utility.">
+<meta name="keywords" content="IP address, IPv4, IPv6, subnet calculator, CIDR, network tool, IP validation, private IP, loopback, network admin">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+<header class="header">
+<nav class="nav">
+<a href="/" class="logo">Paperclip</a>
+<div class="nav-links">
+<a href="/tools/">Tools</a>
+<a href="/content/">Blog</a>
+<a href="/#about">About</a>
+</div>
+</nav>
+</header>
+
+<main class="main">
+<div class="container">
+<h1>IP Address Info Tool</h1>
+<p class="subtitle">Validate IPv4/IPv6 addresses, calculate subnets, convert CIDR notation, detect IP types (private, loopback, reserved), and discover your public IP address. Essential network admin utility.</p>
+
+<div class="ip-tabs">
+<button class="tab-btn active" data-mode="validate">IP Validation</button>
+<button class="tab-btn" data-mode="subnet">Subnet Calculator</button>
+<button class="tab-btn" data-mode="cidr">CIDR Calculator</button>
+<button class="tab-btn" data-mode="myip">My IP Address</button>
+</div>
+
+<!-- IP Validation Panel -->
+<div class="converter-panel active" id="validatePanel">
+<div class="converter-box">
+<div class="input-section">
+<label>Enter IP Address</label>
+<div class="input-row">
+<input type="text" id="ipInput" placeholder="e.g., 192.168.1.1 or 2001:db8::1">
+<button class="btn-clear" id="clearIpBtn" title="Clear">&times;</button>
+</div>
+</div>
+
+<div class="validation-result" id="validationResult">
+<div class="result-status unknown" id="validationStatus">
+<span class="status-icon">❓</span>
+<span class="status-text">Enter an IP address to validate</span>
+</div>
+</div>
+
+<div class="ip-details" id="ipDetails" style="display: none;">
+<h3>IP Address Details</h3>
+<div class="details-grid">
+<div class="detail-item">
+<span class="detail-label">IP Version</span>
+<span class="detail-value" id="detailVersion">--</span>
+</div>
+<div class="detail-item">
+<span class="detail-label">Address Type</span>
+<span class="detail-value" id="detailType">--</span>
+</div>
+<div class="detail-item">
+<span class="detail-label">Binary Representation</span>
+<span class="detail-value mono" id="detailBinary">--</span>
+</div>
+<div class="detail-item" id="octetDetail">
+<span class="detail-label">Octets (Decimal)</span>
+<span class="detail-value mono" id="detailOctets">--</span>
+</div>
+<div class="detail-item" id="hexDetail" style="display: none;">
+<span class="detail-label">Hex Groups</span>
+<span class="detail-value mono" id="detailHex">--</span>
+</div>
+<div class="detail-item">
+<span class="detail-label">Integer Value</span>
+<span class="detail-value mono" id="detailInteger">--</span>
+</div>
+<div class="detail-item full-width">
+<span class="detail-label">Reverse DNS</span>
+<span class="detail-value mono" id="detailReverseDNS">--</span>
+</div>
+</div>
+
+<div class="ip-flags" id="ipFlags">
+<h4>IP Address Classification</h4>
+<div class="flags-grid">
+<div class="flag-item" id="flagPrivate">
+<span class="flag-label">Private</span>
+<span class="flag-value" data-flag="private">Unknown</span>
+</div>
+<div class="flag-item" id="flagLoopback">
+<span class="flag-label">Loopback</span>
+<span class="flag-value" data-flag="loopback">Unknown</span>
+</div>
+<div class="flag-item" id="flagMulticast">
+<span class="flag-label">Multicast</span>
+<span class="flag-value" data-flag="multicast">Unknown</span>
+</div>
+<div class="flag-item" id="flagReserved">
+<span class="flag-label">Reserved</span>
+<span class="flag-value" data-flag="reserved">Unknown</span>
+</div>
+<div class="flag-item" id="flagBroadcast">
+<span class="flag-label">Broadcast</span>
+<span class="flag-value" data-flag="broadcast">Unknown</span>
+</div>
+<div class="flag-item" id="flagLinkLocal">
+<span class="flag-label">Link-Local</span>
+<span class="flag-value" data-flag="linklocal">Unknown</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Subnet Calculator Panel -->
+<div class="converter-panel" id="subnetPanel">
+<div class="converter-box">
+<div class="input-section">
+<label>Network Address & Subnet Mask</label>
+<div class="input-row dual">
+<input type="text" id="subnetIpInput" placeholder="Network IP (e.g., 192.168.1.0)">
+<input type="text" id="subnetMaskInput" placeholder="Mask (e.g., 255.255.255.0 or /24)">
+</div>
+</div>
+
+<div class="quick-buttons">
+<button class="quick-btn" data-mask="/24">/24 (Class C)</button>
+<button class="quick-btn" data-mask="/16">/16 (Class B)</button>
+<button class="quick-btn" data-mask="/8">/8 (Class A)</button>
+<button class="quick-btn" data-mask="/30">/30 (Point-to-Point)</button>
+<button class="quick-btn" data-mask="/29">/29 (6 hosts)</button>
+<button class="quick-btn" data-mask="/28">/28 (14 hosts)</button>
+</div>
+
+<div class="subnet-result" id="subnetResult" style="display: none;">
+<h3>Subnet Information</h3>
+<div class="subnet-grid">
+<div class="subnet-item">
+<span class="subnet-label">Network Address</span>
+<span class="subnet-value mono" id="subnetNetwork">--</span>
+<button class="btn-copy-small" data-copy="network" title="Copy">📋</button>
+</div>
+<div class="subnet-item">
+<span class="subnet-label">Broadcast Address</span>
+<span class="subnet-value mono" id="subnetBroadcast">--</span>
+<button class="btn-copy-small" data-copy="broadcast" title="Copy">📋</button>
+</div>
+<div class="subnet-item">
+<span class="subnet-label">Subnet Mask</span>
+<span class="subnet-value mono" id="subnetMask">--</span>
+<button class="btn-copy-small" data-copy="mask" title="Copy">📋</button>
+</div>
+<div class="subnet-item">
+<span class="subnet-label">CIDR Notation</span>
+<span class="subnet-value mono" id="subnetCidr">--</span>
+<button class="btn-copy-small" data-copy="cidr" title="Copy">📋</button>
+</div>
+<div class="subnet-item">
+<span class="subnet-label">First Usable IP</span>
+<span class="subnet-value mono" id="subnetFirst">--</span>
+<button class="btn-copy-small" data-copy="first" title="Copy">📋</button>
+</div>
+<div class="subnet-item">
+<span class="subnet-label">Last Usable IP</span>
+<span class="subnet-value mono" id="subnetLast">--</span>
+<button class="btn-copy-small" data-copy="last" title="Copy">📋</button>
+</div>
+<div class="subnet-item">
+<span class="subnet-label">Usable Hosts</span>
+<span class="subnet-value" id="subnetHosts">--</span>
+</div>
+<div class="subnet-item">
+<span class="subnet-label">Total Addresses</span>
+<span class="subnet-value" id="subnetTotal">--</span>
+</div>
+<div class="subnet-item full-width">
+<span class="subnet-label">Network Range</span>
+<span class="subnet-value mono" id="subnetRange">--</span>
+</div>
+<div class="subnet-item full-width">
+<span class="subnet-label">Wildcard Mask</span>
+<span class="subnet-value mono" id="subnetWildcard">--</span>
+</div>
+</div>
+</div>
+
+<div class="subnet-visual" id="subnetVisual" style="display: none;">
+<h4>Network Visualization</h4>
+<div class="visual-bar">
+<div class="visual-network" id="visualNetwork"></div>
+<div class="visual-broadcast" id="visualBroadcast"></div>
+<div class="visual-usable" id="visualUsable"></div>
+</div>
+<div class="visual-legend">
+<div class="legend-item">
+<span class="legend-color network"></span>
+<span class="legend-text">Network (1)</span>
+</div>
+<div class="legend-item">
+<span class="legend-color broadcast"></span>
+<span class="legend-text">Broadcast (1)</span>
+</div>
+<div class="legend-item">
+<span class="legend-color usable"></span>
+<span class="legend-text" id="legendUsable">Usable Hosts</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- CIDR Calculator Panel -->
+<div class="converter-panel" id="cidrPanel">
+<div class="converter-box">
+<div class="input-section">
+<label>CIDR Notation</label>
+<div class="input-row">
+<input type="text" id="cidrInput" placeholder="e.g., 192.168.1.0/24">
+</div>
+</div>
+
+<div class="quick-buttons">
+<button class="quick-btn" data-cidr="10.0.0.0/8">10.0.0.0/8</button>
+<button class="quick-btn" data-cidr="172.16.0.0/12">172.16.0.0/12</button>
+<button class="quick-btn" data-cidr="192.168.0.0/16">192.168.0.0/16</button>
+<button class="quick-btn" data-cidr="127.0.0.0/8">127.0.0.0/8</button>
+</div>
+
+<div class="cidr-result" id="cidrResult" style="display: none;">
+<h3>CIDR Block Information</h3>
+<div class="cidr-grid">
+<div class="cidr-item">
+<span class="cidr-label">Network Address</span>
+<span class="cidr-value mono" id="cidrNetwork">--</span>
+<button class="btn-copy-small" data-copy-cidr="network" title="Copy">📋</button>
+</div>
+<div class="cidr-item">
+<span class="cidr-label">Broadcast Address</span>
+<span class="cidr-value mono" id="cidrBroadcast">--</span>
+<button class="btn-copy-small" data-copy-cidr="broadcast" title="Copy">📋</button>
+</div>
+<div class="cidr-item">
+<span class="cidr-label">Subnet Mask</span>
+<span class="cidr-value mono" id="cidrMask">--</span>
+<button class="btn-copy-small" data-copy-cidr="mask" title="Copy">📋</button>
+</div>
+<div class="cidr-item">
+<span class="cidr-label">CIDR Prefix</span>
+<span class="cidr-value mono" id="cidrPrefix">--</span>
+</div>
+<div class="cidr-item">
+<span class="cidr-label">First Usable IP</span>
+<span class="cidr-value mono" id="cidrFirst">--</span>
+<button class="btn-copy-small" data-copy-cidr="first" title="Copy">📋</button>
+</div>
+<div class="cidr-item">
+<span class="cidr-label">Last Usable IP</span>
+<span class="cidr-value mono" id="cidrLast">--</span>
+<button class="btn-copy-small" data-copy-cidr="last" title="Copy">📋</button>
+</div>
+<div class="cidr-item">
+<span class="cidr-label">Total IPs</span>
+<span class="cidr-value" id="cidrTotal">--</span>
+</div>
+<div class="cidr-item">
+<span class="cidr-label">Usable Hosts</span>
+<span class="cidr-value" id="cidrUsable">--</span>
+</div>
+<div class="cidr-item full-width">
+<span class="cidr-label">IP Range</span>
+<span class="cidr-value mono" id="cidrRange">--</span>
+</div>
+</div>
+
+<div class="cidr-subnets" id="cidrSubnets" style="display: none;">
+<h4>Subnet Breakdown</h4>
+<div class="subnets-table" id="subnetsTable"></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- My IP Panel -->
+<div class="converter-panel" id="myipPanel">
+<div class="converter-box">
+<div class="myip-loading" id="myipLoading">
+<div class="loading-spinner"></div>
+<p>Detecting your IP address...</p>
+</div>
+
+<div class="myip-result" id="myipResult" style="display: none;">
+<h3>Your IP Address Information</h3>
+
+<div class="myip-primary">
+<div class="myip-address-box">
+<span class="myip-label">Your Public IPv4 Address</span>
+<span class="myip-address" id="myipAddress">--</span>
+<button class="btn-copy" id="copyMyIp" title="Copy to clipboard">📋 Copy</button>
+</div>
+</div>
+
+<div class="myip-details" id="myipDetails">
+<h4>Connection Details</h4>
+<div class="myip-grid">
+<div class="myip-item">
+<span class="myip-detail-label">IP Version</span>
+<span class="myip-detail-value" id="myipVersion">--</span>
+</div>
+<div class="myip-item">
+<span class="myip-detail-label">ISP / Organization</span>
+<span class="myip-detail-value" id="myipIsp">--</span>
+</div>
+<div class="myip-item">
+<span class="myip-detail-label">Country</span>
+<span class="myip-detail-value" id="myipCountry">--</span>
+</div>
+<div class="myip-item">
+<span class="myip-detail-label">Region</span>
+<span class="myip-detail-value" id="myipRegion">--</span>
+</div>
+<div class="myip-item">
+<span class="myip-detail-label">City</span>
+<span class="myip-detail-value" id="myipCity">--</span>
+</div>
+<div class="myip-item">
+<span class="myip-detail-label">Timezone</span>
+<span class="myip-detail-value" id="myipTimezone">--</span>
+</div>
+<div class="myip-item">
+<span class="myip-detail-label">Coordinates</span>
+<span class="myip-detail-value" id="myipCoords">--</span>
+</div>
+<div class="myip-item">
+<span class="myip-detail-label">User Agent</span>
+<span class="myip-detail-value small" id="myipUserAgent">--</span>
+</div>
+</div>
+</div>
+
+<div class="myip-local" id="myipLocal">
+<h4>Local Network Information</h4>
+<div class="local-grid">
+<div class="local-item">
+<span class="local-label">Local IP (WebRTC)</span>
+<span class="local-value" id="localIpWebRTC">Detecting...</span>
+</div>
+<div class="local-item">
+<span class="local-label">Hostname</span>
+<span class="local-value" id="localHostname">--</span>
+</div>
+<div class="local-item">
+<span class="local-label">Browser Language</span>
+<span class="local-value" id="localLanguage">--</span>
+</div>
+<div class="local-item">
+<span class="local-label">Screen Resolution</span>
+<span class="local-value" id="localScreen">--</span>
+</div>
+</div>
+</div>
+
+<div class="myip-note">
+<p><strong>Note:</strong> Location data is approximate and based on your ISP's registered location, not your exact physical location.</p>
+</div>
+</div>
+
+<div class="myip-error" id="myipError" style="display: none;">
+<p>Unable to detect your IP address. Please check your internet connection and try again.</p>
+<button class="btn-retry" id="retryMyIp">Retry</button>
+</div>
+</div>
+</div>
+
+<div class="related-tools">
+<h3>Related Tools</h3>
+<div class="tool-grid">
+<a href="/tools/hash/" class="tool-card">
+<h4>Hash Generator</h4>
+<p>Generate MD5, SHA-1, SHA-256 hashes</p>
+</a>
+<a href="/tools/base64/" class="tool-card">
+<h4>Base64 Encoder</h4>
+<p>Encode and decode Base64 strings</p>
+</a>
+</div>
+</div>
+</div>
+</main>
+
+<footer class="footer">
+<div class="container">
+<p>&copy; 2026 Paperclip. Free online developer tools.</p>
+</div>
+</footer>
+
+<script src="/public/analytics.js"></script>
+<script src="script.js"></script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+if (window.RelatedTools) {
+RelatedTools.renderRelatedTools('ip-address-info', '#related-tools-container', {
+title: 'Related Tools',
+showCategory: true,
+trackClicks: true
+});
+}
+});
+</script>
+</body>
+</html>

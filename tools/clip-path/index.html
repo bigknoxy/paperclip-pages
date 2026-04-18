@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Clip Path Generator - Create Shapes & Masks | Paperclip</title>
+<meta name="description" content="Free online CSS clip-path generator. Create custom shapes and masks with visual editor, presets, and live preview. Perfect for unique layouts, image masks, and creative designs.">
+<meta name="keywords" content="css clip path generator, clip path maker, css shapes, image mask generator, css polygon, clip-path tool">
+<meta name="author" content="Paperclip">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/clip-path/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+--bg: #0a0e14;
+--card: #11181f;
+--surface: #1a232e;
+--surface-hover: #243240;
+--accent: #f97316;
+--accent-glow: rgba(249, 115, 22, 0.3);
+--secondary: #06b6d4;
+--success: #22c55e;
+--text: #f8fafc;
+--text-muted: #94a3b8;
+--border: rgba(148, 163, 184, 0.15);
+--shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+--shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+--radius: 12px;
+--radius-sm: 8px;
+}
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: 'Outfit', system-ui, sans-serif;
+background: var(--bg);
+color: var(--text);
+line-height: 1.6;
+min-height: 100vh;
+}
+
+header {
+padding: 20px 32px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+max-width: 1400px;
+margin: 0 auto;
+}
+
+.logo {
+font-weight: 700;
+font-size: 1.3em;
+color: var(--accent);
+text-decoration: none;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.logo svg {
+width: 28px;
+height: 28px;
+}
+
+nav {
+display: flex;
+gap: 24px;
+}
+
+nav a {
+color: var(--text-muted);
+text-decoration: none;
+font-size: 14px;
+font-weight: 500;
+transition: color 0.2s;
+}
+
+nav a:hover {
+color: var(--text);
+}
+
+.container {
+max-width: 1400px;
+margin: 0 auto;
+padding: 24px 32px 60px;
+}
+
+.hero {
+text-align: center;
+margin-bottom: 48px;
+}
+
+.hero h1 {
+font-size: clamp(2.5rem, 5vw, 4rem);
+font-weight: 700;
+margin-bottom: 16px;
+background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+
+.hero p {
+color: var(--text-muted);
+font-size: 1.1em;
+max-width: 600px;
+margin: 0 auto 32px;
+}
+
+.tool-wrapper {
+display: grid;
+grid-template-columns: 380px 1fr;
+gap: 32px;
+align-items: start;
+}
+
+@media (max-width: 1024px) {
+.tool-wrapper {
+grid-template-columns: 1fr;
+}
+}
+
+.controls-panel {
+background: var(--card);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+padding: 24px;
+}
+
+.panel-title {
+font-size: 1.1em;
+font-weight: 600;
+margin-bottom: 20px;
+color: var(--text);
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.control-group {
+margin-bottom: 24px;
+}
+
+.control-group:last-child {
+margin-bottom: 0;
+}
+
+.control-label {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 10px;
+font-size: 13px;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.control-value {
+color: var(--text);
+font-weight: 600;
+font-family: 'Space Mono', monospace;
+}
+
+select {
+width: 100%;
+padding: 12px;
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius-sm);
+color: var(--text);
+font-size: 14px;
+cursor: pointer;
+}
+
+select:focus {
+outline: none;
+border-color: var(--accent);
+}
+
+input[type="text"] {
+width: 100%;
+padding: 10px 12px;
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius-sm);
+color: var(--text);
+font-family: 'Space Mono', monospace;
+font-size: 14px;
+}
+
+input[type="text"]:focus {
+outline: none;
+border-color: var(--accent);
+}
+
+.checkbox-control {
+display: flex;
+align-items: center;
+gap: 12px;
+cursor: pointer;
+}
+
+.checkbox-control input[type="checkbox"] {
+width: 20px;
+height: 20px;
+accent-color: var(--accent);
+cursor: pointer;
+}
+
+.btn {
+padding: 10px 16px;
+border: none;
+border-radius: var(--radius-sm);
+font-size: 13px;
+font-weight: 600;
+cursor: pointer;
+display: inline-flex;
+align-items: center;
+gap: 8px;
+transition: all 0.2s;
+}
+
+.btn-secondary {
+background: var(--surface);
+border: 1px solid var(--border);
+color: var(--text);
+}
+
+.btn-secondary:hover {
+background: var(--surface-hover);
+}
+
+.btn-primary {
+background: var(--accent);
+color: white;
+}
+
+.btn-primary:hover {
+background: #ea580c;
+transform: translateY(-1px);
+}
+
+.preview-panel {
+background: var(--card);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+padding: 32px;
+min-height: 500px;
+}
+
+.preview-title {
+font-size: 1.1em;
+font-weight: 600;
+margin-bottom: 20px;
+color: var(--text);
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.preview-area {
+background:
+linear-gradient(45deg, #1a232e 25%, transparent 25%),
+linear-gradient(-45deg, #1a232e 25%, transparent 25%),
+linear-gradient(45deg, transparent 75%, #1a232e 75%),
+linear-gradient(-45deg, transparent 75%, #1a232e 75%);
+background-size: 20px 20px;
+background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+background-color: #0d1117;
+border-radius: var(--radius);
+height: 350px;
+display: flex;
+align-items: center;
+justify-content: center;
+margin-bottom: 24px;
+position: relative;
+overflow: hidden;
+}
+
+.clip-preview {
+width: 280px;
+height: 280px;
+background: linear-gradient(135deg, var(--accent), var(--secondary));
+border-radius: 0;
+transition: clip-path 0.3s ease;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 14px;
+color: white;
+font-weight: 600;
+}
+
+.code-output {
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius-sm);
+padding: 16px;
+position: relative;
+}
+
+.code-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 12px;
+padding-bottom: 12px;
+border-bottom: 1px solid var(--border);
+}
+
+.code-label {
+font-size: 12px;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.copy-btn {
+padding: 8px 16px;
+background: var(--accent);
+color: white;
+border: none;
+border-radius: 6px;
+font-size: 13px;
+font-weight: 500;
+cursor: pointer;
+transition: all 0.2s;
+display: flex;
+align-items: center;
+gap: 6px;
+}
+
+.copy-btn:hover {
+background: #ea580c;
+transform: translateY(-1px);
+}
+
+.copy-btn.copied {
+background: var(--success);
+}
+
+.code-content {
+font-family: 'Space Mono', monospace;
+font-size: 13px;
+line-height: 1.6;
+color: var(--text);
+overflow-x: auto;
+white-space: pre-wrap;
+word-break: break-all;
+}
+
+.presets-section {
+margin-top: 24px;
+padding-top: 24px;
+border-top: 1px solid var(--border);
+}
+
+.presets-title {
+font-size: 14px;
+font-weight: 600;
+margin-bottom: 16px;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.presets-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 12px;
+}
+
+.preset-item {
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius-sm);
+padding: 16px;
+cursor: pointer;
+text-align: center;
+transition: all 0.2s;
+}
+
+.preset-item:hover {
+border-color: var(--accent);
+transform: translateY(-2px);
+}
+
+.preset-item.active {
+border-color: var(--accent);
+box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+.preset-shape {
+width: 50px;
+height: 50px;
+margin: 0 auto 8px;
+background: linear-gradient(135deg, var(--accent), var(--secondary));
+}
+
+.preset-name {
+font-size: 12px;
+color: var(--text);
+font-weight: 500;
+}
+
+.point-editor {
+margin-top: 24px;
+padding-top: 24px;
+border-top: 1px solid var(--border);
+}
+
+.point-editor-title {
+font-size: 14px;
+font-weight: 600;
+margin-bottom: 16px;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.point-row {
+display: grid;
+grid-template-columns: 40px 1fr 1fr auto;
+gap: 8px;
+align-items: center;
+margin-bottom: 8px;
+}
+
+.point-label {
+font-size: 12px;
+color: var(--text-muted);
+font-family: 'Space Mono', monospace;
+}
+
+.point-input {
+width: 100%;
+padding: 8px 10px;
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: 4px;
+color: var(--text);
+font-family: 'Space Mono', monospace;
+font-size: 13px;
+text-align: center;
+}
+
+.point-input:focus {
+outline: none;
+border-color: var(--accent);
+}
+
+.point-remove {
+width: 28px;
+height: 28px;
+border: none;
+background: transparent;
+color: #ef4444;
+cursor: pointer;
+border-radius: 4px;
+transition: all 0.2s;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.point-remove:hover {
+background: rgba(239, 68, 68, 0.1);
+}
+
+.add-point-btn {
+width: 100%;
+padding: 10px;
+background: transparent;
+border: 2px dashed var(--border);
+border-radius: var(--radius-sm);
+color: var(--text-muted);
+font-size: 13px;
+cursor: pointer;
+transition: all 0.2s;
+margin-top: 8px;
+}
+
+.add-point-btn:hover {
+border-color: var(--accent);
+color: var(--accent);
+}
+
+.visual-editor {
+margin-top: 24px;
+padding-top: 24px;
+border-top: 1px solid var(--border);
+}
+
+.visual-editor-title {
+font-size: 14px;
+font-weight: 600;
+margin-bottom: 16px;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.shape-canvas {
+width: 100%;
+height: 200px;
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius-sm);
+position: relative;
+cursor: crosshair;
+overflow: hidden;
+}
+
+.shape-preview {
+position: absolute;
+left: 10%;
+top: 10%;
+width: 80%;
+height: 80%;
+background: linear-gradient(135deg, var(--accent), var(--secondary));
+}
+
+.shape-point {
+position: absolute;
+width: 12px;
+height: 12px;
+background: white;
+border: 2px solid var(--accent);
+border-radius: 50%;
+cursor: grab;
+transform: translate(-50%, -50%);
+z-index: 10;
+box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.shape-point:hover {
+transform: translate(-50%, -50%) scale(1.2);
+}
+
+.shape-point.dragging {
+cursor: grabbing;
+background: var(--accent);
+}
+
+.shape-point::after {
+content: attr(data-index);
+position: absolute;
+top: -18px;
+left: 50%;
+transform: translateX(-50%);
+font-size: 10px;
+color: var(--text-muted);
+font-family: 'Space Mono', monospace;
+}
+
+.visual-hint {
+text-align: center;
+color: var(--text-muted);
+font-size: 12px;
+margin-top: 8px;
+}
+
+.guide-section {
+max-width: 800px;
+margin: 60px auto 0;
+}
+
+.guide-title {
+font-size: 1.8em;
+font-weight: 700;
+margin-bottom: 24px;
+text-align: center;
+}
+
+.guide-content {
+color: var(--text-muted);
+line-height: 1.8;
+}
+
+.guide-content h3 {
+color: var(--text);
+margin: 32px 0 16px;
+font-size: 1.3em;
+}
+
+.guide-content p {
+margin-bottom: 16px;
+}
+
+.guide-content code {
+background: var(--surface);
+padding: 2px 8px;
+border-radius: 4px;
+font-family: 'Space Mono', monospace;
+font-size: 0.9em;
+color: var(--accent);
+}
+
+.guide-content ul {
+padding-left: 24px;
+margin-bottom: 16px;
+}
+
+.guide-content li {
+margin-bottom: 8px;
+}
+
+.shape-values-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 12px;
+margin-top: 16px;
+}
+
+.shape-value-item {
+background: var(--surface);
+border-radius: var(--radius-sm);
+padding: 12px;
+text-align: center;
+}
+
+.shape-value-label {
+font-size: 11px;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.5px;
+margin-bottom: 4px;
+}
+
+.shape-value {
+font-family: 'Space Mono', monospace;
+font-size: 14px;
+color: var(--accent);
+}
+
+footer {
+text-align: center;
+padding: 40px 32px;
+color: var(--text-muted);
+font-size: 14px;
+border-top: 1px solid var(--border);
+margin-top: 60px;
+}
+
+footer a {
+color: var(--accent);
+text-decoration: none;
+}
+
+.shape-categories {
+display: flex;
+gap: 8px;
+margin-bottom: 16px;
+flex-wrap: wrap;
+}
+
+.shape-category {
+padding: 6px 12px;
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: 20px;
+cursor: pointer;
+font-size: 12px;
+color: var(--text-muted);
+transition: all 0.2s;
+}
+
+.shape-category:hover,
+.shape-category.active {
+background: var(--accent);
+border-color: var(--accent);
+color: white;
+}
+</style>
+</head>
+<body>
+<header>
+<a href="/" class="logo">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+</svg>
+Paperclip
+</a>
+<nav>
+<a href="/">Home</a>
+<a href="/tools/">Tools</a>
+<a href="https://github.com/bigknoxy/paperclip-pages" target="_blank">GitHub</a>
+</nav>
+</header>
+
+<div class="container">
+<div class="hero">
+<h1>CSS Clip Path Generator</h1>
+<p>Create custom shapes and masks with our visual editor. Choose from presets or build your own polygon with live preview and instant CSS export.</p>
+</div>
+
+<div class="tool-wrapper">
+<div class="controls-panel">
+<div class="panel-title">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+</svg>
+Clip Path Settings
+</div>
+
+<div class="control-group">
+<div class="control-label">
+<span>Shape Type</span>
+</div>
+<select id="shapeType">
+<option value="polygon">Polygon</option>
+<option value="circle">Circle</option>
+<option value="ellipse">Ellipse</option>
+<option value="inset">Inset</option>
+</select>
+</div>
+
+<div id="customValueSection" class="control-group" style="display: none;">
+<div class="control-label">
+<span>Custom Value</span>
+</div>
+<input type="text" id="customValue" placeholder="50% 0%, 100% 50%, 50% 100%, 0% 50%">
+</div>
+
+<div class="control-group">
+<label class="checkbox-control">
+<input type="checkbox" id="showReference">
+<span>Show Reference Box</span>
+</label>
+</div>
+
+<div class="presets-section">
+<div class="presets-title">Shape Presets</div>
+<div class="shape-categories">
+<span class="shape-category active" data-category="basic">Basic</span>
+<span class="shape-category" data-category="arrows">Arrows</span>
+<span class="shape-category" data-category="stars">Stars</span>
+<span class="shape-category" data-category="frames">Frames</span>
+</div>
+<div class="presets-grid" id="presetsGrid">
+<!-- Presets will be added here -->
+</div>
+</div>
+
+<div class="visual-editor">
+<div class="visual-editor-title">Visual Editor</div>
+<div class="shape-canvas" id="shapeCanvas">
+<div class="shape-preview" id="shapePreview"></div>
+</div>
+<p class="visual-hint">Drag the points to adjust the shape</p>
+</div>
+
+<div class="point-editor" id="pointEditor">
+<div class="point-editor-title">Point Coordinates</div>
+<div id="pointRows">
+<!-- Point inputs will be added here -->
+</div>
+<button class="add-point-btn" id="addPointBtn">+ Add Point</button>
+</div>
+</div>
+
+<div class="preview-panel">
+<div class="preview-title">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="12" cy="12" r="3"/>
+<path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/>
+</svg>
+Live Preview
+</div>
+<div class="preview-area">
+<div class="clip-preview" id="clipPreview">
+Clipped Element
+</div>
+</div>
+
+<div class="code-output">
+<div class="code-header">
+<span class="code-label">Generated CSS</span>
+<button class="copy-btn" id="copyBtn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+</svg>
+Copy CSS
+</button>
+</div>
+<pre class="code-content" id="cssOutput">clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);</pre>
+</div>
+
+<div class="shape-values-grid" id="shapeValues">
+<div class="shape-value-item">
+<div class="shape-value-label">Width</div>
+<div class="shape-value" id="shapeWidth">280px</div>
+</div>
+<div class="shape-value-item">
+<div class="shape-value-label">Height</div>
+<div class="shape-value" id="shapeHeight">280px</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+if (window.RelatedTools) {
+RelatedTools.renderRelatedTools('clip-path', '#related-tools-container', {
+title: 'Related Tools',
+showCategory: true,
+trackClicks: true
+});
+}
+});
+</script>
+
+<div class="guide-section">
+<h2 class="guide-title">Understanding CSS Clip-Path</h2>
+<div class="guide-content">
+<h3>What is Clip-Path?</h3>
+<p>The <code>clip-path</code> CSS property creates a clipping region that sets what part of an element should be shown. Parts that are inside the region are shown, while those outside are hidden.</p>
+
+<h3>Shape Types</h3>
+<ul>
+<li><strong>Polygon</strong> - Define multiple points to create any shape</li>
+<li><strong>Circle</strong> - Create circular or rounded cuts</li>
+<li><strong>Ellipse</strong> - Oval-shaped clipping regions</li>
+<li><strong>Inset</strong> - Inset rectangle from the edges</li>
+</ul>
+
+<h3>Browser Support</h3>
+<p>Clip-path is supported in all modern browsers. For older browsers, the element will simply appear without clipping - no broken layout.</p>
+
+<h3>Best Practices</h3>
+<ul>
+<li><strong>Use percentages</strong> for responsive shapes that scale with the element</li>
+<li><strong>Keep it simple</strong> - Complex polygons can impact performance</li>
+<li><strong>Test on mobile</strong> - Ensure clipped elements remain touchable</li>
+<li><strong>Combine with transforms</strong> - Add rotation or scale for dynamic effects</li>
+</ul>
+
+<h3>Common Use Cases</h3>
+<ul>
+<li><strong>Unique layouts</strong> - Diagonal sections, angled edges</li>
+<li><strong>Image masks</strong> - Creative photo shapes and frames</li>
+<li><strong>Hover effects</strong> - Reveal animations</li>
+<li><strong>Profile pictures</strong> - Hexagon, circle, or custom shapes</li>
+<li><strong>UI elements</strong> - Arrow buttons, speech bubbles</li>
+</ul>
+</div>
+</div>
+</div>
+
+<footer>
+<p>Built with ❤️ by <a href="https://github.com/bigknoxy/paperclip-pages" target="_blank">Paperclip</a></p>
+<p style="margin-top: 8px; opacity: 0.7;">Free tool • No data stored • Generated CSS is yours</p>
+</footer>
+
+<script>
+// Shape presets organized by category
+const presets = {
+basic: [
+{ name: 'Diamond', value: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' },
+{ name: 'Triangle Up', value: 'polygon(50% 0%, 0% 100%, 100% 100%)' },
+{ name: 'Triangle Down', value: 'polygon(0% 0%, 100% 0%, 50% 100%)' },
+{ name: 'Triangle Left', value: 'polygon(100% 0%, 100% 100%, 0% 50%)' },
+{ name: 'Triangle Right', value: 'polygon(0% 0%, 100% 50%, 0% 100%)' },
+{ name: 'Hexagon', value: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)' },
+{ name: 'Octagon', value: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)' },
+{ name: 'Pentagon', value: 'polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)' },
+{ name: 'Trapezoid', value: 'polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%)' },
+{ name: 'Parallelogram', value: 'polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)' },
+{ name: 'Rhombus', value: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' },
+{ name: 'Circle', value: 'circle(50% at 50% 50%)', type: 'circle' }
+],
+arrow: [
+{ name: 'Arrow Right', value: 'polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%)' },
+{ name: 'Arrow Left', value: 'polygon(100% 20%, 40% 20%, 40% 0%, 0% 50%, 40% 100%, 40% 80%, 100% 80%)' },
+{ name: 'Arrow Up', value: 'polygon(0% 100%, 50% 0%, 100% 100%, 80% 100%, 50% 40%, 20% 100%)' },
+{ name: 'Arrow Down', value: 'polygon(0% 0%, 100% 0%, 50% 100%, 50% 100%, 20% 60%, 50% 80%, 80% 60%, 50% 100%, 50% 100%, 100% 0%, 0% 0%)' },
+{ name: 'Chevron Right', value: 'polygon(0% 0%, 40% 0%, 100% 50%, 40% 100%, 0% 100%, 60% 50%)' },
+{ name: 'Chevron Left', value: 'polygon(100% 0%, 60% 0%, 0% 50%, 60% 100%, 100% 100%, 40% 50%)' },
+{ name: 'Pointer', value: 'polygon(0% 0%, 100% 0%, 100% 40%, 60% 40%, 60% 100%, 40% 100%, 40% 40%, 0% 40%)' },
+{ name: 'Ribbon', value: 'polygon(0% 0%, 100% 0%, 90% 50%, 100% 100%, 0% 100%, 10% 50%)' }
+],
+stars: [
+{ name: 'Star', value: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)' },
+{ name: 'Star 5', value: 'polygon(50% 0%, 63% 38%, 100% 38%, 69% 59%, 82% 100%, 50% 75%, 18% 100%, 31% 59%, 0% 38%, 37% 38%)' },
+{ name: 'Star 4', value: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)' },
+{ name: 'Star 6', value: 'polygon(50% 0%, 63% 25%, 100% 25%, 75% 50%, 100% 75%, 63% 75%, 50% 100%, 37% 75%, 0% 75%, 25% 50%, 0% 25%, 37% 25%)' },
+{ name: 'Burst', value: 'polygon(50% 0%, 60% 30%, 100% 30%, 70% 50%, 80% 90%, 50% 70%, 20% 90%, 30% 50%, 0% 30%, 40% 30%)' },
+{ name: 'Cross', value: 'polygon(20% 0%, 80% 0%, 80% 20%, 100% 20%, 100% 80%, 80% 80%, 80% 100%, 20% 100%, 20% 80%, 0% 80%, 0% 20%, 20% 20%)' }
+],
+frames: [
+{ name: 'Frame', value: 'polygon(0% 0%, 0% 100%, 25% 100%, 25% 25%, 75% 25%, 75% 75%, 25% 75%, 25% 100%, 100% 100%, 100% 0%)' },
+{ name: 'Message', value: 'polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%)' },
+{ name: 'Notch', value: 'polygon(0% 0%, 100% 0%, 100% 100%, 85% 100%, 85% 85%, 15% 85%, 15% 100%, 0% 100%)' },
+{ name: 'Side', value: 'polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%)' },
+{ name: 'Corner Cut', value: 'polygon(20% 0%, 100% 0%, 100% 80%, 80% 100%, 0% 100%, 0% 20%)' },
+{ name: 'Bevel', value: 'polygon(10% 0%, 90% 0%, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0% 90%, 0% 10%)' }
+]
+};
+
+// State
+let currentShape = { type: 'polygon', points: [[50, 0], [100, 50], [50, 100], [0, 50]] };
+let currentCategory = 'basic';
+let isDragging = false;
+let dragPointIndex = -1;
+
+// DOM Elements
+const clipPreview = document.getElementById('clipPreview');
+const cssOutput = document.getElementById('cssOutput');
+const copyBtn = document.getElementById('copyBtn');
+const shapeType = document.getElementById('shapeType');
+const presetsGrid = document.getElementById('presetsGrid');
+const pointRows = document.getElementById('pointRows');
+const addPointBtn = document.getElementById('addPointBtn');
+const shapeCanvas = document.getElementById('shapeCanvas');
+const shapePreview = document.getElementById('shapePreview');
+const customValueSection = document.getElementById('customValueSection');
+const customValue = document.getElementById('customValue');
+const showReference = document.getElementById('showReference');
+
+// Initialize
+function init() {
+renderPresets();
+renderPointEditor();
+updateShape();
+setupEventListeners();
+}
+
+// Parse polygon value to points
+function parsePolygon(value) {
+if (!value.startsWith('polygon(')) return null;
+const coords = value.slice(8, -1).split(',').map(p => {
+const [x, y] = p.trim().split(' ').map(parseFloat);
+return [x, y];
+});
+return coords;
+}
+
+// Generate polygon value from points
+function generatePolygonValue() {
+const coords = currentShape.points.map(p => `${p[0]}% ${p[1]}%`).join(', ');
+return `polygon(${coords})`;
+}
+
+// Render presets
+function renderPresets() {
+const categoryPresets = presets[currentCategory] || presets.basic;
+presetsGrid.innerHTML = categoryPresets.map((preset, index) => {
+const points = parsePolygon(preset.value);
+const shapeStyle = points ? `clip-path: ${preset.value}` : '';
+return `
+<div class="preset-item" data-index="${index}" data-value="${preset.value}" data-type="${preset.type || 'polygon'}">
+<div class="preset-shape" style="${shapeStyle}"></div>
+<div class="preset-name">${preset.name}</div>
+</div>
+`;
+}).join('');
+
+presetsGrid.querySelectorAll('.preset-item').forEach(item => {
+item.addEventListener('click', () => {
+presetsGrid.querySelectorAll('.preset-item').forEach(i => i.classList.remove('active'));
+item.classList.add('active');
+const value = item.dataset.value;
+const type = item.dataset.type;
+shapeType.value = type;
+if (type === 'polygon') {
+const points = parsePolygon(value);
+if (points) {
+currentShape = { type: 'polygon', points };
+renderPointEditor();
+updateVisualEditor();
+}
+}
+updateShape();
+});
+});
+}
+
+// Render point editor
+function renderPointEditor() {
+if (currentShape.type !== 'polygon') {
+pointRows.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 20px;">Point editing only available for polygon shapes</p>';
+return;
+}
+
+pointRows.innerHTML = currentShape.points.map((point, index) => `
+<div class="point-row" data-index="${index}">
+<span class="point-label">P${index + 1}</span>
+<input type="text" class="point-input" value="${point[0]}" data-index="${index}" data-axis="x" placeholder="X%">
+<input type="text" class="point-input" value="${point[1]}" data-index="${index}" data-axis="y" placeholder="Y%">
+<button class="point-remove" data-index="${index}">×</button>
+</div>
+`).join('');
+
+// Add event listeners to inputs
+pointRows.querySelectorAll('.point-input').forEach(input => {
+input.addEventListener('change', (e) => {
+const index = parseInt(e.target.dataset.index);
+const axis = e.target.dataset.axis;
+const value = parseFloat(e.target.value) || 0;
+currentShape.points[index][axis === 'x' ? 0 : 1] = Math.max(0, Math.min(100, value));
+updateShape();
+updateVisualEditor();
+});
+});
+
+// Add event listeners to remove buttons
+pointRows.querySelectorAll('.point-remove').forEach(btn => {
+btn.addEventListener('click', (e) => {
+if (currentShape.points.length > 3) {
+const index = parseInt(e.target.dataset.index);
+currentShape.points.splice(index, 1);
+renderPointEditor();
+updateShape();
+updateVisualEditor();
+}
+});
+});
+}
+
+// Update visual editor (canvas)
+function updateVisualEditor() {
+if (currentShape.type !== 'polygon') {
+shapePreview.innerHTML = '';
+shapePreview.style.clipPath = generatePolygonValue();
+return;
+}
+
+const rect = shapeCanvas.getBoundingClientRect();
+const padding = rect.width * 0.1;
+const availableWidth = rect.width - (padding * 2);
+const availableHeight = rect.height - (padding * 2);
+
+// Update preview shape
+shapePreview.style.clipPath = generatePolygonValue();
+
+// Add draggable points
+shapePreview.innerHTML = currentShape.points.map((point, index) => {
+const x = padding + (point[0] / 100) * availableWidth;
+const y = padding + (point[1] / 100) * availableHeight;
+return `<div class="shape-point" data-index="${index}" style="left: ${x}px; top: ${y}px;"></div>`;
+}).join('');
+
+// Add drag handlers
+shapePreview.querySelectorAll('.shape-point').forEach(point => {
+point.addEventListener('mousedown', (e) => {
+isDragging = true;
+dragPointIndex = parseInt(e.target.dataset.index);
+e.target.classList.add('dragging');
+e.preventDefault();
+});
+});
+}
+
+// Setup event listeners
+function setupEventListeners() {
+// Shape type change
+shapeType.addEventListener('change', () => {
+currentShape.type = shapeType.value;
+if (currentShape.type === 'circle') {
+clipPreview.style.clipPath = 'circle(50% at 50% 50%)';
+} else if (currentShape.type === 'ellipse') {
+clipPreview.style.clipPath = 'ellipse(50% 40% at 50% 50%)';
+} else if (currentShape.type === 'inset') {
+clipPreview.style.clipPath = 'inset(10% 20% 30% 40%)';
+}
+renderPointEditor();
+updateVisualEditor();
+updateShape();
+});
+
+// Add point button
+addPointBtn.addEventListener('click', () => {
+if (currentShape.type === 'polygon' && currentShape.points.length < 20) {
+// Add point at center
+const lastPoint = currentShape.points[currentShape.points.length - 1];
+const prevPoint = currentShape.points[currentShape.points.length - 2] || lastPoint;
+currentShape.points.push([
+Math.round((lastPoint[0] + prevPoint[0]) / 2),
+Math.round((lastPoint[1] + prevPoint[1]) / 2)
+]);
+renderPointEditor();
+updateShape();
+updateVisualEditor();
+}
+});
+
+// Show reference box
+showReference.addEventListener('change', () => {
+if (showReference.checked) {
+clipPreview.style.boxShadow = 'inset 0 0 0 2px rgba(255,255,255,0.3)';
+} else {
+clipPreview.style.boxShadow = 'none';
+}
+});
+
+// Category tabs
+document.querySelectorAll('.shape-category').forEach(tab => {
+tab.addEventListener('click', () => {
+document.querySelectorAll('.shape-category').forEach(t => t.classList.remove('active'));
+tab.classList.add('active');
+currentCategory = tab.dataset.category;
+renderPresets();
+});
+});
+
+// Canvas mouse events for dragging
+shapeCanvas.addEventListener('mousemove', (e) => {
+if (isDragging && dragPointIndex >= 0) {
+const rect = shapeCanvas.getBoundingClientRect();
+const padding = rect.width * 0.1;
+const availableWidth = rect.width - (padding * 2);
+const availableHeight = rect.height - (padding * 2);
+
+const x = ((e.clientX - rect.left - padding) / availableWidth) * 100;
+const y = ((e.clientY - rect.top - padding) / availableHeight) * 100;
+
+currentShape.points[dragPointIndex][0] = Math.max(0, Math.min(100, Math.round(x)));
+currentShape.points[dragPointIndex][1] = Math.max(0, Math.min(100, Math.round(y)));
+
+renderPointEditor();
+updateShape();
+updateVisualEditor();
+}
+});
+
+document.addEventListener('mouseup', () => {
+if (isDragging) {
+isDragging = false;
+const draggingPoint = shapePreview.querySelector('.shape-point.dragging');
+if (draggingPoint) {
+draggingPoint.classList.remove('dragging');
+}
+dragPointIndex = -1;
+}
+});
+
+// Copy button
+copyBtn.addEventListener('click', () => {
+navigator.clipboard.writeText(cssOutput.textContent).then(() => {
+copyBtn.classList.add('copied');
+copyBtn.innerHTML = '✓ Copied!';
+setTimeout(() => {
+copyBtn.classList.remove('copied');
+copyBtn.innerHTML = `
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+</svg>
+Copy CSS
+`;
+}, 2000);
+});
+}
+
+// Update shape and CSS output
+function updateShape() {
+let clipValue;
+if (currentShape.type === 'polygon') {
+clipValue = generatePolygonValue();
+} else if (currentShape.type === 'circle') {
+clipValue = 'circle(50% at 50% 50%)';
+} else if (currentShape.type === 'ellipse') {
+clipValue = 'ellipse(50% 40% at 50% 50%)';
+} else if (currentShape.type === 'inset') {
+clipValue = 'inset(10% 20% 30% 40%)';
+}
+
+clipPreview.style.clipPath = clipValue;
+cssOutput.textContent = `clip-path: ${clipValue};`;
+}
+
+// Initialize
+init();
+</script>
+</body>
+</html>

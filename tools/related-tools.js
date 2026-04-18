@@ -172,7 +172,15 @@ related: ['password-generator', 'password-strength', 'base64', 'jwt-decoder']
 },
 
 // Developer Tools
-  'cron-expression-generator': {
+'uuid-generator': {
+name: 'UUID Generator',
+path: '/tools/uuid-generator/',
+category: 'Developer Tools',
+icon: '🔑',
+description: 'Generate UUID v4 (random) and v7 (time-ordered) formats with bulk generation',
+related: ['password-generator', 'hash', 'time-converter', 'json-formatter']
+},
+'cron-expression-generator': {
     name: 'Cron Expression Generator',
     path: '/tools/cron-expression-generator/',
     category: 'Developer Tools',
@@ -230,6 +238,14 @@ related: ['csv-json', 'unit-converter', 'text-processor', 'code-minifier']
     description: 'Convert between bytes, KB, MB, GB, TB, PB with binary and decimal options',
     related: ['time-converter', 'unit-converter', 'batch-converter', 'code-minifier']
   },
+  'ip-address-info': {
+    name: 'IP Address Info',
+    path: '/tools/ip-address-info/',
+    category: 'Developer Tools',
+    icon: '🌐',
+    description: 'Validate IPv4/IPv6, calculate subnets, CIDR notation, detect IP types',
+    related: ['hash', 'jwt-decoder', 'base64', 'text-processor']
+  },
 
   // Design Tools
   'color': {
@@ -238,7 +254,7 @@ related: ['csv-json', 'unit-converter', 'text-processor', 'code-minifier']
     category: 'Design',
     icon: '🎨',
     description: 'Color picker and converter',
-    related: ['color-palette-generator', 'color-contrast', 'css-layout', 'unit-converter']
+    related: ['hsl-to-hex', 'color-palette-generator', 'color-contrast', 'css-layout']
   },
   'color-contrast': {
     name: 'Color Contrast Checker',
@@ -247,6 +263,14 @@ related: ['csv-json', 'unit-converter', 'text-processor', 'code-minifier']
     icon: '♿',
     description: 'WCAG AA/AAA color contrast accessibility checker',
     related: ['color', 'color-palette-generator', 'css-layout', 'readability']
+  },
+  'hsl-to-hex': {
+    name: 'HSL to HEX Converter',
+    path: '/tools/hsl-to-hex/',
+    category: 'Design',
+    icon: '🎨',
+    description: 'Convert HSL colors to HEX codes instantly',
+    related: ['color', 'color-palette-generator', 'color-contrast', 'css-gradient']
   },
   'color-palette-generator': {
     name: 'Color Palette Generator',
@@ -265,21 +289,21 @@ related: ['csv-json', 'unit-converter', 'text-processor', 'code-minifier']
     related: ['color', 'code-minifier', 'color-palette-generator', 'text-processor']
   },
 'box-shadow': {
-name: 'CSS Box Shadow Generator',
-path: '/tools/box-shadow/',
-category: 'Design',
-icon: '🌑',
-description: 'Create beautiful multi-layered CSS box shadows',
-related: ['css-layout', 'css-gradient', 'glassmorphism', 'color']
-},
+    name: 'CSS Box Shadow Generator',
+    path: '/tools/box-shadow/',
+    category: 'Design',
+    icon: '🌑',
+    description: 'Create beautiful multi-layered CSS box shadows',
+    related: ['css-layout', 'css-gradient', 'glassmorphism', 'clip-path']
+  },
 'css-gradient': {
-name: 'CSS Gradient Generator',
-path: '/tools/css-gradient/',
-category: 'Design',
-icon: '🌈',
-description: 'Create linear, radial, and conic CSS gradients',
-related: ['color-palette-generator', 'box-shadow', 'glassmorphism', 'color']
-},
+    name: 'CSS Gradient Generator',
+    path: '/tools/css-gradient/',
+    category: 'Design',
+    icon: '🌈',
+    description: 'Create linear, radial, and conic CSS gradients',
+    related: ['color-palette-generator', 'box-shadow', 'glassmorphism', 'clip-path']
+  },
 'glassmorphism': {
 name: 'Glassmorphism CSS Generator',
 path: '/tools/glassmorphism/',
@@ -289,14 +313,22 @@ description: 'Create frosted glass effects with backdrop-filter',
 related: ['css-gradient', 'box-shadow', 'css-layout', 'color-palette-generator']
 },
 'animation-keyframe': {
-name: 'CSS Animation Keyframe Generator',
-path: '/tools/animation-keyframe/',
-category: 'Design',
-icon: '🎬',
-description: 'Create CSS animations with keyframe editing and live preview',
-related: ['css-gradient', 'box-shadow', 'css-layout', 'glassmorphism']
-},
-'screen-resolution': {
+    name: 'CSS Animation Keyframe Generator',
+    path: '/tools/animation-keyframe/',
+    category: 'Design',
+    icon: '🎬',
+    description: 'Create CSS animations with keyframe editing and live preview',
+    related: ['css-gradient', 'box-shadow', 'css-layout', 'glassmorphism']
+  },
+  'clip-path': {
+    name: 'CSS Clip Path Generator',
+    path: '/tools/clip-path/',
+    category: 'Design',
+    icon: '✂️',
+    description: 'Create custom shapes and masks with visual editor and presets',
+    related: ['css-gradient', 'box-shadow', 'css-layout', 'animation-keyframe']
+  },
+  'screen-resolution': {
 name: 'Screen Resolution Simulator',
 path: '/tools/screen-resolution/',
 category: 'Design',
@@ -347,6 +379,14 @@ category: 'Utilities',
 icon: '🎨',
 description: 'Transform text into fancy Unicode styles',
 related: ['text-case-converter', 'text-processor', 'qr-generator', 'hash']
+},
+'ascii-art': {
+name: 'ASCII Art Generator',
+path: '/tools/ascii-art/',
+category: 'Text & Content',
+icon: '🎨',
+description: 'Convert text into beautiful ASCII art with multiple font styles',
+related: ['unicode-text', 'text-case-converter', 'text-processor', 'lorem-ipsum']
 }
 };
 
