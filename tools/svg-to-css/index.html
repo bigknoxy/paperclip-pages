@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SVG to CSS Background Converter | Paperclip</title>
+<meta name="description" content="Convert SVG to CSS background-image data URI. Optimize inline SVG, URL encode for stylesheets, and get copy-ready CSS output. Perfect for embedding icons and graphics directly in CSS without external files." />
+<meta name="keywords" content="svg to css, svg data uri, css background svg, inline svg css, svg encoder, svg optimizer" />
+<meta name="author" content="Paperclip" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/svg-to-css/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--error:#ef4444;--warning:#f59e0b;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1000px;margin:0 auto}
+.logo{font-weight:700;font-size:1.2em;color:var(--accent)}
+nav{display:flex;gap:16px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--text)}
+.container{max-width:1000px;margin:0 auto;padding:24px}
+h1{font-size:1.8em;margin:0 0 8px 0}
+.subtitle{color:var(--muted);margin-bottom:24px}
+.converter-card{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin-bottom:24px}
+.converter-card h2{margin:0 0 20px 0;font-size:1.2em;color:var(--accent);display:flex;align-items:center;gap:10px}
+.input-group{margin-bottom:20px}
+.input-group:last-child{margin-bottom:0}
+label{display:block;margin-bottom:8px;color:var(--muted);font-size:14px}
+.input-hint{font-size:12px;color:var(--muted);margin-top:6px}
+textarea{width:100%;padding:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:var(--text);font-family:monospace;font-size:13px;min-height:150px;resize:vertical}
+textarea:focus{outline:none;border-color:var(--accent)}
+.drop-zone{border:2px dashed rgba(255,255,255,0.2);border-radius:12px;padding:40px;text-align:center;cursor:pointer;transition:all 0.2s;margin-bottom:20px}
+.drop-zone:hover,.drop-zone.dragover{border-color:var(--accent);background:rgba(6,182,212,0.05)}
+.drop-zone-text{color:var(--muted);font-size:14px}
+.drop-zone-text strong{color:var(--accent);display:block;margin-bottom:8px}
+.options-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px}
+.option-item{display:flex;align-items:center;gap:10px;cursor:pointer;padding:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;transition:all 0.2s}
+.option-item:hover{border-color:var(--accent)}
+.option-item input[type="checkbox"]{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
+.option-item label{cursor:pointer;margin:0}
+.output-section{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px}
+.output-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px}
+.output-header h3{margin:0;font-size:1.1em}
+.css-output{background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:16px;word-break:break-all;font-family:monospace;font-size:12px;line-height:1.6;margin-bottom:16px;min-height:80px;white-space:pre-wrap}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px}
+.stat-item{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px 16px}
+.stat-label{font-size:12px;color:var(--muted);margin-bottom:4px}
+.stat-value{font-size:18px;font-weight:600;color:var(--text)}
+.stat-value.saved{color:var(--success)}
+.button-group{display:flex;gap:12px;flex-wrap:wrap}
+button{padding:12px 24px;background:var(--accent);color:#012;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px}
+button:hover{opacity:.9}
+button.secondary{background:rgba(255,255,255,0.1);color:var(--text)}
+button.secondary:hover{background:rgba(255,255,255,0.15)}
+button.success{background:var(--success)}
+.preview-section{margin-top:20px;padding:20px;background:rgba(255,255,255,0.03);border-radius:8px}
+.preview-section h4{margin:0 0 16px 0;color:var(--accent);font-size:14px}
+.preview-box{width:100%;height:100px;border:1px solid rgba(255,255,255,0.1);border-radius:8px;background-repeat:no-repeat;background-position:center;background-size:contain;margin-bottom:12px}
+.preview-code{background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;font-family:monospace;font-size:12px;color:var(--muted);overflow-x:auto}
+.error-message{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:12px 16px;color:var(--error);font-size:14px;margin-bottom:16px;display:none}
+.error-message.show{display:block}
+.copied-toast{position:fixed;bottom:24px;right:24px;background:var(--success);color:#fff;padding:12px 20px;border-radius:8px;font-weight:600;opacity:0;transform:translateY(20px);transition:all 0.3s ease}
+.copied-toast.show{opacity:1;transform:translateY(0)}
+.tips-section{margin-top:32px;padding:20px;background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(37,99,235,0.1));border-radius:12px;border:1px solid rgba(6,182,212,0.3)}
+.tips-section h3{margin:0 0 16px 0;color:var(--accent)}
+.tips-section ul{margin:0;padding-left:20px;color:var(--muted)}
+.tips-section li{margin-bottom:8px}
+.tips-section code{background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:13px}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
+</style>
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+<header>
+<a href="/" class="logo">← Paperclip</a>
+<nav>
+<a href="/">Home</a>
+<a href="/tools/">Tools</a>
+<a href="/content/">Blog</a>
+</nav>
+</header>
+
+<div class="container">
+<h1>SVG to CSS Background Converter</h1>
+<p class="subtitle">Convert SVG to CSS background-image data URI. Optimize inline SVG, URL encode for stylesheets, and get copy-ready CSS output.</p>
+
+<div class="converter-card">
+<h2>🎨 Input SVG</h2>
+
+<div class="drop-zone" id="dropZone">
+<div class="drop-zone-text">
+<strong>Drop SVG file here</strong>
+or paste SVG code below
+</div>
+</div>
+
+<div class="input-group">
+<textarea id="svgInput" placeholder="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot;&gt;&#10;  &lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot; fill=&quot;%2306b6d4&quot;/&gt;&#10;&lt;/svg&gt;"></textarea>
+<p class="input-hint">Paste your SVG code or drop a file above</p>
+</div>
+
+<div class="options-grid">
+<div class="option-item">
+<input type="checkbox" id="optimizeSvg" checked>
+<label for="optimizeSvg">Optimize SVG (remove whitespace)</label>
+</div>
+<div class="option-item">
+<input type="checkbox" id="encodeSpecial" checked>
+<label for="encodeSpecial">Encode special characters (&lt; &gt; # etc)</label>
+</div>
+<div class="option-item">
+<input type="checkbox" id="addQuotes" checked>
+<label for="addQuotes">Wrap in quotes</label>
+</div>
+<div class="option-item">
+<input type="checkbox" id="includeBgSize">
+<label for="includeBgSize">Add background-size property</label>
+</div>
+</div>
+
+<div class="button-group">
+<button id="convertBtn">Convert to CSS</button>
+<button class="secondary" id="clearBtn">Clear</button>
+<button class="secondary" id="sampleBtn">Load Sample</button>
+</div>
+</div>
+
+<div class="error-message" id="errorMessage"></div>
+
+<div class="output-section" id="outputSection" style="display:none;">
+<div class="output-header">
+<h3>CSS Output</h3>
+<button class="success" id="copyBtn">📋 Copy CSS</button>
+</div>
+
+<div class="stats-grid">
+<div class="stat-item">
+<div class="stat-label">Original Size</div>
+<div class="stat-value" id="originalSize">-</div>
+</div>
+<div class="stat-item">
+<div class="stat-label">CSS Size</div>
+<div class="stat-value" id="cssSize">-</div>
+</div>
+<div class="stat-item">
+<div class="stat-label">Size Saved</div>
+<div class="stat-value saved" id="sizeSaved">-</div>
+</div>
+</div>
+
+<div class="css-output" id="cssOutput"></div>
+
+<div class="button-group">
+<button class="secondary" id="copyUrlBtn">Copy Data URI Only</button>
+<button class="secondary" id="downloadBtn">Download CSS File</button>
+</div>
+
+<div class="preview-section">
+<h4>Preview</h4>
+<div class="preview-box" id="previewBox"></div>
+<div class="preview-code" id="previewCode"></div>
+</div>
+</div>
+
+<div class="tips-section">
+<h3>💡 Pro Tips</h3>
+<ul>
+<li>Use this tool to embed small icons and graphics directly in CSS without HTTP requests</li>
+<li>Optimized SVGs work best - remove unnecessary attributes and minimize whitespace</li>
+<li>URL encoding is required for characters like <code>&lt;</code>, <code>&gt;</code>, <code>#</code>, and <code>&amp;</code> in CSS</li>
+<li>Single quotes around the data URI prevent issues with double quotes in SVG attributes</li>
+<li>For repeated backgrounds, use <code>background-size: contain</code> or <code>cover</code></li>
+<li>Keep inline SVGs under 2-3KB for best performance; larger images should be external files</li>
+</ul>
+</div>
+</div>
+
+<footer>
+<p>Made with minimal code • Free forever • No tracking</p>
+</footer>
+
+<div class="copied-toast" id="copiedToast">Copied to clipboard!</div>
+
+<script src="/public/analytics.js"></script>
+<script>
+(function() {
+const svgInput = document.getElementById('svgInput');
+const dropZone = document.getElementById('dropZone');
+const convertBtn = document.getElementById('convertBtn');
+const clearBtn = document.getElementById('clearBtn');
+const sampleBtn = document.getElementById('sampleBtn');
+const copyBtn = document.getElementById('copyBtn');
+const copyUrlBtn = document.getElementById('copyUrlBtn');
+const downloadBtn = document.getElementById('downloadBtn');
+const optimizeSvg = document.getElementById('optimizeSvg');
+const encodeSpecial = document.getElementById('encodeSpecial');
+const addQuotes = document.getElementById('addQuotes');
+const includeBgSize = document.getElementById('includeBgSize');
+const errorMessage = document.getElementById('errorMessage');
+const outputSection = document.getElementById('outputSection');
+const cssOutput = document.getElementById('cssOutput');
+const originalSizeEl = document.getElementById('originalSize');
+const cssSizeEl = document.getElementById('cssSize');
+const sizeSavedEl = document.getElementById('sizeSaved');
+const previewBox = document.getElementById('previewBox');
+const previewCode = document.getElementById('previewCode');
+const copiedToast = document.getElementById('copiedToast');
+
+let currentDataUri = '';
+
+function showError(msg) {
+errorMessage.textContent = msg;
+errorMessage.classList.add('show');
+}
+
+function hideError() {
+errorMessage.classList.remove('show');
+}
+
+function showToast() {
+copiedToast.classList.add('show');
+setTimeout(() => copiedToast.classList.remove('show'), 2000);
+}
+
+function formatBytes(bytes) {
+if (bytes === 0) return '0 B';
+const k = 1024;
+const sizes = ['B', 'KB', 'MB'];
+const i = Math.floor(Math.log(bytes) / Math.log(k));
+return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+function optimizeSVG(svg) {
+// Remove comments
+svg = svg.replace(/<!--[\s\S]*?-->/g, '');
+// Remove unnecessary whitespace
+svg = svg.replace(/>\s+</g, '><');
+// Remove XML declaration
+svg = svg.replace(/<\?xml[^?]*\?>/gi, '');
+// Remove DOCTYPE
+svg = svg.replace(/<!DOCTYPE[^>]*>/gi, '');
+// Trim
+return svg.trim();
+}
+
+function svgToDataURI(svg, encodeSpecialChars) {
+if (encodeSpecialChars) {
+// URL encode for use in CSS
+return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+} else {
+// Use base64 for complex SVGs with special characters
+const base64 = btoa(unescape(encodeURIComponent(svg)));
+return 'data:image/svg+xml;base64,' + base64;
+}
+}
+
+function generateCSS(dataUri) {
+let css = '.svg-bg {\n';
+css += '  background-image: url(';
+if (addQuotes.checked) {
+css += "'" + dataUri + "'";
+} else {
+css += dataUri;
+}
+css += ');\n';
+css += '  background-repeat: no-repeat;\n';
+css += '  background-position: center;\n';
+if (includeBgSize.checked) {
+css += '  background-size: contain;\n';
+}
+css += '}';
+return css;
+}
+
+function convert() {
+hideError();
+const svg = svgInput.value.trim();
+
+if (!svg) {
+showError('Please enter SVG code or drop a file');
+return;
+}
+
+if (!svg.includes('<svg')) {
+showError('Invalid SVG code. Must contain <svg> element.');
+return;
+}
+
+let processedSvg = svg;
+if (optimizeSvg.checked) {
+processedSvg = optimizeSVG(svg);
+}
+
+// Calculate original size
+const originalBytes = new Blob([svg]).size;
+const processedBytes = new Blob([processedSvg]).size;
+
+// Generate data URI
+const dataUri = svgToDataURI(processedSvg, encodeSpecial.checked);
+currentDataUri = dataUri;
+
+// Calculate CSS size
+const css = generateCSS(dataUri);
+const cssBytes = new Blob([css]).size;
+const saved = originalBytes - cssBytes;
+
+// Update stats
+originalSizeEl.textContent = formatBytes(originalBytes);
+cssSizeEl.textContent = formatBytes(cssBytes);
+if (saved > 0) {
+sizeSavedEl.textContent = '-' + formatBytes(saved);
+sizeSavedEl.classList.add('saved');
+} else {
+sizeSavedEl.textContent = '+' + formatBytes(Math.abs(saved));
+sizeSavedEl.classList.remove('saved');
+}
+
+// Update output
+cssOutput.textContent = css;
+
+// Update preview
+previewBox.style.backgroundImage = 'url(' + dataUri + ')';
+previewCode.textContent = 'background-image: url(' + (addQuotes.checked ? "'...'" : '...') + ');';
+
+// Show output
+outputSection.style.display = 'block';
+outputSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function clear() {
+svgInput.value = '';
+hideError();
+outputSection.style.display = 'none';
+currentDataUri = '';
+}
+
+function loadSample() {
+const sampleSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="12" cy="12" r="10"/>
+  <polyline points="12 6 12 12 16 14"/>
+</svg>`;
+svgInput.value = sampleSVG;
+hideError();
+}
+
+function copyCSS() {
+if (!currentDataUri) return;
+const css = cssOutput.textContent;
+navigator.clipboard.writeText(css).then(() => {
+showToast();
+});
+}
+
+function copyDataURI() {
+if (!currentDataUri) return;
+navigator.clipboard.writeText(currentDataUri).then(() => {
+showToast();
+});
+}
+
+function downloadCSS() {
+if (!currentDataUri) return;
+const css = cssOutput.textContent;
+const blob = new Blob([css], { type: 'text/css' });
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = 'svg-background.css';
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+URL.revokeObjectURL(url);
+}
+
+// Event listeners
+convertBtn.addEventListener('click', convert);
+clearBtn.addEventListener('click', clear);
+sampleBtn.addEventListener('click', loadSample);
+copyBtn.addEventListener('click', copyCSS);
+copyUrlBtn.addEventListener('click', copyDataURI);
+downloadBtn.addEventListener('click', downloadCSS);
+
+// Checkboxes auto-convert
+[optimizeSvg, encodeSpecial, addQuotes, includeBgSize].forEach(cb => {
+cb.addEventListener('change', () => {
+if (svgInput.value.trim() && currentDataUri) {
+convert();
+}
+});
+});
+
+// Drag and drop
+dropZone.addEventListener('dragover', (e) => {
+e.preventDefault();
+dropZone.classList.add('dragover');
+});
+
+dropZone.addEventListener('dragleave', () => {
+dropZone.classList.remove('dragover');
+});
+
+dropZone.addEventListener('drop', (e) => {
+e.preventDefault();
+dropZone.classList.remove('dragover');
+
+const file = e.dataTransfer.files[0];
+if (file && file.type === 'image/svg+xml') {
+const reader = new FileReader();
+reader.onload = (e) => {
+svgInput.value = e.target.result;
+hideError();
+};
+reader.readAsText(file);
+} else {
+showError('Please drop an SVG file');
+}
+});
+
+dropZone.addEventListener('click', () => {
+const input = document.createElement('input');
+input.type = 'file';
+input.accept = '.svg,image/svg+xml';
+input.onchange = (e) => {
+const file = e.target.files[0];
+if (file) {
+const reader = new FileReader();
+reader.onload = (e) => {
+svgInput.value = e.target.result;
+hideError();
+};
+reader.readAsText(file);
+}
+};
+input.click();
+});
+})();
+</script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+if (window.RelatedTools) {
+RelatedTools.renderRelatedTools('svg-to-css', '#related-tools-container', {
+title: 'Related Tools',
+showCategory: true,
+trackClicks: true
+});
+}
+});
+</script>
+</body>
+</html>

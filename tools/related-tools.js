@@ -238,16 +238,24 @@ related: ['csv-json', 'unit-converter', 'text-processor', 'code-minifier']
     description: 'Convert between bytes, KB, MB, GB, TB, PB with binary and decimal options',
     related: ['time-converter', 'unit-converter', 'batch-converter', 'code-minifier']
   },
-  'ip-address-info': {
-    name: 'IP Address Info',
-    path: '/tools/ip-address-info/',
-    category: 'Developer Tools',
-    icon: '🌐',
-    description: 'Validate IPv4/IPv6, calculate subnets, CIDR notation, detect IP types',
-    related: ['hash', 'jwt-decoder', 'base64', 'text-processor']
-  },
+'ip-address-info': {
+name: 'IP Address Info',
+path: '/tools/ip-address-info/',
+category: 'Developer Tools',
+icon: '🌐',
+description: 'Validate IPv4/IPv6, calculate subnets, CIDR notation, detect IP types',
+related: ['hash', 'jwt-decoder', 'base64', 'text-processor']
+},
+'svg-to-css': {
+name: 'SVG to CSS Converter',
+path: '/tools/svg-to-css/',
+category: 'Developer Tools',
+icon: '🎨',
+description: 'Convert SVG to CSS background-image data URI for inline stylesheets',
+related: ['image-to-base64', 'color', 'css-gradient', 'css-layout']
+},
 
-  // Design Tools
+// Design Tools
   'color': {
     name: 'Color Tools',
     path: '/tools/color/',
