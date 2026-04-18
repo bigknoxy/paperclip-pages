@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>UTM URL Builder | Paperclip</title>
+<meta name="description" content="Build UTM tracking URLs for marketing campaigns. Generate properly formatted URLs with source, medium, campaign, term, and content parameters. Free, fast, no ads." />
+<meta name="keywords" content="utm url builder, utm generator, campaign url builder, google analytics utm, tracking url generator" />
+<meta name="author" content="Paperclip" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/utm-builder/" />
+<link rel="preconnect" href="https://cdn.carbonads.com" crossorigin>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--error:#ef4444;--warning:#f59e0b;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1000px;margin:0 auto}
+.logo{font-weight:700;font-size:1.2em;color:var(--accent)}
+nav{display:flex;gap:16px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--text)}
+.container{max-width:1000px;margin:0 auto;padding:24px}
+h1{font-size:1.8em;margin:0 0 8px 0}
+.subtitle{color:var(--muted);margin-bottom:24px}
+.builder-card{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin-bottom:24px}
+.builder-card h2{margin:0 0 20px 0;font-size:1.2em;color:var(--accent);display:flex;align-items:center;gap:10px}
+.input-group{margin-bottom:20px}
+.input-group:last-child{margin-bottom:0}
+label{display:block;margin-bottom:8px;color:var(--muted);font-size:14px}
+label .required{color:var(--accent);margin-left:4px}
+label .help{cursor:help;border-bottom:1px dotted var(--muted)}
+input,select,textarea{width:100%;padding:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:var(--text);font-family:inherit;font-size:14px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
+textarea{min-height:80px;resize:vertical}
+select{cursor:pointer}
+.input-hint{font-size:12px;color:var(--muted);margin-top:6px}
+.presets{margin-bottom:24px}
+.presets h3{margin:0 0 12px 0;font-size:14px;color:var(--muted)}
+.preset-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.preset-btn{padding:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:var(--text);cursor:pointer;font-size:13px;transition:all 0.2s}
+.preset-btn:hover{background:rgba(255,255,255,0.06);border-color:var(--accent)}
+.output-section{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px}
+.output-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px}
+.output-header h3{margin:0;font-size:1.1em}
+.url-preview{background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:16px;word-break:break-all;font-family:monospace;font-size:14px;line-height:1.6;margin-bottom:16px;min-height:60px}
+.url-preview .base{color:var(--accent)}
+.url-preview .param{color:var(--success)}
+.url-preview .value{color:var(--warning)}
+.param-list{margin-top:16px}
+.param-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.param-item:last-child{border-bottom:none}
+.param-name{font-size:13px;color:var(--muted)}
+.param-value{font-size:13px;color:var(--text);font-family:monospace}
+.button-group{display:flex;gap:12px;flex-wrap:wrap}
+button{padding:12px 24px;background:var(--accent);color:#012;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px}
+button:hover{opacity:.9}
+button.secondary{background:rgba(255,255,255,0.1);color:var(--text)}
+button.secondary:hover{background:rgba(255,255,255,0.15)}
+button.success{background:var(--success)}
+.history-section{margin-top:32px}
+.history-section h3{margin:0 0 16px 0;font-size:1.1em;color:var(--accent)}
+.history-list{display:flex;flex-direction:column;gap:8px}
+.history-item{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all 0.2s}
+.history-item:hover{border-color:var(--accent)}
+.history-url{font-family:monospace;font-size:12px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:70%}
+.history-date{font-size:11px;color:var(--muted)}
+.campaign-presets{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:20px;margin-bottom:24px}
+.campaign-presets h3{margin:0 0 16px 0;font-size:1em;color:var(--accent)}
+.preset-category{margin-bottom:16px}
+.preset-category:last-child{margin-bottom:0}
+.preset-category h4{margin:0 0 8px 0;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px}
+.chip-group{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:6px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:20px;color:var(--text);cursor:pointer;font-size:12px;transition:all 0.2s}
+.chip:hover{background:rgba(255,255,255,0.06);border-color:var(--accent)}
+.validation-status{margin-top:8px;padding:8px 12px;border-radius:6px;font-size:13px}
+.validation-status.valid{background:rgba(34,197,94,0.1);color:var(--success)}
+.validation-status.invalid{background:rgba(239,68,68,0.1);color:var(--error)}
+.pro-tips{margin-top:32px;padding:20px;background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(37,99,235,0.1));border-radius:12px;border:1px solid rgba(6,182,212,0.3)}
+.pro-tips h3{margin:0 0 16px 0;color:var(--accent)}
+.pro-tips h4{margin:16px 0 8px 0;color:var(--text);font-size:14px}
+.pro-tips ul{margin:0;padding-left:20px;color:var(--muted)}
+.pro-tips li{margin-bottom:12px}
+.pro-tips code{background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:13px}
+.carbon-ads{margin:32px 0;padding:16px;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid rgba(255,255,255,0.05);text-align:center;min-height:120px}
+.carbon-ads-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
+.copied-toast{position:fixed;bottom:24px;right:24px;background:var(--success);color:#fff;padding:12px 20px;border-radius:8px;font-weight:600;opacity:0;transform:translateY(20px);transition:all 0.3s ease}
+.copied-toast.show{opacity:1;transform:translateY(0)}
+.tabs{display:flex;gap:8px;margin-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:8px}
+.tab{padding:10px 20px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;border-radius:6px;transition:all 0.2s}
+.tab.active{background:rgba(6,182,212,0.1);color:var(--accent)}
+.tab:hover:not(.active){color:var(--text)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+</style>
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+<header>
+<a class="logo" href="/">Paperclip</a>
+<nav>
+<a href="/tools/">Tools</a>
+<a href="/about.html">About</a>
+</nav>
+</header>
+
+<div class="container">
+<h1>UTM URL Builder</h1>
+<p class="subtitle">Build tracking URLs for marketing campaigns. Generate properly formatted UTM parameters for Google Analytics and other analytics platforms.</p>
+
+<div class="tabs">
+<button class="tab active" onclick="switchTab('builder')">URL Builder</button>
+<button class="tab" onclick="switchTab('presets')">Campaign Presets</button>
+</div>
+
+<div class="tab-content active" id="builder-tab">
+<div class="builder-card">
+<h2>🔗 Build Your UTM URL</h2>
+<div class="input-group">
+<label>Website URL <span class="required">*</span></label>
+<input type="url" id="website-url" placeholder="https://example.com/landing-page" oninput="updateUrl()">
+<div class="input-hint">The full URL of your landing page (with https://)</div>
+<div id="url-validation" class="validation-status" style="display:none"></div>
+</div>
+
+<div class="input-group">
+<label>UTM Source <span class="required">*</span> <span class="help" title="Where traffic is coming from (e.g., google, facebook, newsletter)">ⓘ</span></label>
+<input type="text" id="utm-source" placeholder="google, facebook, newsletter, twitter" oninput="updateUrl()">
+<div class="input-hint">The referrer (google, facebook, twitter, linkedin, email, etc.)</div>
+</div>
+
+<div class="input-group">
+<label>UTM Medium <span class="required">*</span> <span class="help" title="Marketing medium (e.g., cpc, banner, email)">ⓘ</span></label>
+<select id="utm-medium" onchange="updateUrl()">
+<option value="">Select medium...</option>
+<option value="cpc">CPC (Cost Per Click)</option>
+<option value="display">Display</option>
+<option value="email">Email</option>
+<option value="organic">Organic</option>
+<option value="paid">Paid Social</option>
+<option value="referral">Referral</option>
+<option value="social">Social</option>
+<option value="video">Video</option>
+<option value="banner">Banner</option>
+<option value="affiliate">Affiliate</option>
+<option value="qr">QR Code</option>
+<option value="sms">SMS</option>
+<option value="push">Push Notification</option>
+</select>
+<div class="input-hint">The marketing medium (cpc, banner, email, social, etc.)</div>
+</div>
+
+<div class="input-group">
+<label>UTM Campaign <span class="required">*</span> <span class="help" title="Campaign name (e.g., spring_sale, product_launch)">ⓘ</span></label>
+<input type="text" id="utm-campaign" placeholder="spring_sale_2024, product_launch" oninput="updateUrl()">
+<div class="input-hint">The campaign name (use underscores for spaces)</div>
+</div>
+
+<div class="input-group">
+<label>UTM Term <span class="help" title="For paid search - the keywords">ⓘ</span></label>
+<input type="text" id="utm-term" placeholder="running+shoes, web+development" oninput="updateUrl()">
+<div class="input-hint">For paid search: identify the keywords (optional)</div>
+</div>
+
+<div class="input-group">
+<label>UTM Content <span class="help" title="Differentiate similar content or links">ⓘ</span></label>
+<input type="text" id="utm-content" placeholder="header_link, sidebar_banner, variant_a" oninput="updateUrl()">
+<div class="input-hint">Use to differentiate ads or links (optional)</div>
+</div>
+
+<div class="button-group">
+<button onclick="copyUrl()">Copy URL</button>
+<button class="secondary" onclick="openUrl()">Open URL</button>
+<button class="secondary" onclick="saveToHistory()">Save to History</button>
+<button class="secondary" onclick="clearForm()">Clear</button>
+</div>
+</div>
+
+<div class="output-section">
+<div class="output-header">
+<h3>Generated URL</h3>
+<div class="button-group">
+<button class="secondary" onclick="copyUrl()">Copy</button>
+<button class="secondary" onclick="copyAsMarkdown()">Copy as Markdown</button>
+</div>
+</div>
+<div class="url-preview" id="url-preview">Enter a URL and UTM parameters to generate your tracking link...</div>
+<div class="param-list" id="param-list" style="display:none"></div>
+</div>
+
+<div class="history-section" id="history-section" style="display:none">
+<h3>Recent URLs</h3>
+<div class="history-list" id="history-list"></div>
+<button class="secondary" onclick="clearHistory()" style="margin-top:12px">Clear History</button>
+</div>
+</div>
+
+<div class="tab-content" id="presets-tab">
+<div class="campaign-presets">
+<h3>Common Source & Medium Combinations</h3>
+<div class="preset-category">
+<h4>Social Media</h4>
+<div class="chip-group">
+<span class="chip" onclick="applyPreset('facebook','social')">Facebook / Social</span>
+<span class="chip" onclick="applyPreset('twitter','social')">Twitter / Social</span>
+<span class="chip" onclick="applyPreset('linkedin','social')">LinkedIn / Social</span>
+<span class="chip" onclick="applyPreset('instagram','social')">Instagram / Social</span>
+<span class="chip" onclick="applyPreset('pinterest','social')">Pinterest / Social</span>
+<span class="chip" onclick="applyPreset('tiktok','social')">TikTok / Social</span>
+<span class="chip" onclick="applyPreset('youtube','social')">YouTube / Social</span>
+</div>
+</div>
+<div class="preset-category">
+<h4>Paid Advertising</h4>
+<div class="chip-group">
+<span class="chip" onclick="applyPreset('google','cpc')">Google / CPC</span>
+<span class="chip" onclick="applyPreset('facebook','paid')">Facebook / Paid</span>
+<span class="chip" onclick="applyPreset('linkedin','paid')">LinkedIn / Paid</span>
+<span class="chip" onclick="applyPreset('twitter','paid')">Twitter / Paid</span>
+<span class="chip" onclick="applyPreset('bing','cpc')">Bing / CPC</span>
+</div>
+</div>
+<div class="preset-category">
+<h4>Email & Direct</h4>
+<div class="chip-group">
+<span class="chip" onclick="applyPreset('newsletter','email')">Newsletter / Email</span>
+<span class="chip" onclick="applyPreset('email','email')">Email / Email</span>
+<span class="chip" onclick="applyPreset('qr','qr')">QR Code / QR</span>
+<span class="chip" onclick="applyPreset('sms','sms')">SMS / SMS</span>
+</div>
+</div>
+</div>
+</div>
+
+<div class="carbon-ads">
+<div class="carbon-ads-label">Advertisement</div>
+<script async src="https://cdn.carbonads.com/carbon.js?serve=YOUR_CARBON_ID&placement=bigknoxygithubio" id="_carbonads_js"></script>
+</div>
+
+<div class="pro-tips">
+<h3>UTM Parameter Best Practices</h3>
+<h4>Required Parameters</h4>
+<ul>
+<li><code>utm_source</code> - Where traffic comes from (google, facebook, newsletter)</li>
+<li><code>utm_medium</code> - Marketing medium (cpc, email, social, banner)</li>
+<li><code>utm_campaign</code> - Campaign name (spring_sale, product_launch)</li>
+</ul>
+<h4>Optional Parameters</h4>
+<ul>
+<li><code>utm_term</code> - Keywords for paid search (running+shoes)</li>
+<li><code>utm_content</code> - Differentiate similar links (header_link, sidebar)</li>
+</ul>
+<h4>Naming Conventions</h4>
+<ul>
+<li>Use lowercase letters consistently</li>
+<li>Replace spaces with underscores or hyphens</li>
+<li>Be consistent across campaigns</li>
+<li>Use descriptive but concise names</li>
+<li>Avoid special characters except + for spaces in terms</li>
+</ul>
+<h4>Common Mistakes to Avoid</h4>
+<ul>
+<li>Don't use UTM parameters on internal links (creates self-referrals)</li>
+<li>Don't forget to URL-encode special characters</li>
+<li>Don't use different naming conventions for the same source</li>
+<li>Don't include PII (personally identifiable information)</li>
+<li>Don't make campaign names too long or complex</li>
+</ul>
+</div>
+
+<footer>
+<p>Made with minimal scaffold · <a href="/README.md" style="color:var(--accent)">Documentation</a></p>
+</footer>
+
+<div class="copied-toast" id="toast">Copied to clipboard!</div>
+
+<script src="/tools/related-tools.js" data-current-tool="utm-builder"></script>
+<script>
+const websiteUrl = document.getElementById('website-url');
+const utmSource = document.getElementById('utm-source');
+const utmMedium = document.getElementById('utm-medium');
+const utmCampaign = document.getElementById('utm-campaign');
+const utmTerm = document.getElementById('utm-term');
+const utmContent = document.getElementById('utm-content');
+const urlPreview = document.getElementById('url-preview');
+const paramList = document.getElementById('param-list');
+const urlValidation = document.getElementById('url-validation');
+
+let history = JSON.parse(localStorage.getItem('utmHistory') || '[]');
+updateHistoryDisplay();
+
+function updateUrl() {
+const baseUrl = websiteUrl.value.trim();
+const source = utmSource.value.trim();
+const medium = utmMedium.value;
+const campaign = utmCampaign.value.trim();
+const term = utmTerm.value.trim();
+const content = utmContent.value.trim();
+
+// Validate URL
+if (baseUrl) {
+if (isValidUrl(baseUrl)) {
+urlValidation.className = 'validation-status valid';
+urlValidation.textContent = '✓ Valid URL';
+urlValidation.style.display = 'block';
+} else {
+urlValidation.className = 'validation-status invalid';
+urlValidation.textContent = '✗ Please enter a valid URL (include https://)';
+urlValidation.style.display = 'block';
+}
+} else {
+urlValidation.style.display = 'none';
+}
+
+if (!baseUrl) {
+urlPreview.innerHTML = 'Enter a URL and UTM parameters to generate your tracking link...';
+urlPreview.style.color = 'var(--muted)';
+paramList.style.display = 'none';
+return;
+}
+
+try {
+const url = new URL(baseUrl);
+
+// Add UTM parameters
+if (source) url.searchParams.set('utm_source', source);
+if (medium) url.searchParams.set('utm_medium', medium);
+if (campaign) url.searchParams.set('utm_campaign', campaign);
+if (term) url.searchParams.set('utm_term', term);
+if (content) url.searchParams.set('utm_content', content);
+
+const finalUrl = url.toString();
+
+// Highlight URL parts
+const base = finalUrl.split('?')[0];
+const params = finalUrl.split('?')[1] || '';
+let highlightedUrl = `<span class="base">${base}</span>`;
+if (params) {
+highlightedUrl += '?' + params.split('&').map((p, i) => {
+const [k, v] = p.split('=');
+return `<span class="param">${i === 0 ? '' : '&amp;'}${decodeURIComponent(k)}</span>=<span class="value">${decodeURIComponent(v)}</span>`;
+}).join('');
+}
+
+urlPreview.innerHTML = highlightedUrl;
+urlPreview.style.color = 'var(--text)';
+
+// Update param list
+paramList.innerHTML = '';
+const params2 = [
+{ name: 'utm_source', value: source, label: 'Source' },
+{ name: 'utm_medium', value: medium, label: 'Medium' },
+{ name: 'utm_campaign', value: campaign, label: 'Campaign' },
+{ name: 'utm_term', value: term, label: 'Term' },
+{ name: 'utm_content', value: content, label: 'Content' }
+];
+
+params2.forEach(p => {
+if (p.value) {
+const item = document.createElement('div');
+item.className = 'param-item';
+item.innerHTML = `<span class="param-name">${p.label}</span><span class="param-value">${p.value}</span>`;
+paramList.appendChild(item);
+}
+});
+paramList.style.display = paramList.children.length > 0 ? 'block' : 'none';
+
+} catch (e) {
+urlPreview.textContent = 'Invalid URL format';
+urlPreview.style.color = 'var(--error)';
+}
+}
+
+function isValidUrl(string) {
+try {
+new URL(string);
+return true;
+} catch (_) {
+return false;
+}
+}
+
+function getCurrentUrl() {
+const baseUrl = websiteUrl.value.trim();
+if (!baseUrl) return '';
+
+try {
+const url = new URL(baseUrl);
+const source = utmSource.value.trim();
+const medium = utmMedium.value;
+const campaign = utmCampaign.value.trim();
+const term = utmTerm.value.trim();
+const content = utmContent.value.trim();
+
+if (source) url.searchParams.set('utm_source', source);
+if (medium) url.searchParams.set('utm_medium', medium);
+if (campaign) url.searchParams.set('utm_campaign', campaign);
+if (term) url.searchParams.set('utm_term', term);
+if (content) url.searchParams.set('utm_content', content);
+
+return url.toString();
+} catch (e) {
+return '';
+}
+}
+
+function copyUrl() {
+const url = getCurrentUrl();
+if (!url) {
+showToast('Please enter a URL first');
+return;
+}
+navigator.clipboard.writeText(url).then(() => showToast('URL copied!'));
+}
+
+function copyAsMarkdown() {
+const url = getCurrentUrl();
+const campaign = utmCampaign.value.trim() || 'Link';
+if (!url) {
+showToast('Please enter a URL first');
+return;
+}
+const markdown = `[${campaign}](${url})`;
+navigator.clipboard.writeText(markdown).then(() => showToast('Markdown copied!'));
+}
+
+function openUrl() {
+const url = getCurrentUrl();
+if (!url) {
+showToast('Please enter a URL first');
+return;
+}
+window.open(url, '_blank');
+}
+
+function saveToHistory() {
+const url = getCurrentUrl();
+if (!url) {
+showToast('Please enter a URL first');
+return;
+}
+
+const entry = {
+url: url,
+source: utmSource.value.trim(),
+medium: utmMedium.value,
+campaign: utmCampaign.value.trim(),
+date: new Date().toISOString()
+};
+
+history.unshift(entry);
+if (history.length > 10) history = history.slice(0, 10);
+localStorage.setItem('utmHistory', JSON.stringify(history));
+updateHistoryDisplay();
+showToast('Saved to history!');
+}
+
+function updateHistoryDisplay() {
+const section = document.getElementById('history-section');
+const list = document.getElementById('history-list');
+
+if (history.length === 0) {
+section.style.display = 'none';
+return;
+}
+
+section.style.display = 'block';
+list.innerHTML = '';
+
+history.forEach((entry, i) => {
+const item = document.createElement('div');
+item.className = 'history-item';
+item.onclick = () => loadFromHistory(i);
+item.innerHTML = `
+<span class="history-url" title="${entry.url}">${entry.url}</span>
+<span class="history-date">${new Date(entry.date).toLocaleDateString()}</span>
+`;
+list.appendChild(item);
+});
+}
+
+function loadFromHistory(index) {
+const entry = history[index];
+if (!entry) return;
+
+websiteUrl.value = entry.url.split('?')[0];
+utmSource.value = entry.source;
+utmMedium.value = entry.medium;
+utmCampaign.value = entry.campaign;
+
+// Extract other params
+const url = new URL(entry.url);
+utmTerm.value = url.searchParams.get('utm_term') || '';
+utmContent.value = url.searchParams.get('utm_content') || '';
+
+updateUrl();
+showToast('Loaded from history');
+}
+
+function clearHistory() {
+history = [];
+localStorage.removeItem('utmHistory');
+updateHistoryDisplay();
+showToast('History cleared');
+}
+
+function clearForm() {
+websiteUrl.value = '';
+utmSource.value = '';
+utmMedium.value = '';
+utmCampaign.value = '';
+utmTerm.value = '';
+utmContent.value = '';
+urlValidation.style.display = 'none';
+updateUrl();
+}
+
+function applyPreset(source, medium) {
+utmSource.value = source;
+utmMedium.value = medium;
+updateUrl();
+switchTab('builder');
+showToast(`Applied: ${source} / ${medium}`);
+}
+
+function switchTab(tab) {
+document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+event.target.classList.add('active');
+document.getElementById(tab + '-tab').classList.add('active');
+}
+
+function showToast(message) {
+const toast = document.getElementById('toast');
+toast.textContent = message;
+toast.classList.add('show');
+setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+// Initialize
+updateUrl();
+</script>
+</body>
+</html>

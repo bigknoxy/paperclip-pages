@@ -70,6 +70,14 @@ related: ['base64', 'color', 'css-layout', 'qr-generator']
     description: 'Format, validate, and minify JSON',
     related: ['csv-json', 'text-processor', 'code-minifier', 'jwt-decoder']
   },
+  'utm-builder': {
+    name: 'UTM URL Builder',
+    path: '/tools/utm-builder/',
+    category: 'Developer Tools',
+    icon: '🔗',
+    description: 'Build tracking URLs with UTM parameters for marketing campaigns',
+    related: ['url-encoder', 'qr-generator', 'html-encoder', 'json-formatter']
+  },
   'jwt-decoder': {
     name: 'JWT Decoder',
     path: '/tools/jwt-decoder/',
