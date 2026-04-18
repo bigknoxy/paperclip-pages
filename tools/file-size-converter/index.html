@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>File Size Converter - Bytes, KB, MB, GB, TB, PB</title>
+<meta name="description" content="Convert between file sizes: bytes, KB, MB, GB, TB, PB. Supports binary (1024) and decimal (1000) calculations with visual size comparison.">
+<meta name="keywords" content="file size converter, bytes to MB, GB to TB, file size calculator, storage converter">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+<header class="header">
+<nav class="nav">
+<a href="/" class="logo">Paperclip</a>
+<div class="nav-links">
+<a href="/tools/">Tools</a>
+<a href="/content/">Blog</a>
+<a href="/#about">About</a>
+</div>
+</nav>
+</header>
+
+<main class="main">
+<div class="container">
+<h1>File Size Converter</h1>
+<p class="subtitle">Convert between bytes, KB, MB, GB, TB, and PB. Supports binary (1024) and decimal (1000) calculations with visual size comparisons.</p>
+
+<div class="converter-box">
+<div class="input-section">
+<label>Enter Size</label>
+<div class="input-row">
+<input type="number" id="sizeInput" placeholder="e.g., 1024" min="0" step="any">
+<select id="fromUnit">
+<option value="B">Bytes (B)</option>
+<option value="KB">Kilobytes (KB)</option>
+<option value="MB">Megabytes (MB)</option>
+<option value="GB">Gigabytes (GB)</option>
+<option value="TB">Terabytes (TB)</option>
+<option value="PB">Petabytes (PB)</option>
+</select>
+</div>
+</div>
+
+<div class="base-toggle">
+<span class="toggle-label">Calculation Base:</span>
+<div class="toggle-group">
+<button class="toggle-btn active" data-base="1024">Binary (1024)</button>
+<button class="toggle-btn" data-base="1000">Decimal (1000)</button>
+</div>
+</div>
+
+<div class="results-section">
+<h3>All Conversions</h3>
+<div class="results-grid" id="resultsGrid">
+<div class="result-item" data-unit="B">
+<span class="result-unit">Bytes</span>
+<span class="result-value" id="resultB">--</span>
+<button class="btn-copy" data-copy="B" title="Copy">Copy</button>
+</div>
+<div class="result-item" data-unit="KB">
+<span class="result-unit">KB</span>
+<span class="result-value" id="resultKB">--</span>
+<button class="btn-copy" data-copy="KB" title="Copy">Copy</button>
+</div>
+<div class="result-item" data-unit="MB">
+<span class="result-unit">MB</span>
+<span class="result-value" id="resultMB">--</span>
+<button class="btn-copy" data-copy="MB" title="Copy">Copy</button>
+</div>
+<div class="result-item" data-unit="GB">
+<span class="result-unit">GB</span>
+<span class="result-value" id="resultGB">--</span>
+<button class="btn-copy" data-copy="GB" title="Copy">Copy</button>
+</div>
+<div class="result-item" data-unit="TB">
+<span class="result-unit">TB</span>
+<span class="result-value" id="resultTB">--</span>
+<button class="btn-copy" data-copy="TB" title="Copy">Copy</button>
+</div>
+<div class="result-item" data-unit="PB">
+<span class="result-unit">PB</span>
+<span class="result-value" id="resultPB">--</span>
+<button class="btn-copy" data-copy="PB" title="Copy">Copy</button>
+</div>
+</div>
+</div>
+
+<div class="visual-comparisons">
+<h3>Visual Size Comparison</h3>
+<div class="comparison-grid" id="comparisonGrid">
+<div class="comparison-item">
+<div class="comparison-icon">📄</div>
+<div class="comparison-info">
+<span class="comparison-name">Text Document</span>
+<span class="comparison-size">~5 KB</span>
+</div>
+<div class="comparison-bar" id="bar-doc"></div>
+</div>
+<div class="comparison-item">
+<div class="comparison-icon">🖼️</div>
+<div class="comparison-info">
+<span class="comparison-name">Photo</span>
+<span class="comparison-size">~2 MB</span>
+</div>
+<div class="comparison-bar" id="bar-photo"></div>
+</div>
+<div class="comparison-item">
+<div class="comparison-icon">🎵</div>
+<div class="comparison-info">
+<span class="comparison-name">MP3 Song</span>
+<span class="comparison-size">~5 MB</span>
+</div>
+<div class="comparison-bar" id="bar-music"></div>
+</div>
+<div class="comparison-item">
+<div class="comparison-icon">🎬</div>
+<div class="comparison-info">
+<span class="comparison-name">HD Video (1 min)</span>
+<span class="comparison-size">~100 MB</span>
+</div>
+<div class="comparison-bar" id="bar-video"></div>
+</div>
+<div class="comparison-item">
+<div class="comparison-icon">💿</div>
+<div class="comparison-info">
+<span class="comparison-name">CD/DVD</span>
+<span class="comparison-size">~700 MB / 4.7 GB</span>
+</div>
+<div class="comparison-bar" id="bar-cd"></div>
+</div>
+<div class="comparison-item">
+<div class="comparison-icon">💾</div>
+<div class="comparison-info">
+<span class="comparison-name">USB Drive</span>
+<span class="comparison-size">~16-128 GB</span>
+</div>
+<div class="comparison-bar" id="bar-usb"></div>
+</div>
+<div class="comparison-item">
+<div class="comparison-icon">🖥️</div>
+<div class="comparison-info">
+<span class="comparison-name">SSD Drive</span>
+<span class="comparison-size">~256 GB - 2 TB</span>
+</div>
+<div class="comparison-bar" id="bar-ssd"></div>
+</div>
+<div class="comparison-item">
+<div class="comparison-icon">☁️</div>
+<div class="comparison-info">
+<span class="comparison-name">Cloud Storage</span>
+<span class="comparison-size">~1-15 GB (free tier)</span>
+</div>
+<div class="comparison-bar" id="bar-cloud"></div>
+</div>
+</div>
+</div>
+
+<div class="quick-presets">
+<h3>Quick Presets</h3>
+<div class="preset-buttons">
+<button class="preset-btn" data-size="1024" data-unit="B">1 KB</button>
+<button class="preset-btn" data-size="1024" data-unit="KB">1 MB</button>
+<button class="preset-btn" data-size="1024" data-unit="MB">1 GB</button>
+<button class="preset-btn" data-size="1024" data-unit="GB">1 TB</button>
+<button class="preset-btn" data-size="5" data-unit="MB">5 MB Photo</button>
+<button class="preset-btn" data-size="100" data-unit="MB">100 MB Video</button>
+<button class="preset-btn" data-size="4.7" data-unit="GB">4.7 GB DVD</button>
+<button class="preset-btn" data-size="700" data-unit="MB">700 MB CD</button>
+</div>
+</div>
+</div>
+
+<div class="related-tools">
+<h3>Related Tools</h3>
+<div class="tool-grid">
+<a href="/tools/unit-converter/" class="tool-card">
+<h4>Unit Converter</h4>
+<p>Convert between units of measurement</p>
+</a>
+<a href="/tools/time-converter/" class="tool-card">
+<h4>Time Converter</h4>
+<p>Convert between timestamps and dates</p>
+</a>
+</div>
+</div>
+</div>
+</main>
+
+<footer class="footer">
+<div class="container">
+<p>&copy; 2026 Paperclip. Free online developer tools.</p>
+</div>
+</footer>
+
+<script src="/public/analytics.js"></script>
+<script src="script.js"></script>
+
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+if (window.RelatedTools) {
+RelatedTools.renderRelatedTools('file-size-converter', '#related-tools-container', {
+title: 'Related Tools',
+showCategory: true,
+trackClicks: true
+});
+}
+});
+</script>
+</body>
+</html>

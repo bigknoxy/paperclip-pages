@@ -215,13 +215,21 @@ description: 'Convert multiple files at once',
 related: ['csv-json', 'unit-converter', 'text-processor', 'code-minifier']
 },
 'time-converter': {
-name: 'Developer Time Converter',
-path: '/tools/time-converter/',
-category: 'Data & Conversion',
-icon: '⏱️',
-description: 'Convert epoch timestamps, ISO 8601 dates, timezones, and relative time',
-related: ['unit-converter', 'json-formatter', 'base64', 'hash']
-},
+    name: 'Developer Time Converter',
+    path: '/tools/time-converter/',
+    category: 'Data & Conversion',
+    icon: '⏱️',
+    description: 'Convert epoch timestamps, ISO 8601 dates, timezones, and relative time',
+    related: ['unit-converter', 'json-formatter', 'base64', 'hash']
+  },
+  'file-size-converter': {
+    name: 'File Size Converter',
+    path: '/tools/file-size-converter/',
+    category: 'Data & Conversion',
+    icon: '💾',
+    description: 'Convert between bytes, KB, MB, GB, TB, PB with binary and decimal options',
+    related: ['time-converter', 'unit-converter', 'batch-converter', 'code-minifier']
+  },
 
   // Design Tools
   'color': {
