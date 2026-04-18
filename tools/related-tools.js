@@ -46,6 +46,14 @@ related: ['base64', 'color', 'css-layout', 'qr-generator']
     description: 'Generate SEO meta tags with social preview',
     related: ['html-encoder', 'code-minifier', 'text-processor', 'json-formatter']
   },
+  'screen-res-simulator': {
+    name: 'Screen Resolution Simulator',
+    path: '/tools/screen-res-simulator/',
+    category: 'Developer Tools',
+    icon: '📱',
+    description: 'Test responsive designs with device presets and custom dimensions',
+    related: ['css-layout', 'animation-keyframe', 'box-shadow', 'color-contrast']
+  },
   'json-formatter': {
     name: 'JSON Formatter & Validator',
     path: '/tools/json-formatter/',
@@ -264,8 +272,16 @@ icon: '🎬',
 description: 'Create CSS animations with keyframe editing and live preview',
 related: ['css-gradient', 'box-shadow', 'css-layout', 'glassmorphism']
 },
+'screen-resolution': {
+name: 'Screen Resolution Simulator',
+path: '/tools/screen-resolution/',
+category: 'Design',
+icon: '📱',
+description: 'Test responsive designs on common device presets with custom dimensions and viewport simulation',
+related: ['css-layout', 'css-gradient', 'box-shadow', 'animation-keyframe']
+},
 
-  // Testing Tools
+// Testing Tools
   'regex-tester': {
     name: 'Regex Tester',
     path: '/tools/regex-tester/',

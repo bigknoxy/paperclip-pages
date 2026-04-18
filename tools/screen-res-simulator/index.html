@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Screen Resolution Simulator | Paperclip</title>
+<meta name="description" content="Test responsive designs with device presets and custom dimensions. Simulate mobile, tablet, and desktop viewports instantly. Free, fast, no ads." />
+<meta name="keywords" content="screen resolution simulator, responsive design tester, viewport simulator, device simulator, breakpoint tester" />
+<meta name="author" content="Paperclip" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/screen-res-simulator/" />
+<link rel="preconnect" href="https://cdn.carbonads.com" crossorigin>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--error:#ef4444;--warning:#f59e0b;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1400px;margin:0 auto}
+.logo{font-weight:700;font-size:1.2em;color:var(--accent)}
+nav{display:flex;gap:16px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--text)}
+.container{max-width:1400px;margin:0 auto;padding:24px}
+h1{font-size:1.8em;margin:0 0 8px 0}
+.subtitle{color:var(--muted);margin-bottom:24px}
+.simulator-grid{display:grid;grid-template-columns:280px 1fr;gap:24px}
+@media(max-width:900px){.simulator-grid{grid-template-columns:1fr}}
+.sidebar{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:20px}
+.sidebar h2{margin:0 0 16px 0;font-size:1.1em;color:var(--accent)}
+.device-presets{margin-bottom:24px}
+.preset-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
+.preset-btn{padding:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:var(--text);cursor:pointer;font-size:13px;transition:all 0.2s}
+.preset-btn:hover{background:rgba(255,255,255,0.06);border-color:var(--accent)}
+.preset-btn.active{background:var(--accent);color:#012;border-color:var(--accent)}
+.preset-btn .icon{font-size:18px;margin-bottom:4px;display:block}
+.preset-btn .name{font-weight:600}
+.preset-btn .dims{font-size:11px;color:var(--muted);display:block;margin-top:2px}
+.preset-btn.active .dims{color:rgba(0,0,0,0.6)}
+.custom-dims{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.input-group{margin-bottom:12px}
+.input-group:last-child{margin-bottom:0}
+label{display:block;margin-bottom:6px;color:var(--muted);font-size:13px}
+input,select{width:100%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px;color:var(--text);font-family:inherit;font-size:14px}
+input:focus,select:focus{outline:none;border-color:var(--accent)}
+.checkbox-group{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.checkbox-group input{width:auto}
+.checkbox-group label{margin:0;color:var(--text);font-size:14px}
+.orientation-toggle{display:flex;gap:8px;margin-bottom:16px}
+.orientation-btn{flex:1;padding:10px;background:rgba(255,255,viewport{width:device-width,initial-scale=1}0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:var(--text);cursor:pointer;font-size:13px}
+.orientation-btn.active{background:var(--accent);color:#012}
+.url-input{margin-bottom:16px}
+.url-input input{width:100%}
+.viewport-container{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:20px;min-height:600px}
+.viewport-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.05)}
+.viewport-info{display:flex;gap:24px;align-items:center}
+.viewport-dims{font-size:1.2em;font-weight:600;color:var(--accent)}
+.viewport-ratio{color:var(--muted);font-size:14px}
+.device-type{font-size:13px;padding:4px 12px;background:rgba(255,255,255,0.05);border-radius:20px;color:var(--muted)}
+.device-type.mobile{background:rgba(34,197,94,0.1);color:var(--success)}
+.device-type.tablet{background:rgba(245,158,11,0.1);color:var(--warning)}
+.device-type.desktop{background:rgba(6,182,212,0.1);color:var(--accent)}
+.scale-control{display:flex;align-items:center;gap:12px}
+.scale-control label{color:var(--muted);font-size:13px}
+.scale-control input[type="range"]{width:100px}
+.scale-value{font-size:13px;color:var(--text);min-width:40px}
+.viewport-frame{position:relative;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.3);margin:0 auto;transition:all 0.3s ease}
+.viewport-frame iframe{width:100%;height:100%;border:none;display:block}
+.viewport-placeholder{display:flex;align-items:center;justify-content:center;height:100%;color:#64748b;font-size:14px;flex-direction:column;gap:12px}
+.viewport-placeholder .icon{font-size:48px}
+.device-presets-list{display:flex;gap:8px;overflow-x:auto;padding:4px;margin:-4px;margin-bottom:16px}
+.preset-chip{padding:8px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:20px;color:var(--text);cursor:pointer;font-size:13px;white-space:nowrap;transition:all 0.2s}
+.preset-chip:hover{background:rgba(255,255,255,0.06);border-color:var(--accent)}
+.preset-chip.active{background:var(--accent);color:#012}
+.pro-tips{margin-top:32px;padding:20px;background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(37,99,235,0.1));border-radius:12px;border:1px solid rgba(6,182,212,0.3)}
+.pro-tips h3{margin:0 0 16px 0;color:var(--accent)}
+.pro-tips h4{margin:16px 0 8px 0;color:var(--text);font-size:14px}
+.pro-tips ul{margin:0;padding-left:20px;color:var(--muted)}
+.pro-tips li{margin-bottom:12px}
+.pro-tips a{color:var(--accent);text-decoration:none}
+.pro-tips a:hover{text-decoration:underline}
+.carbon-ads{margin:32px 0;padding:16px;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid rgba(255,255,255,0.05);text-align:center;min-height:120px}
+.carbon-ads-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+.breakpoints-info{margin-top:20px;padding:16px;background:rgba(255,255,255,0.02);border-radius:8px}
+.breakpoints-info h3{margin:0 0 12px 0;font-size:14px;color:var(--accent)}
+.breakpoint-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.breakpoint-row:last-child{border-bottom:none}
+.breakpoint-name{font-size:13px;color:var(--text)}
+.breakpoint-dims{font-size:13px;color:var(--muted)}
+.button-group{display:flex;gap:12px;flex-wrap:wrap}
+button{padding:10px 20px;background:var(--accent);color:#012;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px}
+button:hover{opacity:.9}
+button.secondary{background:rgba(255,255,255,0.1);color:var(--text)}
+button.secondary:hover{background:rgba(255,255,255,0.15)}
+.ruler{position:relative;height:24px;background:var(--card);border-radius:4px;margin-bottom:8px;overflow:hidden}
+.ruler-mark{position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,0.2)}
+.ruler-mark.major{background:rgba(255,255,255,0.4);width:2px}
+.ruler-label{position:absolute;top:4px;font-size:10px;color:var(--muted);transform:translateX(-50%)}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
+</style>
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+<header>
+<a class="logo" href="/">Paperclip</a>
+<nav>
+<a href="/tools/">Tools</a>
+<a href="/about.html">About</a>
+</nav>
+</header>
+
+<div class="container">
+<h1>Screen Resolution Simulator</h1>
+<p class="subtitle">Test responsive designs with device presets and custom dimensions. Preview how your site looks on different screens.</p>
+
+<div class="simulator-grid">
+<div class="sidebar">
+<h2>Device Presets</h2>
+<div class="device-presets">
+<div class="preset-grid">
+<button class="preset-btn" data-width="375" data-height="812" data-name="iPhone 14">
+<span class="icon">📱</span>
+<span class="name">iPhone 14</span>
+<span class="dims">375 × 812</span>
+</button>
+<button class="preset-btn" data-width="390" data-height="844" data-name="iPhone 14 Pro">
+<span class="icon">📱</span>
+<span class="name">iPhone 14 Pro</span>
+<span class="dims">390 × 844</span>
+</button>
+<button class="preset-btn" data-width="414" data-height="896" data-name="iPhone 14 Plus">
+<span class="icon">📱</span>
+<span class="name">iPhone 14 Plus</span>
+<span class="dims">414 × 896</span>
+</button>
+<button class="preset-btn" data-width="430" data-height="932" data-name="iPhone 14 Pro Max">
+<span class="icon">📱</span>
+<span class="name">iPhone 14 Pro Max</span>
+<span class="dims">430 × 932</span>
+</button>
+<button class="preset-btn" data-width="360" data-height="800" data-name="Pixel 7">
+<span class="icon">📱</span>
+<span class="name">Pixel 7</span>
+<span class="dims">360 × 800</span>
+</button>
+<button class="preset-btn" data-width="412" data-height="915" data-name="Pixel 7 Pro">
+<span class="icon">📱</span>
+<span class="name">Pixel 7 Pro</span>
+<span class="dims">412 × 915</span>
+</button>
+<button class="preset-btn" data-width="768" data-height="1024" data-name="iPad Mini">
+<span class="icon">📲</span>
+<span class="name">iPad Mini</span>
+<span class="dims">768 × 1024</span>
+</button>
+<button class="preset-btn" data-width="810" data-height="1080" data-name="iPad Air">
+<span class="icon">📲</span>
+<span class="name">iPad Air</span>
+<span class="dims">810 × 1080</span>
+</button>
+<button class="preset-btn" data-width="834" data-height="1194" data-name="iPad Pro 11">
+<span class="icon">📲</span>
+<span class="name">iPad Pro 11"</span>
+<span class="dims">834 × 1194</span>
+</button>
+<button class="preset-btn" data-width="1024" data-height="1366" data-name="iPad Pro 12.9">
+<span class="icon">📲</span>
+<span class="name">iPad Pro 12.9"</span>
+<span class="dims">1024 × 1366</span>
+</button>
+<button class="preset-btn" data-width="1366" data-height="768" data-name="Laptop">
+<span class="icon">💻</span>
+<span class="name">Laptop</span>
+<span class="dims">1366 × 768</span>
+</button>
+<button class="preset-btn" data-width="1920" data-height="1080" data-name="Full HD">
+<span class="icon">🖥️</span>
+<span class="name">Full HD</span>
+<span class="dims">1920 × 1080</span>
+</button>
+<button class="preset-btn" data-width="2560" data-height="1440" data-name="2K Monitor">
+<span class="icon">🖥️</span>
+<span class="name">2K Monitor</span>
+<span class="dims">2560 × 1440</span>
+</button>
+<button class="preset-btn" data-width="3840" data-height="2160" data-name="4K Monitor">
+<span class="icon">🖥️</span>
+<span class="name">4K Monitor</span>
+<span class="dims">3840 × 2160</span>
+</button>
+</div>
+</div>
+
+<h2>Custom Dimensions</h2>
+<div class="custom-dims">
+<div class="input-group">
+<label>Width (px)</label>
+<input type="number" id="custom-width" value="375" min="320" max="5120">
+</div>
+<div class="input-group">
+<label>Height (px)</label>
+<input type="number" id="custom-height" value="812" min="480" max="2880">
+</div>
+</div>
+
+<div class="orientation-toggle">
+<button class="orientation-btn active" id="portrait-btn">Portrait</button>
+<button class="orientation-btn" id="landscape-btn">Landscape</button>
+</div>
+
+<div class="url-input">
+<label>Website URL</label>
+<input type="url" id="website-url" placeholder="https://example.com" value="https://bigknoxy.github.io/paperclip-pages/">
+</div>
+
+<button onclick="loadWebsite()">Load Website</button>
+
+<div class="breakpoints-info">
+<h3>Common Breakpoints</h3>
+<div class="breakpoint-row">
+<span class="breakpoint-name">Mobile</span>
+<span class="breakpoint-dims">< 768px</span>
+</div>
+<div class="breakpoint-row">
+<span class="breakpoint-name">Tablet</span>
+<span class="breakpoint-dims">768px - 1024px</span>
+</div>
+<div class="breakpoint-row">
+<span class="breakpoint-name">Laptop</span>
+<span class="breakpoint-dims">1024px - 1440px</span>
+</div>
+<div class="breakpoint-row">
+<span class="breakpoint-name">Desktop</span>
+<span class="breakpoint-dims">> 1440px</span>
+</div>
+</div>
+</div>
+
+<div class="viewport-container">
+<div class="viewport-header">
+<div class="viewport-info">
+<div class="viewport-dims" id="viewport-dims">375 × 812</div>
+<div class="viewport-ratio" id="viewport-ratio">9:19.5</div>
+<div class="device-type mobile" id="device-type">Mobile</div>
+</div>
+<div class="scale-control">
+<label>Scale:</label>
+<input type="range" id="scale-slider" min="25" max="100" value="100">
+<span class="scale-value" id="scale-value">100%</span>
+</div>
+</div>
+
+<div class="viewport-frame" id="viewport-frame" style="width:375px;height:812px">
+<div class="viewport-placeholder" id="viewport-placeholder">
+<span class="icon">🌐</span>
+<span>Enter a URL and click Load Website</span>
+</div>
+</div>
+</div>
+</div>
+
+<div class="carbon-ads">
+<div class="carbon-ads-label">Advertisement</div>
+<script async src="https://cdn.carbonads.com/carbon.js?serve=YOUR_CARBON_ID&placement=bigknoxygithubio" id="_carbonads_js"></script>
+</div>
+
+<div class="pro-tips">
+<h3>Responsive Design Best Practices</h3>
+<h4>Mobile-First Approach</h4>
+<ul>
+<li>Design for mobile screens first, then scale up</li>
+<li>Minimize content and focus on essential features for small screens</li>
+<li>Use touch-friendly tap targets (minimum 44px × 44px)</li>
+</ul>
+<h4>Breakpoints Strategy</h4>
+<ul>
+<li>Don't design for specific devices - design for content</li>
+<li>Add breakpoints when the layout breaks, not based on device specs</li>
+<li>Test on real devices, not just simulators</li>
+</ul>
+<h4>Viewport Meta Tag</h4>
+<ul>
+<li>Always include: <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code></li>
+<li>Prevents mobile browsers from zooming out to desktop view</li>
+<li>Essential for responsive design to work properly</li>
+</ul>
+<h4>Testing Checklist</h4>
+<ul>
+<li>Test both portrait and landscape orientations</li>
+<li>Check touch targets are large enough</li>
+<li>Verify text is readable without zooming (minimum 16px)</li>
+<li>Ensure horizontal scrolling is never required</li>
+<li>Test on slow connections and with images disabled</li>
+</ul>
+</div>
+
+<footer>
+<p>Made with minimal scaffold · <a href="/README.md" style="color:var(--accent)">Documentation</a></p>
+</footer>
+
+<script src="/tools/related-tools.js" data-current-tool="screen-res-simulator"></script>
+<script>
+const viewportFrame = document.getElementById('viewport-frame');
+const viewportPlaceholder = document.getElementById('viewport-placeholder');
+const customWidth = document.getElementById('custom-width');
+const customHeight = document.getElementById('custom-height');
+const websiteUrl = document.getElementById('website-url');
+const scaleSlider = document.getElementById('scale-slider');
+const scaleValue = document.getElementById('scale-value');
+const portraitBtn = document.getElementById('portrait-btn');
+const landscapeBtn = document.getElementById('landscape-btn');
+let currentWidth = 375;
+let currentHeight = 812;
+let isLandscape = false;
+
+document.querySelectorAll('.preset-btn').forEach(btn => {
+btn.addEventListener('click', () => {
+document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+btn.classList.add('active');
+currentWidth = parseInt(btn.dataset.width);
+currentHeight = parseInt(btn.dataset.height);
+isLandscape = false;
+portraitBtn.classList.add('active');
+landscapeBtn.classList.remove('active');
+updateViewport();
+});
+});
+
+customWidth.addEventListener('change', () => {
+currentWidth = parseInt(customWidth.value) || 375;
+updateViewport();
+});
+
+customHeight.addEventListener('change', () => {
+currentHeight = parseInt(customHeight.value) || 812;
+updateViewport();
+});
+
+portraitBtn.addEventListener('click', () => {
+isLandscape = false;
+portraitBtn.classList.add('active');
+landscapeBtn.classList.remove('active');
+updateViewport();
+});
+
+landscapeBtn.addEventListener('click', () => {
+isLandscape = true;
+landscapeBtn.classList.add('active');
+portraitBtn.classList.remove('active');
+updateViewport();
+});
+
+scaleSlider.addEventListener('input', () => {
+const scale = scaleSlider.value;
+scaleValue.textContent = scale + '%';
+viewportFrame.style.transform = `scale(${scale / 100})`;
+viewportFrame.style.transformOrigin = 'top left';
+});
+
+function updateViewport() {
+const width = isLandscape ? currentHeight : currentWidth;
+const height = isLandscape ? currentWidth : currentHeight;
+
+viewportFrame.style.width = width + 'px';
+viewportFrame.style.height = height + 'px';
+
+document.getElementById('viewport-dims').textContent = width + ' × ' + height;
+
+const ratio = simplifyRatio(width, height);
+document.getElementById('viewport-ratio').textContent = ratio;
+
+const deviceType = document.getElementById('device-type');
+if (width < 768) {
+deviceType.textContent = 'Mobile';
+deviceType.className = 'device-type mobile';
+} else if (width < 1024) {
+deviceType.textContent = 'Tablet';
+deviceType.className = 'device-type tablet';
+} else {
+deviceType.textContent = 'Desktop';
+deviceType.className = 'device-type desktop';
+}
+
+customWidth.value = currentWidth;
+customHeight.value = currentHeight;
+}
+
+function simplifyRatio(w, h) {
+const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+const divisor = gcd(w, h);
+return (w / divisor) + ':' + (h / divisor);
+}
+
+function loadWebsite() {
+const url = websiteUrl.value.trim();
+if (!url) return;
+
+const width = isLandscape ? currentHeight : currentWidth;
+const height = isLandscape ? currentWidth : currentHeight;
+
+viewportPlaceholder.style.display = 'none';
+
+let iframe = viewportFrame.querySelector('iframe');
+if (!iframe) {
+iframe = document.createElement('iframe');
+viewportFrame.appendChild(iframe);
+}
+
+iframe.style.width = width + 'px';
+iframe.style.height = height + 'px';
+iframe.src = url.startsWith('http') ? url : 'https://' + url;
+}
+
+updateViewport();
+</script>
+</body>
+</html>

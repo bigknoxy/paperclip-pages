@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Screen Resolution Simulator - Test Responsive Designs | Paperclip</title>
+<meta name="description" content="Free online screen resolution simulator. Test responsive designs on common device presets (mobile, tablet, desktop) with custom dimensions and viewport simulation. No physical devices needed.">
+<meta name="keywords" content="screen resolution simulator, responsive design tester, viewport simulator, device emulator, mobile resolution tester, responsive breakpoint tester">
+<meta name="author" content="Paperclip">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/screen-resolution/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+--bg: #0a0e14;
+--card: #11181f;
+--surface: #1a232e;
+--surface-hover: #243240;
+--accent: #f97316;
+--accent-glow: rgba(249, 115, 22, 0.3);
+--secondary: #06b6d4;
+--success: #22c55e;
+--text: #f8fafc;
+--text-muted: #94a3b8;
+--border: rgba(148, 163, 184, 0.15);
+--shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+--shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+--radius: 12px;
+--radius-sm: 8px;
+}
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: 'Outfit', system-ui, sans-serif;
+background: var(--bg);
+color: var(--text);
+line-height: 1.6;
+min-height: 100vh;
+}
+
+header {
+padding: 20px 32px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+max-width: 1400px;
+margin: 0 auto;
+}
+
+.logo {
+font-weight: 700;
+font-size: 1.3em;
+color: var(--accent);
+text-decoration: none;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.logo svg {
+width: 28px;
+height: 28px;
+}
+
+nav {
+display: flex;
+gap: 24px;
+}
+
+nav a {
+color: var(--text-muted);
+text-decoration: none;
+font-size: 14px;
+font-weight: 500;
+transition: color 0.2s;
+}
+
+nav a:hover {
+color: var(--text);
+}
+
+.container {
+max-width: 1400px;
+margin: 0 auto;
+padding: 24px 32px 60px;
+}
+
+.hero {
+text-align: center;
+margin-bottom: 48px;
+}
+
+.hero h1 {
+font-size: clamp(2.5rem, 5vw, 4rem);
+font-weight: 700;
+margin-bottom: 16px;
+background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+
+.hero p {
+color: var(--text-muted);
+font-size: 1.1em;
+max-width: 600px;
+margin: 0 auto 32px;
+}
+
+.tool-wrapper {
+display: grid;
+grid-template-columns: 320px 1fr;
+gap: 32px;
+align-items: start;
+}
+
+@media (max-width: 1024px) {
+.tool-wrapper {
+grid-template-columns: 1fr;
+}
+}
+
+.controls-panel {
+background: var(--card);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+padding: 24px;
+}
+
+.panel-title {
+font-size: 1.1em;
+font-weight: 600;
+margin-bottom: 20px;
+color: var(--text);
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.device-presets {
+margin-bottom: 24px;
+padding-bottom: 24px;
+border-bottom: 1px solid var(--border);
+}
+
+.preset-category {
+margin-bottom: 16px;
+}
+
+.preset-category-title {
+font-size: 11px;
+font-weight: 600;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.5px;
+margin-bottom: 10px;
+}
+
+.preset-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 8px;
+}
+
+.preset-btn {
+padding: 10px 12px;
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius-sm);
+color: var(--text);
+font-size: 13px;
+font-weight: 500;
+cursor: pointer;
+transition: all 0.2s;
+text-align: left;
+display: flex;
+flex-direction: column;
+gap: 2px;
+}
+
+.preset-btn:hover {
+border-color: var(--accent);
+background: var(--surface-hover);
+}
+
+.preset-btn.active {
+border-color: var(--accent);
+background: var(--accent);
+color: white;
+}
+
+.preset-btn .preset-dims {
+font-size: 11px;
+opacity: 0.7;
+font-family: 'Space Mono', monospace;
+}
+
+.custom-dims {
+margin-bottom: 24px;
+padding-bottom: 24px;
+border-bottom: 1px solid var(--border);
+}
+
+.dim-inputs {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 12px;
+margin-bottom: 16px;
+}
+
+.dim-group {
+display: flex;
+flex-direction: column;
+gap: 6px;
+}
+
+.dim-group label {
+font-size: 12px;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.dim-group input {
+padding: 10px 12px;
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius-sm);
+color: var(--text);
+font-family: 'Space Mono', monospace;
+font-size: 14px;
+}
+
+.dim-group input:focus {
+outline: none;
+border-color: var(--accent);
+}
+
+.orientation-toggle {
+display: flex;
+gap: 8px;
+}
+
+.orientation-btn {
+flex: 1;
+padding: 10px;
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius-sm);
+color: var(--text);
+font-size: 13px;
+font-weight: 500;
+cursor: pointer;
+transition: all 0.2s;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 6px;
+}
+
+.orientation-btn:hover {
+border-color: var(--accent);
+}
+
+.orientation-btn.active {
+border-color: var(--accent);
+background: var(--accent);
+color: white;
+}
+
+.viewport-controls {
+margin-bottom: 24px;
+padding-bottom: 24px;
+border-bottom: 1px solid var(--border);
+}
+
+.control-group {
+margin-bottom: 16px;
+}
+
+.control-group:last-child {
+margin-bottom: 0;
+}
+
+.control-label {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 8px;
+font-size: 12px;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.control-value {
+color: var(--text);
+font-weight: 600;
+font-family: 'Space Mono', monospace;
+}
+
+input[type="range"] {
+width: 100%;
+height: 6px;
+background: var(--surface);
+border-radius: 3px;
+outline: none;
+-webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+-webkit-appearance: none;
+width: 18px;
+height: 18px;
+background: var(--accent);
+border-radius: 50%;
+cursor: pointer;
+transition: transform 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+transform: scale(1.1);
+}
+
+.checkbox-control {
+display: flex;
+align-items: center;
+gap: 12px;
+cursor: pointer;
+}
+
+.checkbox-control input[type="checkbox"] {
+width: 20px;
+height: 20px;
+accent-color: var(--accent);
+cursor: pointer;
+}
+
+.url-input-group {
+display: flex;
+gap: 8px;
+}
+
+.url-input-group input {
+flex: 1;
+padding: 10px 12px;
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius-sm);
+color: var(--text);
+font-size: 14px;
+}
+
+.url-input-group input:focus {
+outline: none;
+border-color: var(--accent);
+}
+
+.url-input-group input::placeholder {
+color: var(--text-muted);
+}
+
+.url-input-group button {
+padding: 10px 16px;
+background: var(--accent);
+border: none;
+border-radius: var(--radius-sm);
+color: white;
+font-size: 13px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.2s;
+}
+
+.url-input-group button:hover {
+background: #ea580c;
+}
+
+.action-btns {
+display: flex;
+gap: 8px;
+}
+
+.action-btn {
+flex: 1;
+padding: 12px;
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius-sm);
+color: var(--text);
+font-size: 13px;
+font-weight: 500;
+cursor: pointer;
+transition: all 0.2s;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 6px;
+}
+
+.action-btn:hover {
+border-color: var(--accent);
+background: var(--surface-hover);
+}
+
+.action-btn.primary {
+background: var(--accent);
+border-color: var(--accent);
+color: white;
+}
+
+.action-btn.primary:hover {
+background: #ea580c;
+}
+
+.preview-panel {
+background: var(--card);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+padding: 24px;
+min-height: 600px;
+}
+
+.preview-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 20px;
+flex-wrap: wrap;
+gap: 12px;
+}
+
+.preview-title {
+font-size: 1.1em;
+font-weight: 600;
+color: var(--text);
+}
+
+.preview-info {
+display: flex;
+gap: 16px;
+font-size: 13px;
+color: var(--text-muted);
+}
+
+.preview-info span {
+display: flex;
+align-items: center;
+gap: 6px;
+}
+
+.preview-info .dim-value {
+color: var(--text);
+font-family: 'Space Mono', monospace;
+font-weight: 600;
+}
+
+.preview-container {
+background: var(--surface);
+border-radius: var(--radius);
+padding: 20px;
+overflow: auto;
+min-height: 500px;
+display: flex;
+align-items: flex-start;
+justify-content: flex-start;
+}
+
+.device-frame {
+background: #1a1a1a;
+border-radius: var(--radius);
+padding: 12px;
+box-shadow: var(--shadow-lg);
+transition: all 0.3s ease;
+margin: 0 auto;
+}
+
+.device-screen {
+background: white;
+border-radius: var(--radius-sm);
+overflow: hidden;
+position: relative;
+transition: all 0.3s ease;
+}
+
+.device-screen iframe {
+width: 100%;
+height: 100%;
+border: none;
+display: block;
+}
+
+.device-notch {
+position: absolute;
+top: 0;
+left: 50%;
+transform: translateX(-50%);
+width: 120px;
+height: 24px;
+background: #1a1a1a;
+border-bottom-left-radius: 12px;
+border-bottom-right-radius: 12px;
+z-index: 10;
+display: none;
+}
+
+.device-frame.mobile .device-notch {
+display: block;
+}
+
+.ruler-h, .ruler-v {
+position: absolute;
+background: var(--accent);
+opacity: 0;
+transition: opacity 0.2s;
+pointer-events: none;
+z-index: 100;
+}
+
+.ruler-h {
+height: 1px;
+left: 0;
+right: 0;
+}
+
+.ruler-v {
+width: 1px;
+top: 0;
+bottom: 0;
+}
+
+.device-screen:hover .ruler-h,
+.device-screen:hover .ruler-v {
+opacity: 0.5;
+}
+
+.resolution-info {
+margin-top: 20px;
+padding-top: 20px;
+border-top: 1px solid var(--border);
+}
+
+.resolution-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 12px;
+}
+
+.resolution-item {
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius-sm);
+padding: 12px 16px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.resolution-item .label {
+font-size: 12px;
+color: var(--text-muted);
+}
+
+.resolution-item .value {
+font-family: 'Space Mono', monospace;
+font-size: 14px;
+color: var(--text);
+font-weight: 600;
+}
+
+.guide-section {
+max-width: 800px;
+margin: 60px auto 0;
+}
+
+.guide-title {
+font-size: 1.8em;
+font-weight: 700;
+margin-bottom: 24px;
+text-align: center;
+}
+
+.guide-content {
+color: var(--text-muted);
+line-height: 1.8;
+}
+
+.guide-content h3 {
+color: var(--text);
+margin: 32px 0 16px;
+font-size: 1.3em;
+}
+
+.guide-content p {
+margin-bottom: 16px;
+}
+
+.guide-content code {
+background: var(--surface);
+padding: 2px 8px;
+border-radius: 4px;
+font-family: 'Space Mono', monospace;
+font-size: 0.9em;
+color: var(--accent);
+}
+
+.breakpoint-table {
+width: 100%;
+border-collapse: collapse;
+margin: 20px 0;
+}
+
+.breakpoint-table th,
+.breakpoint-table td {
+padding: 12px;
+text-align: left;
+border-bottom: 1px solid var(--border);
+}
+
+.breakpoint-table th {
+color: var(--text-muted);
+font-size: 12px;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.breakpoint-table td {
+color: var(--text);
+}
+
+.breakpoint-table tr:hover {
+background: var(--surface);
+}
+
+footer {
+text-align: center;
+padding: 40px 32px;
+color: var(--text-muted);
+font-size: 14px;
+border-top: 1px solid var(--border);
+margin-top: 60px;
+}
+
+footer a {
+color: var(--accent);
+text-decoration: none;
+}
+
+.empty-state {
+text-align: center;
+padding: 80px 40px;
+color: var(--text-muted);
+}
+
+.empty-state-icon {
+font-size: 64px;
+margin-bottom: 20px;
+opacity: 0.5;
+}
+
+.empty-state h3 {
+font-size: 1.3em;
+color: var(--text);
+margin-bottom: 12px;
+}
+
+.empty-state p {
+max-width: 400px;
+margin: 0 auto 24px;
+}
+
+.scale-control {
+display: flex;
+align-items: center;
+gap: 12px;
+}
+
+.scale-value {
+min-width: 50px;
+text-align: right;
+font-family: 'Space Mono', monospace;
+color: var(--text);
+font-weight: 600;
+}
+</style>
+</head>
+<body>
+<header>
+<a href="/" class="logo">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+</svg>
+Paperclip
+</a>
+<nav>
+<a href="/">Home</a>
+<a href="/tools/">Tools</a>
+<a href="https://github.com/bigknoxy/paperclip-pages" target="_blank">GitHub</a>
+</nav>
+</header>
+
+<div class="container">
+<div class="hero">
+<h1>Screen Resolution Simulator</h1>
+<p>Test responsive designs on any device size. Switch between presets or enter custom dimensions to see how your site adapts.</p>
+</div>
+
+<div class="tool-wrapper">
+<div class="controls-panel">
+<div class="panel-title">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="4" y="4" width="16" height="16" rx="2"/>
+<rect x="9" y="9" width="6" height="6"/>
+</svg>
+Device Presets
+</div>
+
+<div class="device-presets">
+<div class="preset-category">
+<div class="preset-category-title">Mobile</div>
+<div class="preset-grid">
+<button class="preset-btn" data-width="375" data-height="667" data-type="mobile">
+iPhone SE
+<span class="preset-dims">375 × 667</span>
+</button>
+<button class="preset-btn" data-width="390" data-height="844" data-type="mobile">
+iPhone 14
+<span class="preset-dims">390 × 844</span>
+</button>
+<button class="preset-btn" data-width="414" data-height="896" data-type="mobile">
+iPhone 14+
+<span class="preset-dims">414 × 896</span>
+</button>
+<button class="preset-btn" data-width="360" data-height="740" data-type="mobile">
+Galaxy S21
+<span class="preset-dims">360 × 740</span>
+</button>
+</div>
+</div>
+
+<div class="preset-category">
+<div class="preset-category-title">Tablet</div>
+<div class="preset-grid">
+<button class="preset-btn" data-width="768" data-height="1024" data-type="tablet">
+iPad Mini
+<span class="preset-dims">768 × 1024</span>
+</button>
+<button class="preset-btn" data-width="810" data-height="1080" data-type="tablet">
+iPad Air
+<span class="preset-dims">810 × 1080</span>
+</button>
+<button class="preset-btn" data-width="834" data-height="1194" data-type="tablet">
+iPad Pro 11
+<span class="preset-dims">834 × 1194</span>
+</button>
+<button class="preset-btn" data-width="1024" data-height="1366" data-type="tablet">
+iPad Pro 12.9
+<span class="preset-dims">1024 × 1366</span>
+</button>
+</div>
+</div>
+
+<div class="preset-category">
+<div class="preset-category-title">Desktop</div>
+<div class="preset-grid">
+<button class="preset-btn" data-width="1280" data-height="720" data-type="desktop">
+HD Laptop
+<span class="preset-dims">1280 × 720</span>
+</button>
+<button class="preset-btn" data-width="1366" data-height="768" data-type="desktop">
+Standard
+<span class="preset-dims">1366 × 768</span>
+</button>
+<button class="preset-btn" data-width="1920" data-height="1080" data-type="desktop">
+Full HD
+<span class="preset-dims">1920 × 1080</span>
+</button>
+<button class="preset-btn" data-width="2560" data-height="1440" data-type="desktop">
+2K QHD
+<span class="preset-dims">2560 × 1440</span>
+</button>
+</div>
+</div>
+</div>
+
+<div class="custom-dims">
+<div class="panel-title" style="margin-bottom: 16px;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<polygon points="14 2 18 6 7 17 3 17 3 13 14 2"/>
+</svg>
+Custom Dimensions
+</div>
+<div class="dim-inputs">
+<div class="dim-group">
+<label>Width (px)</label>
+<input type="number" id="widthInput" value="390" min="100" max="3840">
+</div>
+<div class="dim-group">
+<label>Height (px)</label>
+<input type="number" id="heightInput" value="844" min="100" max="2160">
+</div>
+</div>
+<div class="orientation-toggle">
+<button class="orientation-btn active" id="portraitBtn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="6" y="4" width="12" height="16" rx="2"/>
+</svg>
+Portrait
+</button>
+<button class="orientation-btn" id="landscapeBtn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="4" y="6" width="16" height="12" rx="2"/>
+</svg>
+Landscape
+</button>
+</div>
+</div>
+
+<div class="viewport-controls">
+<div class="panel-title" style="margin-bottom: 16px;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+</svg>
+Viewport Options
+</div>
+
+<div class="control-group">
+<div class="control-label">
+<span>Zoom Scale</span>
+<span class="control-value" id="scaleValue">100%</span>
+</div>
+<input type="range" id="scaleSlider" min="25" max="150" value="100">
+</div>
+
+<div class="control-group">
+<label class="checkbox-control">
+<input type="checkbox" id="showDeviceFrame" checked>
+<span>Show Device Frame</span>
+</label>
+</div>
+</div>
+
+<div class="panel-title" style="margin-bottom: 16px;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+</svg>
+Load Website
+</div>
+<div class="url-input-group">
+<input type="url" id="urlInput" placeholder="https://example.com" value="">
+<button id="loadUrlBtn">Load</button>
+</div>
+
+<div class="action-btns" style="margin-top: 16px;">
+<button class="action-btn" id="resetBtn">Reset</button>
+<button class="action-btn primary" id="refreshBtn">Refresh</button>
+</div>
+</div>
+
+<div class="preview-panel">
+<div class="preview-header">
+<div class="preview-title">Live Preview</div>
+<div class="preview-info">
+<span>Viewport: <span class="dim-value" id="viewportDims">390 × 844</span></span>
+<span>DPR: <span class="dim-value">1.0</span></span>
+</div>
+</div>
+
+<div class="preview-container" id="previewContainer">
+<div class="device-frame mobile" id="deviceFrame">
+<div class="device-notch"></div>
+<div class="device-screen" id="deviceScreen" style="width: 390px; height: 844px;">
+<div class="empty-state">
+<div class="empty-state-icon">📱</div>
+<h3>Enter a URL to begin</h3>
+<p>Test your responsive design on this device size. Enter a website URL or use the demo content below.</p>
+<button class="action-btn primary" id="demoBtn" style="margin-top: 8px;">Load Demo</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="resolution-info">
+<div class="resolution-grid">
+<div class="resolution-item">
+<span class="label">CSS Pixels</span>
+<span class="value" id="cssPixels">390 × 844</span>
+</div>
+<div class="resolution-item">
+<span class="label">Aspect Ratio</span>
+<span class="value" id="aspectRatio">19.5:9</span>
+</div>
+<div class="resolution-item">
+<span class="label">Category</span>
+<span class="value" id="deviceCategory">Mobile</span>
+</div>
+<div class="resolution-item">
+<span class="label">Viewport Size</span>
+<span class="value" id="viewportSize">Medium</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="guide-section">
+<h2 class="guide-title">Responsive Breakpoint Guide</h2>
+<div class="guide-content">
+<h3>Common Breakpoints</h3>
+<p>Use these standard breakpoints when building responsive layouts. Test your designs at each size to ensure they adapt gracefully.</p>
+
+<table class="breakpoint-table">
+<thead>
+<tr>
+<th>Breakpoint</th>
+<th>Range</th>
+<th>Typical Devices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>xs</code></td>
+<td>&lt; 576px</td>
+<td>Mobile phones (portrait)</td>
+</tr>
+<tr>
+<td><code>sm</code></td>
+<td>576px - 767px</td>
+<td>Large phones, small tablets</td>
+</tr>
+<tr>
+<td><code>md</code></td>
+<td>768px - 991px</td>
+<td>Tablets (portrait), small laptops</td>
+</tr>
+<tr>
+<td><code>lg</code></td>
+<td>992px - 1199px</td>
+<td>Laptops, desktops</td>
+</tr>
+<tr>
+<td><code>xl</code></td>
+<td>1200px - 1399px</td>
+<td>Large desktops</td>
+</tr>
+<tr>
+<td><code>xxl</code></td>
+<td>≥ 1400px</td>
+<td>Extra large screens</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Best Practices</h3>
+<p><strong>Design mobile-first:</strong> Start with the smallest viewport and progressively enhance for larger screens. This ensures your core content is accessible everywhere.</p>
+<p><strong>Use relative units:</strong> Prefer <code>rem</code>, <code>em</code>, and <code>%</code> over fixed pixels. This allows layouts to scale gracefully.</p>
+<p><strong>Test real content:</strong> Don't just test with placeholder text. Real content often reveals edge cases and overflow issues.</p>
+<p><strong>Check touch targets:</strong> On mobile, ensure interactive elements are at least 44×44px for comfortable tapping.</p>
+<p><strong>Consider orientation:</strong> Test both portrait and landscape modes. Some designs that work in one orientation break in the other.</p>
+
+<h3>Device Pixel Ratio (DPR)</h3>
+<p>Modern devices have high-density displays with DPR values of 2×, 3×, or higher. CSS pixels don't map 1:1 to physical pixels. Use <code>srcset</code> for images and <code>-webkit-device-pixel-ratio</code> media queries when necessary.</p>
+</div>
+</div>
+</div>
+
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+if (window.RelatedTools) {
+RelatedTools.renderRelatedTools('screen-resolution', '#related-tools-container', {
+title: 'Related Tools',
+showCategory: true,
+trackClicks: true
+});
+}
+});
+</script>
+
+<footer>
+<p>Built with ❤️ by <a href="https://github.com/bigknoxy/paperclip-pages" target="_blank">Paperclip</a></p>
+<p style="margin-top: 8px; opacity: 0.7;">Free tool • No data stored • Test locally</p>
+</footer>
+
+<script>
+// Device presets data
+const devicePresets = {
+mobile: [
+{ name: 'iPhone SE', width: 375, height: 667, dpr: 2 },
+{ name: 'iPhone 12/13/14', width: 390, height: 844, dpr: 3 },
+{ name: 'iPhone 14 Pro', width: 393, height: 852, dpr: 3 },
+{ name: 'iPhone 14 Plus/Max', width: 428, height: 926, dpr: 3 },
+{ name: 'Galaxy S20/S21', width: 360, height: 800, dpr: 3 },
+{ name: 'Pixel 6', width: 412, height: 915, dpr: 2.625 },
+{ name: 'Pixel 7', width: 412, height: 892, dpr: 2.625 }
+],
+tablet: [
+{ name: 'iPad Mini', width: 768, height: 1024, dpr: 2 },
+{ name: 'iPad Air', width: 820, height: 1180, dpr: 2 },
+{ name: 'iPad Pro 11"', width: 834, height: 1194, dpr: 2 },
+{ name: 'iPad Pro 12.9"', width: 1024, height: 1366, dpr: 2 },
+{ name: 'Galaxy Tab S8', width: 800, height: 1280, dpr: 2 }
+],
+desktop: [
+{ name: 'HD (720p)', width: 1280, height: 720, dpr: 1 },
+{ name: 'WXGA', width: 1366, height: 768, dpr: 1 },
+{ name: 'Full HD', width: 1920, height: 1080, dpr: 1 },
+{ name: 'QHD (2K)', width: 2560, height: 1440, dpr: 1 },
+{ name: '4K UHD', width: 3840, height: 2160, dpr: 1 },
+{ name: 'MacBook Air', width: 1440, height: 900, dpr: 2 },
+{ name: 'MacBook Pro 14"', width: 1512, height: 982, dpr: 2 },
+{ name: 'MacBook Pro 16"', width: 1728, height: 1117, dpr: 2 }
+]
+};
+
+// State
+let currentWidth = 390;
+let currentHeight = 844;
+let currentScale = 100;
+let isLandscape = false;
+let showFrame = true;
+let currentUrl = '';
+
+// DOM elements
+const widthInput = document.getElementById('widthInput');
+const heightInput = document.getElementById('heightInput');
+const portraitBtn = document.getElementById('portraitBtn');
+const landscapeBtn = document.getElementById('landscapeBtn');
+const scaleSlider = document.getElementById('scaleSlider');
+const scaleValue = document.getElementById('scaleValue');
+const showDeviceFrame = document.getElementById('showDeviceFrame');
+const urlInput = document.getElementById('urlInput');
+const loadUrlBtn = document.getElementById('loadUrlBtn');
+const resetBtn = document.getElementById('resetBtn');
+const refreshBtn = document.getElementById('refreshBtn');
+const demoBtn = document.getElementById('demoBtn');
+const deviceFrame = document.getElementById('deviceFrame');
+const deviceScreen = document.getElementById('deviceScreen');
+const presetBtns = document.querySelectorAll('.preset-btn');
+const viewportDims = document.getElementById('viewportDims');
+const cssPixels = document.getElementById('cssPixels');
+const aspectRatio = document.getElementById('aspectRatio');
+const deviceCategory = document.getElementById('deviceCategory');
+const viewportSize = document.getElementById('viewportSize');
+
+// Initialize
+function init() {
+setupEventListeners();
+updateDeviceFrame();
+updateInfoDisplay();
+}
+
+function setupEventListeners() {
+// Preset buttons
+presetBtns.forEach(btn => {
+btn.addEventListener('click', () => {
+presetBtns.forEach(b => b.classList.remove('active'));
+btn.classList.add('active');
+
+const width = parseInt(btn.dataset.width);
+const height = parseInt(btn.dataset.height);
+const type = btn.dataset.type;
+
+if (isLandscape) {
+currentWidth = height;
+currentHeight = width;
+} else {
+currentWidth = width;
+currentHeight = height;
+}
+
+widthInput.value = currentWidth;
+heightInput.value = currentHeight;
+
+updateDeviceFrame();
+updateInfoDisplay();
+});
+});
+
+// Custom dimension inputs
+widthInput.addEventListener('change', () => {
+currentWidth = parseInt(widthInput.value) || 390;
+updateDeviceFrame();
+updateInfoDisplay();
+deselectPresets();
+});
+
+heightInput.addEventListener('change', () => {
+currentHeight = parseInt(heightInput.value) || 844;
+updateDeviceFrame();
+updateInfoDisplay();
+deselectPresets();
+});
+
+// Orientation toggle
+portraitBtn.addEventListener('click', () => {
+if (!isLandscape) return;
+isLandscape = false;
+portraitBtn.classList.add('active');
+landscapeBtn.classList.remove('active');
+
+// Swap dimensions
+[currentWidth, currentHeight] = [currentHeight, currentWidth];
+widthInput.value = currentWidth;
+heightInput.value = currentHeight;
+
+updateDeviceFrame();
+updateInfoDisplay();
+});
+
+landscapeBtn.addEventListener('click', () => {
+if (isLandscape) return;
+isLandscape = true;
+landscapeBtn.classList.add('active');
+portraitBtn.classList.remove('active');
+
+// Swap dimensions
+[currentWidth, currentHeight] = [currentHeight, currentWidth];
+widthInput.value = currentWidth;
+heightInput.value = currentHeight;
+
+updateDeviceFrame();
+updateInfoDisplay();
+});
+
+// Scale slider
+scaleSlider.addEventListener('input', () => {
+currentScale = parseInt(scaleSlider.value);
+scaleValue.textContent = currentScale + '%';
+updateDeviceFrame();
+});
+
+// Show device frame toggle
+showDeviceFrame.addEventListener('change', () => {
+showFrame = showDeviceFrame.checked;
+updateDeviceFrame();
+});
+
+// URL loading
+loadUrlBtn.addEventListener('click', loadUrl);
+urlInput.addEventListener('keypress', (e) => {
+if (e.key === 'Enter') loadUrl();
+});
+
+// Action buttons
+resetBtn.addEventListener('click', resetToDefaults);
+refreshBtn.addEventListener('click', refreshFrame);
+demoBtn.addEventListener('click', loadDemo);
+}
+
+function deselectPresets() {
+presetBtns.forEach(btn => btn.classList.remove('active'));
+}
+
+function loadUrl() {
+let url = urlInput.value.trim();
+if (!url) return;
+
+// Add protocol if missing
+if (!url.startsWith('http://') && !url.startsWith('https://')) {
+url = 'https://' + url;
+}
+
+currentUrl = url;
+refreshFrame();
+}
+
+function refreshFrame() {
+if (!currentUrl) {
+// Show empty state
+deviceScreen.innerHTML = `
+<div class="empty-state">
+<div class="empty-state-icon">📱</div>
+<h3>Enter a URL to begin</h3>
+<p>Test your responsive design on this device size. Enter a website URL or use the demo content below.</p>
+<button class="action-btn primary" id="demoBtn" style="margin-top: 8px;">Load Demo</button>
+</div>
+`;
+document.getElementById('demoBtn').addEventListener('click', loadDemo);
+return;
+}
+
+// Load URL in iframe
+deviceScreen.innerHTML = `<iframe src="${currentUrl}" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-presentation"></iframe>`;
+}
+
+function loadDemo() {
+const demoHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Responsive Demo</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+line-height: 1.6;
+color: #333;
+background: #f5f5f5;
+}
+.container {
+max-width: 1200px;
+margin: 0 auto;
+padding: 20px;
+}
+header {
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+color: white;
+padding: 60px 20px;
+text-align: center;
+}
+h1 { font-size: 2.5em; margin-bottom: 10px; }
+.subtitle { font-size: 1.2em; opacity: 0.9; }
+.grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+gap: 20px;
+padding: 40px 0;
+}
+.card {
+background: white;
+border-radius: 12px;
+padding: 24px;
+box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+transition: transform 0.2s;
+}
+.card:hover { transform: translateY(-4px); }
+.card h3 { color: #667eea; margin-bottom: 10px; }
+.card p { color: #666; }
+.stats {
+background: white;
+border-radius: 12px;
+padding: 30px;
+margin: 20px 0;
+display: flex;
+justify-content: space-around;
+flex-wrap: wrap;
+gap: 20px;
+}
+.stat { text-align: center; }
+.stat-value {
+font-size: 2em;
+font-weight: bold;
+color: #667eea;
+}
+.stat-label { color: #666; font-size: 0.9em; }
+.cta {
+background: #667eea;
+color: white;
+text-align: center;
+padding: 40px 20px;
+border-radius: 12px;
+margin: 40px 0;
+}
+.cta h2 { margin-bottom: 20px; }
+.cta-button {
+display: inline-block;
+background: white;
+color: #667eea;
+padding: 12px 30px;
+border-radius: 30px;
+text-decoration: none;
+font-weight: bold;
+margin-top: 10px;
+}
+.viewport-info {
+background: #333;
+color: white;
+padding: 15px;
+text-align: center;
+font-family: monospace;
+position: fixed;
+bottom: 0;
+left: 0;
+right: 0;
+}
+@media (max-width: 600px) {
+h1 { font-size: 1.8em; }
+.subtitle { font-size: 1em; }
+.grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<header>
+<h1>🎨 Responsive Design Demo</h1>
+<p class="subtitle">Resize this window to see how content adapts</p>
+</header>
+<div class="container">
+<div class="grid">
+<div class="card">
+<h3>📱 Mobile First</h3>
+<p>This content adapts gracefully from mobile to desktop. Notice how the grid changes based on available space.</p>
+</div>
+<div class="card">
+<h3>🎯 Flexible Layouts</h3>
+<p>Using CSS Grid and Flexbox for responsive designs that work at any screen size.</p>
+</div>
+<div class="card">
+<h3>⚡ Fast Loading</h3>
+<p>Optimized assets and efficient CSS ensure quick rendering across all devices.</p>
+</div>
+<div class="card">
+<h3>♿ Accessible</h3>
+<p>Proper semantic HTML and ARIA labels make this content usable by everyone.</p>
+</div>
+</div>
+<div class="stats">
+<div class="stat">
+<div class="stat-value">100%</div>
+<div class="stat-label">Responsive</div>
+</div>
+<div class="stat">
+<div class="stat-value">60fps</div>
+<div class="stat-label">Performance</div>
+</div>
+<div class="stat">
+<div class="stat-value">A+</div>
+<div class="stat-label">Accessibility</div>
+</div>
+<div class="stat">
+<div class="stat-value">100</div>
+<div class="stat-label">Lighthouse</div>
+</div>
+</div>
+<div class="cta">
+<h2>Ready to test your own site?</h2>
+<p>Enter your URL in the simulator above to see how it looks on different devices.</p>
+<a href="#" class="cta-button">Get Started</a>
+</div>
+</div>
+<div class="viewport-info" id="viewportInfo">
+Viewport: <span id="vw">0</span> × <span id="vh">0</span> px
+</div>
+<script>
+function updateViewport() {
+document.getElementById('vw').textContent = window.innerWidth;
+document.getElementById('vh').textContent = window.innerHeight;
+}
+window.addEventListener('resize', updateViewport);
+updateViewport();
+</script>
+</body>
+</html>
+`;
+const blob = new Blob([demoHtml], { type: 'text/html' });
+const demoUrl = URL.createObjectURL(blob);
+deviceScreen.innerHTML = `<iframe src="${demoUrl}" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>`;
+}
+
+function resetToDefaults() {
+currentWidth = 390;
+currentHeight = 844;
+currentScale = 100;
+isLandscape = false;
+showFrame = true;
+currentUrl = '';
+
+widthInput.value = currentWidth;
+heightInput.value = currentHeight;
+scaleSlider.value = currentScale;
+scaleValue.textContent = '100%';
+showDeviceFrame.checked = true;
+urlInput.value = '';
+
+portraitBtn.classList.add('active');
+landscapeBtn.classList.remove('active');
+deselectPresets();
+
+// Find and activate iPhone preset
+presetBtns.forEach(btn => {
+if (btn.dataset.width === '390' && btn.dataset.height === '844') {
+btn.classList.add('active');
+}
+});
+
+updateDeviceFrame();
+updateInfoDisplay();
+refreshFrame();
+}
+
+function updateDeviceFrame() {
+// Calculate scaled dimensions
+const scale = currentScale / 100;
+const scaledWidth = Math.round(currentWidth * scale);
+const scaledHeight = Math.round(currentHeight * scale);
+
+// Update device screen size
+deviceScreen.style.width = currentWidth + 'px';
+deviceScreen.style.height = currentHeight + 'px';
+
+// Apply scale transform to fit in container
+if (scale !== 1) {
+deviceScreen.style.transform = `scale(${scale})`;
+deviceScreen.style.transformOrigin = 'top left';
+} else {
+deviceScreen.style.transform = 'none';
+}
+
+// Update device frame visibility
+if (showFrame) {
+deviceFrame.classList.add('mobile');
+deviceFrame.style.padding = '12px';
+} else {
+deviceFrame.classList.remove('mobile');
+deviceFrame.style.padding = '0';
+deviceFrame.style.background = 'transparent';
+deviceFrame.style.boxShadow = 'none';
+}
+
+// Update viewport display
+viewportDims.textContent = currentWidth + ' × ' + currentHeight;
+}
+
+function updateInfoDisplay() {
+// CSS Pixels
+cssPixels.textContent = currentWidth + ' × ' + currentHeight;
+
+// Aspect Ratio
+const gcd = (a, b) => b ? gcd(b, a % b) : a;
+const divisor = gcd(currentWidth, currentHeight);
+const ratioW = currentWidth / divisor;
+const ratioH = currentHeight / divisor;
+aspectRatio.textContent = ratioW + ':' + ratioH;
+
+// Device Category
+let category = 'Unknown';
+if (currentWidth < 576) {
+category = 'Mobile';
+} else if (currentWidth < 992) {
+category = 'Tablet';
+} else {
+category = 'Desktop';
+}
+deviceCategory.textContent = category;
+
+// Viewport Size
+let size = 'Small';
+if (currentWidth >= 1200) size = 'Extra Large';
+else if (currentWidth >= 992) size = 'Large';
+else if (currentWidth >= 768) size = 'Medium';
+viewportSize.textContent = size;
+}
+
+// Initialize app
+init();
+
+// Select default preset (iPhone 14)
+document.querySelector('.preset-btn[data-width="390"]').classList.add('active');
+</script>
+</body>
+</html>
