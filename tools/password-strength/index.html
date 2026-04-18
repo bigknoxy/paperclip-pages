@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Password Strength Checker - Test Password Security</title>
+<meta name="description" content="Check password strength with entropy analysis, crack time estimates, and dictionary checks. Interactive password security analyzer.">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+<header class="header">
+<nav class="nav">
+<a href="/" class="logo">Paperclip</a>
+<div class="nav-links">
+<a href="/tools/">Tools</a>
+<a href="/content/">Blog</a>
+</div>
+</nav>
+</header>
+
+<main class="main">
+<div class="container">
+<h1>Password Strength Checker</h1>
+<p class="subtitle">Analyze password security with entropy calculation & crack time estimates</p>
+
+<div class="checker-card">
+<div class="password-input-container">
+<label for="passwordInput" class="input-label">Enter password to analyze</label>
+<div class="password-input-wrapper">
+<input type="password" id="passwordInput" placeholder="Type or paste your password" autocomplete="off">
+<button id="toggleVisibility" class="icon-btn" title="Show/Hide password" type="button">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="eyeIcon">
+<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+<circle cx="12" cy="12" r="3"></circle>
+</svg>
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="eyeOffIcon" style="display: none;">
+<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+<line x1="1" y1="1" x2="23" y2="23"></line>
+</svg>
+</button>
+</div>
+</div>
+
+<div class="strength-meter-section">
+<div class="strength-bar-container">
+<div class="strength-bar-bg">
+<div id="strengthFill" class="strength-fill"></div>
+</div>
+<div class="strength-labels">
+<span class="strength-level" data-level="0">Very Weak</span>
+<span class="strength-level" data-level="1">Weak</span>
+<span class="strength-level" data-level="2">Fair</span>
+<span class="strength-level" data-level="3">Good</span>
+<span class="strength-level" data-level="4">Strong</span>
+<span class="strength-level" data-level="5">Excellent</span>
+</div>
+</div>
+<div id="strengthText" class="strength-text">Enter a password to begin analysis</div>
+</div>
+
+<div class="metrics-grid">
+<div class="metric-card">
+<div class="metric-value" id="entropyValue">0</div>
+<div class="metric-unit">bits</div>
+<div class="metric-label">Entropy</div>
+</div>
+<div class="metric-card">
+<div class="metric-value" id="crackTimeValue">Instant</div>
+<div class="metric-label">Estimated Crack Time</div>
+</div>
+<div class="metric-card">
+<div class="metric-value" id="poolSizeValue">0</div>
+<div class="metric-unit">chars</div>
+<div class="metric-label">Character Pool</div>
+</div>
+<div class="metric-card">
+<div class="metric-value" id="lengthValue">0</div>
+<div class="metric-unit">chars</div>
+<div class="metric-label">Length</div>
+</div>
+</div>
+
+<div class="analysis-section">
+<h3>Password Analysis</h3>
+<div class="analysis-grid" id="analysisGrid">
+<div class="analysis-item" data-check="length">
+<span class="check-icon" id="lengthCheck">○</span>
+<span class="check-text">At least 12 characters</span>
+</div>
+<div class="analysis-item" data-check="uppercase">
+<span class="check-icon" id="uppercaseCheck">○</span>
+<span class="check-text">Contains uppercase letters (A-Z)</span>
+</div>
+<div class="analysis-item" data-check="lowercase">
+<span class="check-icon" id="lowercaseCheck">○</span>
+<span class="check-text">Contains lowercase letters (a-z)</span>
+</div>
+<div class="analysis-item" data-check="numbers">
+<span class="check-icon" id="numbersCheck">○</span>
+<span class="check-text">Contains numbers (0-9)</span>
+</div>
+<div class="analysis-item" data-check="symbols">
+<span class="check-icon" id="symbolsCheck">○</span>
+<span class="check-text">Contains symbols (!@#$...)</span>
+</div>
+<div class="analysis-item" data-check="unique">
+<span class="check-icon" id="uniqueCheck">○</span>
+<span class="check-text">No repeated characters</span>
+</div>
+<div class="analysis-item" data-check="dictionary">
+<span class="check-icon" id="dictionaryCheck">○</span>
+<span class="check-text">Not in common dictionary</span>
+</div>
+<div class="analysis-item" data-check="sequences">
+<span class="check-icon" id="sequencesCheck">○</span>
+<span class="check-text">No keyboard sequences</span>
+</div>
+</div>
+</div>
+
+<div class="dictionary-warning" id="dictionaryWarning" style="display: none;">
+<div class="warning-icon">⚠️</div>
+<div class="warning-content">
+<h4>Common Password Detected</h4>
+<p>This password appears in common password lists. It could be cracked instantly.</p>
+</div>
+</div>
+
+<div class="improvement-tips" id="improvementTips">
+<h4>How to improve your password:</h4>
+<ul id="tipsList">
+<li>Use at least 12 characters</li>
+<li>Mix uppercase, lowercase, numbers, and symbols</li>
+<li>Avoid dictionary words and personal information</li>
+<li>Use a passphrase or random characters</li>
+</ul>
+</div>
+
+<div class="generator-cta">
+<p>Need a stronger password?</p>
+<a href="/tools/password-generator/" class="btn btn-primary">Generate Secure Password</a>
+</div>
+</div>
+
+<div class="features-grid">
+<div class="feature-card">
+<h3>Entropy Analysis</h3>
+<p>Mathematical calculation of password randomness based on length and character variety.</p>
+</div>
+<div class="feature-card">
+<h3>Crack Time Estimation</h3>
+<p>Realistic estimates based on modern cracking speeds and attack scenarios.</p>
+</div>
+<div class="feature-card">
+<h3>Dictionary Check</h3>
+<p>Detects common passwords, dictionary words, and known breached passwords.</p>
+</div>
+<div class="feature-card">
+<h3>Pattern Detection</h3>
+<p>Identifies keyboard sequences, repeated characters, and predictable patterns.</p>
+</div>
+</div>
+
+<div class="security-info" style="margin-top: 40px; padding: 24px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 12px; border: 1px solid #fbbf24;">
+<h3 style="margin: 0 0 16px 0; color: #92400e;">Why Password Strength Matters</h3>
+<p style="color: #78350f; margin-bottom: 16px;">Weak passwords are the #1 cause of account breaches. Modern computers can test billions of passwords per second.</p>
+<ul style="color: #92400e; padding-left: 20px; margin: 0;">
+<li style="margin-bottom: 8px;"><strong>8 characters:</strong> Cracked in minutes</li>
+<li style="margin-bottom: 8px;"><strong>12 characters:</strong> Cracked in days/weeks</li>
+<li style="margin-bottom: 8px;"><strong>16+ characters:</strong> Takes centuries to crack</li>
+<li>Each additional character makes your password exponentially stronger.</li>
+</ul>
+</div>
+
+<div class="carbon-ads" style="margin: 32px 0; padding: 16px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; min-height: 120px;">
+<div style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Sponsored</div>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7ITK7L&placement=paperclip" id="_carbonads_js"></script>
+</div>
+
+<div class="pro-tools" style="margin-top: 40px; padding: 24px; background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%); border-radius: 12px; border: 1px solid #7dd3fc;">
+<h3 style="margin: 0 0 16px 0; color: #0369a1;">Password Security Tools</h3>
+<ul style="color: #475569; padding-left: 20px; margin: 0;">
+<li style="margin-bottom: 12px;"><strong><a href="https://haveibeenpwned.com/" target="_blank" style="color: #0369a1;">Have I Been Pwned</a></strong> - Check if your password has been exposed in data breaches</li>
+<li style="margin-bottom: 12px;"><strong><a href="https://1password.com/" target="_blank" style="color: #0369a1;">1Password</a></strong> - Password manager with security alerts and breach monitoring</li>
+<li style="margin-bottom: 12px;"><strong><a href="https://bitwarden.com/" target="_blank" style="color: #0369a1;">Bitwarden</a></strong> - Open source password manager with free tier</li>
+</ul>
+</div>
+
+<div class="related-resources" style="margin-top: 40px; padding: 24px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
+<h3 style="margin: 0 0 16px 0; color: #1e293b;">Related Resources</h3>
+<ul style="color: #64748b; padding-left: 20px; margin: 0;">
+<li><a href="/tools/password-generator/" style="color: #3b82f6; text-decoration: none;">Password Generator</a> - Create secure passwords</li>
+<li><a href="/tools/hash/" style="color: #3b82f6; text-decoration: none;">Hash Generator</a> - Hash your passwords securely</li>
+<li><a href="/content/how-to-use-online-developer-tools-safely" style="color: #3b82f6; text-decoration: none;">Online Tools Safety Guide</a> - Security best practices</li>
+</ul>
+</div>
+</div>
+</main>
+
+<footer class="footer">
+<div class="container">
+<p>&copy; 2026 Paperclip. Check your password security.</p>
+</div>
+</footer>
+
+<script src="/public/analytics.js"></script>
+<script src="script.js"></script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+if (window.RelatedTools) {
+RelatedTools.renderRelatedTools('password-generator', '#related-tools-container', {
+title: 'Related Tools',
+showCategory: true,
+trackClicks: true
+});
+}
+});
+</script>
+</body>
+</html>

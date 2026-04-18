@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Animation Keyframe Generator - Create Animations | Paperclip</title>
+<meta name="description" content="Free online CSS animation keyframe generator. Create stunning animations with live preview, keyframe editing, and instant CSS export. Perfect for web designers and developers.">
+<meta name="keywords" content="css animation generator, keyframe generator, css animations, animation maker, web animation tool, css keyframes">
+<meta name="author" content="Paperclip">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/animation-keyframe/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+--bg: #0a0e14;
+--card: #11181f;
+--surface: #1a232e;
+--surface-hover: #243240;
+--accent: #f97316;
+--accent-glow: rgba(249, 115, 22, 0.3);
+--secondary: #06b6d4;
+--success: #22c55e;
+--text: #f8fafc;
+--text-muted: #94a3b8;
+--border: rgba(148, 163, 184, 0.15);
+--shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+--shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+--radius: 12px;
+--radius-sm: 8px;
+}
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: 'Outfit', system-ui, sans-serif;
+background: var(--bg);
+color: var(--text);
+line-height: 1.6;
+min-height: 100vh;
+}
+
+header {
+padding: 20px 32px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+max-width: 1400px;
+margin: 0 auto;
+}
+
+.logo {
+font-weight: 700;
+font-size: 1.3em;
+color: var(--accent);
+text-decoration: none;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.logo svg {
+width: 28px;
+height: 28px;
+}
+
+nav {
+display: flex;
+gap: 24px;
+}
+
+nav a {
+color: var(--text-muted);
+text-decoration: none;
+font-size: 14px;
+font-weight: 500;
+transition: color 0.2s;
+}
+
+nav a:hover {
+color: var(--text);
+}
+
+.container {
+max-width: 1400px;
+margin: 0 auto;
+padding: 24px 32px 60px;
+}
+
+.hero {
+text-align: center;
+margin-bottom: 48px;
+}
+
+.hero h1 {
+font-size: clamp(2.5rem, 5vw, 4rem);
+font-weight: 700;
+margin-bottom: 16px;
+background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 50%, var(--success) 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+
+.hero p {
+color: var(--text-muted);
+font-size: 1.1em;
+max-width: 600px;
+margin: 0 auto 32px;
+}
+
+.tool-wrapper {
+display: grid;
+grid-template-columns: 360px 1fr;
+gap: 32px;
+align-items: start;
+}
+
+@media (max-width: 1024px) {
+.tool-wrapper {
+grid-template-columns: 1fr;
+}
+}
+
+.controls-panel {
+background: var(--card);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+padding: 24px;
+}
+
+.panel-title {
+font-size: 1.1em;
+font-weight: 600;
+margin-bottom: 20px;
+color: var(--text);
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.control-group {
+margin-bottom: 20px;
+}
+
+.control-label {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 8px;
+font-size: 13px;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.control-value {
+color: var(--text);
+font-weight: 600;
+font-family: 'Space Mono', monospace;
+}
+
+input[type="text"], input[type="number"] {
+width: 100%;
+padding: 10px 12px;
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius-sm);
+color: var(--text);
+font-family: 'Space Mono', monospace;
+font-size: 14px;
+}
+
+input[type="text"]:focus, input[type="number"]:focus {
+outline: none;
+border-color: var(--accent);
+}
+
+input[type="range"] {
+width: 100%;
+height: 6px;
+background: var(--surface);
+border-radius: 3px;
+outline: none;
+-webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+-webkit-appearance: none;
+width: 18px;
+height: 18px;
+background: var(--accent);
+border-radius: 50%;
+cursor: pointer;
+transition: transform 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+transform: scale(1.1);
+}
+
+select {
+width: 100%;
+padding: 10px 12px;
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius-sm);
+color: var(--text);
+font-size: 14px;
+cursor: pointer;
+}
+
+select:focus {
+outline: none;
+border-color: var(--accent);
+}
+
+.checkbox-control {
+display: flex;
+align-items: center;
+gap: 12px;
+cursor: pointer;
+}
+
+.checkbox-control input[type="checkbox"] {
+width: 20px;
+height: 20px;
+accent-color: var(--accent);
+cursor: pointer;
+}
+
+.preview-panel {
+background: var(--card);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+padding: 32px;
+min-height: 500px;
+}
+
+.preview-title {
+font-size: 1.1em;
+font-weight: 600;
+margin-bottom: 20px;
+color: var(--text);
+}
+
+.preview-area {
+background:
+linear-gradient(45deg, #1a232e 25%, transparent 25%),
+linear-gradient(-45deg, #1a232e 25%, transparent 25%),
+linear-gradient(45deg, transparent 75%, #1a232e 75%),
+linear-gradient(-45deg, transparent 75%, #1a232e 75%);
+background-size: 20px 20px;
+background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+background-color: #0d1117;
+border-radius: var(--radius);
+height: 300px;
+display: flex;
+align-items: center;
+justify-content: center;
+margin-bottom: 24px;
+position: relative;
+overflow: hidden;
+}
+
+.preview-box {
+width: 120px;
+height: 120px;
+background: linear-gradient(135deg, var(--accent), var(--secondary));
+border-radius: var(--radius-sm);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 14px;
+color: white;
+font-weight: 600;
+}
+
+.playback-controls {
+display: flex;
+gap: 12px;
+justify-content: center;
+margin-bottom: 24px;
+}
+
+.btn {
+padding: 12px 24px;
+border: none;
+border-radius: var(--radius-sm);
+font-size: 14px;
+font-weight: 600;
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 8px;
+transition: all 0.2s;
+}
+
+.btn svg {
+width: 18px;
+height: 18px;
+}
+
+.btn-primary {
+background: var(--accent);
+color: white;
+}
+
+.btn-primary:hover {
+background: #ea580c;
+transform: translateY(-1px);
+}
+
+.btn-secondary {
+background: var(--surface);
+border: 1px solid var(--border);
+color: var(--text);
+}
+
+.btn-secondary:hover {
+background: var(--surface-hover);
+}
+
+/* Timeline */
+.timeline-section {
+margin-top: 24px;
+padding-top: 24px;
+border-top: 1px solid var(--border);
+}
+
+.timeline-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 16px;
+}
+
+.timeline-label {
+font-size: 14px;
+font-weight: 600;
+color: var(--text);
+}
+
+.timeline {
+position: relative;
+height: 60px;
+background: var(--surface);
+border-radius: var(--radius-sm);
+margin-bottom: 16px;
+overflow: hidden;
+}
+
+.timeline-track {
+position: absolute;
+top: 50%;
+left: 0;
+right: 0;
+height: 4px;
+background: var(--border);
+transform: translateY(-50%);
+}
+
+.timeline-progress {
+position: absolute;
+top: 50%;
+left: 0;
+height: 4px;
+background: var(--accent);
+transform: translateY(-50%);
+width: 0%;
+transition: width 0.1s linear;
+}
+
+.keyframe-marker {
+position: absolute;
+top: 50%;
+width: 16px;
+height: 16px;
+background: var(--accent);
+border: 3px solid var(--card);
+border-radius: 50%;
+transform: translate(-50%, -50%);
+cursor: pointer;
+transition: all 0.2s;
+}
+
+.keyframe-marker:hover {
+transform: translate(-50%, -50%) scale(1.2);
+}
+
+.keyframe-marker.active {
+background: var(--success);
+box-shadow: 0 0 10px var(--success);
+}
+
+.keyframe-percent {
+position: absolute;
+top: -20px;
+left: 50%;
+transform: translateX(-50%);
+font-size: 11px;
+color: var(--text-muted);
+font-family: 'Space Mono', monospace;
+}
+
+.add-keyframe-btn {
+width: 100%;
+padding: 12px;
+background: var(--surface);
+border: 2px dashed var(--border);
+border-radius: var(--radius-sm);
+color: var(--text-muted);
+font-size: 14px;
+font-weight: 500;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+transition: all 0.2s;
+}
+
+.add-keyframe-btn:hover {
+border-color: var(--accent);
+color: var(--accent);
+}
+
+/* Properties Panel */
+.properties-section {
+margin-top: 24px;
+padding-top: 24px;
+border-top: 1px solid var(--border);
+}
+
+.properties-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 12px;
+}
+
+.property-group {
+background: var(--surface);
+border-radius: var(--radius-sm);
+padding: 12px;
+}
+
+.property-label {
+font-size: 11px;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.5px;
+margin-bottom: 6px;
+display: block;
+}
+
+.property-input {
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.property-input input {
+flex: 1;
+background: var(--card);
+border: 1px solid var(--border);
+border-radius: 4px;
+padding: 6px 8px;
+color: var(--text);
+font-family: 'Space Mono', monospace;
+font-size: 13px;
+}
+
+.property-input span {
+font-size: 12px;
+color: var(--text-muted);
+}
+
+/* Code Output */
+.code-output {
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius-sm);
+padding: 16px;
+position: relative;
+margin-top: 24px;
+}
+
+.code-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 12px;
+padding-bottom: 12px;
+border-bottom: 1px solid var(--border);
+}
+
+.code-label {
+font-size: 12px;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.code-tabs {
+display: flex;
+gap: 8px;
+}
+
+.code-tab {
+padding: 6px 12px;
+background: transparent;
+border: none;
+border-radius: 4px;
+color: var(--text-muted);
+font-size: 12px;
+cursor: pointer;
+transition: all 0.2s;
+}
+
+.code-tab:hover {
+color: var(--text);
+}
+
+.code-tab.active {
+background: var(--card);
+color: var(--accent);
+}
+
+.copy-btn {
+padding: 8px 16px;
+background: var(--accent);
+color: white;
+border: none;
+border-radius: 6px;
+font-size: 13px;
+font-weight: 500;
+cursor: pointer;
+transition: all 0.2s;
+display: flex;
+align-items: center;
+gap: 6px;
+}
+
+.copy-btn:hover {
+background: #ea580c;
+transform: translateY(-1px);
+}
+
+.copy-btn.copied {
+background: var(--success);
+}
+
+.code-content {
+font-family: 'Space Mono', monospace;
+font-size: 13px;
+line-height: 1.6;
+color: var(--text);
+overflow-x: auto;
+white-space: pre-wrap;
+word-break: break-all;
+}
+
+/* Presets */
+.presets-section {
+margin-top: 24px;
+padding-top: 24px;
+border-top: 1px solid var(--border);
+}
+
+.presets-title {
+font-size: 14px;
+font-weight: 600;
+margin-bottom: 16px;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.presets-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+gap: 12px;
+}
+
+.preset-item {
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius-sm);
+padding: 16px;
+cursor: pointer;
+text-align: center;
+transition: all 0.2s;
+}
+
+.preset-item:hover {
+border-color: var(--accent);
+transform: translateY(-2px);
+}
+
+.preset-icon {
+width: 40px;
+height: 40px;
+margin: 0 auto 8px;
+background: linear-gradient(135deg, var(--accent), var(--secondary));
+border-radius: var(--radius-sm);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 20px;
+}
+
+.preset-name {
+font-size: 12px;
+color: var(--text);
+font-weight: 500;
+}
+
+/* Guide Section */
+.guide-section {
+max-width: 800px;
+margin: 60px auto 0;
+}
+
+.guide-title {
+font-size: 1.8em;
+font-weight: 700;
+margin-bottom: 24px;
+text-align: center;
+}
+
+.guide-content {
+color: var(--text-muted);
+line-height: 1.8;
+}
+
+.guide-content h3 {
+color: var(--text);
+margin: 32px 0 16px;
+font-size: 1.3em;
+}
+
+.guide-content p {
+margin-bottom: 16px;
+}
+
+.guide-content code {
+background: var(--surface);
+padding: 2px 8px;
+border-radius: 4px;
+font-family: 'Space Mono', monospace;
+font-size: 0.9em;
+color: var(--accent);
+}
+
+/* Animation for preview */
+@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+from { transform: translateX(-100px); opacity: 0; }
+to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+from { transform: translateX(100px); opacity: 0; }
+to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInUp {
+from { transform: translateY(100px); opacity: 0; }
+to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideInDown {
+from { transform: translateY(-100px); opacity: 0; }
+to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes scaleIn {
+from { transform: scale(0); }
+to { transform: scale(1); }
+}
+
+@keyframes rotateIn {
+from { transform: rotate(-180deg) scale(0); }
+to { transform: rotate(0) scale(1); }
+}
+
+@keyframes bounce {
+0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+40% { transform: translateY(-30px); }
+60% { transform: translateY(-15px); }
+}
+
+@keyframes pulse {
+0% { transform: scale(1); }
+50% { transform: scale(1.1); }
+100% { transform: scale(1); }
+}
+
+@keyframes shake {
+0%, 100% { transform: translateX(0); }
+10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes flip {
+0% { transform: perspective(400px) rotateY(0); }
+100% { transform: perspective(400px) rotateY(360deg); }
+}
+
+footer {
+text-align: center;
+padding: 40px 32px;
+color: var(--text-muted);
+font-size: 14px;
+border-top: 1px solid var(--border);
+margin-top: 60px;
+}
+
+footer a {
+color: var(--accent);
+text-decoration: none;
+}
+</style>
+</head>
+<body>
+<header>
+<a href="/" class="logo">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/>
+</svg>
+Paperclip
+</a>
+<nav>
+<a href="/">Home</a>
+<a href="/tools/">Tools</a>
+<a href="https://github.com/bigknoxy/paperclip-pages" target="_blank">GitHub</a>
+</nav>
+</header>
+
+<div class="container">
+<div class="hero">
+<h1>CSS Animation Keyframe Generator</h1>
+<p>Create beautiful CSS animations with live preview, keyframe editing, and instant code export. Perfect for buttons, loaders, and micro-interactions.</p>
+</div>
+
+<div class="tool-wrapper">
+<div class="controls-panel">
+<div class="panel-title">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="12" cy="12" r="10"/>
+<polyline points="12 6 12 12 16 14"/>
+</svg>
+Animation Settings
+</div>
+
+<div class="control-group">
+<div class="control-label">
+<span>Animation Name</span>
+</div>
+<input type="text" id="animName" value="myAnimation" placeholder="myAnimation">
+</div>
+
+<div class="control-group">
+<div class="control-label">
+<span>Duration</span>
+<span class="control-value" id="durationValue">1000ms</span>
+</div>
+<input type="range" id="duration" min="100" max="5000" step="100" value="1000">
+</div>
+
+<div class="control-group">
+<div class="control-label">
+<span>Timing Function</span>
+</div>
+<select id="timingFunction">
+<option value="ease">ease</option>
+<option value="linear">linear</option>
+<option value="ease-in">ease-in</option>
+<option value="ease-out">ease-out</option>
+<option value="ease-in-out">ease-in-out</option>
+<option value="cubic-bezier(0.68, -0.55, 0.265, 1.55)">bounce</option>
+</select>
+</div>
+
+<div class="control-group">
+<div class="control-label">
+<span>Delay</span>
+<span class="control-value" id="delayValue">0ms</span>
+</div>
+<input type="range" id="delay" min="0" max="2000" step="50" value="0">
+</div>
+
+<div class="control-group">
+<label class="checkbox-control">
+<input type="checkbox" id="infinite" checked>
+<span>Infinite Loop</span>
+</label>
+</div>
+
+<div class="control-group">
+<label class="checkbox-control">
+<input type="checkbox" id="alternate" checked>
+<span>Alternate Direction</span>
+</label>
+</div>
+
+<div class="control-group">
+<div class="control-label">
+<span>Iteration Count</span>
+</div>
+<input type="number" id="iterationCount" value="infinite" placeholder="infinite or number">
+</div>
+
+<div class="presets-section">
+<div class="presets-title">Quick Presets</div>
+<div class="presets-grid" id="presetsGrid">
+<!-- Presets will be added here -->
+</div>
+</div>
+</div>
+
+<div class="preview-panel">
+<div class="preview-title">Live Preview</div>
+<div class="preview-area">
+<div class="preview-box" id="previewBox">Animate</div>
+</div>
+
+<div class="playback-controls">
+<button class="btn btn-secondary" id="playBtn">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<polygon points="5 3 19 12 5 21 5 3"/>
+</svg>
+Play
+</button>
+<button class="btn btn-secondary" id="pauseBtn">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="6" y="4" width="4" height="16"/>
+<rect x="14" y="4" width="4" height="16"/>
+</svg>
+Pause
+</button>
+<button class="btn btn-secondary" id="resetBtn">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<polyline points="23 4 23 10 17 10"/>
+<path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+</svg>
+Reset
+</button>
+</div>
+
+<div class="timeline-section">
+<div class="timeline-header">
+<span class="timeline-label">Keyframe Timeline</span>
+<button class="btn btn-secondary" id="removeKeyframeBtn" style="padding: 6px 12px; font-size: 12px;">Remove Selected</button>
+</div>
+<div class="timeline" id="timeline">
+<div class="timeline-track"></div>
+<div class="timeline-progress" id="timelineProgress"></div>
+<!-- Keyframes will be added here -->
+</div>
+<button class="add-keyframe-btn" id="addKeyframeBtn">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<line x1="12" y1="5" x2="12" y2="19"/>
+<line x1="5" y1="12" x2="19" y2="12"/>
+</svg>
+Add Keyframe
+</button>
+</div>
+
+<div class="properties-section">
+<div class="panel-title">Keyframe Properties</div>
+<div class="properties-grid" id="propertiesGrid">
+<div class="property-group">
+<label class="property-label">Opacity</label>
+<div class="property-input">
+<input type="number" id="propOpacity" min="0" max="1" step="0.1" value="1">
+</div>
+</div>
+<div class="property-group">
+<label class="property-label">Translate X</label>
+<div class="property-input">
+<input type="number" id="propTranslateX" value="0">
+<span>px</span>
+</div>
+</div>
+<div class="property-group">
+<label class="property-label">Translate Y</label>
+<div class="property-input">
+<input type="number" id="propTranslateY" value="0">
+<span>px</span>
+</div>
+</div>
+<div class="property-group">
+<label class="property-label">Scale</label>
+<div class="property-input">
+<input type="number" id="propScale" min="0" step="0.1" value="1">
+</div>
+</div>
+<div class="property-group">
+<label class="property-label">Rotate</label>
+<div class="property-input">
+<input type="number" id="propRotate" value="0">
+<span>deg</span>
+</div>
+</div>
+<div class="property-group">
+<label class="property-label">Blur</label>
+<div class="property-input">
+<input type="number" id="propBlur" min="0" value="0">
+<span>px</span>
+</div>
+</div>
+</div>
+</div>
+
+<div class="code-output">
+<div class="code-header">
+<div class="code-tabs">
+<button class="code-tab active" data-tab="css">CSS</button>
+<button class="code-tab" data-tab="html">HTML</button>
+</div>
+<button class="copy-btn" id="copyBtn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+</svg>
+Copy CSS
+</button>
+</div>
+<pre class="code-content" id="codeOutput">/* CSS will appear here */</pre>
+</div>
+</div>
+</div>
+
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+if (window.RelatedTools) {
+RelatedTools.renderRelatedTools('animation-keyframe', '#related-tools-container', {
+title: 'Related Tools',
+showCategory: true,
+trackClicks: true
+});
+}
+});
+</script>
+
+<div class="guide-section">
+<h2 class="guide-title">How to Use CSS Animations</h2>
+<div class="guide-content">
+<h3>Understanding Keyframes</h3>
+<p>CSS animations use keyframes to define styles at specific points during the animation. The browser automatically interpolates between these keyframes to create smooth transitions.</p>
+
+<h3>Animation Properties</h3>
+<p><code>animation-name</code> - References the @keyframes rule</p>
+<p><code>animation-duration</code> - How long the animation takes</p>
+<p><code>animation-timing-function</code> - Speed curve (ease, linear, ease-in, etc.)</p>
+<p><code>animation-delay</code> - Wait time before starting</p>
+<p><code>animation-iteration-count</code> - How many times to repeat</p>
+<p><code>animation-direction</code> - normal, reverse, alternate</p>
+
+<h3>Best Practices</h3>
+<p><strong>Use transform instead of position:</strong> Animating transform and opacity is GPU-accelerated and smoother than animating left/top/width/height.</p>
+<p><strong>Will-change hint:</strong> Add will-change: transform to elements that will animate for better performance.</p>
+<p><strong>Keep it subtle:</strong> Micro-animations (200-400ms) feel responsive. Long animations can feel sluggish.</p>
+
+<h3>Common Use Cases</h3>
+<p><strong>Button hover states:</strong> Subtle scale or color transitions on interaction</p>
+<p><strong>Loading spinners:</strong> Continuous rotation animations</p>
+<p><strong>Page transitions:</strong> Fade in content as it loads</p>
+<p><strong>Scroll animations:</strong> Elements that animate as they enter the viewport</p>
+<p><strong>Attention:</strong> Gentle pulse or bounce to draw focus</p>
+</div>
+</div>
+</div>
+
+<footer>
+<p>Built with ❤️ by <a href="https://github.com/bigknoxy/paperclip-pages" target="_blank">Paperclip</a></p>
+<p style="margin-top: 8px; opacity: 0.7;">Free tool • No data stored • Generated CSS is yours</p>
+</footer>
+
+<script>
+// Animation presets with keyframes
+const presets = [
+{
+name: 'Fade In',
+icon: '👁️',
+keyframes: [
+{ percent: 0, opacity: 0, translateX: 0, translateY: 0, scale: 1, rotate: 0, blur: 0 },
+{ percent: 100, opacity: 1, translateX: 0, translateY: 0, scale: 1, rotate: 0, blur: 0 }
+],
+duration: 1000,
+timingFunction: 'ease-out'
+},
+{
+name: 'Slide Up',
+icon: '⬆️',
+keyframes: [
+{ percent: 0, opacity: 0, translateX: 0, translateY: 50, scale: 1, rotate: 0, blur: 0 },
+{ percent: 100, opacity: 1, translateX: 0, translateY: 0, scale: 1, rotate: 0, blur: 0 }
+],
+duration: 800,
+timingFunction: 'ease-out'
+},
+{
+name: 'Scale In',
+icon: '🔍',
+keyframes: [
+{ percent: 0, opacity: 0, translateX: 0, translateY: 0, scale: 0.5, rotate: 0, blur: 0 },
+{ percent: 100, opacity: 1, translateX: 0, translateY: 0, scale: 1, rotate: 0, blur: 0 }
+],
+duration: 600,
+timingFunction: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)'
+},
+{
+name: 'Bounce',
+icon: '⚡',
+keyframes: [
+{ percent: 0, opacity: 1, translateX: 0, translateY: 0, scale: 1, rotate: 0, blur: 0 },
+{ percent: 40, translateX: 0, translateY: -30, scale: 1, rotate: 0, blur: 0 },
+{ percent: 60, translateX: 0, translateY: -15, scale: 1, rotate: 0, blur: 0 },
+{ percent: 100, translateX: 0, translateY: 0, scale: 1, rotate: 0, blur: 0 }
+],
+duration: 1000,
+timingFunction: 'ease'
+},
+{
+name: 'Pulse',
+icon: '💓',
+keyframes: [
+{ percent: 0, opacity: 1, translateX: 0, translateY: 0, scale: 1, rotate: 0, blur: 0 },
+{ percent: 50, opacity: 1, translateX: 0, translateY: 0, scale: 1.1, rotate: 0, blur: 0 },
+{ percent: 100, opacity: 1, translateX: 0, translateY: 0, scale: 1, rotate: 0, blur: 0 }
+],
+duration: 1500,
+timingFunction: 'ease-in-out',
+infinite: true,
+alternate: true
+},
+{
+name: 'Shake',
+icon: '📳',
+keyframes: [
+{ percent: 0, translateX: 0 },
+{ percent: 10, translateX: -10 },
+{ percent: 20, translateX: 10 },
+{ percent: 30, translateX: -10 },
+{ percent: 40, translateX: 10 },
+{ percent: 50, translateX: -10 },
+{ percent: 60, translateX: 10 },
+{ percent: 70, translateX: -10 },
+{ percent: 80, translateX: 10 },
+{ percent: 90, translateX: -10 },
+{ percent: 100, translateX: 0 }
+],
+duration: 800,
+timingFunction: 'ease-in-out'
+},
+{
+name: 'Rotate',
+icon: '🔄',
+keyframes: [
+{ percent: 0, opacity: 1, translateX: 0, translateY: 0, scale: 1, rotate: 0, blur: 0 },
+{ percent: 100, opacity: 1, translateX: 0, translateY: 0, scale: 1, rotate: 360, blur: 0 }
+],
+duration: 2000,
+timingFunction: 'linear',
+infinite: true
+},
+{
+name: 'Flip',
+icon: '🃏',
+keyframes: [
+{ percent: 0, opacity: 1, translateX: 0, translateY: 0, scale: 1, rotateY: 0, blur: 0 },
+{ percent: 50, rotateY: 90 },
+{ percent: 100, opacity: 1, translateX: 0, translateY: 0, scale: 1, rotateY: 180, blur: 0 }
+],
+duration: 1000,
+timingFunction: 'ease-in-out',
+alternate: true
+},
+{
+name: 'Elastic',
+icon: '🎯',
+keyframes: [
+{ percent: 0, translateX: 0, scale: 0.3 },
+{ percent: 50, translateX: 0, scale: 1.05 },
+{ percent: 70, translateX: 0, scale: 0.9 },
+{ percent: 100, translateX: 0, scale: 1 }
+],
+duration: 1000,
+timingFunction: 'ease'
+}
+];
+
+// State
+let keyframes = [
+{ percent: 0, opacity: 1, translateX: 0, translateY: 0, scale: 1, rotate: 0, blur: 0 },
+{ percent: 100, opacity: 1, translateX: 0, translateY: 0, scale: 1, rotate: 0, blur: 0 }
+];
+let selectedKeyframeIndex = 0;
+let isPlaying = false;
+let animationStyle = null;
+
+// DOM elements
+const animName = document.getElementById('animName');
+const duration = document.getElementById('duration');
+const durationValue = document.getElementById('durationValue');
+const timingFunction = document.getElementById('timingFunction');
+const delay = document.getElementById('delay');
+const delayValue = document.getElementById('delayValue');
+const infinite = document.getElementById('infinite');
+const alternate = document.getElementById('alternate');
+const iterationCount = document.getElementById('iterationCount');
+const previewBox = document.getElementById('previewBox');
+const timeline = document.getElementById('timeline');
+const timelineProgress = document.getElementById('timelineProgress');
+const codeOutput = document.getElementById('codeOutput');
+const copyBtn = document.getElementById('copyBtn');
+const presetsGrid = document.getElementById('presetsGrid');
+
+// Property inputs
+const propOpacity = document.getElementById('propOpacity');
+const propTranslateX = document.getElementById('propTranslateX');
+const propTranslateY = document.getElementById('propTranslateY');
+const propScale = document.getElementById('propScale');
+const propRotate = document.getElementById('propRotate');
+const propBlur = document.getElementById('propBlur');
+
+// Initialize
+function init() {
+renderPresets();
+renderTimeline();
+updateControlValues();
+updateCode();
+updatePreviewStyle();
+setupEventListeners();
+}
+
+// Render presets
+function renderPresets() {
+presetsGrid.innerHTML = presets.map((preset, index) => `
+<div class="preset-item" data-preset="${index}">
+<div class="preset-icon">${preset.icon}</div>
+<div class="preset-name">${preset.name}</div>
+</div>
+`).join('');
+
+presetsGrid.querySelectorAll('.preset-item').forEach(item => {
+item.addEventListener('click', () => {
+const preset = presets[parseInt(item.dataset.preset)];
+applyPreset(preset);
+});
+});
+}
+
+// Apply preset
+function applyPreset(preset) {
+keyframes = preset.keyframes.map(k => ({
+percent: k.percent,
+opacity: k.opacity ?? 1,
+translateX: k.translateX ?? 0,
+translateY: k.translateY ?? 0,
+scale: k.scale ?? 1,
+rotate: k.rotate ?? 0,
+blur: k.blur ?? 0
+}));
+
+animName.value = preset.name.toLowerCase().replace(/\s+/g, '');
+duration.value = preset.duration;
+durationValue.textContent = preset.duration + 'ms';
+timingFunction.value = preset.timingFunction || 'ease';
+infinite.checked = preset.infinite || false;
+alternate.checked = preset.alternate || false;
+
+if (preset.infinite) {
+iterationCount.value = 'infinite';
+}
+
+selectedKeyframeIndex = 0;
+renderTimeline();
+updateControlValues();
+updateCode();
+updatePreviewStyle();
+}
+
+// Render timeline
+function renderTimeline() {
+// Remove existing markers
+timeline.querySelectorAll('.keyframe-marker').forEach(m => m.remove());
+
+keyframes.forEach((kf, index) => {
+const marker = document.createElement('div');
+marker.className = 'keyframe-marker' + (index === selectedKeyframeIndex ? ' active' : '');
+marker.style.left = kf.percent + '%';
+marker.dataset.index = index;
+
+const percent = document.createElement('div');
+percent.className = 'keyframe-percent';
+percent.textContent = kf.percent + '%';
+marker.appendChild(percent);
+
+marker.addEventListener('click', (e) => {
+e.stopPropagation();
+selectedKeyframeIndex = index;
+renderTimeline();
+updateControlValues();
+});
+
+timeline.appendChild(marker);
+});
+}
+
+// Update control values from selected keyframe
+function updateControlValues() {
+const kf = keyframes[selectedKeyframeIndex];
+propOpacity.value = kf.opacity;
+propTranslateX.value = kf.translateX;
+propTranslateY.value = kf.translateY;
+propScale.value = kf.scale;
+propRotate.value = kf.rotate;
+propBlur.value = kf.blur;
+}
+
+// Update keyframe from controls
+function updateKeyframeFromControls() {
+keyframes[selectedKeyframeIndex] = {
+percent: keyframes[selectedKeyframeIndex].percent,
+opacity: parseFloat(propOpacity.value) || 1,
+translateX: parseFloat(propTranslateX.value) || 0,
+translateY: parseFloat(propTranslateY.value) || 0,
+scale: parseFloat(propScale.value) || 1,
+rotate: parseFloat(propRotate.value) || 0,
+blur: parseFloat(propBlur.value) || 0
+};
+updateCode();
+updatePreviewStyle();
+}
+
+// Generate CSS
+function generateCSS() {
+const name = animName.value || 'myAnimation';
+const dur = duration.value + 'ms';
+const timing = timingFunction.value;
+const del = delay.value + 'ms';
+const iterations = infinite.checked ? 'infinite' : (iterationCount.value || 1);
+const direction = alternate.checked ? 'alternate' : 'normal';
+
+// Sort keyframes by percent
+const sortedKeyframes = [...keyframes].sort((a, b) => a.percent - b.percent);
+
+// Generate keyframe CSS
+let keyframeCSS = `@keyframes ${name} {\n`;
+sortedKeyframes.forEach(kf => {
+const transforms = [];
+if (kf.translateX !== 0 || kf.translateY !== 0) {
+transforms.push(`translate(${kf.translateX}px, ${kf.translateY}px)`);
+}
+if (kf.scale !== 1) {
+transforms.push(`scale(${kf.scale})`);
+}
+if (kf.rotate !== 0) {
+transforms.push(`rotate(${kf.rotate}deg)`);
+}
+
+let properties = '';
+if (transforms.length > 0) {
+properties += `    transform: ${transforms.join(' ')};\n`;
+}
+if (kf.opacity !== 1) {
+properties += `    opacity: ${kf.opacity};\n`;
+}
+if (kf.blur !== 0) {
+properties += `    filter: blur(${kf.blur}px);\n`;
+}
+
+keyframeCSS += `  ${kf.percent}% {\n${properties}  }\n`;
+});
+keyframeCSS += `}\n`;
+
+// Generate animation class
+const animationCSS = `.${name} {\n  animation: ${name} ${dur} ${timing} ${del} ${iterations} ${direction};\n}`;
+
+return keyframeCSS + '\n' + animationCSS;
+}
+
+// Update code output
+function updateCode() {
+codeOutput.textContent = generateCSS();
+}
+
+// Update preview style
+function updatePreviewStyle() {
+// Remove old animation style
+if (animationStyle) {
+animationStyle.remove();
+}
+
+// Create new style
+const css = generateCSS();
+animationStyle = document.createElement('style');
+animationStyle.textContent = css;
+document.head.appendChild(animationStyle);
+
+// Apply animation class
+previewBox.className = 'preview-box ' + (animName.value || 'myAnimation');
+}
+
+// Event listeners
+function setupEventListeners() {
+// Settings
+animName.addEventListener('input', () => {
+updateCode();
+updatePreviewStyle();
+});
+
+duration.addEventListener('input', () => {
+durationValue.textContent = duration.value + 'ms';
+updateCode();
+updatePreviewStyle();
+});
+
+timingFunction.addEventListener('change', () => {
+updateCode();
+updatePreviewStyle();
+});
+
+delay.addEventListener('input', () => {
+delayValue.textContent = delay.value + 'ms';
+updateCode();
+updatePreviewStyle();
+});
+
+infinite.addEventListener('change', () => {
+if (infinite.checked) {
+iterationCount.value = 'infinite';
+}
+updateCode();
+updatePreviewStyle();
+});
+
+alternate.addEventListener('change', () => {
+updateCode();
+updatePreviewStyle();
+});
+
+iterationCount.addEventListener('change', () => {
+if (iterationCount.value !== 'infinite') {
+infinite.checked = false;
+}
+updateCode();
+updatePreviewStyle();
+});
+
+// Property inputs
+propOpacity.addEventListener('input', updateKeyframeFromControls);
+propTranslateX.addEventListener('input', updateKeyframeFromControls);
+propTranslateY.addEventListener('input', updateKeyframeFromControls);
+propScale.addEventListener('input', updateKeyframeFromControls);
+propRotate.addEventListener('input', updateKeyframeFromControls);
+propBlur.addEventListener('input', updateKeyframeFromControls);
+
+// Add keyframe
+let nextKeyframePercent = 50;
+document.getElementById('addKeyframeBtn').addEventListener('click', () => {
+// Find a gap or use 50% if empty
+const percents = keyframes.map(k => k.percent);
+let newPercent = 50;
+
+for (let i = 0; i < percents.length - 1; i++) {
+const gap = percents[i + 1] - percents[i];
+if (gap > 20) {
+newPercent = Math.round((percents[i] + percents[i + 1]) / 2);
+break;
+}
+}
+
+// Interpolate values from nearest keyframes
+const prev = keyframes.filter(k => k.percent <= newPercent).pop() || keyframes[0];
+const next = keyframes.filter(k => k.percent >= newPercent)[0] || keyframes[keyframes.length - 1];
+const t = prev === next ? 0 : (newPercent - prev.percent) / (next.percent - prev.percent);
+
+keyframes.push({
+percent: newPercent,
+opacity: prev.opacity + (next.opacity - prev.opacity) * t,
+translateX: prev.translateX + (next.translateX - prev.translateX) * t,
+translateY: prev.translateY + (next.translateY - prev.translateY) * t,
+scale: prev.scale + (next.scale - prev.scale) * t,
+rotate: prev.rotate + (next.rotate - prev.rotate) * t,
+blur: prev.blur + (next.blur - prev.blur) * t
+});
+
+keyframes.sort((a, b) => a.percent - b.percent);
+selectedKeyframeIndex = keyframes.findIndex(k => k.percent === newPercent);
+renderTimeline();
+updateControlValues();
+updateCode();
+updatePreviewStyle();
+});
+
+// Remove keyframe
+document.getElementById('removeKeyframeBtn').addEventListener('click', () => {
+if (keyframes.length > 2) {
+keyframes.splice(selectedKeyframeIndex, 1);
+selectedKeyframeIndex = Math.min(selectedKeyframeIndex, keyframes.length - 1);
+renderTimeline();
+updateControlValues();
+updateCode();
+updatePreviewStyle();
+}
+});
+
+// Playback controls
+document.getElementById('playBtn').addEventListener('click', () => {
+previewBox.style.animation = 'none';
+previewBox.offsetHeight; // Trigger reflow
+updatePreviewStyle();
+});
+
+document.getElementById('pauseBtn').addEventListener('click', () => {
+previewBox.style.animationPlayState = 'paused';
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+previewBox.style.animation = 'none';
+});
+
+// Copy button
+copyBtn.addEventListener('click', () => {
+navigator.clipboard.writeText(codeOutput.textContent).then(() => {
+copyBtn.classList.add('copied');
+copyBtn.innerHTML = '✓ Copied!';
+setTimeout(() => {
+copyBtn.classList.remove('copied');
+copyBtn.innerHTML = `
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+</svg>
+Copy CSS
+`;
+}, 2000);
+});
+
+// Code tabs
+document.querySelectorAll('.code-tab').forEach(tab => {
+tab.addEventListener('click', () => {
+document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+tab.classList.add('active');
+
+if (tab.dataset.tab === 'css') {
+codeOutput.textContent = generateCSS();
+copyBtn.innerHTML = `
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+</svg>
+Copy CSS
+`;
+} else {
+codeOutput.textContent = `<div class="${animName.value || 'myAnimation'}">
+  Animated Content
+</div>`;
+copyBtn.innerHTML = `
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+</svg>
+Copy HTML
+`;
+}
+});
+});
+}
+
+// Initialize
+init();
+</script>
+</body>
+</html>

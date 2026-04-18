@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barcode & QR Code Reader - Free Online Scanner</title>
+  <meta name="description" content="Free online barcode and QR code scanner. Use your camera or upload an image to scan. Supports QR Code, Code 128, EAN, UPC, Data Matrix, and more.">
+  <meta name="keywords" content="barcode scanner, QR code reader, barcode reader, online scanner, free barcode tool">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+  <header class="header">
+    <nav class="nav">
+      <a href="/" class="logo">Paperclip</a>
+      <div class="nav-links">
+        <a href="/tools/">Tools</a>
+        <a href="/content/">Blog</a>
+        <a href="/#about">About</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="main">
+    <div class="container">
+      <h1>Barcode & QR Code Reader</h1>
+      <p class="subtitle">Scan barcodes and QR codes instantly using your camera or by uploading an image. Supports all major barcode formats.</p>
+
+      <div class="scanner-container">
+        <!-- Tab Switching -->
+        <div class="scanner-tabs">
+          <button class="tab-btn active" data-mode="camera">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+              <circle cx="12" cy="13" r="4"/>
+            </svg>
+            Camera Scan
+          </button>
+          <button class="tab-btn" data-mode="upload">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            Upload Image
+          </button>
+        </div>
+
+        <!-- Camera Mode -->
+        <div class="scan-panel" id="cameraPanel">
+          <div class="camera-container" id="cameraContainer">
+            <video id="video" playsinline></video>
+            <canvas id="cameraCanvas" style="display: none;"></canvas>
+            <div class="camera-overlay">
+              <div class="scan-line"></div>
+              <div class="scan-frame">
+                <div class="corner top-left"></div>
+                <div class="corner top-right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="corner bottom-right"></div>
+              </div>
+            </div>
+            <div class="camera-placeholder" id="cameraPlaceholder">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="3" width="7" height="7"/>
+                <rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/>
+                <rect x="3" y="14" width="7" height="7"/>
+              </svg>
+              <p>Camera access required</p>
+              <span class="hint">Click "Start Camera" below to begin scanning</span>
+            </div>
+          </div>
+          <div class="camera-controls">
+            <button class="btn btn-primary" id="startCameraBtn">Start Camera</button>
+            <button class="btn btn-secondary hidden" id="stopCameraBtn">Stop Camera</button>
+            <select class="camera-select hidden" id="cameraSelect">
+              <option value="">Select camera...</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Upload Mode -->
+        <div class="scan-panel hidden" id="uploadPanel">
+          <div class="upload-area" id="uploadArea">
+            <input type="file" id="fileInput" accept="image/*" hidden>
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <p>Drag & drop an image here</p>
+            <span class="hint">or click to browse files</span>
+            <button class="btn btn-secondary" style="margin-top: 1rem;">Select Image</button>
+          </div>
+          <div class="upload-preview hidden" id="uploadPreview">
+            <img id="previewImage" alt="Preview">
+            <button class="btn btn-secondary" id="clearUploadBtn">Clear & Upload New</button>
+          </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection">
+          <div class="result-header">
+            <h3>Scan Results</h3>
+            <span class="scan-status" id="scanStatus">Ready to scan</span>
+          </div>
+          <div class="result-content" id="resultContent">
+            <div class="result-placeholder" id="resultPlaceholder">
+              <p>Results will appear here</p>
+            </div>
+            <div class="result-details hidden" id="resultDetails">
+              <div class="result-row">
+                <span class="result-label">Content:</span>
+                <div class="result-value-container">
+                  <code class="result-value" id="resultValue"></code>
+                  <button class="btn-icon" id="copyBtn" title="Copy to clipboard">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Format:</span>
+                <span class="result-format" id="resultFormat"></span>
+              </div>
+              <div class="result-actions" id="resultActions">
+                <a href="#" class="btn btn-primary hidden" id="openUrlBtn" target="_blank">Open URL</a>
+                <a href="#" class="btn btn-secondary hidden" id="searchBtn" target="_blank">Search Online</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Supported Formats -->
+        <div class="formats-section">
+          <h3>Supported Formats</h3>
+          <div class="formats-grid">
+            <div class="format-item">
+              <span class="format-icon">🔲</span>
+              <span class="format-name">QR Code</span>
+            </div>
+            <div class="format-item">
+              <span class="format-icon">📊</span>
+              <span class="format-name">Code 128</span>
+            </div>
+            <div class="format-item">
+              <span class="format-icon">🏷️</span>
+              <span class="format-name">EAN-13</span>
+            </div>
+            <div class="format-item">
+              <span class="format-icon">🏷️</span>
+              <span class="format-name">EAN-8</span>
+            </div>
+            <div class="format-item">
+              <span class="format-icon">📦</span>
+              <span class="format-name">UPC-A</span>
+            </div>
+            <div class="format-item">
+              <span class="format-icon">📦</span>
+              <span class="format-name">UPC-E</span>
+            </div>
+            <div class="format-item">
+              <span class="format-icon">📋</span>
+              <span class="format-name">Code 39</span>
+            </div>
+            <div class="format-item">
+              <span class="format-icon">📋</span>
+              <span class="format-name">Code 93</span>
+            </div>
+            <div class="format-item">
+              <span class="format-icon">◼️</span>
+              <span class="format-name">Data Matrix</span>
+            </div>
+            <div class="format-item">
+              <span class="format-icon">📊</span>
+              <span class="format-name">ITF</span>
+            </div>
+            <div class="format-item">
+              <span class="format-icon">🔢</span>
+              <span class="format-name">Codabar</span>
+            </div>
+            <div class="format-item">
+              <span class="format-icon">💊</span>
+              <span class="format-name">PDF417</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features Section -->
+      <div class="features-section">
+        <h2>Why Use Our Barcode Reader?</h2>
+        <div class="features-grid">
+          <div class="feature">
+            <div class="feature-icon">📷</div>
+            <h3>Camera Scanning</h3>
+            <p>Use your device's camera to scan barcodes in real-time. Works on mobile and desktop.</p>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">📁</div>
+            <h3>Image Upload</h3>
+            <p>Upload barcode images to scan static codes from photos or screenshots.</p>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">🔒</div>
+            <h3>Privacy First</h3>
+            <p>All scanning happens in your browser. No data is sent to our servers.</p>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">📱</div>
+            <h3>Universal Support</h3>
+            <p>Works with all major barcode formats including QR, EAN, UPC, and Code 128.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Use Cases -->
+      <div class="use-cases">
+        <h2>Popular Use Cases</h2>
+        <div class="use-cases-grid">
+          <div class="use-case">
+            <h4>📦 Inventory Management</h4>
+            <p>Quickly scan product barcodes for inventory tracking and stock management.</p>
+          </div>
+          <div class="use-case">
+            <h4>🔗 QR Code Links</h4>
+            <p>Scan QR codes to instantly open URLs, WiFi networks, or contact information.</p>
+          </div>
+          <div class="use-case">
+            <h4>🏷️ Asset Tracking</h4>
+            <p>Read asset tags and serial numbers for equipment management.</p>
+          </div>
+          <div class="use-case">
+            <h4>🛒 Price Comparison</h4>
+            <p>Scan product barcodes to look up prices and reviews online.</p>
+          </div>
+          <div class="use-case">
+            <h4>🎫 Event Tickets</h4>
+            <p>Validate tickets and passes by scanning QR codes at entry points.</p>
+          </div>
+          <div class="use-case">
+            <h4>📄 Document Scanning</h4>
+            <p>Read Data Matrix and PDF417 codes from documents and ID cards.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Paperclip. Free online tools for everyone.</p>
+      <div class="footer-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="/content/">Blog</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/@zxing/browser@0.1.1/umd/index.min.js"></script>
+  <script src="/public/analytics.js"></script>
+  <script src="script.js"></script>
+
+  <!-- Related Tools Widget -->
+  <div id="related-tools-container"></div>
+  <script src="/tools/related-tools.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.RelatedTools) {
+        RelatedTools.renderRelatedTools('barcode-reader', '#related-tools-container', {
+          title: 'Related Tools',
+          showCategory: true,
+          trackClicks: true
+        });
+      }
+    });
+  </script>
+</body>
+</html>

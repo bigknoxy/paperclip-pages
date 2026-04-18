@@ -38,6 +38,14 @@ related: ['base64', 'color', 'css-layout', 'qr-generator']
     description: 'Encode and decode HTML entities',
     related: ['url-encoder', 'base64', 'text-processor', 'markdown-editor']
   },
+  'meta-tag-generator': {
+    name: 'Meta Tag Generator',
+    path: '/tools/meta-tag-generator/',
+    category: 'Developer Tools',
+    icon: '🏷️',
+    description: 'Generate SEO meta tags with social preview',
+    related: ['html-encoder', 'code-minifier', 'text-processor', 'json-formatter']
+  },
   'json-formatter': {
     name: 'JSON Formatter & Validator',
     path: '/tools/json-formatter/',
@@ -113,23 +121,31 @@ related: ['base64', 'color', 'css-layout', 'qr-generator']
     related: ['text-case-converter', 'markdown-editor', 'word-counter', 'html-encoder']
   },
 
-  // Security Tools
-  'password-generator': {
-    name: 'Password Generator',
-    path: '/tools/password-generator/',
-    category: 'Security',
-    icon: '🔑',
-    description: 'Generate secure passwords',
-    related: ['hash', 'qr-generator', 'base64', 'jwt-decoder']
-  },
-  'hash': {
-    name: 'Hash Generator',
-    path: '/tools/hash/',
-    category: 'Security',
-    icon: '#️⃣',
-    description: 'Generate MD5, SHA-1, SHA-256 hashes',
-    related: ['password-generator', 'base64', 'jwt-decoder', 'text-processor']
-  },
+// Security Tools
+'password-generator': {
+name: 'Password Generator',
+path: '/tools/password-generator/',
+category: 'Security',
+icon: '🔑',
+description: 'Generate secure passwords',
+related: ['password-strength', 'hash', 'qr-generator', 'base64']
+},
+'password-strength': {
+name: 'Password Strength Checker',
+path: '/tools/password-strength/',
+category: 'Security',
+icon: '🔒',
+description: 'Check password security with entropy analysis',
+related: ['password-generator', 'hash', 'base64', 'jwt-decoder']
+},
+'hash': {
+name: 'Hash Generator',
+path: '/tools/hash/',
+category: 'Security',
+icon: '#️⃣',
+description: 'Generate MD5, SHA-1, SHA-256 hashes',
+related: ['password-generator', 'password-strength', 'base64', 'jwt-decoder']
+},
 
 // Developer Tools
   'cron-expression-generator': {
@@ -190,7 +206,15 @@ related: ['unit-converter', 'json-formatter', 'base64', 'hash']
     category: 'Design',
     icon: '🎨',
     description: 'Color picker and converter',
-    related: ['color-palette-generator', 'css-layout', 'unit-converter', 'text-processor']
+    related: ['color-palette-generator', 'color-contrast', 'css-layout', 'unit-converter']
+  },
+  'color-contrast': {
+    name: 'Color Contrast Checker',
+    path: '/tools/color-contrast/',
+    category: 'Design',
+    icon: '♿',
+    description: 'WCAG AA/AAA color contrast accessibility checker',
+    related: ['color', 'color-palette-generator', 'css-layout', 'readability']
   },
   'color-palette-generator': {
     name: 'Color Palette Generator',
@@ -232,6 +256,14 @@ icon: '💎',
 description: 'Create frosted glass effects with backdrop-filter',
 related: ['css-gradient', 'box-shadow', 'css-layout', 'color-palette-generator']
 },
+'animation-keyframe': {
+name: 'CSS Animation Keyframe Generator',
+path: '/tools/animation-keyframe/',
+category: 'Design',
+icon: '🎬',
+description: 'Create CSS animations with keyframe editing and live preview',
+related: ['css-gradient', 'box-shadow', 'css-layout', 'glassmorphism']
+},
 
   // Testing Tools
   'regex-tester': {
@@ -258,8 +290,24 @@ related: ['css-gradient', 'box-shadow', 'css-layout', 'color-palette-generator']
     category: 'Utilities',
     icon: '🔲',
     description: 'Generate QR codes',
-    related: ['password-generator', 'hash', 'base64', 'url-encoder']
-  }
+    related: ['barcode-reader', 'password-generator', 'hash', 'base64']
+  },
+'barcode-reader': {
+name: 'Barcode & QR Code Reader',
+path: '/tools/barcode-reader/',
+category: 'Utilities',
+icon: '📷',
+description: 'Scan barcodes and QR codes with camera or image upload',
+related: ['qr-generator', 'image-to-base64', 'hash', 'password-generator']
+},
+'unicode-text': {
+name: 'Unicode Text Converter',
+path: '/tools/unicode-text/',
+category: 'Utilities',
+icon: '🎨',
+description: 'Transform text into fancy Unicode styles',
+related: ['text-case-converter', 'text-processor', 'qr-generator', 'hash']
+}
 };
 
 /**
