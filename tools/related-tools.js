@@ -46,6 +46,14 @@ related: ['base64', 'color', 'css-layout', 'qr-generator']
     description: 'Generate SEO meta tags with social preview',
     related: ['html-encoder', 'code-minifier', 'text-processor', 'json-formatter']
   },
+  'favicon-generator': {
+    name: 'Favicon Generator',
+    path: '/tools/favicon-generator/',
+    category: 'Developer Tools',
+    icon: '🎯',
+    description: 'Create multi-size favicon files from any image',
+    related: ['meta-tag-generator', 'image-to-base64', 'color', 'css-layout']
+  },
   'screen-res-simulator': {
     name: 'Screen Resolution Simulator',
     path: '/tools/screen-res-simulator/',
