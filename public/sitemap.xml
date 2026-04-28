@@ -13,12 +13,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://bigknoxy.github.io/paperclip-pages/tools/</loc>
-    <lastmod>2026-04-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
+<url>
+<loc>https://bigknoxy.github.io/paperclip-pages/tools/</loc>
+<lastmod>2026-04-18</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.9</priority>
+</url>
   <url>
     <loc>https://bigknoxy.github.io/paperclip-pages/analytics-dashboard.html</loc>
     <lastmod>2026-04-17</lastmod>
@@ -26,15 +26,21 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Developer Tools -->
-  <url>
-    <loc>https://bigknoxy.github.io/paperclip-pages/tools/base64/</loc>
-    <lastmod>2026-04-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://bigknoxy.github.io/paperclip-pages/tools/url-encoder/</loc>
+<!-- Developer Tools -->
+<url>
+<loc>https://bigknoxy.github.io/paperclip-pages/tools/base64/</loc>
+<lastmod>2026-04-18</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+</url>
+<url>
+<loc>https://bigknoxy.github.io/paperclip-pages/tools/base64-encoder/</loc>
+<lastmod>2026-04-18</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+</url>
+<url>
+<loc>https://bigknoxy.github.io/paperclip-pages/tools/url-encoder/</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -165,7 +171,7 @@
   <!-- Text Tools -->
   <url>
     <loc>https://bigknoxy.github.io/paperclip-pages/tools/text-case-converter/</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -246,6 +252,12 @@
   <url>
     <loc>https://bigknoxy.github.io/paperclip-pages/tools/hsl-to-hex/</loc>
     <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bigknoxy.github.io/paperclip-pages/tools/css-to-scss/</loc>
+    <lastmod>2026-04-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
