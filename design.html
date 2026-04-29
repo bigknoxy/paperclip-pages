@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Paperclip Design System | Color Palette, Typography & Visual Identity</title>
+  <meta name="description" content="Paperclip's design system - color palette, typography, and visual identity guidelines for maintaining consistent branding across all developer tools." />
+  <meta name="keywords" content="design system, color palette, typography, visual identity, branding, paperclip" />
+  <meta name="author" content="Paperclip" />
+  <meta name="robots" content="index, follow" />
+
+  <meta property="og:title" content="Paperclip Design System | Color Palette, Typography & Visual Identity" />
+  <meta property="og:description" content="Paperclip's design system - color palette, typography, and visual identity guidelines." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bigknoxy.github.io/paperclip-pages/design.html" />
+  <meta property="og:image" content="https://bigknoxy.github.io/paperclip-pages/assets/og-image.svg" />
+  <meta property="og:site_name" content="Paperclip" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Paperclip Design System | Color Palette, Typography & Visual Identity" />
+  <meta name="twitter:description" content="Paperclip's design system - color palette, typography, and visual identity guidelines." />
+  <meta name="twitter:image" content="https://bigknoxy.github.io/paperclip-pages/assets/og-image.svg" />
+
+  <link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/design.html" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/favicon.svg" />
+
+  <style>
+    :root {
+      /* Color Palette - Primary */
+      --color-bg-primary: #0f1724;
+      --color-bg-secondary: #071024;
+      --color-bg-card: #0b1220;
+      --color-bg-card-light: #07162b;
+      
+      /* Color Palette - Accent */
+      --color-accent: #06b6d4;
+      --color-accent-light: #22d3ee;
+      --color-accent-dark: #0891b2;
+      --color-accent-soft: rgba(6, 182, 212, 0.1);
+      
+      /* Color Palette - Text */
+      --color-text-primary: #e6eef3;
+      --color-text-secondary: #9aa7b2;
+      --color-text-muted: #64748b;
+      
+      /* Color Palette - Borders */
+      --color-border: rgba(255, 255, 255, 0.04);
+      --color-border-light: rgba(255, 255, 255, 0.08);
+      --color-border-accent: rgba(6, 182, 212, 0.3);
+      
+      /* Typography */
+      --font-family-primary: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      --font-family-mono: "SF Mono", "Fira Code", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+      
+      /* Font Sizes */
+      --font-size-xs: 0.75rem;    /* 12px */
+      --font-size-sm: 0.8125rem;  /* 13px */
+      --font-size-base: 0.875rem; /* 14px */
+      --font-size-md: 1rem;       /* 16px */
+      --font-size-lg: 1.125rem;   /* 18px */
+      --font-size-xl: 1.25rem;    /* 20px */
+      --font-size-2xl: 1.5rem;    /* 24px */
+      --font-size-3xl: 1.75rem;   /* 28px */
+      --font-size-4xl: 2rem;      /* 32px */
+      
+      /* Font Weights */
+      --font-weight-normal: 400;
+      --font-weight-medium: 500;
+      --font-weight-semibold: 600;
+      --font-weight-bold: 700;
+      
+      /* Line Heights */
+      --line-height-tight: 1.25;
+      --line-height-snug: 1.375;
+      --line-height-normal: 1.5;
+      --line-height-relaxed: 1.625;
+      
+      /* Spacing */
+      --space-1: 0.25rem;  /* 4px */
+      --space-2: 0.5rem;   /* 8px */
+      --space-3: 0.75rem;  /* 12px */
+      --space-4: 1rem;     /* 16px */
+      --space-5: 1.25rem;  /* 20px */
+      --space-6: 1.5rem;   /* 24px */
+      --space-8: 2rem;     /* 32px */
+      --space-10: 2.5rem;  /* 40px */
+      --space-12: 3rem;    /* 48px */
+      
+      /* Border Radius */
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      --radius-full: 9999px;
+      
+      /* Shadows */
+      --shadow-sm: 0 2px 8px rgba(2, 6, 23, 0.4);
+      --shadow-md: 0 8px 30px rgba(2, 6, 23, 0.6);
+      --shadow-lg: 0 12px 40px rgba(2, 6, 23, 0.7);
+      --shadow-glow: 0 0 20px rgba(6, 182, 212, 0.3);
+      
+      color-scheme: dark;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-family-primary);
+      font-size: var(--font-size-base);
+      line-height: var(--line-height-normal);
+      background: linear-gradient(180deg, var(--color-bg-primary), var(--color-bg-secondary));
+      color: var(--color-text-primary);
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    /* Header Navigation */
+    .header {
+      padding: var(--space-4) var(--space-6);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      color: var(--color-text-secondary);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .header-logo {
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-lg);
+      color: var(--color-text-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .header-logo::before {
+      content: "📎";
+      font-size: var(--font-size-xl);
+    }
+
+    .header-nav {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .nav-link {
+      background: rgba(255, 255, 255, 0.03);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-sm);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--color-border-light);
+      color: var(--color-text-primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: var(--space-12) var(--space-6);
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-title {
+      font-size: var(--font-size-4xl);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-4);
+      background: linear-gradient(135deg, var(--color-text-primary), var(--color-accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: var(--font-size-lg);
+      color: var(--color-text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: var(--line-height-relaxed);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-6);
+    }
+
+    /* Section Styles */
+    .section {
+      margin-bottom: var(--space-12);
+    }
+
+    .section-header {
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .section-title {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--space-2);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .section-title::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 24px;
+      background: var(--color-accent);
+      border-radius: var(--radius-sm);
+    }
+
+    .section-description {
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-md);
+    }
+
+    /* Color Palette Grid */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .color-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .color-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .color-swatch {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-family-mono);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .color-info {
+      padding: var(--space-4);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .color-name {
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--space-1);
+    }
+
+    .color-value {
+      font-family: var(--font-family-mono);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .copy-btn {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-text-secondary);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-size-xs);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      background: var(--color-accent-soft);
+      border-color: var(--color-border-accent);
+      color: var(--color-accent);
+    }
+
+    /* Typography Section */
+    .typography-showcase {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+    }
+
+    .type-scale {
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .type-scale:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .type-sample {
+      margin-bottom: var(--space-2);
+    }
+
+    .type-meta {
+      font-family: var(--font-family-mono);
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+      display: flex;
+      gap: var(--space-4);
+    }
+
+    .font-4xl { font-size: var(--font-size-4xl); font-weight: var(--font-weight-bold); }
+    .font-3xl { font-size: var(--font-size-3xl); font-weight: var(--font-weight-bold); }
+    .font-2xl { font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); }
+    .font-xl { font-size: var(--font-size-xl); font-weight: var(--font-weight-semibold); }
+    .font-lg { font-size: var(--font-size-lg); font-weight: var(--font-weight-medium); }
+    .font-md { font-size: var(--font-size-md); font-weight: var(--font-weight-normal); }
+    .font-base { font-size: var(--font-size-base); font-weight: var(--font-weight-normal); }
+    .font-sm { font-size: var(--font-size-sm); font-weight: var(--font-weight-normal); }
+    .font-xs { font-size: var(--font-size-xs); font-weight: var(--font-weight-normal); }
+
+    /* Component Examples */
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .component-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+    }
+
+    .component-title {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-4);
+    }
+
+    /* Button Styles */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-semibold);
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: #012;
+    }
+
+    .btn-primary:hover {
+      background: var(--color-accent-light);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--color-text-primary);
+      border: 1px solid var(--color-border);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--color-border-light);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-text-secondary);
+    }
+
+    .btn-ghost:hover {
+      color: var(--color-text-primary);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Card Styles */
+    .card-example {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+      border: 1px solid var(--color-border);
+      padding: var(--space-5);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-example h4 {
+      margin: 0 0 var(--space-2) 0;
+      font-size: var(--font-size-lg);
+    }
+
+    .card-example p {
+      margin: 0;
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-sm);
+    }
+
+    /* Form Elements */
+    .input-example {
+      width: 100%;
+      padding: var(--space-3);
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      color: var(--color-text-primary);
+      font-size: var(--font-size-sm);
+      font-family: var(--font-family-primary);
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .input-example::placeholder {
+      color: var(--color-text-muted);
+    }
+
+    .input-example:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
+    }
+
+    /* Badge Styles */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .badge-default {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-secondary);
+    }
+
+    .badge-accent {
+      background: var(--color-accent-soft);
+      border: 1px solid var(--color-border-accent);
+      color: var(--color-accent);
+    }
+
+    /* Code Block */
+    .code-block {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      font-family: var(--font-family-mono);
+      font-size: var(--font-size-sm);
+      overflow-x: auto;
+      color: var(--color-text-secondary);
+    }
+
+    .code-block .keyword { color: var(--color-accent-light); }
+    .code-block .property { color: #a5b4fc; }
+    .code-block .value { color: #86efac; }
+    .code-block .punctuation { color: var(--color-text-muted); }
+
+    /* Guidelines Section */
+    .guidelines-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .guideline-item {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+    }
+
+    .guideline-item h4 {
+      margin: 0 0 var(--space-3) 0;
+      font-size: var(--font-size-md);
+      color: var(--color-text-primary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .guideline-item p {
+      margin: 0;
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-sm);
+      line-height: var(--line-height-relaxed);
+    }
+
+    .guideline-icon {
+      font-size: var(--font-size-lg);
+    }
+
+    /* Footer */
+    .footer {
+      padding: var(--space-8) var(--space-6);
+      text-align: center;
+      color: var(--color-text-muted);
+      font-size: var(--font-size-sm);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .footer a {
+      color: var(--color-accent);
+      text-decoration: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        gap: var(--space-3);
+        padding: var(--space-4);
+      }
+
+      .hero-title {
+        font-size: var(--font-size-3xl);
+      }
+
+      .hero {
+        padding: var(--space-8) var(--space-4);
+      }
+
+      .container {
+        padding: var(--space-4);
+      }
+
+      .color-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      }
+
+      .component-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Success Toast */
+    .toast {
+      position: fixed;
+      bottom: var(--space-6);
+      right: var(--space-6);
+      background: var(--color-accent);
+      color: #012;
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      font-weight: var(--font-weight-semibold);
+      font-size: var(--font-size-sm);
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Navigation -->
+  <header class="header">
+    <a href="/" class="header-logo">Paperclip</a>
+    <nav class="header-nav">
+      <a href="/tools/" class="nav-link">Tools</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="design.html" class="nav-link">Design</a>
+      <a href="README.md" class="nav-link">README</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1 class="hero-title">Design System</h1>
+    <p class="hero-subtitle">A comprehensive visual identity guide for Paperclip's developer tools — featuring our color palette, typography, spacing, and component patterns.</p>
+  </section>
+
+  <main class="container">
+    <!-- Color Palette Section -->
+    <section class="section" id="colors">
+      <div class="section-header">
+        <h2 class="section-title">Color Palette</h2>
+        <p class="section-description">Our carefully selected colors create a cohesive dark theme that's easy on the eyes while maintaining excellent contrast and visual hierarchy.</p>
+      </div>
+      
+      <div class="color-grid">
+        <!-- Background Colors -->
+        <div class="color-card">
+          <div class="color-swatch" style="background: #0f1724; color: #fff;">#0f1724</div>
+          <div class="color-info">
+            <div class="color-name">Background Primary</div>
+            <div class="color-value">
+              <span>#0f1724</span>
+              <button class="copy-btn" onclick="copyToClipboard('#0f1724')">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: #071024; color: #fff;">#071024</div>
+          <div class="color-info">
+            <div class="color-name">Background Secondary</div>
+            <div class="color-value">
+              <span>#071024</span>
+              <button class="copy-btn" onclick="copyToClipboard('#071024')">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: #0b1220; color: #fff;">#0b1220</div>
+          <div class="color-info">
+            <div class="color-name">Card Background</div>
+            <div class="color-value">
+              <span>#0b1220</span>
+              <button class="copy-btn" onclick="copyToClipboard('#0b1220')">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: #07162b; color: #fff;">#07162b</div>
+          <div class="color-info">
+            <div class="color-name">Card Light</div>
+            <div class="color-value">
+              <span>#07162b</span>
+              <button class="copy-btn" onclick="copyToClipboard('#07162b')">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accent Colors -->
+        <div class="color-card">
+          <div class="color-swatch" style="background: #06b6d4; color: #012;">#06b6d4</div>
+          <div class="color-info">
+            <div class="color-name">Accent</div>
+            <div class="color-value">
+              <span>#06b6d4</span>
+              <button class="copy-btn" onclick="copyToClipboard('#06b6d4')">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: #22d3ee; color: #012;">#22d3ee</div>
+          <div class="color-info">
+            <div class="color-name">Accent Light</div>
+            <div class="color-value">
+              <span>#22d3ee</span>
+              <button class="copy-btn" onclick="copyToClipboard('#22d3ee')">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: #0891b2; color: #fff;">#0891b2</div>
+          <div class="color-info">
+            <div class="color-name">Accent Dark</div>
+            <div class="color-value">
+              <span>#0891b2</span>
+              <button class="copy-btn" onclick="copyToClipboard('#0891b2')">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Colors -->
+        <div class="color-card">
+          <div class="color-swatch" style="background: #e6eef3; color: #0f1724;">#e6eef3</div>
+          <div class="color-info">
+            <div class="color-name">Text Primary</div>
+            <div class="color-value">
+              <span>#e6eef3</span>
+              <button class="copy-btn" onclick="copyToClipboard('#e6eef3')">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: #9aa7b2; color: #0f1724;">#9aa7b2</div>
+          <div class="color-info">
+            <div class="color-name">Text Secondary</div>
+            <div class="color-value">
+              <span>#9aa7b2</span>
+              <button class="copy-btn" onclick="copyToClipboard('#9aa7b2')">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: #64748b; color: #fff;">#64748b</div>
+          <div class="color-info">
+            <div class="color-name">Text Muted</div>
+            <div class="color-value">
+              <span>#64748b</span>
+              <button class="copy-btn" onclick="copyToClipboard('#64748b')">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Border Colors -->
+        <div class="color-card">
+          <div class="color-swatch" style="background: rgba(255,255,255,0.04); color: #fff; border: 1px solid rgba(255,255,255,0.1);">rgba(255,255,255,0.04)</div>
+          <div class="color-info">
+            <div class="color-name">Border</div>
+            <div class="color-value">
+              <span>rgba(255,255,255,0.04)</span>
+              <button class="copy-btn" onclick="copyToClipboard('rgba(255,255,255,0.04)')">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: rgba(6,182,212,0.3); color: #fff; border: 1px solid rgba(6,182,212,0.5);">rgba(6,182,212,0.3)</div>
+          <div class="color-info">
+            <div class="color-name">Border Accent</div>
+            <div class="color-value">
+              <span>rgba(6,182,212,0.3)</span>
+              <button class="copy-btn" onclick="copyToClipboard('rgba(6,182,212,0.3)')">Copy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography Section -->
+    <section class="section" id="typography">
+      <div class="section-header">
+        <h2 class="section-title">Typography</h2>
+        <p class="section-description">We use Inter for its excellent readability at all sizes, paired with system fonts for fallback. Monospace text uses SF Mono / Fira Code.</p>
+      </div>
+
+      <div class="typography-showcase">
+        <div class="type-scale">
+          <div class="type-sample font-4xl">The quick brown fox jumps over the lazy dog</div>
+          <div class="type-meta">
+            <span>4xl / 32px</span>
+            <span>Bold (700)</span>
+            <span>--font-size-4xl</span>
+          </div>
+        </div>
+
+        <div class="type-scale">
+          <div class="type-sample font-3xl">The quick brown fox jumps over the lazy dog</div>
+          <div class="type-meta">
+            <span>3xl / 28px</span>
+            <span>Bold (700)</span>
+            <span>--font-size-3xl</span>
+          </div>
+        </div>
+
+        <div class="type-scale">
+          <div class="type-sample font-2xl">The quick brown fox jumps over the lazy dog</div>
+          <div class="type-meta">
+            <span>2xl / 24px</span>
+            <span>Semibold (600)</span>
+            <span>--font-size-2xl</span>
+          </div>
+        </div>
+
+        <div class="type-scale">
+          <div class="type-sample font-xl">The quick brown fox jumps over the lazy dog</div>
+          <div class="type-meta">
+            <span>xl / 20px</span>
+            <span>Semibold (600)</span>
+            <span>--font-size-xl</span>
+          </div>
+        </div>
+
+        <div class="type-scale">
+          <div class="type-sample font-lg">The quick brown fox jumps over the lazy dog</div>
+          <div class="type-meta">
+            <span>lg / 18px</span>
+            <span>Medium (500)</span>
+            <span>--font-size-lg</span>
+          </div>
+        </div>
+
+        <div class="type-scale">
+          <div class="type-sample font-md">The quick brown fox jumps over the lazy dog</div>
+          <div class="type-meta">
+            <span>md / 16px</span>
+            <span>Normal (400)</span>
+            <span>--font-size-md</span>
+          </div>
+        </div>
+
+        <div class="type-scale">
+          <div class="type-sample font-base">The quick brown fox jumps over the lazy dog</div>
+          <div class="type-meta">
+            <span>base / 14px</span>
+            <span>Normal (400)</span>
+            <span>--font-size-base</span>
+          </div>
+        </div>
+
+        <div class="type-scale">
+          <div class="type-sample font-sm">The quick brown fox jumps over the lazy dog</div>
+          <div class="type-meta">
+            <span>sm / 13px</span>
+            <span>Normal (400)</span>
+            <span>--font-size-sm</span>
+          </div>
+        </div>
+
+        <div class="type-scale">
+          <div class="type-sample font-xs">The quick brown fox jumps over the lazy dog</div>
+          <div class="type-meta">
+            <span>xs / 12px</span>
+            <span>Normal (400)</span>
+            <span>--font-size-xs</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Component Examples Section -->
+    <section class="section" id="components">
+      <div class="section-header">
+        <h2 class="section-title">Component Patterns</h2>
+        <p class="section-description">Reusable UI components that maintain consistency across all Paperclip tools and pages.</p>
+      </div>
+
+      <div class="component-grid">
+        <!-- Buttons -->
+        <div class="component-card">
+          <div class="component-title">Buttons</div>
+          <div style="display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center;">
+            <button class="btn btn-primary">Primary</button>
+            <button class="btn btn-secondary">Secondary</button>
+            <button class="btn btn-ghost">Ghost</button>
+          </div>
+        </div>
+
+        <!-- Cards -->
+        <div class="component-card">
+          <div class="component-title">Cards</div>
+          <div class="card-example">
+            <h4>Card Title</h4>
+            <p>This is an example card with subtle gradients and shadows.</p>
+          </div>
+        </div>
+
+        <!-- Badges -->
+        <div class="component-card">
+          <div class="component-title">Badges</div>
+          <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
+            <span class="badge badge-default">Default</span>
+            <span class="badge badge-accent">Accent</span>
+            <span class="badge badge-default">Developer Tools</span>
+            <span class="badge badge-accent">New</span>
+          </div>
+        </div>
+
+        <!-- Form Inputs -->
+        <div class="component-card">
+          <div class="component-title">Form Inputs</div>
+          <input type="text" class="input-example" placeholder="Enter your text..." />
+        </div>
+
+        <!-- Code Block -->
+        <div class="component-card">
+          <div class="component-title">Code Block</div>
+          <div class="code-block">
+            <span class="punctuation">.</span><span class="keyword">component</span> {<br>
+            &nbsp;&nbsp;<span class="property">background</span>: <span class="value">var(--color-bg-card)</span>;<br>
+            &nbsp;&nbsp;<span class="property">border</span>: <span class="value">1px solid var(--color-border)</span>;<br>
+            &nbsp;&nbsp;<span class="property">border-radius</span>: <span class="value">var(--radius-lg)</span>;<br>
+            }
+          </div>
+        </div>
+
+        <!-- Typography Sample -->
+        <div class="component-card">
+          <div class="component-title">Text Hierarchy</div>
+          <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+            <p style="margin: 0; font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); color: var(--color-text-primary);">Heading Text</p>
+            <p style="margin: 0; font-size: var(--font-size-sm); color: var(--color-text-secondary);">Secondary text provides additional context and details.</p>
+            <p style="margin: 0; font-size: var(--font-size-xs); color: var(--color-text-muted);">Muted text for timestamps and metadata</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Visual Identity Guidelines -->
+    <section class="section" id="guidelines">
+      <div class="section-header">
+        <h2 class="section-title">Visual Identity Guidelines</h2>
+        <p class="section-description">Key principles for maintaining consistent branding across Paperclip's ecosystem.</p>
+      </div>
+
+      <div class="guidelines-grid">
+        <div class="guideline-item">
+          <h4><span class="guideline-icon">🎨</span> Color Usage</h4>
+          <p>Always use the primary accent color (#06b6d4) sparingly for CTAs and highlights. Backgrounds should use the dark gradient for visual depth.</p>
+        </div>
+
+        <div class="guideline-item">
+          <h4><span class="guideline-icon">📐</span> Spacing</h4>
+          <p>Maintain consistent spacing using the 4px grid system. Use 16px base spacing, scaling up by factors of 8 for larger gaps.</p>
+        </div>
+
+        <div class="guideline-item">
+          <h4><span class="guideline-icon">✨</span> Effects</h4>
+          <p>Use subtle shadows for elevation. Glow effects on the accent color help interactive elements stand out. Avoid heavy drop shadows.</p>
+        </div>
+
+        <div class="guideline-item">
+          <h4><span class="guideline-icon">📱</span> Responsiveness</h4>
+          <p>Design mobile-first with breakpoints at 768px. Navigation should collapse gracefully on smaller screens.</p>
+        </div>
+
+        <div class="guideline-item">
+          <h4><span class="guideline-icon">♿</span> Accessibility</h4>
+          <p>Maintain WCAG AA contrast ratios. Text primary against background primary provides 12.5:1 contrast ratio.</p>
+        </div>
+
+        <div class="guideline-item">
+          <h4><span class="guideline-icon">🔄</span> Consistency</h4>
+          <p>Reuse existing patterns before creating new ones. All tools should feel like part of the same cohesive ecosystem.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CSS Variables Reference -->
+    <section class="section" id="css-variables">
+      <div class="section-header">
+        <h2 class="section-title">CSS Variables Reference</h2>
+        <p class="section-description">Quick reference for all design tokens used across Paperclip.</p>
+      </div>
+
+      <div class="code-block" style="margin-bottom: var(--space-4);">
+<span class="comment">/* Color Palette */</span><br>
+<span class="property">--color-bg-primary</span><span class="punctuation">:</span> <span class="value">#0f1724</span><span class="punctuation">;</span><br>
+<span class="property">--color-bg-secondary</span><span class="punctuation">:</span> <span class="value">#071024</span><span class="punctuation">;</span><br>
+<span class="property">--color-bg-card</span><span class="punctuation">:</span> <span class="value">#0b1220</span><span class="punctuation">;</span><br>
+<span class="property">--color-accent</span><span class="punctuation">:</span> <span class="value">#06b6d4</span><span class="punctuation">;</span><br>
+<span class="property">--color-text-primary</span><span class="punctuation">:</span> <span class="value">#e6eef3</span><span class="punctuation">;</span><br>
+<span class="property">--color-text-secondary</span><span class="punctuation">:</span> <span class="value">#9aa7b2</span><span class="punctuation">;</span><br><br>
+<span class="comment">/* Typography */</span><br>
+<span class="property">--font-family-primary</span><span class="punctuation">:</span> <span class="value">Inter, system-ui, sans-serif</span><span class="punctuation">;</span><br>
+<span class="property">--font-family-mono</span><span class="punctuation">:</span> <span class="value">"SF Mono", "Fira Code", monospace</span><span class="punctuation">;</span><br><br>
+<span class="comment">/* Spacing Scale */</span><br>
+<span class="property">--space-1</span><span class="punctuation">:</span> <span class="value">0.25rem</span><span class="punctuation">;</span> <span class="comment">/* 4px */</span><br>
+<span class="property">--space-2</span><span class="punctuation">:</span> <span class="value">0.5rem</span><span class="punctuation">;</span> <span class="comment">/* 8px */</span><br>
+<span class="property">--space-4</span><span class="punctuation">:</span> <span class="value">1rem</span><span class="punctuation">;</span> <span class="comment">/* 16px */</span><br>
+<span class="property">--space-6</span><span class="punctuation">:</span> <span class="value">1.5rem</span><span class="punctuation">;</span> <span class="comment">/* 24px */</span><br>
+<span class="property">--space-8</span><span class="punctuation">:</span> <span class="value">2rem</span><span class="punctuation">;</span> <span class="comment">/* 32px */</span>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Paperclip Design System • <a href="/">Home</a> • <a href="/tools/">Tools</a> • <a href="about.html">About</a></p>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">Copied to clipboard!</div>
+
+  <script>
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Copied to clipboard!');
+      }).catch(() => {
+        showToast('Failed to copy');
+      });
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
