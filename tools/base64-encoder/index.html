@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Base64 Encoder & Decoder - Online Base64 Converter | Paperclip</title>
+<meta name="description" content="Free online Base64 encoder and decoder. Convert text to Base64, decode Base64 to text, upload files, drag & drop support. URL-safe Base64 option. Fast, private, no ads." />
+<meta name="keywords" content="base64 encode online, base64 decode, base64 converter, file to base64, url safe base64, base64 encoder decoder" />
+<meta name="author" content="Paperclip" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/base64-encoder/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://cdn.carbonads.com" crossorigin>
+<link rel="preconnect" href="https://via.placeholder.com" crossorigin>
+<style>
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--error:#ef4444;--warning:#f59e0b;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+.logo{font-weight:700;font-size:1.2em;color:var(--accent)}
+nav{display:flex;gap:16px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--text)}
+.container{max-width:1000px;margin:0 auto;padding:24px}
+h1{font-size:1.8em;margin:0 0 8px 0}
+.subtitle{color:var(--muted);margin-bottom:24px}
+.tool-box{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin-bottom:20px}
+label{display:block;margin-bottom:8px;color:var(--muted);font-size:14px}
+textarea{width:100%;min-height:120px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;color:var(--text);font-family:monospace;font-size:14px;resize:vertical}
+textarea:focus{outline:none;border-color:var(--accent)}
+.button-group{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}
+button{padding:12px 24px;background:var(--accent);color:#012;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px}
+button:hover{opacity:.9}
+button.secondary{background:rgba(255,255,255,0.1);color:var(--text)}
+button.secondary:hover{background:rgba(255,255,255,0.15)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.output-box{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;min-height:60px;font-family:monospace;font-size:14px;word-break:break-all;white-space:pre-wrap}
+.message{margin-top:8px;padding:8px 12px;border-radius:6px;font-size:14px}
+.message.success{background:rgba(34,197,94,.1);color:var(--success)}
+.message.error{background:rgba(239,68,68,.1);color:var(--error)}
+.message.warning{background:rgba(245,158,11,.1);color:var(--warning)}
+.options{margin:16px 0;display:flex;gap:20px;flex-wrap:wrap;align-items:center}
+.option{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;color:var(--text)}
+.option input[type="checkbox"]{cursor:pointer}
+.mode-tabs{display:flex;gap:8px;margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:16px}
+.mode-tab{padding:10px 20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;cursor:pointer;font-size:14px;color:var(--muted);transition:all .2s}
+.mode-tab:hover{background:rgba(255,255,255,0.08)}
+.mode-tab.active{background:var(--accent);color:#012;border-color:var(--accent)}
+.drop-zone{border:2px dashed rgba(255,255,255,0.2);border-radius:12px;padding:40px 24px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:16px;background:rgba(255,255,255,0.02)}
+.drop-zone:hover,.drop-zone.dragover{border-color:var(--accent);background:rgba(6,182,212,0.05)}
+.drop-zone .icon{font-size:48px;margin-bottom:12px;opacity:.6}
+.drop-zone p{margin:0;color:var(--muted);font-size:14px}
+.drop-zone .hint{font-size:12px;margin-top:8px;opacity:.7}
+.file-info{display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(255,255,255,0.05);border-radius:8px;margin-bottom:16px}
+.file-info .file-name{font-weight:600;flex:1}
+.file-info .file-size{color:var(--muted);font-size:13px}
+.file-info button{padding:6px 12px;font-size:12px}
+.stats{display:flex;gap:24px;flex-wrap:wrap;margin:16px 0;padding:12px 16px;background:rgba(255,255,255,0.03);border-radius:8px;font-size:13px}
+.stat{display:flex;align-items:center;gap:6px}
+.stat-label{color:var(--muted)}
+.stat-value{color:var(--accent);font-weight:600;font-family:monospace}
+.output-actions{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap}
+.output-actions button{padding:8px 16px;font-size:13px}
+.tips{margin-top:32px;padding:20px;background:var(--card);border-radius:12px;border:1px solid rgba(255,255,255,0.05)}
+.tips h3{margin:0 0 12px 0;color:var(--accent)}
+.tips ul{margin:0;padding-left:20px;color:var(--muted)}
+.tips li{margin-bottom:8px}
+.tips a{color:var(--accent);text-decoration:none}
+.tips a:hover{text-decoration:underline}
+.pro-tips{margin-top:32px;padding:20px;background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(37,99,235,0.1));border-radius:12px;border:1px solid rgba(6,182,212,0.3)}
+.pro-tips h3{margin:0 0 16px 0;color:var(--accent)}
+.pro-tips h4{margin:16px 0 8px 0;color:var(--text);font-size:14px}
+.pro-tips ul{margin:0;padding-left:20px;color:var(--muted)}
+.pro-tips li{margin-bottom:12px}
+.pro-tips a{color:var(--accent);text-decoration:none}
+.pro-tips a:hover{text-decoration:underline}
+.carbon-ads{margin:32px 0;padding:16px;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid rgba(255,255,255,0.05);text-align:center;min-height:120px}
+.carbon-ads-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+.affiliate-banner{margin:24px 0;padding:16px;background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(251,191,36,0.05));border-radius:12px;border:1px solid rgba(245,158,11,0.3);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.affiliate-banner img{width:60px;height:60px;object-fit:cover;border-radius:8px}
+.affiliate-banner .content{flex:1;min-width:200px}
+.affiliate-banner h4{margin:0 0 4px 0;color:var(--text)}
+.affiliate-banner p{margin:0 0 8px 0;color:var(--muted);font-size:13px}
+.affiliate-banner a{color:var(--accent);text-decoration:none;font-weight:600}
+.affiliate-banner a:hover{text-decoration:underline}
+.hidden{display:none !important}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
+@media (max-width: 640px) {
+.container{padding:16px}
+.drop-zone{padding:24px 16px}
+.stats{gap:12px}
+}
+</style>
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+<header>
+<a href="/" class="logo">← Paperclip</a>
+<nav>
+<a href="/">Home</a>
+<a href="/about.html">About</a>
+<a href="/tools/">Tools</a>
+</nav>
+</header>
+
+<div class="container">
+<h1>Base64 Encoder & Decoder</h1>
+<p class="subtitle">Encode text to Base64 or decode Base64 back to text. Upload files via drag & drop. All processing happens in your browser - nothing is sent to any server.</p>
+
+<div class="tool-box">
+<div class="mode-tabs">
+<div class="mode-tab active" onclick="setMode('text')" id="tab-text">Text Mode</div>
+<div class="mode-tab" onclick="setMode('file')" id="tab-file">File Mode</div>
+</div>
+
+<!-- Text Mode -->
+<div id="text-mode">
+<label for="input">Input</label>
+<textarea id="input" placeholder="Enter text to encode or Base64 to decode..." spellcheck="false"></textarea>
+
+<div class="stats" id="input-stats">
+<div class="stat"><span class="stat-label">Characters:</span><span class="stat-value" id="char-count">0</span></div>
+<div class="stat"><span class="stat-label">Bytes:</span><span class="stat-value" id="byte-count">0</span></div>
+</div>
+</div>
+
+<!-- File Mode -->
+<div id="file-mode" class="hidden">
+<div class="drop-zone" id="drop-zone">
+<div class="icon">📁</div>
+<p>Drag & drop files here or click to browse</p>
+<p class="hint">Supports any file type - images, documents, binary files</p>
+<input type="file" id="file-input" style="display:none" />
+</div>
+<div id="file-info" class="file-info hidden">
+<span class="file-name" id="file-name"></span>
+<span class="file-size" id="file-size"></span>
+<button class="secondary" onclick="clearFile()">Remove</button>
+</div>
+</div>
+
+<div class="options">
+<label class="option">
+<input type="checkbox" id="url-safe">
+<span>URL-safe Base64 (replace +/ with -_)</span>
+</label>
+<label class="option">
+<input type="checkbox" id="auto-detect" checked>
+<span>Auto-detect Base64 input</span>
+</label>
+</div>
+
+<div class="button-group">
+<button onclick="encode()">Encode to Base64</button>
+<button onclick="decode()">Decode from Base64</button>
+<button class="secondary" onclick="swap()">Swap</button>
+<button class="secondary" onclick="clearAll()">Clear</button>
+</div>
+
+<label>Output</label>
+<div id="output" class="output-box" placeholder="Result will appear here..."></div>
+
+<div class="stats" id="output-stats">
+<div class="stat"><span class="stat-label">Output size:</span><span class="stat-value" id="output-size">0 bytes</span></div>
+<div class="stat"><span class="stat-label">Base64 overhead:</span><span class="stat-value" id="overhead">~33%</span></div>
+</div>
+
+<div class="output-actions">
+<button class="secondary" onclick="copyOutput()">📋 Copy to Clipboard</button>
+<button class="secondary" onclick="downloadOutput()" id="download-btn">💾 Download as File</button>
+</div>
+
+<div id="message"></div>
+</div>
+
+<!-- Email CTA -->
+<style>
+.email-cta-box { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); padding: 1.5rem; margin: 2rem 0; border-radius: 12px; color: white; text-align: center; }
+.email-cta-box h3 { margin: 0 0 0.75rem 0; font-size: 1.25rem; }
+.email-cta-box p { margin: 0 0 1rem 0; opacity: 0.95; font-size: 0.95rem; }
+.email-cta-box form { display: flex; gap: 0.5rem; max-width: 400px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+.email-cta-box input { flex: 1; min-width: 200px; padding: 0.75rem 1rem; border: none; border-radius: 6px; font-size: 1rem; }
+.email-cta-box button { background: #10b981; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 600; cursor: pointer; }
+</style>
+<div class="email-cta-box">
+<h3>Get the Complete Base64 Cheatsheet</h3>
+<p>Join 500+ developers. Get Base64 reference guide + URL-safe encoding tips + weekly dev tools.</p>
+<form id="base64EmailForm">
+<input type="email" placeholder="your@email.com" required>
+<button type="submit">Get Cheatsheet</button>
+</form>
+</div>
+
+<div class="pro-tips">
+<h3>Pro Tools for Developers</h3>
+<ul>
+<li><strong><a href="https://www.postman.com/?ref=paperclip" target="_blank" rel="nofollow">Postman</a></strong> - Test APIs with Base64-encoded payloads. Auto-formatting and built-in encoders for authentication headers.</li>
+<li><strong><a href="https://httpie.io/?ref=paperclip" target="_blank" rel="nofollow">HTTPie</a></strong> - Modern CLI HTTP client with built-in Base64 support. Perfect for scripting API requests.</li>
+<li><strong><a href="https://www.jetbrains.com/webstorm/?ref=paperclip" target="_blank" rel="nofollow">WebStorm</a></strong> - Smart JavaScript IDE with Base64 inspection and encoding helpers built-in.</li>
+</ul>
+<p style="margin-top:16px;font-size:13px;color:var(--muted)">Master web development with <a href="https://www.udemy.com/topic/web-development/?ref=paperclip" target="_blank">Udemy's Web Development Courses</a>.</p>
+</div>
+
+<div class="carbon-ads">
+<div class="carbon-ads-label">Sponsored</div>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7ITK7L&placement=paperclip" id="_carbonads_js"></script>
+</div>
+
+<div class="affiliate-banner">
+<img loading="lazy" src="https://via.placeholder.com/60x60/2563eb/ffffff?text=64" alt="Base64" onerror="this.style.display='none'">
+<div class="content">
+<h4>Base64.ai - AI Document Processing</h4>
+<p>Extract data from any document with AI. Supports PDFs, images, and scans. Free tier includes 100 docs/month.</p>
+<a href="https://base64.ai/?ref=paperclip" target="_blank" rel="nofollow">Try Free →</a>
+</div>
+</div>
+
+<div class="tips">
+<h3>What is Base64?</h3>
+<ul>
+<li>Base64 is an encoding scheme that converts binary data into ASCII text using 64 characters (A-Z, a-z, 0-9, +, /)</li>
+<li>Commonly used for data URLs, email attachments, JSON Web Tokens (JWT), and embedding binary in text formats</li>
+<li>Encoded output is about 33% larger than the original data due to the 6-bit to 8-bit conversion</li>
+<li>URL-safe Base64 replaces + with - and / with _ to avoid URL encoding issues</li>
+</ul>
+
+<h3>Related Resources</h3>
+<ul>
+<li><a href="/content/complete-base64-guide">Complete Base64 Guide</a> - Learn how Base64 works and when to use it</li>
+<li><a href="/content/base64-troubleshooting">Base64 Troubleshooting</a> - Fix common encoding/decoding errors</li>
+<li><a href="/content/base64-vs-url-encoding">Base64 vs URL Encoding</a> - When to use each encoding method</li>
+<li><a href="/tools/url-encoder">URL Encoder/Decoder</a> - Encode for web URLs</li>
+<li><a href="/tools/image-to-base64">Image to Base64 Converter</a> - Convert images to data URIs</li>
+<li><a href="/tools/jwt-decoder">JWT Decoder</a> - Decode JSON Web Tokens</li>
+</ul>
+</div>
+</div>
+
+<footer>
+<p>Made with minimal code • Free forever • No tracking</p>
+</footer>
+
+<script src="/public/analytics.js"></script>
+<script>
+// Track tool usage
+function trackBase64(action, details) {
+if (window.PaperclipAnalytics) {
+PaperclipAnalytics.tool.track('base64-encoder', action, details);
+}
+}
+
+const input = document.getElementById('input');
+const output = document.getElementById('output');
+const message = document.getElementById('message');
+const urlSafe = document.getElementById('url-safe');
+const autoDetect = document.getElementById('auto-detect');
+const dropZone = document.getElementById('drop-zone');
+const fileInput = document.getElementById('file-input');
+const fileInfo = document.getElementById('file-info');
+const fileName = document.getElementById('file-name');
+const fileSize = document.getElementById('file-size');
+const downloadBtn = document.getElementById('download-btn');
+
+let currentFile = null;
+let currentMode = 'text';
+let lastWasDecode = false;
+
+// Update input stats
+function updateInputStats() {
+const text = input.value;
+const chars = text.length;
+const bytes = new Blob([text]).size;
+document.getElementById('char-count').textContent = chars.toLocaleString();
+document.getElementById('byte-count').textContent = bytes.toLocaleString();
+}
+
+input.addEventListener('input', updateInputStats);
+
+// Mode switching
+function setMode(mode) {
+currentMode = mode;
+document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+document.getElementById('tab-' + mode).classList.add('active');
+
+if (mode === 'text') {
+document.getElementById('text-mode').classList.remove('hidden');
+document.getElementById('file-mode').classList.add('hidden');
+} else {
+document.getElementById('text-mode').classList.add('hidden');
+document.getElementById('file-mode').classList.remove('hidden');
+}
+clearMessage();
+}
+
+// Drag and drop
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+dropZone.addEventListener(eventName, preventDefaults, false);
+document.body.addEventListener(eventName, preventDefaults, false);
+});
+
+function preventDefaults(e) {
+e.preventDefault();
+e.stopPropagation();
+}
+
+['dragenter', 'dragover'].forEach(eventName => {
+dropZone.addEventListener(eventName, () => dropZone.classList.add('dragover'), false);
+});
+
+['dragleave', 'drop'].forEach(eventName => {
+dropZone.addEventListener(eventName, () => dropZone.classList.remove('dragover'), false);
+});
+
+dropZone.addEventListener('drop', handleDrop, false);
+dropZone.addEventListener('click', () => fileInput.click());
+fileInput.addEventListener('change', handleFiles);
+
+function handleDrop(e) {
+const dt = e.dataTransfer;
+const files = dt.files;
+handleFiles({ target: { files: files } });
+}
+
+function handleFiles(e) {
+const files = e.target.files;
+if (files.length > 0) {
+const file = files[0];
+currentFile = file;
+fileName.textContent = file.name;
+fileSize.textContent = formatBytes(file.size);
+fileInfo.classList.remove('hidden');
+dropZone.querySelector('p').textContent = file.name;
+showMessage('File uploaded: ' + file.name + ' (' + formatBytes(file.size) + ')', 'success');
+trackBase64('file_upload', { file_size: file.size, file_type: file.type });
+}
+}
+
+function clearFile() {
+currentFile = null;
+fileInput.value = '';
+fileInfo.classList.add('hidden');
+dropZone.querySelector('p').textContent = 'Drag & drop files here or click to browse';
+}
+
+function formatBytes(bytes, decimals = 2) {
+if (bytes === 0) return '0 Bytes';
+const k = 1024;
+const dm = decimals < 0 ? 0 : decimals;
+const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+const i = Math.floor(Math.log(bytes) / Math.log(k));
+return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
+function showMessage(text, type) {
+message.textContent = text;
+message.className = 'message ' + type;
+if (type !== 'error') {
+setTimeout(() => { message.textContent = ''; message.className = ''; }, 4000);
+}
+}
+
+function clearMessage() {
+message.textContent = '';
+message.className = '';
+}
+
+// Base64 encoding/decoding
+function toBase64(str, urlSafeMode) {
+let base64 = btoa(unescape(encodeURIComponent(str)));
+if (urlSafeMode) {
+base64 = base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+return base64;
+}
+
+function fromBase64(str, urlSafeMode) {
+let base64 = str;
+if (urlSafeMode) {
+base64 = base64.replace(/-/g, '+').replace(/_/g, '/');
+// Add padding if needed
+while (base64.length % 4) {
+base64 += '=';
+}
+}
+return decodeURIComponent(escape(atob(base64)));
+}
+
+function isBase64(str) {
+// Check if string looks like Base64
+const base64Pattern = /^[A-Za-z0-9+/\-_]+={0,2}$/;
+const clean = str.replace(/\s/g, '');
+return base64Pattern.test(clean) && clean.length % 4 === 0 && clean.length >= 4;
+}
+
+function encode() {
+try {
+clearMessage();
+if (currentMode === 'file' && currentFile) {
+encodeFile();
+return;
+}
+
+const text = input.value;
+if (!text) {
+showMessage('Please enter some text to encode', 'error');
+return;
+}
+
+const result = toBase64(text, urlSafe.checked);
+output.textContent = result;
+updateOutputStats(text.length, result.length);
+showMessage('Encoded successfully!', 'success');
+lastWasDecode = false;
+downloadBtn.textContent = '💾 Download as File';
+trackBase64('encode', { input_length: text.length, output_length: result.length, url_safe: urlSafe.checked });
+} catch (e) {
+showMessage('Error encoding: ' + e.message, 'error');
+}
+}
+
+function encodeFile() {
+const reader = new FileReader();
+reader.onload = function(e) {
+const base64 = e.target.result.split(',')[1];
+let result = base64;
+if (urlSafe.checked) {
+result = result.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+output.textContent = result;
+updateOutputStats(currentFile.size, result.length);
+showMessage('File encoded to Base64!', 'success');
+lastWasDecode = false;
+downloadBtn.textContent = '💾 Download as File';
+trackBase64('encode_file', { file_size: currentFile.size, file_name: currentFile.name, url_safe: urlSafe.checked });
+};
+reader.readAsDataURL(currentFile);
+}
+
+function decode() {
+try {
+clearMessage();
+let text;
+if (currentMode === 'file' && currentFile) {
+decodeFile();
+return;
+} else {
+text = input.value.trim();
+}
+
+if (!text) {
+showMessage('Please enter Base64 to decode', 'error');
+return;
+}
+
+const result = fromBase64(text, urlSafe.checked);
+output.textContent = result;
+updateOutputStats(text.length, result.length);
+showMessage('Decoded successfully!', 'success');
+lastWasDecode = true;
+downloadBtn.textContent = '💾 Download Decoded File';
+trackBase64('decode', { input_length: text.length, output_length: result.length, url_safe: urlSafe.checked });
+} catch (e) {
+showMessage('Invalid Base64 string: ' + e.message, 'error');
+}
+}
+
+function decodeFile() {
+const reader = new FileReader();
+reader.onload = function(e) {
+try {
+let base64 = e.target.result;
+// Try to extract Base64 from data URL if present
+if (base64.includes(',')) {
+base64 = base64.split(',')[1];
+}
+
+if (urlSafe.checked) {
+base64 = base64.replace(/-/g, '+').replace(/_/g, '/');
+while (base64.length % 4) base64 += '=';
+}
+
+const binary = atob(base64);
+const bytes = new Uint8Array(binary.length);
+for (let i = 0; i < binary.length; i++) {
+bytes[i] = binary.charCodeAt(i);
+}
+
+const blob = new Blob([bytes]);
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = 'decoded-file';
+a.click();
+URL.revokeObjectURL(url);
+
+showMessage('File decoded and downloaded!', 'success');
+trackBase64('decode_file', { file_size: currentFile.size, file_name: currentFile.name });
+} catch (e) {
+showMessage('Error decoding file: ' + e.message, 'error');
+}
+};
+reader.readAsText(currentFile);
+}
+
+function updateOutputStats(inputLen, outputLen) {
+document.getElementById('output-size').textContent = outputLen.toLocaleString() + ' chars';
+if (inputLen > 0) {
+const overhead = ((outputLen - inputLen) / inputLen * 100).toFixed(0);
+document.getElementById('overhead').textContent = (overhead > 0 ? '+' : '') + overhead + '%';
+}
+}
+
+function swap() {
+const temp = input.value;
+input.value = output.textContent;
+output.textContent = temp;
+updateInputStats();
+showMessage('Input and output swapped!', 'success');
+}
+
+function clearAll() {
+input.value = '';
+output.textContent = '';
+clearMessage();
+updateInputStats();
+if (currentMode === 'file') {
+clearFile();
+}
+}
+
+function copyOutput() {
+const text = output.textContent;
+if (!text) {
+showMessage('Nothing to copy', 'error');
+return;
+}
+navigator.clipboard.writeText(text).then(() => {
+showMessage('Copied to clipboard!', 'success');
+trackBase64('copy_output', { length: text.length });
+}).catch(() => {
+showMessage('Failed to copy', 'error');
+});
+}
+
+function downloadOutput() {
+const text = output.textContent;
+if (!text) {
+showMessage('Nothing to download', 'error');
+return;
+}
+
+let blob;
+let filename;
+
+if (lastWasDecode) {
+// Try to determine if it's binary or text
+try {
+// If we can decode it as UTF-8, treat as text
+const decoded = output.textContent;
+blob = new Blob([decoded], { type: 'text/plain' });
+filename = 'decoded.txt';
+} catch (e) {
+blob = new Blob([text], { type: 'application/octet-stream' });
+filename = 'decoded.bin';
+}
+} else {
+blob = new Blob([text], { type: 'text/plain' });
+filename = 'base64-encoded.txt';
+}
+
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = filename;
+a.click();
+URL.revokeObjectURL(url);
+showMessage('Downloaded: ' + filename, 'success');
+trackBase64('download', { filename: filename, size: blob.size });
+}
+
+// Auto-detect Base64 on paste
+input.addEventListener('paste', function(e) {
+if (!autoDetect.checked) return;
+setTimeout(() => {
+const text = input.value.trim();
+if (isBase64(text)) {
+showMessage('Base64 detected! Click "Decode" to convert.', 'warning');
+}
+}, 0);
+});
+
+// Form submission
+document.getElementById('base64EmailForm').addEventListener('submit', function(e) {
+e.preventDefault();
+showMessage('Thanks! Check your email for the cheatsheet.', 'success');
+});
+</script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+if (window.RelatedTools) {
+RelatedTools.renderRelatedTools('base64-encoder', '#related-tools-container', {
+title: 'Related Tools',
+showCategory: true,
+trackClicks: true
+});
+}
+});
+</script>
+</body>
+</html>

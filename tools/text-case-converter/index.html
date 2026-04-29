@@ -78,16 +78,20 @@ footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;bor
 <label for="input">Input Text (one or multiple lines)</label>
 <textarea id="input" placeholder="Enter text to convert..." spellcheck="false"></textarea>
 
-<div class="options">
-<label class="option">
-<input type="checkbox" id="autoConvert" checked>
-<span>Auto-convert on type</span>
-</label>
-<label class="option">
-<input type="checkbox" id="preserveLines" checked>
-<span>Convert each line separately</span>
-</label>
-</div>
+  <div class="options">
+    <label class="option">
+      <input type="checkbox" id="autoConvert" checked>
+      <span>Auto-convert on type</span>
+    </label>
+    <label class="option">
+      <input type="checkbox" id="preserveLines" checked>
+      <span>Convert each line separately</span>
+    </label>
+    <label class="option">
+      <input type="checkbox" id="preserveAcronyms">
+      <span>Preserve acronyms (HTML vs Html)</span>
+    </label>
+  </div>
 
 <div class="button-group">
 <button onclick="convertAll()">Convert All</button>
@@ -103,63 +107,89 @@ footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;bor
 <div id="message"></div>
 </div>
 
-<div class="output-grid" id="outputGrid" style="display:none;">
-<div class="output-card">
-<h4>camelCase <button class="copy-btn" onclick="copyOutput('camel')">Copy</button></h4>
-<pre id="camel"></pre>
-</div>
-<div class="output-card">
-<h4>PascalCase <button class="copy-btn" onclick="copyOutput('pascal')">Copy</button></h4>
-<pre id="pascal"></pre>
-</div>
-<div class="output-card">
-<h4>snake_case <button class="copy-btn" onclick="copyOutput('snake')">Copy</button></h4>
-<pre id="snake"></pre>
-</div>
-<div class="output-card">
-<h4>SCREAMING_SNAKE_CASE <button class="copy-btn" onclick="copyOutput('screamingSnake')">Copy</button></h4>
-<pre id="screamingSnake"></pre>
-</div>
-<div class="output-card">
-<h4>kebab-case <button class="copy-btn" onclick="copyOutput('kebab')">Copy</button></h4>
-<pre id="kebab"></pre>
-</div>
-<div class="output-card">
-<h4>Train-Case <button class="copy-btn" onclick="copyOutput('train')">Copy</button></h4>
-<pre id="train"></pre>
-</div>
-<div class="output-card">
-<h4>dot.notation <button class="copy-btn" onclick="copyOutput('dot')">Copy</button></h4>
-<pre id="dot"></pre>
-</div>
-<div class="output-card">
-<h4>Original Case <button class="copy-btn" onclick="copyOutput('original')">Copy</button></h4>
-<pre id="original"></pre>
-</div>
-</div>
+  <div class="output-grid" id="outputGrid" style="display:none;">
+    <div class="output-card">
+      <h4>camelCase <button class="copy-btn" onclick="copyOutput('camel')">Copy</button></h4>
+      <pre id="camel"></pre>
+    </div>
+    <div class="output-card">
+      <h4>PascalCase <button class="copy-btn" onclick="copyOutput('pascal')">Copy</button></h4>
+      <pre id="pascal"></pre>
+    </div>
+    <div class="output-card">
+      <h4>snake_case <button class="copy-btn" onclick="copyOutput('snake')">Copy</button></h4>
+      <pre id="snake"></pre>
+    </div>
+    <div class="output-card">
+      <h4>SCREAMING_SNAKE_CASE <button class="copy-btn" onclick="copyOutput('screamingSnake')">Copy</button></h4>
+      <pre id="screamingSnake"></pre>
+    </div>
+    <div class="output-card">
+      <h4>kebab-case <button class="copy-btn" onclick="copyOutput('kebab')">Copy</button></h4>
+      <pre id="kebab"></pre>
+    </div>
+    <div class="output-card">
+      <h4>SCREAMING-KEBAB-CASE <button class="copy-btn" onclick="copyOutput('screamingKebab')">Copy</button></h4>
+      <pre id="screamingKebab"></pre>
+    </div>
+    <div class="output-card">
+      <h4>Train-Case <button class="copy-btn" onclick="copyOutput('train')">Copy</button></h4>
+      <pre id="train"></pre>
+    </div>
+    <div class="output-card">
+      <h4>dot.notation <button class="copy-btn" onclick="copyOutput('dot')">Copy</button></h4>
+      <pre id="dot"></pre>
+    </div>
+    <div class="output-card">
+      <h4>UPPERCASE <button class="copy-btn" onclick="copyOutput('upper')">Copy</button></h4>
+      <pre id="upper"></pre>
+    </div>
+    <div class="output-card">
+      <h4>lowercase <button class="copy-btn" onclick="copyOutput('lower')">Copy</button></h4>
+      <pre id="lower"></pre>
+    </div>
+    <div class="output-card">
+      <h4>Title Case <button class="copy-btn" onclick="copyOutput('title')">Copy</button></h4>
+      <pre id="title"></pre>
+    </div>
+    <div class="output-card">
+      <h4>Sentence case <button class="copy-btn" onclick="copyOutput('sentence')">Copy</button></h4>
+      <pre id="sentence"></pre>
+    </div>
+  </div>
 
-<div class="tips">
-<h3>Case Style Reference</h3>
-<div class="case-grid">
-<div class="case-item"><span>camelCase</span><code>myVariableName</code></div>
-<div class="case-item"><span>PascalCase</span><code>MyClassName</code></div>
-<div class="case-item"><span>snake_case</span><code>my_variable_name</code></div>
-<div class="case-item"><span>SCREAMING_SNAKE_CASE</span><code>MY_CONSTANT_NAME</code></div>
-<div class="case-item"><span>kebab-case</span><code>my-file-name</code></div>
-<div class="case-item"><span>Train-Case</span><code>My-File-Name</code></div>
-<div class="case-item"><span>dot.notation</span><code>my.object.property</code></div>
-</div>
+  <div class="tips">
+    <h3>Case Style Reference</h3>
+    <div class="case-grid">
+      <div class="case-item"><span>camelCase</span><code>myVariableName</code></div>
+      <div class="case-item"><span>PascalCase</span><code>MyClassName</code></div>
+      <div class="case-item"><span>snake_case</span><code>my_variable_name</code></div>
+      <div class="case-item"><span>SCREAMING_SNAKE_CASE</span><code>MY_CONSTANT_NAME</code></div>
+      <div class="case-item"><span>kebab-case</span><code>my-file-name</code></div>
+      <div class="case-item"><span>SCREAMING-KEBAB-CASE</span><code>MY-FILE-NAME</code></div>
+      <div class="case-item"><span>Train-Case</span><code>My-File-Name</code></div>
+      <div class="case-item"><span>dot.notation</span><code>my.object.property</code></div>
+      <div class="case-item"><span>UPPERCASE</span><code>ALL CAPS</code></div>
+      <div class="case-item"><span>lowercase</span><code>all lowercase</code></div>
+      <div class="case-item"><span>Title Case</span><code>Title Case Words</code></div>
+      <div class="case-item"><span>Sentence case</span><code>Sentence case value.</code></div>
+    </div>
 
-<h3 style="margin-top:24px;">Common Use Cases</h3>
-<ul>
-<li><strong>camelCase:</strong> JavaScript variables, JSON keys, CSS-in-JS</li>
-<li><strong>PascalCase:</strong> TypeScript/Java classes, React components, enum names</li>
-<li><strong>snake_case:</strong> Python variables, Ruby, database column names</li>
-<li><strong>SCREAMING_SNAKE_CASE:</strong> Constants, environment variables, enums</li>
-<li><strong>kebab-case:</strong> CSS classes, HTML attributes, file names, URL slugs</li>
-<li><strong>Train-Case:</strong> HTTP headers, protocol names</li>
-<li><strong>dot.notation:</strong> Object paths, configuration keys, i18n namespaces</li>
-</ul>
+    <h3 style="margin-top:24px;">Common Use Cases</h3>
+    <ul>
+      <li><strong>camelCase:</strong> JavaScript variables, JSON keys, CSS-in-JS</li>
+      <li><strong>PascalCase:</strong> TypeScript/Java classes, React components, enum names</li>
+      <li><strong>snake_case:</strong> Python variables, Ruby, database column names</li>
+      <li><strong>SCREAMING_SNAKE_CASE:</strong> Constants, environment variables, enums</li>
+      <li><strong>kebab-case:</strong> CSS classes, HTML attributes, file names, URL slugs</li>
+      <li><strong>SCREAMING-KEBAB-CASE:</strong> Environment variable keys, CLI flags, HTTP headers</li>
+      <li><strong>Train-Case:</strong> HTTP headers, protocol names</li>
+      <li><strong>dot.notation:</strong> Object paths, configuration keys, i18n namespaces</li>
+      <li><strong>UPPERCASE:</strong> Shouting text, emphasis, acronyms display</li>
+      <li><strong>lowercase:</strong> Normalizing text, case-insensitive comparisons</li>
+      <li><strong>Title Case:</strong> Headlines, book titles, document headings</li>
+      <li><strong>Sentence case:</strong> Paragraphs, descriptions, UI labels</li>
+    </ul>
 
 <h3 style="margin-top:24px;">Related Tools</h3>
 <ul>
@@ -183,6 +213,7 @@ const stats = document.getElementById('stats');
 const message = document.getElementById('message');
 const autoConvert = document.getElementById('autoConvert');
 const preserveLines = document.getElementById('preserveLines');
+const preserveAcronyms = document.getElementById('preserveAcronyms');
 
 function showMessage(text, type) {
   message.textContent = text;
@@ -197,17 +228,48 @@ function updateStats(text) {
   stats.style.display = text ? 'flex' : 'none';
 }
 
-function toWords(str) {
+function toWords(str, preserveAcronyms = false) {
   // Split on camelCase, PascalCase, snake_case, kebab-case, dot.notation, spaces
-  return str
+  let result = str
     .replace(/([a-z])([A-Z])/g, '$1 $2')
     .replace(/([A-Z])([A-Z][a-z])/g, '$1 $2')
     .replace(/[._-]/g, ' ')
     .replace(/\s+/g, ' ')
-    .trim()
-    .toLowerCase()
+    .trim();
+
+  if (!preserveAcronyms) {
+    result = result.toLowerCase();
+  }
+
+  return result
     .split(' ')
     .filter(w => w.length > 0);
+}
+
+function toUpperCase(str) {
+  return str.toUpperCase();
+}
+
+function toLowerCase(str) {
+  return str.toLowerCase();
+}
+
+function toTitleCase(str) {
+  // Title Case: First letter of each word capitalized
+  return str
+    .toLowerCase()
+    .replace(/\b\w/g, char => char.toUpperCase());
+}
+
+function toSentenceCase(str) {
+  // Sentence case: First letter capitalized, rest lowercase
+  const trimmed = str.trim();
+  if (!trimmed) return '';
+  return trimmed.charAt(0).toUpperCase() + trimmed.slice(1).toLowerCase();
+}
+
+function toScreamingKebabCase(words) {
+  return words.join('-').toUpperCase();
 }
 
 function toCamelCase(words) {
@@ -239,17 +301,21 @@ function toDotNotation(words) {
   return words.join('.');
 }
 
-function convertLine(line) {
-  const words = toWords(line);
+function convertLine(line, preserveAcronymsFlag = false) {
+  const words = toWords(line, preserveAcronymsFlag);
   return {
     camel: toCamelCase(words),
     pascal: toPascalCase(words),
     snake: toSnakeCase(words),
     screamingSnake: toScreamingSnakeCase(words),
     kebab: toKebabCase(words),
+    screamingKebab: toScreamingKebabCase(words),
     train: toTrainCase(words),
     dot: toDotNotation(words),
-    original: line
+    upper: toUpperCase(line),
+    lower: toLowerCase(line),
+    title: toTitleCase(line),
+    sentence: toSentenceCase(line)
   };
 }
 
@@ -264,10 +330,11 @@ function convertAll() {
   updateStats(text);
 
   const preserve = preserveLines.checked;
+  const preserveAcronymsFlag = preserveAcronyms.checked;
   const lines = preserve ? text.split('\n') : [text];
-  const results = lines.map(convertLine);
+  const results = lines.map(line => convertLine(line, preserveAcronymsFlag));
 
-  const formats = ['camel', 'pascal', 'snake', 'screamingSnake', 'kebab', 'train', 'dot', 'original'];
+  const formats = ['camel', 'pascal', 'snake', 'screamingSnake', 'kebab', 'screamingKebab', 'train', 'dot', 'upper', 'lower', 'title', 'sentence'];
   formats.forEach(fmt => {
     const output = results.map(r => r[fmt]).join('\n');
     document.getElementById(fmt).textContent = output || '(no output)';
@@ -279,14 +346,11 @@ function convertAll() {
 
 function clearAll() {
   input.value = '';
-  document.getElementById('camel').textContent = '';
-  document.getElementById('pascal').textContent = '';
-  document.getElementById('snake').textContent = '';
-  document.getElementById('screamingSnake').textContent = '';
-  document.getElementById('kebab').textContent = '';
-  document.getElementById('train').textContent = '';
-  document.getElementById('dot').textContent = '';
-  document.getElementById('original').textContent = '';
+  const formats = ['camel', 'pascal', 'snake', 'screamingSnake', 'kebab', 'screamingKebab', 'train', 'dot', 'upper', 'lower', 'title', 'sentence'];
+  formats.forEach(fmt => {
+    const el = document.getElementById(fmt);
+    if (el) el.textContent = '';
+  });
   outputGrid.style.display = 'none';
   stats.style.display = 'none';
   message.textContent = '';

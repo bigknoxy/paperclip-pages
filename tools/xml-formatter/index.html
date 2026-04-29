@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>XML Formatter & Validator | Paperclip</title>
+<meta name="description" content="Free online XML formatter and validator. Beautify, minify, and validate XML. Pretty print XML with syntax highlighting. Fast, private, works offline. No ads." />
+<meta name="keywords" content="xml formatter, xml validator, xml beautifier, online xml tool, pretty print xml, xml minifier" />
+<meta name="author" content="Paperclip" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/xml-formatter/" />
+<link rel="preconnect" href="https://cdn.carbonads.com" crossorigin>
+<link rel="preconnect" href="https://via.placeholder.com" crossorigin>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--error:#ef4444;--warning:#f59e0b;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+.logo{font-weight:700;font-size:1.2em;color:var(--accent);text-decoration:none}
+nav{display:flex;gap:16px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--text)}
+.container{max-width:1200px;margin:0 auto;padding:24px}
+h1{font-size:1.8em;margin:0 0 8px 0}
+.subtitle{color:var(--muted);margin-bottom:24px}
+.tool-box{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin-bottom:20px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:768px){.split{grid-template-columns:1fr}}
+label{display:block;margin-bottom:8px;color:var(--muted);font-size:14px}
+textarea{width:100%;min-height:350px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;color:var(--text);font-family:'Monaco','Consolas',monospace;font-size:13px;resize:vertical;outline:none}
+textarea:focus{outline:none;border-color:var(--accent)}
+.button-group{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}
+button{padding:10px 20px;background:var(--accent);color:#012;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px;transition:opacity .2s}
+button:hover{opacity:.9}
+button.secondary{background:rgba(255,255,255,0.1);color:var(--text)}
+button.secondary:hover{background:rgba(255,255,255,0.15)}
+button.success{background:var(--success);color:#fff}
+.status{margin-top:8px;padding:8px 12px;border-radius:6px;font-size:14px}
+.status.success{background:rgba(34,197,94,.1);color:var(--success);border:1px solid rgba(34,197,94,.2)}
+.status.error{background:rgba(239,68,68,.1);color:var(--error);border:1px solid rgba(239,68,68,.2)}
+.stats{display:flex;gap:24px;margin-top:12px;color:var(--muted);font-size:13px}
+.options-bar{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;padding:16px;background:rgba(255,255,255,0.02);border-radius:8px}
+.option{display:flex;align-items:center;gap:8px}
+.option label{font-size:13px;color:var(--muted)}
+.option select,.option input{padding:6px 10px;background:var(--bg);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:var(--text);font-size:13px;outline:none}
+.option input[type="checkbox"]{width:auto;transform:scale(1.2);cursor:pointer}
+.drop-zone{background:var(--card);border:2px dashed rgba(255,255,255,0.1);border-radius:12px;padding:32px 24px;text-align:center;transition:all .2s;cursor:pointer;margin-bottom:24px}
+.drop-zone:hover,.drop-zone.dragover{border-color:var(--accent);background:rgba(6,182,212,0.05)}
+.drop-zone svg{width:40px;height:40px;color:var(--accent);margin-bottom:12px}
+.drop-zone h3{margin:0 0 8px 0;font-size:1.1em;color:var(--text)}
+.drop-zone p{margin:0;color:var(--muted);font-size:14px}
+.drop-zone input[type="file"]{display:none}
+.pro-tips{margin-top:32px;padding:20px;background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(37,99,235,0.1));border-radius:12px;border:1px solid rgba(6,182,212,0.3)}
+.pro-tips h3{margin:0 0 16px 0;color:var(--accent)}
+.pro-tips ul{margin:0;padding-left:20px;color:var(--muted)}
+.pro-tips li{margin-bottom:12px}
+.pro-tips a{color:var(--accent);text-decoration:none}
+.pro-tips a:hover{text-decoration:underline}
+.carbon-ads{margin:32px 0;padding:16px;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid rgba(255,255,255,0.05);text-align:center;min-height:120px}
+.carbon-ads-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+.affiliate-banner{margin:24px 0;padding:16px;background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(251,191,36,0.05));border-radius:12px;border:1px solid rgba(245,158,11,0.3);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.affiliate-banner img{width:60px;height:60px;object-fit:cover;border-radius:8px}
+.affiliate-banner .content{flex:1;min-width:200px}
+.affiliate-banner h4{margin:0 0 4px 0;color:var(--text)}
+.affiliate-banner p{margin:0 0 8px 0;color:var(--muted);font-size:13px}
+.affiliate-banner a{color:var(--accent);text-decoration:none;font-weight:600}
+.affiliate-banner a:hover{text-decoration:underline}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
+.tips{margin-top:32px;padding:20px;background:var(--card);border-radius:12px;border:1px solid rgba(255,255,255,0.05)}
+.tips h3{margin:0 0 16px 0;color:var(--text)}
+.tips ul{color:var(--muted);padding-left:20px;line-height:1.8}
+.tips a{color:var(--accent);text-decoration:none}
+.tips a:hover{text-decoration:underline}
+</style>
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+<header>
+<a href="/" class="logo">← Paperclip</a>
+<nav>
+<a href="/">Home</a>
+<a href="/about.html">About</a>
+<a href="/demo">Demo</a>
+</nav>
+</header>
+
+<div class="container">
+<h1>XML Formatter & Validator</h1>
+<p class="subtitle">Beautify, minify, and validate XML. Pretty print with customizable indentation. All processing happens in your browser.</p>
+
+<div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+<h3>Drop XML file here</h3>
+<p>or click to browse. Supports .xml files up to 10MB</p>
+<input type="file" id="file-input" accept=".xml,.txt" onchange="handleFile(event)">
+</div>
+
+<div class="tool-box">
+<div class="options-bar">
+<div class="option">
+<label for="indent-type">Indent:</label>
+<select id="indent-type">
+<option value="2" selected>2 spaces</option>
+<option value="4">4 spaces</option>
+<option value="tab">Tab</option>
+</select>
+</div>
+<div class="option">
+<label for="sort-attrs">
+<input type="checkbox" id="sort-attrs">
+Sort attributes
+</label>
+</div>
+<div class="option">
+<label for="self-close">
+<input type="checkbox" id="self-close" checked>
+Self-close empty tags
+</label>
+</div>
+</div>
+
+<div class="split">
+<div>
+<label for="input">Input XML</label>
+<textarea id="input" placeholder="Paste your XML here...&#10;&#10;Example:&#10;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;root&gt;&#10;  &lt;person&gt;&#10;    &lt;name&gt;John Doe&lt;/name&gt;&#10;    &lt;age&gt;30&lt;/age&gt;&#10;    &lt;address&gt;&#10;      &lt;street&gt;123 Main St&lt;/street&gt;&#10;      &lt;city&gt;New York&lt;/city&gt;&#10;    &lt;/address&gt;&#10;  &lt;/person&gt;&#10;&lt;/root&gt;" spellcheck="false"></textarea>
+</div>
+<div>
+<label for="output">Formatted Output</label>
+<textarea id="output" placeholder="Formatted XML will appear here..." readonly></textarea>
+</div>
+</div>
+
+<div class="button-group">
+<button onclick="formatXML()">Beautify</button>
+<button onclick="minifyXML()">Minify</button>
+<button onclick="validateXML()">Validate</button>
+<button class="secondary" onclick="copyOutput()">Copy</button>
+<button class="secondary" onclick="downloadXML()">Download</button>
+<button class="secondary" onclick="clearAll()">Clear</button>
+</div>
+
+<div id="status"></div>
+<div class="stats" id="stats"></div>
+</div>
+
+<!-- Email CTA -->
+<style>
+.email-cta-box { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); padding: 1.5rem; margin: 2rem 0; border-radius: 12px; color: white; text-align: center; }
+.email-cta-box h3 { margin: 0 0 0.75rem 0; font-size: 1.25rem; }
+.email-cta-box p { margin: 0 0 1rem 0; opacity: 0.95; font-size: 0.95rem; }
+.email-cta-box form { display: flex; gap: 0.5rem; max-width: 400px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+.email-cta-box input { flex: 1; min-width: 200px; padding: 0.75rem 1rem; border: none; border-radius: 6px; font-size: 1rem; }
+.email-cta-box button { background: #10b981; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 600; cursor: pointer; }
+</style>
+<div class="email-cta-box">
+<h3>Get the XML & API Development Cheatsheet</h3>
+<p>Join 500+ developers. Get the complete XML reference + weekly API tips.</p>
+<form id="xmlEmailForm">
+<input type="email" placeholder="your@email.com" required>
+<button type="submit">Get Cheatsheet</button>
+</form>
+</div>
+
+<div class="pro-tips">
+<h3>Pro Tools for API Developers</h3>
+<ul>
+<li><strong><a href="https://www.postman.com/pricing?ref=paperclip" target="_blank" rel="nofollow">Postman Pro</a></strong> - Advanced XML/JSON validation, automated testing, and team collaboration. The industry standard for API development.</li>
+<li><strong><a href="https://www.xmltools.io/?ref=paperclip" target="_blank" rel="nofollow">XMLTools.io</a></strong> - Advanced XML validation with XPath support and schema validation.</li>
+<li><strong><a href="https://www.oxygenxml.com/?ref=paperclip" target="_blank" rel="nofollow">Oxygen XML Editor</a></strong> - Professional XML editor with schema validation, transformation, and debugging tools.</li>
+</ul>
+<p style="margin-top:16px;font-size:13px;color:var(--muted)">Level up your API skills with <a href="https://frontendmasters.com/courses/api-design-graphql/?ref=paperclip" target="_blank">Frontend Masters API Courses</a>.</p>
+</div>
+
+<div class="carbon-ads">
+<div class="carbon-ads-label">Sponsored</div>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7ITK7L&placement=paperclip" id="_carbonads_js"></script>
+</div>
+
+<div class="affiliate-banner">
+<img loading="lazy" src="https://via.placeholder.com/60x60/2563eb/ffffff?text=API" alt="Beeceptor" onerror="this.style.display='none'">
+<div class="content">
+<h4>Beeceptor — Mock API in Seconds</h4>
+<p>Build mock APIs for testing without writing code. Perfect for frontend development when the backend isn't ready.</p>
+<a href="https://beeceptor.com/?ref=paperclip" target="_blank" rel="nofollow">Start Free →</a>
+</div>
+</div>
+
+<div class="tips">
+<h3>Related Resources</h3>
+<ul>
+<li><a href="/tools/json-formatter">JSON Formatter & Validator</a> - Format and validate JSON data</li>
+<li><a href="/tools/yaml-json">YAML ↔ JSON Converter</a> - Convert between YAML and JSON</li>
+<li><a href="/tools/html-encoder">HTML Encoder/Decoder</a> - Encode and decode HTML entities</li>
+<li><a href="/tools/csv-json">CSV ↔ JSON Converter</a> - Convert between CSV and JSON</li>
+<li><a href="/tools/code-minifier">Code Minifier</a> - Minify CSS, JS, and HTML code</li>
+</ul>
+</div>
+</div>
+
+<script src="/public/analytics.js"></script>
+<footer>
+<p>Made with minimal code • Free forever • No tracking</p>
+</footer>
+
+<script>
+// Track XML formatter usage
+function trackXMLFormatter(action, inputSize) {
+if (window.PaperclipAnalytics) {
+PaperclipAnalytics.tool.track('xml-formatter', action, { input_size: inputSize });
+}
+}
+
+const input = document.getElementById('input');
+const output = document.getElementById('output');
+const status = document.getElementById('status');
+const stats = document.getElementById('stats');
+
+function showStatus(text, type) {
+status.textContent = text;
+status.className = 'status ' + type;
+}
+
+function clearStatus() {
+status.textContent = '';
+status.className = '';
+}
+
+function getIndent() {
+const indentType = document.getElementById('indent-type').value;
+if (indentType === 'tab') return '\t';
+return ' '.repeat(parseInt(indentType) || 2);
+}
+
+// Parse XML string into DOM
+function parseXML(xmlString) {
+const parser = new DOMParser();
+const doc = parser.parseFromString(xmlString, 'application/xml');
+const errorNode = doc.querySelector('parsererror');
+if (errorNode) {
+const errorText = errorNode.textContent;
+// Extract line and column from error message
+const match = errorText.match(/line\s+(\d+).*column\s+(\d+)/i);
+if (match) {
+throw new Error(`XML Parse Error at line ${match[1]}, column ${match[2]}`);
+}
+throw new Error('XML Parse Error: Invalid XML');
+}
+return doc;
+}
+
+// Get indentation level
+function getIndentLevel(node) {
+let level = 0;
+let parent = node.parentNode;
+while (parent && parent.nodeType === Node.ELEMENT_NODE) {
+level++;
+parent = parent.parentNode;
+}
+return level;
+}
+
+// Format XML with indentation
+function formatXMLNode(node, indent, depth = 0) {
+const indentStr = indent.repeat(depth);
+const nextIndentStr = indent.repeat(depth + 1);
+
+if (node.nodeType === Node.TEXT_NODE) {
+const text = node.textContent.trim();
+return text ? escapeXML(text) : '';
+}
+
+if (node.nodeType === Node.COMMENT_NODE) {
+return indentStr + '<!--' + node.textContent + '-->';
+}
+
+if (node.nodeType === Node.CDATA_SECTION_NODE) {
+return indentStr + '<![CDATA[' + node.textContent + ']]>';
+}
+
+if (node.nodeType === Node.PROCESSING_INSTRUCTION_NODE) {
+return indentStr + '<?' + node.target + ' ' + node.textContent + '?>';
+}
+
+if (node.nodeType === Node.ELEMENT_NODE) {
+let result = indentStr + '<' + node.nodeName;
+
+// Handle attributes
+const attrs = Array.from(node.attributes);
+if (document.getElementById('sort-attrs').checked) {
+attrs.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+for (const attr of attrs) {
+result += ' ' + attr.name + '="' + escapeXML(attr.value) + '"';
+}
+
+const hasChildren = node.childNodes.length > 0;
+const hasOnlyText = hasChildren && node.childNodes.length === 1 && node.childNodes[0].nodeType === Node.TEXT_NODE;
+const selfCloseEmpty = document.getElementById('self-close').checked;
+
+if (!hasChildren) {
+if (selfCloseEmpty) {
+result += ' />';
+} else {
+result += '></' + node.nodeName + '>';
+}
+return result;
+}
+
+result += '>';
+
+if (hasOnlyText) {
+const text = node.childNodes[0].textContent.trim();
+result += escapeXML(text) + '</' + node.nodeName + '>';
+} else {
+result += '\n';
+for (const child of node.childNodes) {
+const childStr = formatXMLNode(child, indent, depth + 1);
+if (childStr) {
+result += childStr + '\n';
+}
+}
+result += indentStr + '</' + node.nodeName + '>';
+}
+
+return result;
+}
+
+return '';
+}
+
+// Escape XML special characters
+function escapeXML(text) {
+return text
+.replace(/&/g, '&amp;')
+.replace(/</g, '&lt;')
+.replace(/>/g, '&gt;')
+.replace(/"/g, '&quot;')
+.replace(/'/g, '&apos;');
+}
+
+function formatXML() {
+try {
+const text = input.value.trim();
+if (!text) {
+showStatus('Please enter some XML', 'error');
+return;
+}
+
+const doc = parseXML(text);
+const indent = getIndent();
+let result = '';
+
+// Process all child nodes of the document
+for (const node of doc.childNodes) {
+const nodeStr = formatXMLNode(node, indent, 0);
+if (nodeStr) {
+if (result) result += '\n';
+result += nodeStr;
+}
+}
+
+output.value = result;
+showStatus('XML formatted successfully!', 'success');
+updateStats(result);
+trackXMLFormatter('format', text.length);
+} catch (e) {
+showStatus('Invalid XML: ' + e.message, 'error');
+}
+}
+
+function minifyXML() {
+try {
+const text = input.value.trim();
+if (!text) {
+showStatus('Please enter some XML', 'error');
+return;
+}
+
+const doc = parseXML(text);
+
+// Serialize and remove whitespace between tags
+let minified = new XMLSerializer().serializeToString(doc);
+minified = minified.replace(/>\s+</g, '><').trim();
+
+output.value = minified;
+showStatus('XML minified!', 'success');
+updateStats(minified);
+trackXMLFormatter('minify', text.length);
+} catch (e) {
+showStatus('Invalid XML: ' + e.message, 'error');
+}
+}
+
+function validateXML() {
+try {
+const text = input.value.trim();
+if (!text) {
+showStatus('Please enter some XML', 'error');
+return;
+}
+
+const doc = parseXML(text);
+let nodeCount = 0;
+let elementCount = 0;
+let attrCount = 0;
+
+function countNodes(node) {
+if (node.nodeType === Node.ELEMENT_NODE) {
+elementCount++;
+attrCount += node.attributes.length;
+}
+nodeCount++;
+for (const child of node.childNodes) {
+countNodes(child);
+}
+}
+
+for (const node of doc.childNodes) {
+countNodes(node);
+}
+
+output.value = text;
+showStatus(`Valid XML! Elements: ${elementCount}, Attributes: ${attrCount}`, 'success');
+updateStats(text, { elements: elementCount, attributes: attrCount });
+trackXMLFormatter('validate', text.length);
+} catch (e) {
+showStatus('Invalid XML: ' + e.message, 'error');
+}
+}
+
+function updateStats(xml, extra = {}) {
+if (!xml) {
+stats.innerHTML = '';
+return;
+}
+
+const size = new Blob([xml]).size;
+const lines = xml.split('\n').length;
+let html = `<span>Size: ${size.toLocaleString()} bytes</span><span>Lines: ${lines}</span>`;
+
+if (extra.elements !== undefined) {
+html += `<span>Elements: ${extra.elements}</span>`;
+}
+if (extra.attributes !== undefined) {
+html += `<span>Attributes: ${extra.attributes}</span>`;
+}
+
+stats.innerHTML = html;
+}
+
+function clearAll() {
+input.value = '';
+output.value = '';
+status.textContent = '';
+status.className = '';
+stats.innerHTML = '';
+}
+
+function copyOutput() {
+const text = output.value;
+if (!text || text.startsWith('//')) {
+showStatus('Nothing to copy', 'error');
+return;
+}
+navigator.clipboard.writeText(text).then(() => {
+showStatus('Copied to clipboard!', 'success');
+});
+}
+
+function downloadXML() {
+const content = output.value;
+if (!content || content.startsWith('//')) {
+showStatus('Nothing to download', 'error');
+return;
+}
+const blob = new Blob([content], { type: 'application/xml' });
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = 'formatted.xml';
+a.click();
+URL.revokeObjectURL(url);
+showStatus('File downloaded!', 'success');
+}
+
+function handleFile(e) {
+const file = e.target.files[0];
+if (!file) return;
+
+if (file.size > 10 * 1024 * 1024) {
+showStatus('File too large (max 10MB)', 'error');
+return;
+}
+
+const reader = new FileReader();
+reader.onload = (evt) => {
+input.value = evt.target.result;
+formatXML();
+showStatus('File loaded: ' + file.name, 'success');
+};
+reader.readAsText(file);
+}
+
+// Drag and drop
+document.addEventListener('DOMContentLoaded', () => {
+const dropZone = document.getElementById('drop-zone');
+
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+dropZone.addEventListener(eventName, (e) => {
+e.preventDefault();
+e.stopPropagation();
+}, false);
+});
+
+dropZone.addEventListener('dragenter', () => {
+dropZone.classList.add('dragover');
+});
+
+dropZone.addEventListener('dragover', () => {
+dropZone.classList.add('dragover');
+});
+
+dropZone.addEventListener('dragleave', () => {
+dropZone.classList.remove('dragover');
+});
+
+dropZone.addEventListener('drop', (e) => {
+dropZone.classList.remove('dragover');
+const file = e.dataTransfer.files[0];
+if (file) {
+const reader = new FileReader();
+reader.onload = (evt) => {
+input.value = evt.target.result;
+formatXML();
+showStatus('File loaded: ' + file.name, 'success');
+};
+reader.readAsText(file);
+}
+});
+});
+
+// Auto-format on paste with delay
+input.addEventListener('paste', function() {
+setTimeout(() => {
+if (input.value.trim().length > 0) {
+formatXML();
+}
+}, 100);
+});
+</script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+if (window.RelatedTools) {
+RelatedTools.renderRelatedTools('xml-formatter', '#related-tools-container', {
+title: 'Related Tools',
+showCategory: true,
+trackClicks: true
+});
+}
+});
+</script>
+</body>
+</html>

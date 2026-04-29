@@ -68,7 +68,23 @@ related: ['base64', 'color', 'css-layout', 'qr-generator']
     category: 'Developer Tools',
     icon: '📋',
     description: 'Format, validate, and minify JSON',
-    related: ['csv-json', 'text-processor', 'code-minifier', 'jwt-decoder']
+    related: ['csv-json', 'text-processor', 'code-minifier', 'jwt-decoder', 'xml-formatter', 'sql-formatter']
+  },
+  'xml-formatter': {
+    name: 'XML Formatter & Validator',
+    path: '/tools/xml-formatter/',
+    category: 'Developer Tools',
+    icon: '📄',
+    description: 'Format, validate, and minify XML with pretty printing',
+    related: ['json-formatter', 'html-encoder', 'code-minifier', 'csv-json']
+  },
+  'sql-formatter': {
+    name: 'SQL Formatter & Validator',
+    path: '/tools/sql-formatter/',
+    category: 'Developer Tools',
+    icon: '🗃️',
+    description: 'Format, validate, and minify SQL queries. Supports MySQL, PostgreSQL, SQLite',
+    related: ['json-formatter', 'csv-json', 'text-processor', 'code-minifier', 'diff-checker']
   },
   'utm-builder': {
     name: 'UTM URL Builder',
@@ -118,7 +134,7 @@ related: ['base64', 'color', 'css-layout', 'qr-generator']
     category: 'Text & Content',
     icon: '📑',
     description: 'Edit and preview Markdown',
-    related: ['html-encoder', 'text-processor', 'lorem-ipsum', 'word-counter']
+    related: ['markdown-to-html', 'html-encoder', 'text-processor', 'lorem-ipsum', 'word-counter']
   },
   'word-counter': {
     name: 'Word Counter',
@@ -196,16 +212,16 @@ related: ['password-generator', 'hash', 'time-converter', 'json-formatter']
     category: 'Data & Conversion',
     icon: '🔄',
     description: 'Bidirectional CSV/JSON converter with drag-drop and multiple delimiters',
-    related: ['json-formatter', 'yaml-json', 'batch-converter', 'text-processor']
+    related: ['json-formatter', 'yaml-json', 'batch-converter', 'text-processor', 'sql-formatter']
   },
 'yaml-json': {
-name: 'YAML ↔ JSON Converter',
-path: '/tools/yaml-json/',
-category: 'Data & Conversion',
-icon: '📋',
-description: 'Bidirectional YAML/JSON converter with validation',
-related: ['json-formatter', 'csv-json', 'text-processor', 'code-minifier']
-},
+    name: 'YAML ↔ JSON Converter',
+    path: '/tools/yaml-json/',
+    category: 'Data & Conversion',
+    icon: '📋',
+    description: 'Bidirectional YAML/JSON converter with validation',
+    related: ['json-formatter', 'csv-json', 'text-processor', 'code-minifier', 'xml-formatter']
+  },
 'unit-converter': {
 name: 'Unit Converter',
 path: '/tools/unit-converter/',
@@ -253,6 +269,14 @@ category: 'Developer Tools',
 icon: '🎨',
 description: 'Convert SVG to CSS background-image data URI for inline stylesheets',
 related: ['image-to-base64', 'color', 'css-gradient', 'css-layout']
+},
+'css-to-scss': {
+name: 'CSS to SCSS/LESS Converter',
+path: '/tools/css-to-scss/',
+category: 'Developer Tools',
+icon: '🔄',
+description: 'Convert flat CSS to nested SCSS or LESS syntax with variable extraction',
+related: ['code-minifier', 'css-layout', 'css-gradient', 'box-shadow']
 },
 
 // Design Tools
@@ -389,13 +413,29 @@ description: 'Transform text into fancy Unicode styles',
 related: ['text-case-converter', 'text-processor', 'qr-generator', 'hash']
 },
 'ascii-art': {
-name: 'ASCII Art Generator',
-path: '/tools/ascii-art/',
-category: 'Text & Content',
-icon: '🎨',
-description: 'Convert text into beautiful ASCII art with multiple font styles',
-related: ['unicode-text', 'text-case-converter', 'text-processor', 'lorem-ipsum']
-}
+    name: 'ASCII Art Generator',
+    path: '/tools/ascii-art/',
+    category: 'Text & Content',
+    icon: '🎨',
+    description: 'Convert text into beautiful ASCII art with multiple font styles',
+    related: ['unicode-text', 'text-case-converter', 'text-processor', 'lorem-ipsum']
+  },
+  'url-shortener': {
+    name: 'URL Shortener & Expander',
+    path: '/tools/url-shortener/',
+    category: 'Utilities',
+    icon: '🔗',
+    description: 'Create short links from long URLs and expand shortened URLs safely',
+    related: ['qr-generator', 'utm-builder', 'barcode-reader', 'base64']
+  },
+  'markdown-to-html': {
+    name: 'Markdown to HTML Converter',
+    path: '/tools/markdown-to-html/',
+    category: 'Text & Content',
+    icon: '📄',
+    description: 'Convert Markdown to clean HTML instantly. Supports GitHub Flavored Markdown including tables, task lists, and code blocks.',
+    related: ['markdown-editor', 'html-encoder', 'code-minifier', 'text-processor']
+  }
 };
 
 /**

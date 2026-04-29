@@ -1,0 +1,881 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SQL Formatter & Validator | Paperclip</title>
+<meta name="description" content="Free online SQL formatter and validator. Beautify, minify, and validate SQL queries for MySQL, PostgreSQL, SQLite, and more. Fast, private, works offline. No ads." />
+<meta name="keywords" content="sql formatter, sql validator, sql beautifier, online sql tool, sql minifier, query formatter" />
+<meta name="author" content="Paperclip" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/sql-formatter/" />
+<link rel="preconnect" href="https://cdn.carbonads.com" crossorigin>
+<link rel="preconnect" href="https://via.placeholder.com" crossorigin>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--error:#ef4444;--warning:#f59e0b;--keyword:#c792ea;--string:#c3e88d;--number:#f78c6c;--comment:#676e95;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+.logo{font-weight:700;font-size:1.2em;color:var(--accent);text-decoration:none}
+nav{display:flex;gap:16px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--text)}
+.container{max-width:1200px;margin:0 auto;padding:24px}
+h1{font-size:1.8em;margin:0 0 8px 0}
+.subtitle{color:var(--muted);margin-bottom:24px}
+.tool-box{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin-bottom:20px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:768px){.split{grid-template-columns:1fr}}
+label{display:block;margin-bottom:8px;color:var(--muted);font-size:14px}
+textarea{width:100%;min-height:350px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;color:var(--text);font-family:'Monaco','Consolas',monospace;font-size:13px;resize:vertical;outline:none}
+textarea:focus{outline:none;border-color:var(--accent)}
+.button-group{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}
+button{padding:10px 20px;background:var(--accent);color:#012;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px;transition:opacity .2s}
+button:hover{opacity:.9}
+button.secondary{background:rgba(255,255,255,0.1);color:var(--text)}
+button.secondary:hover{background:rgba(255,255,255,0.15)}
+button.success{background:var(--success);color:#fff}
+.status{margin-top:8px;padding:8px 12px;border-radius:6px;font-size:14px}
+.status.success{background:rgba(34,197,94,.1);color:var(--success);border:1px solid rgba(34,197,94,.2)}
+.status.error{background:rgba(239,68,68,.1);color:var(--error);border:1px solid rgba(239,68,68,.2)}
+.stats{display:flex;gap:24px;margin-top:12px;color:var(--muted);font-size:13px}
+.options-bar{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;padding:16px;background:rgba(255,255,255,0.02);border-radius:8px}
+.option{display:flex;align-items:center;gap:8px}
+.option label{font-size:13px;color:var(--muted)}
+.option select,.option input{padding:6px 10px;background:var(--bg);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:var(--text);font-size:13px;outline:none}
+.option input[type="checkbox"]{width:auto;transform:scale(1.2);cursor:pointer}
+.drop-zone{background:var(--card);border:2px dashed rgba(255,255,255,0.1);border-radius:12px;padding:32px 24px;text-align:center;transition:all .2s;cursor:pointer;margin-bottom:24px}
+.drop-zone:hover,.drop-zone.dragover{border-color:var(--accent);background:rgba(6,182,212,0.05)}
+.drop-zone svg{width:40px;height:40px;color:var(--accent);margin-bottom:12px}
+.drop-zone h3{margin:0 0 8px 0;font-size:1.1em;color:var(--text)}
+.drop-zone p{margin:0;color:var(--muted);font-size:14px}
+.drop-zone input[type="file"]{display:none}
+.pro-tips{margin-top:32px;padding:20px;background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(37,99,235,0.1));border-radius:12px;border:1px solid rgba(6,182,212,0.3)}
+.pro-tips h3{margin:0 0 16px 0;color:var(--accent)}
+.pro-tips ul{margin:0;padding-left:20px;color:var(--muted)}
+.pro-tips li{margin-bottom:12px}
+.pro-tips a{color:var(--accent);text-decoration:none}
+.pro-tips a:hover{text-decoration:underline}
+.carbon-ads{margin:32px 0;padding:16px;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid rgba(255,255,255,0.05);text-align:center;min-height:120px}
+.carbon-ads-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+.affiliate-banner{margin:24px 0;padding:16px;background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(251,191,36,0.05));border-radius:12px;border:1px solid rgba(245,158,11,0.3);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.affiliate-banner img{width:60px;height:60px;object-fit:cover;border-radius:8px}
+.affiliate-banner .content{flex:1;min-width:200px}
+.affiliate-banner h4{margin:0 0 4px 0;color:var(--text)}
+.affiliate-banner p{margin:0 0 8px 0;color:var(--muted);font-size:13px}
+.affiliate-banner a{color:var(--accent);text-decoration:none;font-weight:600}
+.affiliate-banner a:hover{text-decoration:underline}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
+.tips{margin-top:32px;padding:20px;background:var(--card);border-radius:12px;border:1px solid rgba(255,255,255,0.05)}
+.tips h3{margin:0 0 16px 0;color:var(--text)}
+.tips ul{color:var(--muted);padding-left:20px;line-height:1.8}
+.tips a{color:var(--accent);text-decoration:none}
+.tips a:hover{text-decoration:underline}
+.keyword{color:var(--keyword);font-weight:600}
+.string{color:var(--string)}
+.number{color:var(--number)}
+.comment{color:var(--comment);font-style:italic}
+</style>
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+<header>
+<a href="/" class="logo">← Paperclip</a>
+<nav>
+<a href="/">Home</a>
+<a href="/about.html">About</a>
+<a href="/demo">Demo</a>
+</nav>
+</header>
+
+<div class="container">
+<h1>SQL Formatter & Validator</h1>
+<p class="subtitle">Beautify, minify, and validate SQL queries. Supports MySQL, PostgreSQL, SQLite, and standard SQL. All processing happens in your browser.</p>
+
+<div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+<h3>Drop SQL file here</h3>
+<p>or click to browse. Supports .sql files up to 10MB</p>
+<input type="file" id="file-input" accept=".sql,.txt" onchange="handleFile(event)">
+</div>
+
+<div class="tool-box">
+<div class="options-bar">
+<div class="option">
+<label for="dialect">Dialect:</label>
+<select id="dialect">
+<option value="standard" selected>Standard SQL</option>
+<option value="mysql">MySQL</option>
+<option value="postgresql">PostgreSQL</option>
+<option value="sqlite">SQLite</option>
+<option value="mssql">SQL Server</option>
+</select>
+</div>
+<div class="option">
+<label for="indent-type">Indent:</label>
+<select id="indent-type">
+<option value="2" selected>2 spaces</option>
+<option value="4">4 spaces</option>
+<option value="tab">Tab</option>
+</select>
+</div>
+<div class="option">
+<label for="uppercase-keywords">
+<input type="checkbox" id="uppercase-keywords" checked>
+UPPERCASE keywords
+</label>
+</div>
+<div class="option">
+<label for="line-breaks">
+<input type="checkbox" id="line-breaks" checked>
+Line breaks after clauses
+</label>
+</div>
+</div>
+
+<div class="split">
+<div>
+<label for="input">Input SQL</label>
+<textarea id="input" placeholder="Paste your SQL here...&#10;&#10;Example:&#10;SELECT u.id, u.name, COUNT(o.id) as order_count&#10;FROM users u&#10;LEFT JOIN orders o ON u.id = o.user_id&#10;WHERE u.status = 'active'&#10;GROUP BY u.id, u.name&#10;HAVING COUNT(o.id) > 5&#10;ORDER BY order_count DESC&#10;LIMIT 10;" spellcheck="false"></textarea>
+</div>
+<div>
+<label for="output">Formatted Output</label>
+<textarea id="output" placeholder="Formatted SQL will appear here..." readonly></textarea>
+</div>
+</div>
+
+<div class="button-group">
+<button onclick="formatSQL()">Beautify</button>
+<button onclick="minifySQL()">Minify</button>
+<button onclick="validateSQL()">Validate</button>
+<button class="secondary" onclick="copyOutput()">Copy</button>
+<button class="secondary" onclick="downloadSQL()">Download</button>
+<button class="secondary" onclick="clearAll()">Clear</button>
+</div>
+
+<div id="status"></div>
+<div class="stats" id="stats"></div>
+</div>
+
+<!-- Email CTA -->
+<style>
+.email-cta-box { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); padding: 1.5rem; margin: 2rem 0; border-radius: 12px; color: white; text-align: center; }
+.email-cta-box h3 { margin: 0 0 0.75rem 0; font-size: 1.25rem; }
+.email-cta-box p { margin: 0 0 1rem 0; opacity: 0.95; font-size: 0.95rem; }
+.email-cta-box form { display: flex; gap: 0.5rem; max-width: 400px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+.email-cta-box input { flex: 1; min-width: 200px; padding: 0.75rem 1rem; border: none; border-radius: 6px; font-size: 1rem; }
+.email-cta-box button { background: #10b981; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 600; cursor: pointer; }
+</style>
+<div class="email-cta-box">
+<h3>Get the SQL & Database Cheatsheet</h3>
+<p>Join 500+ developers. Get the complete SQL reference + weekly database tips.</p>
+<form id="sqlEmailForm">
+<input type="email" placeholder="your@email.com" required>
+<button type="submit">Get Cheatsheet</button>
+</form>
+</div>
+
+<div class="pro-tips">
+<h3>Pro Tools for Database Developers</h3>
+<ul>
+<li><strong><a href="https://www.tableplus.com/?ref=paperclip" target="_blank" rel="nofollow">TablePlus</a></strong> - Modern, native database GUI for MySQL, PostgreSQL, SQLite, and more. Clean interface, powerful features.</li>
+<li><strong><a href="https://www.beekeeperstudio.io/?ref=paperclip" target="_blank" rel="nofollow">Beekeeper Studio</a></strong> - Free and open source SQL editor and database manager. Cross-platform and easy to use.</li>
+<li><strong><a href="https://sqlflow.io/?ref=paperclip" target="_blank" rel="nofollow">SQLFlow</a></strong> - Visualize data lineage and SQL relationships. Understand complex queries and database schemas.</li>
+</ul>
+<p style="margin-top:16px;font-size:13px;color:var(--muted)">Level up your database skills with <a href="https://frontendmasters.com/courses/sql-fundamentals/?ref=paperclip" target="_blank">Frontend Masters SQL Courses</a>.</p>
+</div>
+
+<div class="carbon-ads">
+<div class="carbon-ads-label">Sponsored</div>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7ITK7L&placement=paperclip" id="_carbonads_js"></script>
+</div>
+
+<div class="affiliate-banner">
+<img loading="lazy" src="https://via.placeholder.com/60x60/2563eb/ffffff?text=DB" alt="Database" onerror="this.style.display='none'">
+<div class="content">
+<h4>PlanetScale — Serverless MySQL</h4>
+<p>Deploy MySQL databases globally with ease. Branching, deploy requests, and automatic scaling. Built on Vitess.</p>
+<a href="https://planetscale.com/?ref=paperclip" target="_blank" rel="nofollow">Start Free →</a>
+</div>
+</div>
+
+<div class="tips">
+<h3>Related Resources</h3>
+<ul>
+<li><a href="/tools/json-formatter">JSON Formatter & Validator</a> - Format and validate JSON data</li>
+<li><a href="/tools/csv-json">CSV ↔ JSON Converter</a> - Convert between CSV and JSON</li>
+<li><a href="/tools/text-processor">Text Processor</a> - Advanced text transformations</li>
+<li><a href="/tools/diff-checker">Diff Checker</a> - Compare text differences</li>
+<li><a href="/tools/code-minifier">Code Minifier</a> - Minify CSS, JS, and HTML code</li>
+</ul>
+</div>
+</div>
+
+<script src="/public/analytics.js"></script>
+<footer>
+<p>Made with minimal code • Free forever • No tracking</p>
+</footer>
+
+<script>
+// Track SQL formatter usage
+function trackSQLFormatter(action, inputSize) {
+  if (window.PaperclipAnalytics) {
+    PaperclipAnalytics.tool.track('sql-formatter', action, { input_size: inputSize });
+  }
+}
+
+const input = document.getElementById('input');
+const output = document.getElementById('output');
+const status = document.getElementById('status');
+const stats = document.getElementById('stats');
+
+function showStatus(text, type) {
+  status.textContent = text;
+  status.className = 'status ' + type;
+}
+
+function clearStatus() {
+  status.textContent = '';
+  status.className = '';
+}
+
+function getIndent() {
+  const indentType = document.getElementById('indent-type').value;
+  if (indentType === 'tab') return '\t';
+  return ' '.repeat(parseInt(indentType) || 2);
+}
+
+// SQL Keywords
+const SQL_KEYWORDS = new Set([
+  'SELECT', 'FROM', 'WHERE', 'INSERT', 'UPDATE', 'DELETE', 'CREATE', 'DROP', 'ALTER',
+  'TABLE', 'INDEX', 'VIEW', 'TRIGGER', 'PROCEDURE', 'FUNCTION', 'DATABASE',
+  'JOIN', 'INNER', 'LEFT', 'RIGHT', 'FULL', 'OUTER', 'CROSS', 'ON', 'USING',
+  'AND', 'OR', 'NOT', 'NULL', 'IS', 'IN', 'EXISTS', 'BETWEEN', 'LIKE',
+  'GROUP', 'BY', 'HAVING', 'ORDER', 'ASC', 'DESC', 'LIMIT', 'OFFSET',
+  'UNION', 'INTERSECT', 'EXCEPT', 'ALL', 'DISTINCT', 'AS',
+  'VALUES', 'SET', 'INTO', 'CASE', 'WHEN', 'THEN', 'ELSE', 'END',
+  'IF', 'ELSEIF', 'WHILE', 'FOR', 'LOOP', 'RETURN', 'DECLARE',
+  'PRIMARY', 'KEY', 'FOREIGN', 'REFERENCES', 'UNIQUE', 'DEFAULT',
+  'COMMIT', 'ROLLBACK', 'TRANSACTION', 'BEGIN', 'SAVEPOINT',
+  'GRANT', 'REVOKE', 'PRIVILEGES', 'TO', 'USER', 'ROLE',
+  'CONSTRAINT', 'CASCADE', 'RESTRICT', 'NO', 'ACTION',
+  'VARCHAR', 'INT', 'INTEGER', 'BIGINT', 'SMALLINT', 'DECIMAL',
+  'NUMERIC', 'FLOAT', 'REAL', 'DOUBLE', 'BOOLEAN', 'DATE', 'TIME',
+  'TIMESTAMP', 'TEXT', 'BLOB', 'BINARY', 'VARBINARY', 'CHAR',
+  'AUTO_INCREMENT', 'IDENTITY', 'SERIAL', 'NOW', 'CURRENT_DATE',
+  'CURRENT_TIME', 'CURRENT_TIMESTAMP', 'TRUE', 'FALSE'
+]);
+
+// Token types
+const TOKEN_TYPES = {
+  KEYWORD: 'KEYWORD',
+  IDENTIFIER: 'IDENTIFIER',
+  STRING: 'STRING',
+  NUMBER: 'NUMBER',
+  OPERATOR: 'OPERATOR',
+  PUNCTUATION: 'PUNCTUATION',
+  COMMENT: 'COMMENT',
+  WHITESPACE: 'WHITESPACE',
+  NEWLINE: 'NEWLINE',
+  OTHER: 'OTHER'
+};
+
+// Tokenize SQL
+function tokenize(sql) {
+  const tokens = [];
+  let i = 0;
+
+  while (i < sql.length) {
+    const char = sql[i];
+
+    // Skip whitespace but track it
+    if (/\s/.test(char)) {
+      if (char === '\n') {
+        tokens.push({ type: TOKEN_TYPES.NEWLINE, value: '\n' });
+      } else {
+        let whitespace = '';
+        while (i < sql.length && /\s/.test(sql[i]) && sql[i] !== '\n') {
+          whitespace += sql[i];
+          i++;
+        }
+        tokens.push({ type: TOKEN_TYPES.WHITESPACE, value: whitespace });
+        continue;
+      }
+      i++;
+      continue;
+    }
+
+    // Single-line comment
+    if (char === '-' && sql[i + 1] === '-') {
+      let comment = '--';
+      i += 2;
+      while (i < sql.length && sql[i] !== '\n') {
+        comment += sql[i];
+        i++;
+      }
+      tokens.push({ type: TOKEN_TYPES.COMMENT, value: comment });
+      continue;
+    }
+
+    // Multi-line comment
+    if (char === '/' && sql[i + 1] === '*') {
+      let comment = '/*';
+      i += 2;
+      while (i < sql.length && !(sql[i] === '*' && sql[i + 1] === '/')) {
+        comment += sql[i];
+        i++;
+      }
+      if (i < sql.length) {
+        comment += '*/';
+        i += 2;
+      }
+      tokens.push({ type: TOKEN_TYPES.COMMENT, value: comment });
+      continue;
+    }
+
+    // String literals
+    if (char === "'" || char === '"' || char === '`') {
+      const quote = char;
+      let string = quote;
+      i++;
+      while (i < sql.length && sql[i] !== quote) {
+        if (sql[i] === '\\' && i + 1 < sql.length) {
+          string += sql[i] + sql[i + 1];
+          i += 2;
+        } else {
+          string += sql[i];
+          i++;
+        }
+      }
+      if (i < sql.length) {
+        string += quote;
+        i++;
+      }
+      tokens.push({ type: TOKEN_TYPES.STRING, value: string });
+      continue;
+    }
+
+    // Numbers
+    if (/\d/.test(char)) {
+      let number = '';
+      while (i < sql.length && (/\d/.test(sql[i]) || sql[i] === '.')) {
+        number += sql[i];
+        i++;
+      }
+      tokens.push({ type: TOKEN_TYPES.NUMBER, value: number });
+      continue;
+    }
+
+    // Operators
+    if (/[=<>!+\-*/%]/.test(char)) {
+      let op = char;
+      i++;
+      if (i < sql.length && /[=<>]/.test(sql[i])) {
+        op += sql[i];
+        i++;
+      }
+      tokens.push({ type: TOKEN_TYPES.OPERATOR, value: op });
+      continue;
+    }
+
+    // Punctuation
+    if (/[(),.;\[\]{}]/.test(char)) {
+      tokens.push({ type: TOKEN_TYPES.PUNCTUATION, value: char });
+      i++;
+      continue;
+    }
+
+    // Identifiers and keywords
+    if (/[a-zA-Z_]/.test(char)) {
+      let identifier = '';
+      while (i < sql.length && /[a-zA-Z0-9_$]/.test(sql[i])) {
+        identifier += sql[i];
+        i++;
+      }
+      const upper = identifier.toUpperCase();
+      if (SQL_KEYWORDS.has(upper)) {
+        tokens.push({ type: TOKEN_TYPES.KEYWORD, value: identifier, keyword: upper });
+      } else {
+        tokens.push({ type: TOKEN_TYPES.IDENTIFIER, value: identifier });
+      }
+      continue;
+    }
+
+    // Other characters
+    tokens.push({ type: TOKEN_TYPES.OTHER, value: char });
+    i++;
+  }
+
+  return tokens;
+}
+
+// Get indentation level based on context
+function getIndentLevel(tokens, index) {
+  let level = 0;
+  let inParen = 0;
+
+  for (let i = 0; i < index; i++) {
+    const token = tokens[i];
+    if (token.type === TOKEN_TYPES.PUNCTUATION) {
+      if (token.value === '(') inParen++;
+      else if (token.value === ')') inParen--;
+    }
+    if (token.type === TOKEN_TYPES.KEYWORD) {
+      const kw = token.keyword;
+      if (kw === 'SELECT' || kw === 'FROM' || kw === 'WHERE' ||
+          kw === 'GROUP' || kw === 'ORDER' || kw === 'HAVING' ||
+          kw === 'INSERT' || kw === 'UPDATE' || kw === 'DELETE' ||
+          kw === 'CREATE' || kw === 'ALTER' || kw === 'DROP') {
+        if (inParen === 0) level = 1;
+      }
+      if (kw === 'JOIN' || kw === 'INNER' || kw === 'LEFT' ||
+          kw === 'RIGHT' || kw === 'FULL' || kw === 'CROSS') {
+        if (inParen === 0) level = 1;
+      }
+    }
+  }
+
+  return Math.max(0, inParen > 0 ? level + 1 : level);
+}
+
+function formatSQL() {
+  try {
+    const text = input.value.trim();
+    if (!text) {
+      showStatus('Please enter some SQL', 'error');
+      return;
+    }
+
+    const tokens = tokenize(text);
+    const indent = getIndent();
+    const uppercase = document.getElementById('uppercase-keywords').checked;
+    const lineBreaks = document.getElementById('line-breaks').checked;
+
+    let result = '';
+    let currentLine = '';
+    let currentLevel = 0;
+    let inSelectList = false;
+    let parenDepth = 0;
+
+    const MAJOR_KEYWORDS = new Set([
+      'SELECT', 'FROM', 'WHERE', 'GROUP', 'HAVING', 'ORDER',
+      'LIMIT', 'OFFSET', 'INSERT', 'UPDATE', 'DELETE',
+      'CREATE', 'ALTER', 'DROP', 'TRUNCATE', 'UNION',
+      'INTERSECT', 'EXCEPT', 'VALUES', 'SET', 'JOIN'
+    ]);
+
+    const CLAUSE_KEYWORDS = new Set([
+      'INNER', 'LEFT', 'RIGHT', 'FULL', 'CROSS', 'OUTER'
+    ]);
+
+    for (let i = 0; i < tokens.length; i++) {
+      const token = tokens[i];
+      const prevToken = i > 0 ? tokens[i - 1] : null;
+      const nextToken = i < tokens.length - 1 ? tokens[i + 1] : null;
+
+      // Handle comments
+      if (token.type === TOKEN_TYPES.COMMENT) {
+        if (currentLine.trim()) {
+          result += currentLine + '\n';
+          currentLine = indent.repeat(currentLevel);
+        }
+        result += token.value + '\n';
+        if (token.value.startsWith('/*')) {
+          currentLine = indent.repeat(currentLevel);
+        }
+        continue;
+      }
+
+      // Track parentheses
+      if (token.type === TOKEN_TYPES.PUNCTUATION) {
+        if (token.value === '(') {
+          parenDepth++;
+        } else if (token.value === ')') {
+          parenDepth--;
+        }
+      }
+
+      // Keywords
+      if (token.type === TOKEN_TYPES.KEYWORD) {
+        const keyword = uppercase ? token.keyword : token.value;
+
+        // Major clause keywords get their own line
+        if (MAJOR_KEYWORDS.has(token.keyword)) {
+          if (token.keyword === 'SELECT') {
+            if (currentLine.trim()) {
+              result += currentLine + '\n';
+            }
+            currentLevel = 0;
+            currentLine = keyword;
+            inSelectList = true;
+          } else if (CLAUSE_KEYWORDS.has(token.keyword) && prevToken?.keyword === 'JOIN') {
+            currentLine += ' ' + keyword;
+          } else if (token.keyword === 'JOIN') {
+            if (currentLine.trim()) {
+              result += currentLine + '\n';
+            }
+            currentLevel = 1;
+            currentLine = indent.repeat(currentLevel) + keyword;
+          } else {
+            if (currentLine.trim()) {
+              result += currentLine + '\n';
+            }
+            currentLevel = 1;
+            currentLine = indent.repeat(currentLevel) + keyword;
+            inSelectList = false;
+          }
+        } else if (token.keyword === 'AND' || token.keyword === 'OR') {
+          if (currentLine.trim()) {
+            result += currentLine + '\n';
+          }
+          currentLine = indent.repeat(currentLevel + 1) + keyword;
+        } else {
+          if (currentLine && !currentLine.endsWith(' ')) {
+            currentLine += ' ';
+          }
+          currentLine += keyword;
+        }
+        continue;
+      }
+
+      // Handle commas in SELECT list
+      if (token.type === TOKEN_TYPES.PUNCTUATION && token.value === ',') {
+        currentLine += ',';
+        if (inSelectList && lineBreaks && parenDepth === 0) {
+          result += currentLine + '\n';
+          currentLine = indent.repeat(currentLevel + 1);
+        }
+        continue;
+      }
+
+      // Other punctuation
+      if (token.type === TOKEN_TYPES.PUNCTUATION) {
+        currentLine += token.value;
+        continue;
+      }
+
+      // Strings and other tokens
+      if (token.type !== TOKEN_TYPES.WHITESPACE && token.type !== TOKEN_TYPES.NEWLINE) {
+        if (currentLine && !currentLine.endsWith(' ') &&
+            !currentLine.endsWith('(') && !token.value.startsWith(')')) {
+          currentLine += ' ';
+        }
+        currentLine += token.value;
+      }
+    }
+
+    if (currentLine.trim()) {
+      result += currentLine;
+    }
+
+    output.value = result.trim();
+    showStatus('SQL formatted successfully!', 'success');
+    updateStats(result);
+    trackSQLFormatter('format', text.length);
+  } catch (e) {
+    showStatus('Error formatting SQL: ' + e.message, 'error');
+  }
+}
+
+function minifySQL() {
+  try {
+    const text = input.value.trim();
+    if (!text) {
+      showStatus('Please enter some SQL', 'error');
+      return;
+    }
+
+    const tokens = tokenize(text);
+    let result = '';
+    let prevWasKeyword = false;
+    let prevToken = null;
+
+    for (const token of tokens) {
+      if (token.type === TOKEN_TYPES.COMMENT) {
+        continue; // Remove comments in minified
+      }
+
+      if (token.type === TOKEN_TYPES.WHITESPACE || token.type === TOKEN_TYPES.NEWLINE) {
+        if (result && !result.endsWith(' ') && prevToken?.type !== TOKEN_TYPES.PUNCTUATION) {
+          result += ' ';
+        }
+        continue;
+      }
+
+      // Add space between identifiers and keywords if needed
+      if (token.type === TOKEN_TYPES.KEYWORD || token.type === TOKEN_TYPES.IDENTIFIER) {
+        if (result && !result.endsWith(' ') && !result.endsWith('(')) {
+          result += ' ';
+        }
+      }
+
+      result += token.value;
+      prevToken = token;
+    }
+
+    // Clean up extra spaces
+    output.value = result.replace(/\s+/g, ' ').trim();
+    showStatus('SQL minified!', 'success');
+    updateStats(output.value);
+    trackSQLFormatter('minify', text.length);
+  } catch (e) {
+    showStatus('Error minifying SQL: ' + e.message, 'error');
+  }
+}
+
+function validateSQL() {
+  try {
+    const text = input.value.trim();
+    if (!text) {
+      showStatus('Please enter some SQL', 'error');
+      return;
+    }
+
+    const tokens = tokenize(text);
+    const errors = [];
+    let parenDepth = 0;
+    let quoteChar = null;
+    let statementType = null;
+    let hasSelect = false;
+    let hasFrom = false;
+    let hasWhere = false;
+
+    // Track parentheses balance
+    for (const token of tokens) {
+      if (token.type === TOKEN_TYPES.PUNCTUATION) {
+        if (token.value === '(') parenDepth++;
+        else if (token.value === ')') parenDepth--;
+      }
+
+      // Track statement type
+      if (token.type === TOKEN_TYPES.KEYWORD) {
+        const kw = token.keyword;
+        if (!statementType && ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'CREATE', 'DROP', 'ALTER'].includes(kw)) {
+          statementType = kw;
+        }
+        if (kw === 'SELECT') hasSelect = true;
+        if (kw === 'FROM') hasFrom = true;
+        if (kw === 'WHERE') hasWhere = true;
+      }
+    }
+
+    if (parenDepth > 0) {
+      errors.push(`Unclosed parentheses: ${parenDepth} opening bracket(s) not closed`);
+    } else if (parenDepth < 0) {
+      errors.push(`Extra closing parentheses: ${Math.abs(parenDepth)} closing bracket(s) without opening`);
+    }
+
+    // Check for common issues
+    const upperText = text.toUpperCase();
+
+    // Check for incomplete statements
+    if (statementType === 'SELECT' && !hasFrom) {
+      // Allow SELECT without FROM (e.g., SELECT 1)
+    }
+
+    // Check for trailing semicolon issues
+    if (text.endsWith(';') && text.replace(/\s/g, '').endsWith(';;')) {
+      errors.push('Double semicolon detected at end of statement');
+    }
+
+    // Generate validation stats
+    const stats = {
+      statements: 0,
+      tables: 0,
+      columns: 0,
+      joins: 0,
+      conditions: 0
+    };
+
+    let prevToken = null;
+    for (let i = 0; i < tokens.length; i++) {
+      const token = tokens[i];
+      const nextToken = i < tokens.length - 1 ? tokens[i + 1] : null;
+
+      if (token.type === TOKEN_TYPES.KEYWORD) {
+        if (['SELECT', 'INSERT', 'UPDATE', 'DELETE'].includes(token.keyword)) {
+          stats.statements++;
+        }
+        if (token.keyword === 'FROM' || token.keyword === 'INTO' || token.keyword === 'UPDATE') {
+          if (nextToken && nextToken.type === TOKEN_TYPES.IDENTIFIER) {
+            stats.tables++;
+          }
+        }
+        if (['JOIN', 'INNER', 'LEFT', 'RIGHT', 'FULL', 'CROSS'].includes(token.keyword)) {
+          if (token.keyword === 'JOIN' || (token.keyword !== 'JOIN' && nextToken?.keyword === 'JOIN')) {
+            stats.joins++;
+          }
+        }
+        if (token.keyword === 'WHERE') {
+          stats.conditions++;
+        }
+      }
+
+      // Count comma-separated items in SELECT
+      if (token.type === TOKEN_TYPES.PUNCTUATION && token.value === ',') {
+        if (prevToken?.type === TOKEN_TYPES.IDENTIFIER || prevToken?.type === TOKEN_TYPES.OPERATOR) {
+          stats.columns++;
+        }
+      }
+
+      prevToken = token;
+    }
+
+    if (errors.length > 0) {
+      showStatus('Validation errors: ' + errors.join('; '), 'error');
+    } else {
+      let msg = 'Valid SQL!';
+      if (stats.statements > 0) msg += ` Statements: ${stats.statements}`;
+      if (stats.tables > 0) msg += `, Tables: ${stats.tables}`;
+      if (stats.joins > 0) msg += `, Joins: ${stats.joins}`;
+      showStatus(msg, 'success');
+    }
+
+    updateStats(text, stats);
+    trackSQLFormatter('validate', text.length);
+  } catch (e) {
+    showStatus('Validation error: ' + e.message, 'error');
+  }
+}
+
+function updateStats(sql, extra = {}) {
+  if (!sql) {
+    stats.innerHTML = '';
+    return;
+  }
+
+  const size = new Blob([sql]).size;
+  const lines = sql.split('\n').length;
+  let html = `<span>Size: ${size.toLocaleString()} bytes</span><span>Lines: ${lines}</span>`;
+
+  if (extra.statements !== undefined) {
+    html += `<span>Statements: ${extra.statements}</span>`;
+  }
+  if (extra.tables !== undefined) {
+    html += `<span>Tables: ${extra.tables}</span>`;
+  }
+  if (extra.joins !== undefined) {
+    html += `<span>Joins: ${extra.joins}</span>`;
+  }
+
+  stats.innerHTML = html;
+}
+
+function clearAll() {
+  input.value = '';
+  output.value = '';
+  status.textContent = '';
+  status.className = '';
+  stats.innerHTML = '';
+}
+
+function copyOutput() {
+  const text = output.value;
+  if (!text) {
+    showStatus('Nothing to copy', 'error');
+    return;
+  }
+  navigator.clipboard.writeText(text).then(() => {
+    showStatus('Copied to clipboard!', 'success');
+  });
+}
+
+function downloadSQL() {
+  const content = output.value;
+  if (!content) {
+    showStatus('Nothing to download', 'error');
+    return;
+  }
+  const blob = new Blob([content], { type: 'application/sql' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'formatted.sql';
+  a.click();
+  URL.revokeObjectURL(url);
+  showStatus('File downloaded!', 'success');
+}
+
+function handleFile(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  if (file.size > 10 * 1024 * 1024) {
+    showStatus('File too large (max 10MB)', 'error');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = (evt) => {
+    input.value = evt.target.result;
+    formatSQL();
+    showStatus('File loaded: ' + file.name, 'success');
+  };
+  reader.readAsText(file);
+}
+
+// Drag and drop
+document.addEventListener('DOMContentLoaded', () => {
+  const dropZone = document.getElementById('drop-zone');
+
+  ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    dropZone.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }, false);
+  });
+
+  dropZone.addEventListener('dragenter', () => {
+    dropZone.classList.add('dragover');
+  });
+
+  dropZone.addEventListener('dragover', () => {
+    dropZone.classList.add('dragover');
+  });
+
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('dragover');
+  });
+
+  dropZone.addEventListener('drop', (e) => {
+    dropZone.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        input.value = evt.target.result;
+        formatSQL();
+        showStatus('File loaded: ' + file.name, 'success');
+      };
+      reader.readAsText(file);
+    }
+  });
+});
+
+// Auto-format on paste with delay
+input.addEventListener('paste', function() {
+  setTimeout(() => {
+    if (input.value.trim().length > 0) {
+      formatSQL();
+    }
+  }, 100);
+});
+</script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.RelatedTools) {
+    RelatedTools.renderRelatedTools('sql-formatter', '#related-tools-container', {
+      title: 'Related Tools',
+      showCategory: true,
+      trackClicks: true
+    });
+  }
+});
+</script>
+</body>
+</html>

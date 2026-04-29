@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>URL Shortener & Expander - Create Short Links | Paperclip</title>
+<meta name="description" content="Free URL shortener and expander tool. Create short, shareable links from long URLs. Instantly expand shortened URLs to see where they lead. No registration required." />
+<meta name="keywords" content="url shortener, short url, link shortener, url expander, expand short url, tiny url, free url shortener" />
+<meta name="author" content="Paperclip" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://bigknoxy.github.io/paperclip-pages/tools/url-shortener/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://cdn.carbonads.com" crossorigin>
+<style>
+:root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa7b2;--text:#e6eef3;--success:#22c55e;--error:#ef4444;--warning:#f59e0b;--info:#3b82f6;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 28px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+.logo{font-weight:700;font-size:1.2em;color:var(--accent)}
+nav{display:flex;gap:16px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--text)}
+.container{max-width:1000px;margin:0 auto;padding:24px}
+h1{font-size:1.8em;margin:0 0 8px 0}
+.subtitle{color:var(--muted);margin-bottom:24px}
+.tool-box{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin-bottom:20px}
+label{display:block;margin-bottom:8px;color:var(--muted);font-size:14px}
+input[type="text"],input[type="url"],textarea{width:100%;padding:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:var(--text);font-family:monospace;font-size:14px}
+input:focus,textarea:focus{outline:none;border-color:var(--accent)}
+textarea{min-height:80px;resize:vertical}
+.button-group{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}
+button{padding:12px 24px;background:var(--accent);color:#012;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px}
+button:hover{opacity:.9}
+button.secondary{background:rgba(255,255,255,0.1);color:var(--text)}
+button.secondary:hover{background:rgba(255,255,255,0.15)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.output-box{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;min-height:60px;font-family:monospace;font-size:14px;word-break:break-all;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.output-box .url-text{flex:1}
+.message{margin-top:12px;padding:10px 14px;border-radius:6px;font-size:14px}
+.message.success{background:rgba(34,197,94,.1);color:var(--success)}
+.message.error{background:rgba(239,68,68,.1);color:var(--error)}
+.message.warning{background:rgba(245,158,11,.1);color:var(--warning)}
+.message.info{background:rgba(59,130,246,.1);color:var(--info)}
+.mode-tabs{display:flex;gap:8px;margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:16px}
+.mode-tab{padding:10px 20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;cursor:pointer;font-size:14px;color:var(--muted);transition:all .2s}
+.mode-tab:hover{background:rgba(255,255,255,0.08)}
+.mode-tab.active{background:var(--accent);color:#012;border-color:var(--accent)}
+.hidden{display:none !important}
+.stats{display:flex;gap:24px;flex-wrap:wrap;margin:16px 0;padding:12px 16px;background:rgba(255,255,255,0.03);border-radius:8px;font-size:13px}
+.stat{display:flex;align-items:center;gap:6px}
+.stat-label{color:var(--muted)}
+.stat-value{color:var(--accent);font-weight:600;font-family:monospace}
+.output-actions{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap}
+.output-actions button{padding:8px 16px;font-size:13px}
+.short-url-display{font-size:18px;font-weight:600;color:var(--accent);word-break:break-all}
+.expanded-url-display{font-size:14px;color:var(--text);word-break:break-all}
+.history-section{margin-top:32px}
+.history-section h3{margin:0 0 16px 0;color:var(--text)}
+.history-list{max-height:300px;overflow-y:auto}
+.history-item{display:flex;align-items:center;gap:12px;padding:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);border-radius:8px;margin-bottom:8px}
+.history-item .short-url{color:var(--accent);font-family:monospace;font-weight:600;min-width:120px}
+.history-item .long-url{flex:1;color:var(--muted);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.history-item .actions{display:flex;gap:8px}
+.history-item .actions button{padding:6px 12px;font-size:12px}
+.history-empty{text-align:center;padding:24px;color:var(--muted);font-size:14px}
+.tips{margin-top:32px;padding:20px;background:var(--card);border-radius:12px;border:1px solid rgba(255,255,255,0.05)}
+.tips h3{margin:0 0 12px 0;color:var(--accent)}
+.tips ul{margin:0;padding-left:20px;color:var(--muted)}
+.tips li{margin-bottom:8px}
+.tips a{color:var(--accent);text-decoration:none}
+.tips a:hover{text-decoration:underline}
+.carbon-ads{margin:32px 0;padding:16px;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid rgba(255,255,255,0.05);text-align:center;min-height:120px}
+.carbon-ads-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
+@media (max-width: 640px) {
+.container{padding:16px}
+.history-item{flex-wrap:wrap}
+.history-item .short-url{min-width:auto;width:100%}
+.history-item .long-url{width:100%}
+}
+</style>
+<link rel="stylesheet" href="/tools/related-tools.css">
+</head>
+<body>
+<header>
+<a href="/" class="logo">← Paperclip</a>
+<nav>
+<a href="/">Home</a>
+<a href="/about.html">About</a>
+<a href="/tools/">Tools</a>
+</nav>
+</header>
+
+<div class="container">
+<h1>URL Shortener & Expander</h1>
+<p class="subtitle">Create short, memorable links from long URLs or expand shortened URLs to see where they lead. All processing happens in your browser.</p>
+
+<div class="tool-box">
+<div class="mode-tabs">
+<div class="mode-tab active" onclick="setMode('shorten')" id="tab-shorten">Shorten URL</div>
+<div class="mode-tab" onclick="setMode('expand')" id="tab-expand">Expand URL</div>
+</div>
+
+<!-- Shorten Mode -->
+<div id="shorten-mode">
+<label for="long-url">Enter a long URL to shorten</label>
+<input type="url" id="long-url" placeholder="https://example.com/very/long/url/path?with=parameters" />
+
+<div class="button-group">
+<button onclick="shortenUrl()">Create Short Link</button>
+<button class="secondary" onclick="clearShorten()">Clear</button>
+</div>
+
+<div id="shorten-result" class="hidden">
+<label>Your shortened URL:</label>
+<div class="output-box">
+<span class="url-text short-url-display" id="short-url-output"></span>
+<button class="secondary" onclick="copyShortUrl()">📋 Copy</button>
+</div>
+<div class="stats" style="margin-top:16px">
+<div class="stat"><span class="stat-label">Original length:</span><span class="stat-value" id="original-length">0 chars</span></div>
+<div class="stat"><span class="stat-label">Shortened length:</span><span class="stat-value" id="shortened-length">0 chars</span></div>
+<div class="stat"><span class="stat-label">Reduction:</span><span class="stat-value" id="reduction">0%</span></div>
+</div>
+</div>
+</div>
+
+<!-- Expand Mode -->
+<div id="expand-mode" class="hidden">
+<label for="short-url">Enter a shortened URL to expand</label>
+<input type="url" id="short-url" placeholder="https://tinyurl.com/abc123 or https://bit.ly/xyz" />
+
+<div class="button-group">
+<button onclick="expandUrl()">Expand URL</button>
+<button class="secondary" onclick="clearExpand()">Clear</button>
+</div>
+
+<div id="expand-result" class="hidden">
+<label>Expanded destination:</label>
+<div class="output-box">
+<span class="url-text expanded-url-display" id="expanded-url-output"></span>
+<a id="visit-link" href="#" target="_blank" rel="noopener noreferrer"><button class="secondary">↗ Visit</button></a>
+</div>
+<div class="output-actions">
+<button class="secondary" onclick="copyExpandedUrl()">📋 Copy URL</button>
+</div>
+</div>
+</div>
+
+<div id="message"></div>
+</div>
+
+<!-- History Section -->
+<div class="history-section">
+<h3>Your Shortened URLs <button class="secondary" onclick="clearHistory()" style="padding:4px 12px;font-size:12px;margin-left:12px">Clear History</button></h3>
+<div id="history-list" class="history-list">
+<div class="history-empty">No URLs shortened yet. Create your first short link above!</div>
+</div>
+</div>
+
+<div class="carbon-ads">
+<div class="carbon-ads-label">Sponsored</div>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7ITK7L&placement=paperclip" id="_carbonads_js"></script>
+</div>
+
+<div class="tips">
+<h3>How It Works</h3>
+<ul>
+<li><strong>Client-side shortening:</strong> URLs are shortened using a hash-based algorithm entirely in your browser</li>
+<li><strong>Local storage:</strong> Your shortened URLs are stored locally in your browser for easy access</li>
+<li><strong>Privacy-focused:</strong> No data is sent to any server - everything stays on your device</li>
+<li><strong>URL expansion:</strong> Paste any shortened URL (bit.ly, tinyurl, etc.) to see where it leads before clicking</li>
+<li><strong>Shareable links:</strong> Shortened URLs can be copied and shared anywhere</li>
+</ul>
+
+<h3 style="margin-top:24px">Popular URL Shorteners</h3>
+<ul>
+<li><strong>bit.ly</strong> - One of the most popular URL shorteners with analytics</li>
+<li><strong>tinyurl.com</strong> - Simple, no-registration URL shortening</li>
+<li><strong>short.link</strong> - Modern URL shortener with custom domains</li>
+<li><strong>t.co</strong> - Twitter's official URL shortener</li>
+</ul>
+
+<h3 style="margin-top:24px">Security Tips</h3>
+<ul>
+<li>Always expand unknown short URLs before clicking to avoid phishing</li>
+<li>Be cautious of short links in emails or messages from unknown sources</li>
+<li>Use this tool to preview where shortened URLs lead before visiting</li>
+</ul>
+
+<h3 style="margin-top:24px">Related Tools</h3>
+<ul>
+<li><a href="/tools/qr-generator/">QR Code Generator</a> - Create QR codes for your shortened URLs</li>
+<li><a href="/tools/url-encoder/">URL Encoder/Decoder</a> - Encode special characters for URLs</li>
+<li><a href="/tools/base64-encoder/">Base64 Encoder</a> - Encode data to Base64 format</li>
+</ul>
+</div>
+</div>
+
+<footer>
+<p>Made with minimal code • Free forever • No tracking</p>
+</footer>
+
+<script src="/public/analytics.js"></script>
+<script>
+// Track tool usage
+function trackUrlShortener(action, details) {
+  if (window.PaperclipAnalytics) {
+    PaperclipAnalytics.tool.track('url-shortener', action, details);
+  }
+}
+
+const STORAGE_KEY = 'urlShortenerHistory';
+const SHORT_URL_PREFIX = window.location.origin + window.location.pathname + '#';
+
+let currentMode = 'shorten';
+let shortenedUrlMap = {};
+
+// Load history on page load
+function loadHistory() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      shortenedUrlMap = JSON.parse(saved);
+      renderHistory();
+    }
+  } catch (e) {
+    console.error('Failed to load history:', e);
+  }
+}
+
+// Save history to localStorage
+function saveHistory() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(shortenedUrlMap));
+  } catch (e) {
+    console.error('Failed to save history:', e);
+  }
+}
+
+// Generate a short hash from a URL
+function generateHash(url) {
+  let hash = 0;
+  for (let i = 0; i < url.length; i++) {
+    const char = url.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  // Convert to base62 alphanumeric string
+  const base62 = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let result = '';
+  let num = Math.abs(hash);
+  if (num === 0) return 'a';
+  while (num > 0) {
+    result = base62[num % 62] + result;
+    num = Math.floor(num / 62);
+  }
+  // Add timestamp to ensure uniqueness
+  const timeComponent = Date.now().toString(36).slice(-4);
+  return result.slice(0, 6) + timeComponent;
+}
+
+// Mode switching
+function setMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + mode).classList.add('active');
+
+  if (mode === 'shorten') {
+    document.getElementById('shorten-mode').classList.remove('hidden');
+    document.getElementById('expand-mode').classList.add('hidden');
+  } else {
+    document.getElementById('shorten-mode').classList.add('hidden');
+    document.getElementById('expand-mode').classList.remove('hidden');
+  }
+  clearMessage();
+}
+
+// Shorten URL
+function shortenUrl() {
+  try {
+    clearMessage();
+    const longUrl = document.getElementById('long-url').value.trim();
+
+    if (!longUrl) {
+      showMessage('Please enter a URL to shorten', 'error');
+      return;
+    }
+
+    // Validate URL
+    let validatedUrl = longUrl;
+    if (!longUrl.startsWith('http://') && !longUrl.startsWith('https://')) {
+      validatedUrl = 'https://' + longUrl;
+    }
+
+    try {
+      new URL(validatedUrl);
+    } catch (e) {
+      showMessage('Please enter a valid URL', 'error');
+      return;
+    }
+
+    // Check if URL is already shortened
+    const existingHash = Object.keys(shortenedUrlMap).find(key => shortenedUrlMap[key] === validatedUrl);
+    let hash;
+    if (existingHash) {
+      hash = existingHash;
+    } else {
+      hash = generateHash(validatedUrl);
+      shortenedUrlMap[hash] = validatedUrl;
+      saveHistory();
+      renderHistory();
+    }
+
+    const shortUrl = SHORT_URL_PREFIX + hash;
+    document.getElementById('short-url-output').textContent = shortUrl;
+    document.getElementById('shorten-result').classList.remove('hidden');
+
+    // Update stats
+    document.getElementById('original-length').textContent = validatedUrl.length + ' chars';
+    document.getElementById('shortened-length').textContent = shortUrl.length + ' chars';
+    const reduction = Math.round(((validatedUrl.length - shortUrl.length) / validatedUrl.length) * 100);
+    document.getElementById('reduction').textContent = (reduction > 0 ? reduction : 0) + '%';
+
+    showMessage('URL shortened successfully!', 'success');
+    trackUrlShortener('shorten', { original_length: validatedUrl.length, short_length: shortUrl.length });
+  } catch (e) {
+    showMessage('Error shortening URL: ' + e.message, 'error');
+  }
+}
+
+// Expand URL
+function expandUrl() {
+  try {
+    clearMessage();
+    const shortUrl = document.getElementById('short-url').value.trim();
+
+    if (!shortUrl) {
+      showMessage('Please enter a shortened URL to expand', 'error');
+      return;
+    }
+
+    // Check if it's our shortened URL
+    const hashMatch = shortUrl.match(/#([a-zA-Z0-9]+)$/);
+    if (hashMatch && hashMatch[1]) {
+      const hash = hashMatch[1];
+      if (shortenedUrlMap[hash]) {
+        const longUrl = shortenedUrlMap[hash];
+        document.getElementById('expanded-url-output').textContent = longUrl;
+        document.getElementById('visit-link').href = longUrl;
+        document.getElementById('expand-result').classList.remove('hidden');
+        showMessage('URL expanded successfully!', 'success');
+        trackUrlShortener('expand_local', { hash: hash });
+        return;
+      }
+    }
+
+    // Try to expand external shortened URLs
+    // For security, we'll show a warning about external URLs
+    document.getElementById('expanded-url-output').textContent = shortUrl;
+    document.getElementById('visit-link').href = shortUrl;
+    document.getElementById('expand-result').classList.remove('hidden');
+    showMessage('Note: External short URLs cannot be expanded without visiting. Click "Visit" with caution.', 'warning');
+    trackUrlShortener('expand_external', { url: shortUrl });
+  } catch (e) {
+    showMessage('Error expanding URL: ' + e.message, 'error');
+  }
+}
+
+// Copy short URL
+function copyShortUrl() {
+  const url = document.getElementById('short-url-output').textContent;
+  navigator.clipboard.writeText(url).then(() => {
+    showMessage('Short URL copied to clipboard!', 'success');
+    trackUrlShortener('copy_short', { length: url.length });
+  }).catch(() => {
+    showMessage('Failed to copy', 'error');
+  });
+}
+
+// Copy expanded URL
+function copyExpandedUrl() {
+  const url = document.getElementById('expanded-url-output').textContent;
+  navigator.clipboard.writeText(url).then(() => {
+    showMessage('URL copied to clipboard!', 'success');
+    trackUrlShortener('copy_expanded', { length: url.length });
+  }).catch(() => {
+    showMessage('Failed to copy', 'error');
+  });
+}
+
+// Clear shorten form
+function clearShorten() {
+  document.getElementById('long-url').value = '';
+  document.getElementById('shorten-result').classList.add('hidden');
+  clearMessage();
+}
+
+// Clear expand form
+function clearExpand() {
+  document.getElementById('short-url').value = '';
+  document.getElementById('expand-result').classList.add('hidden');
+  clearMessage();
+}
+
+// Render history
+function renderHistory() {
+  const historyList = document.getElementById('history-list');
+  const hashes = Object.keys(shortenedUrlMap);
+
+  if (hashes.length === 0) {
+    historyList.innerHTML = '<div class="history-empty">No URLs shortened yet. Create your first short link above!</div>';
+    return;
+  }
+
+  // Sort by most recent first (reverse order of creation based on hash timestamp)
+  const sortedHashes = hashes.sort((a, b) => {
+    const timeA = parseInt(a.slice(-4), 36) || 0;
+    const timeB = parseInt(b.slice(-4), 36) || 0;
+    return timeB - timeA;
+  });
+
+  historyList.innerHTML = sortedHashes.map(hash => {
+    const longUrl = shortenedUrlMap[hash];
+    const shortUrl = SHORT_URL_PREFIX + hash;
+    return `
+      <div class="history-item">
+        <span class="short-url">${shortUrl.replace(window.location.origin, '')}</span>
+        <span class="long-url" title="${longUrl}">${longUrl}</span>
+        <div class="actions">
+          <button class="secondary" onclick="copyHistoryUrl('${hash}')">Copy</button>
+          <button class="secondary" onclick="deleteHistoryItem('${hash}')" style="background:rgba(239,68,68,.2);color:var(--error)">×</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Copy URL from history
+function copyHistoryUrl(hash) {
+  const url = SHORT_URL_PREFIX + hash;
+  navigator.clipboard.writeText(url).then(() => {
+    showMessage('URL copied to clipboard!', 'success');
+    trackUrlShortener('copy_history', { hash: hash });
+  }).catch(() => {
+    showMessage('Failed to copy', 'error');
+  });
+}
+
+// Delete history item
+function deleteHistoryItem(hash) {
+  delete shortenedUrlMap[hash];
+  saveHistory();
+  renderHistory();
+  showMessage('URL removed from history', 'success');
+}
+
+// Clear all history
+function clearHistory() {
+  if (Object.keys(shortenedUrlMap).length === 0) return;
+  if (confirm('Clear all shortened URL history?')) {
+    shortenedUrlMap = {};
+    saveHistory();
+    renderHistory();
+    showMessage('History cleared', 'success');
+    trackUrlShortener('clear_history', {});
+  }
+}
+
+// Show message
+function showMessage(text, type) {
+  const message = document.getElementById('message');
+  message.textContent = text;
+  message.className = 'message ' + type;
+  if (type !== 'error') {
+    setTimeout(() => {
+      message.textContent = '';
+      message.className = '';
+    }, 4000);
+  }
+}
+
+// Clear message
+function clearMessage() {
+  const message = document.getElementById('message');
+  message.textContent = '';
+  message.className = '';
+}
+
+// Check URL hash on page load for redirection
+function checkHashRedirect() {
+  const hash = window.location.hash.slice(1);
+  if (hash && shortenedUrlMap[hash]) {
+    const longUrl = shortenedUrlMap[hash];
+    trackUrlShortener('redirect', { hash: hash });
+    window.location.href = longUrl;
+  }
+}
+
+// Initialize
+loadHistory();
+checkHashRedirect();
+</script>
+
+<!-- Related Tools Widget -->
+<div id="related-tools-container"></div>
+<script src="/tools/related-tools.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.RelatedTools) {
+    RelatedTools.renderRelatedTools('url-shortener', '#related-tools-container', {
+      title: 'Related Tools',
+      showCategory: true,
+      trackClicks: true
+    });
+  }
+});
+</script>
+</body>
+</html>
